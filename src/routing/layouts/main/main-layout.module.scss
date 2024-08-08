@@ -1,0 +1,30 @@
+/* to combine layouts into one component */
+
+.layout {
+  display: grid;
+  grid-template:
+    'layout_header' 66px
+    'layout_submenu' auto
+    'layout_content' 1fr;
+  grid-gap: 0;
+  width: 100vw;
+  height: 100dvh;
+
+  & > header {
+    z-index: 2;
+    grid-area: layout_header;
+    width: inherit;
+  }
+
+  & > nav {
+    z-index: 1;
+    grid-area: layout_submenu;
+    width: inherit;
+  }
+
+  & > main {
+    grid-area: layout_content;
+    width: inherit;
+    overflow: auto;
+  }
+}

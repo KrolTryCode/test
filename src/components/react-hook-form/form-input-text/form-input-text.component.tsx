@@ -1,0 +1,37 @@
+import { FieldPath, FieldValues, UseControllerProps, useController } from 'react-hook-form';
+
+import { InputText } from '~/ui-components/input-text/input-text.component';
+import { InputTextProps } from '~/ui-components/input-text/input-text.type';
+import { MaskedInput } from '~/ui-components/masked-input/masked-input.component';
+
+import { ValidationError } from '../_validation-error/validation-error.component';
+
+interface FormInputTextProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+> extends Partial<InputTextProps> {
+  mask?: string;
+  controllerProps: UseControllerProps<TFieldValues, TName>;
+}
+
+export function FormInputText<TFieldValues extends FieldValues = FieldValues>({
+  controllerProps,
+  mask,
+  ...inputProps
+}: FormInputTextProps<TFieldValues, FieldPath<TFieldValues>>) {
+  const { field, fieldState } = useController(controllerProps);
+  const InputComponent = mask ? MaskedInput : InputText;
+
+  return (
+    <ValidationError {...fieldState}>
+      <InputComponent
+        {...inputProps}
+        invalid={fieldState.invalid}
+        value={field.value || ''}
+        onChange={field.onChange}
+        onBlur={field.onBlur}
+        mask={mask!}
+      />
+    </ValidationError>
+  );
+}

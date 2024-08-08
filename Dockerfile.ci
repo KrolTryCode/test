@@ -1,0 +1,4 @@
+FROM nginx
+COPY build /usr/share/nginx/html
+RUN mkdir /etc/nginx/templates
+COPY .nginx/nginx.conf.template /etc/nginx/templates/default.conf.template

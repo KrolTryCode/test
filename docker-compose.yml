@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  ui_proxy:
+    image: nginx:alpine
+    ports:
+      - 9000:9000
+    volumes:
+      - .nginx/dev.conf.template:/etc/nginx/templates/nginx.conf.template
+    environment:
+      UI_SERVER: http://host.docker.internal:3000
+      CORE_URL: ${CORE_URL}
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    profiles:
+      - frontend
+      - full
+
+  app:
+    image: ${BACKEND_IMAGE}
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SYSTEM_DATABASE_URL: jdbc:postgresql://db:5432/app_db
+      PROJECT_DATABASE_URL: jdbc:postgresql://db:5432/project_db
+      UI_HOST: localhost:9000
+      SMTP_HOST: smtp
+      SMTP_PORT: 1025
+      SMTP_USERNAME: smtp
+      SMTP_HTTP_PORT: 8025
+      SMTP_PASSWORD: passw01d123
+    profiles:
+      - full
+
+  db:
+    image: postgis/postgis:15-3.4-alpine
+    labels:
+      org.springframework.boot.service-connection: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: app_db
+    ports:
+      - '15432:5432'
+    volumes:
+      - ./db_data/db:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
+      interval: 3s
+      timeout: 5s
+      retries: 20
+    profiles:
+      - full
+
+  smtp:
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - 1025:1025
+      - 8025:8025
+    profiles:
+      - full

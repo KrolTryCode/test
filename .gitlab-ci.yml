@@ -1,0 +1,193 @@
+variables:
+  NODE_IMAGE: node:20.13.1
+  CONTAINER_IMAGE: gcr.io/kaniko-project/executor:debug
+  DEPLOYMENT_IMAGE: quay.io/lifechurch/k8s-deploy-helper:latest
+
+stages:
+  - build
+  - lint
+  # - test
+  # - sonarqube-check
+  # - image
+  # - deploy
+
+#region build
+
+.build:
+  stage: build
+  image: $NODE_IMAGE
+  variables:
+    CI: '0'
+  script:
+    - npm ci
+    - npm run build:api
+    - npm run build
+  artifacts:
+    paths:
+      - build
+      - node_modules
+      - src/api/utils
+    expire_in: 3m
+
+⚒️build:dev:
+  extends: .build
+  except:
+    - master
+  variables:
+    CORE_URL: $CORE_URL_DEV
+
+
+⚒️build:prod:
+  extends: .build
+  only:
+    - master
+  variables:
+    CORE_URL: $CORE_URL_PROD
+
+#endregion
+
+#region codestyle
+
+✒️lint:eslint:
+  stage: lint
+  image: $NODE_IMAGE
+  variables:
+    CI: '1'
+    ESLINT_CODE_QUALITY_REPORT: gl-codequality.json
+  script:
+    - npm ci
+    - npm run lint:eslint -- --format gitlab
+  artifacts:
+    reports:
+      codequality: gl-codequality.json
+
+🪶lint:stylelint:
+  variables:
+    CI: '1'
+    STYLELINT_CODE_QUALITY_REPORT: gl-codequality.json
+  stage: lint
+  image: $NODE_IMAGE
+  script:
+    - npm ci
+    - npm run lint:styles -- --custom-formatter node_modules/stylelint-formatter-gitlab
+  artifacts:
+    reports:
+      codequality: gl-codequality.json
+
+#endregion
+
+#region tests
+
+🧪tests:
+  image: $NODE_IMAGE
+  stage: test
+  variables:
+    CI: '0'
+  script:
+    - npm run test -- --reporter=junit --outputFile=coverage.xml
+  artifacts:
+    reports:
+      junit: coverage.xml
+
+#endregion
+
+#region sonarqube
+
+✅branch-sonarqube-check:
+  stage: sonarqube-check
+  only:
+    - master
+    - develop
+  image:
+    name: sonarsource/sonar-scanner-cli:5.0
+    entrypoint: [""]
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+    GIT_DEPTH: "0"
+  cache:
+    - key: "${CI_JOB_NAME}"
+      policy: pull-push
+      paths:
+        - .sonar/cache
+  script: sonar-scanner -Dsonar.branch.name=$CI_COMMIT_BRANCH
+  allow_failure: true
+  needs: []
+
+#endregion
+
+#region image
+
+📦image:
+  image:
+    name: $CONTAINER_IMAGE
+    entrypoint: [""]
+  stage: image
+  script:
+    - mkdir -p /kaniko/.docker
+    - >
+      echo "{\"auths\":{\"${CI_REGISTRY}\":{\"username\":\"${CI_REGISTRY_USER}\",
+      \"password\":\"${CI_REGISTRY_PASSWORD}\"}}}" > /kaniko/.docker/config.json
+    - >
+      /kaniko/executor --context ${CI_PROJECT_DIR} --cache=true
+      --dockerfile ${CI_PROJECT_DIR}/Dockerfile.ci
+      --destination ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}
+      --destination ${CI_REGISTRY_IMAGE}:latest
+  only:
+    - develop
+    - master
+  retry:
+    max: 1
+    when:
+      - runner_system_failure
+
+#endregion
+
+#region deploy
+
+.k8s:
+  image: $DEPLOYMENT_IMAGE
+  before_script:
+    - mkdir -p ~/.kube
+    - base64 --decode $K8S_CONFIG > ~/.kube/config
+  stage: deploy
+  script:
+    - echo "Before deploying to Kubernetes"
+    - kubectl -n ${K8S_NAMESPACE} set image deploy/${K8S_DEPLOYMENT} ksrc-ui=${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA} --record
+    - echo "After deploying to Kubernetes"
+    - >
+      kubectl -n ${K8S_NAMESPACE} rollout status deploy/${K8S_DEPLOYMENT} || (kubectl -n ${K8S_NAMESPACE} rollout undo deploy/${K8S_DEPLOYMENT} && echo "Rollout update failed" && exit 1)
+  dependencies:
+    - 📦image
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+  variables:
+    K8S_NAMESPACE: "ksrc-dev"
+    K8S_DEPLOYMENT: "ksrc-ui"
+
+☸️k8s:develop:
+  extends: .k8s
+  only:
+    - develop
+  variables:
+    K8S_NAMESPACE: "ksrc-dev"
+    K8S_DEPLOYMENT: "ksrc-ui"
+
+☸️k8s:prod:
+  extends: .k8s
+  only:
+    - master
+  variables:
+    K8S_NAMESPACE: "ksrc-prd"
+    K8S_DEPLOYMENT: "ksrc-ui"
+
+☸️k8s:pre:
+  extends: .k8s
+  only:
+    - develop
+  variables:
+    K8S_NAMESPACE: "ksrc-pre"
+    K8S_DEPLOYMENT: "ksrc-ui"
+
+#endregion

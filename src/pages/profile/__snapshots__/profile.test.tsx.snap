@@ -1,0 +1,1037 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Profile > renders the profile > profile 1`] = `
+<div
+  data-testid="appContainer"
+>
+  <h2
+    class="MuiTypography-root MuiTypography-h3 MuiTypography-gutterBottom css-1ec63ay-MuiTypography-root"
+  >
+    Профиль
+  </h2>
+  <div
+    class="MuiStack-root css-1on8rii-MuiStack-root"
+  >
+    <div
+      class="MuiStack-root css-wqgdpk-MuiStack-root"
+    >
+      <div
+        class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-16lcqbv-MuiAvatar-root"
+        color="primary"
+      />
+      <button
+        class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorSecondary MuiButton-disableElevation Mui-disabled MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorSecondary MuiButton-disableElevation  css-114vuml-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
+        disabled=""
+        id=":r0:"
+        tabindex="-1"
+        type="button"
+      >
+        Изменить фото
+      </button>
+    </div>
+    <form
+      class="MuiStack-root css-ox3dtq-MuiStack-root"
+      role="form"
+    >
+      <fieldset
+        class="MuiStack-root css-106nt1m-MuiStack-root"
+      >
+        <legend
+          class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-17uy6uj-MuiTypography-root"
+        >
+          <div
+            class="MuiStack-root css-13tplj0-MuiStack-root"
+          >
+            Персональные данные
+          </div>
+        </legend>
+        <fieldset
+          class="MuiStack-root css-1javh08-MuiStack-root"
+        >
+          <div
+            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
+          >
+            <label
+              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+            >
+              Имя
+            </label>
+            <div
+              class="MuiBox-root css-eal7pa"
+            >
+              <div
+                class="MuiBox-root css-0"
+                data-mui-internal-clone-element="true"
+              >
+                <div
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-k31kdd-MuiFormControl-root-MuiTextField-root"
+                >
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1nmkmuk-MuiInputBase-root-MuiOutlinedInput-root"
+                  >
+                    <input
+                      aria-invalid="false"
+                      aria-readonly="false"
+                      autocomplete="off"
+                      class="MuiInputBase-input MuiOutlinedInput-input css-7vuigm-MuiInputBase-input-MuiOutlinedInput-input"
+                      id=":r2:"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-ihdtdm"
+                      >
+                        <span
+                          class="notranslate"
+                        >
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
+          >
+            <label
+              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+            >
+              Фамилия
+            </label>
+            <div
+              class="MuiBox-root css-eal7pa"
+            >
+              <div
+                class="MuiBox-root css-0"
+                data-mui-internal-clone-element="true"
+              >
+                <div
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-k31kdd-MuiFormControl-root-MuiTextField-root"
+                >
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1nmkmuk-MuiInputBase-root-MuiOutlinedInput-root"
+                  >
+                    <input
+                      aria-invalid="false"
+                      aria-readonly="false"
+                      autocomplete="off"
+                      class="MuiInputBase-input MuiOutlinedInput-input css-7vuigm-MuiInputBase-input-MuiOutlinedInput-input"
+                      id=":r4:"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-ihdtdm"
+                      >
+                        <span
+                          class="notranslate"
+                        >
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
+          >
+            <label
+              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+            >
+              Отчество
+            </label>
+            <div
+              class="MuiBox-root css-eal7pa"
+            >
+              <div
+                class="MuiBox-root css-0"
+                data-mui-internal-clone-element="true"
+              >
+                <div
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-k31kdd-MuiFormControl-root-MuiTextField-root"
+                >
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1nmkmuk-MuiInputBase-root-MuiOutlinedInput-root"
+                  >
+                    <input
+                      aria-invalid="false"
+                      aria-readonly="false"
+                      autocomplete="off"
+                      class="MuiInputBase-input MuiOutlinedInput-input css-7vuigm-MuiInputBase-input-MuiOutlinedInput-input"
+                      id=":r6:"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-ihdtdm"
+                      >
+                        <span
+                          class="notranslate"
+                        >
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset
+          class="MuiStack-root css-1javh08-MuiStack-root"
+        >
+          <div
+            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
+          >
+            <label
+              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+            >
+              Предприятие
+            </label>
+            <div
+              class="MuiBox-root css-eal7pa"
+            >
+              <div
+                class="MuiBox-root css-0"
+                data-mui-internal-clone-element="true"
+              >
+                <div
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-k31kdd-MuiFormControl-root-MuiTextField-root"
+                >
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1nmkmuk-MuiInputBase-root-MuiOutlinedInput-root"
+                  >
+                    <input
+                      aria-invalid="false"
+                      aria-readonly="false"
+                      autocomplete="off"
+                      class="MuiInputBase-input MuiOutlinedInput-input css-7vuigm-MuiInputBase-input-MuiOutlinedInput-input"
+                      id=":r8:"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-ihdtdm"
+                      >
+                        <span
+                          class="notranslate"
+                        >
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
+          >
+            <label
+              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+            >
+              Подразделение
+            </label>
+            <div
+              class="MuiBox-root css-eal7pa"
+            >
+              <div
+                class="MuiBox-root css-0"
+                data-mui-internal-clone-element="true"
+              >
+                <div
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-k31kdd-MuiFormControl-root-MuiTextField-root"
+                >
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1nmkmuk-MuiInputBase-root-MuiOutlinedInput-root"
+                  >
+                    <input
+                      aria-invalid="false"
+                      aria-readonly="false"
+                      autocomplete="off"
+                      class="MuiInputBase-input MuiOutlinedInput-input css-7vuigm-MuiInputBase-input-MuiOutlinedInput-input"
+                      id=":ra:"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-ihdtdm"
+                      >
+                        <span
+                          class="notranslate"
+                        >
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
+          >
+            <label
+              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+            >
+              Должность
+            </label>
+            <div
+              class="MuiBox-root css-eal7pa"
+            >
+              <div
+                class="MuiBox-root css-0"
+                data-mui-internal-clone-element="true"
+              >
+                <div
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-k31kdd-MuiFormControl-root-MuiTextField-root"
+                >
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1nmkmuk-MuiInputBase-root-MuiOutlinedInput-root"
+                  >
+                    <input
+                      aria-invalid="false"
+                      aria-readonly="false"
+                      autocomplete="off"
+                      class="MuiInputBase-input MuiOutlinedInput-input css-7vuigm-MuiInputBase-input-MuiOutlinedInput-input"
+                      id=":rc:"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-ihdtdm"
+                      >
+                        <span
+                          class="notranslate"
+                        >
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
+            hidden=""
+          >
+            <label
+              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+            >
+              Новый пароль
+            </label>
+            <div
+              class="MuiBox-root css-eal7pa"
+            >
+              <div
+                class="MuiBox-root css-0"
+                data-mui-internal-clone-element="true"
+              >
+                <div
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-k31kdd-MuiFormControl-root-MuiTextField-root"
+                >
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-k58ynz-MuiInputBase-root-MuiOutlinedInput-root"
+                  >
+                    <input
+                      aria-invalid="false"
+                      aria-readonly="false"
+                      autocomplete="new-password"
+                      class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-1dasi9x-MuiInputBase-input-MuiOutlinedInput-input"
+                      id=":re:"
+                      type="password"
+                      value=""
+                    />
+                    <div
+                      class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                    >
+                      <button
+                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-yvetkp-MuiButtonBase-root-MuiIconButton-root"
+                        tabindex="0"
+                        type="button"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall css-5z9s59-MuiSvgIcon-root"
+                          data-testid="VisibilityOutlinedIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4m0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-ihdtdm"
+                      >
+                        <span
+                          class="notranslate"
+                        >
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
+            hidden=""
+          >
+            <label
+              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+            >
+              Повтор пароля
+            </label>
+            <div
+              class="MuiBox-root css-eal7pa"
+            >
+              <div
+                class="MuiBox-root css-0"
+                data-mui-internal-clone-element="true"
+              >
+                <div
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-k31kdd-MuiFormControl-root-MuiTextField-root"
+                >
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-k58ynz-MuiInputBase-root-MuiOutlinedInput-root"
+                  >
+                    <input
+                      aria-invalid="false"
+                      aria-readonly="false"
+                      autocomplete="new-password"
+                      class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-1dasi9x-MuiInputBase-input-MuiOutlinedInput-input"
+                      id=":rg:"
+                      type="password"
+                      value=""
+                    />
+                    <div
+                      class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                    >
+                      <button
+                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-yvetkp-MuiButtonBase-root-MuiIconButton-root"
+                        tabindex="0"
+                        type="button"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall css-5z9s59-MuiSvgIcon-root"
+                          data-testid="VisibilityOutlinedIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4m0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-ihdtdm"
+                      >
+                        <span
+                          class="notranslate"
+                        >
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </fieldset>
+      <fieldset
+        class="MuiStack-root css-106nt1m-MuiStack-root"
+      >
+        <legend
+          class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-17uy6uj-MuiTypography-root"
+        >
+          <div
+            class="MuiStack-root css-13tplj0-MuiStack-root"
+          >
+            Контакты
+          </div>
+        </legend>
+        <fieldset
+          class="MuiStack-root css-1javh08-MuiStack-root"
+        >
+          <div
+            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
+          >
+            <label
+              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+            >
+              E-mail
+            </label>
+            <div
+              class="MuiBox-root css-eal7pa"
+            >
+              <div
+                class="MuiBox-root css-0"
+                data-mui-internal-clone-element="true"
+              >
+                <div
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-k31kdd-MuiFormControl-root-MuiTextField-root"
+                >
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1nmkmuk-MuiInputBase-root-MuiOutlinedInput-root"
+                  >
+                    <input
+                      aria-invalid="false"
+                      aria-readonly="false"
+                      autocomplete="email"
+                      class="MuiInputBase-input MuiOutlinedInput-input css-7vuigm-MuiInputBase-input-MuiOutlinedInput-input"
+                      id=":ri:"
+                      type="email"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-ihdtdm"
+                      >
+                        <span
+                          class="notranslate"
+                        >
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiBox-root css-0"
+            data-mui-internal-clone-element="true"
+          >
+            <label
+              class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-qr77c8-MuiFormControlLabel-root"
+            >
+              <span
+                class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-1a7qjma-MuiButtonBase-root-MuiCheckbox-root"
+              >
+                <input
+                  class="PrivateSwitchBase-input css-1m9pwf3"
+                  data-indeterminate="false"
+                  type="checkbox"
+                />
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  data-testid="CheckBoxOutlineBlankIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                  />
+                </svg>
+              </span>
+              Хочу получать информационные рассылки
+            </label>
+          </div>
+        </fieldset>
+        <fieldset
+          class="MuiStack-root css-1javh08-MuiStack-root"
+        >
+          <div
+            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
+          >
+            <label
+              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+            >
+              Номер телефона
+            </label>
+            <div
+              class="MuiBox-root css-eal7pa"
+            >
+              <div
+                class="MuiBox-root css-0"
+                data-mui-internal-clone-element="true"
+              >
+                <div
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-k31kdd-MuiFormControl-root-MuiTextField-root"
+                >
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1nmkmuk-MuiInputBase-root-MuiOutlinedInput-root"
+                  >
+                    <input
+                      aria-invalid="false"
+                      aria-readonly="false"
+                      autocomplete="off"
+                      class="MuiInputBase-input MuiOutlinedInput-input css-7vuigm-MuiInputBase-input-MuiOutlinedInput-input"
+                      id=":rl:"
+                      placeholder="+7 (000) 000-00-00"
+                      type="text"
+                      value=""
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-ihdtdm"
+                      >
+                        <span
+                          class="notranslate"
+                        >
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </fieldset>
+      <fieldset
+        class="MuiStack-root css-106nt1m-MuiStack-root"
+      >
+        <legend
+          class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-17uy6uj-MuiTypography-root"
+        >
+          <div
+            class="MuiStack-root css-13tplj0-MuiStack-root"
+          >
+            Системные данные
+          </div>
+        </legend>
+        <fieldset
+          class="MuiStack-root css-1javh08-MuiStack-root"
+        >
+          <div
+            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
+          >
+            <label
+              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+            >
+              Дата регистрации
+            </label>
+            <div
+              class="MuiBox-root css-eal7pa"
+            >
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-xzkq5t-MuiFormControl-root-MuiTextField-root"
+              >
+                <div
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedEnd Mui-readOnly MuiInputBase-readOnly css-k58ynz-MuiInputBase-root-MuiOutlinedInput-root"
+                >
+                  <input
+                    aria-invalid="false"
+                    autocomplete="off"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedEnd Mui-readOnly MuiInputBase-readOnly css-burf4l-MuiInputBase-input-MuiOutlinedInput-input"
+                    id=":rm:"
+                    inputmode="text"
+                    placeholder="ДД.ММ.ГГГГ чч:мм"
+                    readonly=""
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeSmall css-1d2tyhs-MuiInputAdornment-root"
+                  >
+                    <button
+                      aria-label="Выберите дату"
+                      class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1qqlian-MuiButtonBase-root-MuiIconButton-root"
+                      disabled=""
+                      tabindex="-1"
+                      type="button"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                        data-testid="CalendarIcon"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                  >
+                    <legend
+                      class="css-ihdtdm"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
+          >
+            <label
+              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+            >
+              Дата последнего входа
+            </label>
+            <div
+              class="MuiBox-root css-eal7pa"
+            >
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-xzkq5t-MuiFormControl-root-MuiTextField-root"
+              >
+                <div
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedEnd Mui-readOnly MuiInputBase-readOnly css-k58ynz-MuiInputBase-root-MuiOutlinedInput-root"
+                >
+                  <input
+                    aria-invalid="false"
+                    autocomplete="off"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedEnd Mui-readOnly MuiInputBase-readOnly css-burf4l-MuiInputBase-input-MuiOutlinedInput-input"
+                    id=":ro:"
+                    inputmode="text"
+                    placeholder="ДД.ММ.ГГГГ чч:мм"
+                    readonly=""
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeSmall css-1d2tyhs-MuiInputAdornment-root"
+                  >
+                    <button
+                      aria-label="Выберите дату"
+                      class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1qqlian-MuiButtonBase-root-MuiIconButton-root"
+                      disabled=""
+                      tabindex="-1"
+                      type="button"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                        data-testid="CalendarIcon"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                  >
+                    <legend
+                      class="css-ihdtdm"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
+          >
+            <label
+              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+            >
+              IP-адрес последнего входа
+            </label>
+            <div
+              class="MuiBox-root css-eal7pa"
+            >
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-k31kdd-MuiFormControl-root-MuiTextField-root"
+              >
+                <div
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1nmkmuk-MuiInputBase-root-MuiOutlinedInput-root"
+                >
+                  <input
+                    aria-invalid="false"
+                    aria-readonly="true"
+                    autocomplete="off"
+                    class="MuiInputBase-input MuiOutlinedInput-input css-7vuigm-MuiInputBase-input-MuiOutlinedInput-input"
+                    id=":rq:"
+                    readonly=""
+                    type="text"
+                    value=""
+                  />
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                  >
+                    <legend
+                      class="css-ihdtdm"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
+            hidden=""
+          >
+            <label
+              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+            >
+              Состояние
+            </label>
+            <div
+              class="MuiBox-root css-eal7pa"
+            >
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-k31kdd-MuiFormControl-root-MuiTextField-root"
+              >
+                <div
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1nmkmuk-MuiInputBase-root-MuiOutlinedInput-root"
+                >
+                  <input
+                    aria-invalid="false"
+                    aria-readonly="true"
+                    autocomplete="off"
+                    class="MuiInputBase-input MuiOutlinedInput-input css-7vuigm-MuiInputBase-input-MuiOutlinedInput-input"
+                    id=":rr:"
+                    readonly=""
+                    type="text"
+                    value="Нет данных"
+                  />
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                  >
+                    <legend
+                      class="css-ihdtdm"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
+            hidden=""
+          >
+            <label
+              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+            >
+              Кем создана учетная запись
+            </label>
+            <div
+              class="MuiBox-root css-eal7pa"
+            >
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-k31kdd-MuiFormControl-root-MuiTextField-root"
+              >
+                <div
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1nmkmuk-MuiInputBase-root-MuiOutlinedInput-root"
+                >
+                  <input
+                    aria-invalid="false"
+                    aria-readonly="true"
+                    autocomplete="off"
+                    class="MuiInputBase-input MuiOutlinedInput-input css-7vuigm-MuiInputBase-input-MuiOutlinedInput-input"
+                    id=":rs:"
+                    readonly=""
+                    type="text"
+                    value=""
+                  />
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                  >
+                    <legend
+                      class="css-ihdtdm"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset
+          class="MuiStack-root css-1javh08-MuiStack-root"
+        >
+          <div
+            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
+          >
+            <label
+              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+            >
+              Часовой пояс
+            </label>
+            <div
+              class="MuiBox-root css-eal7pa"
+            >
+              <div
+                class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-3t3jfx-MuiAutocomplete-root"
+              >
+                <div
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-k31kdd-MuiFormControl-root-MuiTextField-root"
+                >
+                  <div
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-k58ynz-MuiInputBase-root-MuiOutlinedInput-root"
+                  >
+                    <input
+                      aria-autocomplete="list"
+                      aria-expanded="false"
+                      aria-invalid="false"
+                      autocapitalize="none"
+                      autocomplete="off"
+                      class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-1dasi9x-MuiInputBase-input-MuiOutlinedInput-input"
+                      id=":rt:"
+                      role="combobox"
+                      spellcheck="false"
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
+                    >
+                      <button
+                        aria-label="Открыть"
+                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-3p0hq5-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                        tabindex="-1"
+                        title="Открыть"
+                        type="button"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                          data-testid="ArrowDropDownIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-ihdtdm"
+                      >
+                        <span
+                          class="notranslate"
+                        >
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </fieldset>
+      <div
+        class="MuiStack-root css-18ohlsh-MuiStack-root"
+      >
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorSecondary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorSecondary MuiButton-disableElevation  css-114vuml-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
+          id=":rv:"
+          tabindex="0"
+          type="button"
+        >
+          Изменить пароль
+        </button>
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation  css-1vmx4fr-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
+          id=":r10:"
+          tabindex="0"
+          type="submit"
+        >
+          Сохранить
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;

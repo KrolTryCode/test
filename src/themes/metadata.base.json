@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "key": "$base-border-radius",
+      "value": "5px"
+    },
+    {
+      "key": "$base-accent",
+      "value": "rgba(0, 84, 165, 1)"
+    },
+    {
+      "key": "$base-success",
+      "value": "rgba(44, 181, 99, 1)"
+    },
+    {
+      "key": "$base-warning",
+      "value": "rgba(234, 118, 11, 1)"
+    },
+    {
+      "key": "$base-danger",
+      "value": "rgba(234, 11, 11, 1)"
+    }
+  ],
+  "baseTheme": "generic.light",
+  "assetsBasePath": "../../../node_modules/devextreme/dist/css/",
+  "outputColorScheme": "base",
+  "base": true
+}

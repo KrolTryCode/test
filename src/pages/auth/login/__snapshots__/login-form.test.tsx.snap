@@ -1,0 +1,156 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Login form > should render login form 1`] = `
+<form
+  class="MuiStack-root css-eir3lh-MuiStack-root"
+  role="form"
+>
+  <div
+    class="MuiFormControl-root css-1dixy4o-MuiFormControl-root"
+  >
+    <label
+      class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+    >
+      Логин
+    </label>
+    <div
+      class="MuiBox-root css-eal7pa"
+    >
+      <div
+        class="MuiBox-root css-0"
+        data-mui-internal-clone-element="true"
+      >
+        <div
+          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-k31kdd-MuiFormControl-root-MuiTextField-root"
+        >
+          <div
+            class="MuiInputBase-root MuiFilledInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-1k42hnj-MuiInputBase-root-MuiFilledInput-root"
+          >
+            <input
+              aria-invalid="false"
+              aria-readonly="false"
+              autocomplete="off"
+              class="MuiInputBase-input MuiFilledInput-input css-1clywqe-MuiInputBase-input-MuiFilledInput-input"
+              id=":r1:"
+              placeholder="Логин"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="MuiFormControl-root css-1dixy4o-MuiFormControl-root"
+  >
+    <label
+      class="MuiFormLabel-root MuiFormLabel-colorPrimary css-t65k0l-MuiFormLabel-root"
+    >
+      Пароль
+    </label>
+    <div
+      class="MuiBox-root css-eal7pa"
+    >
+      <div
+        class="MuiBox-root css-0"
+        data-mui-internal-clone-element="true"
+      >
+        <div
+          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-k31kdd-MuiFormControl-root-MuiTextField-root"
+        >
+          <div
+            class="MuiInputBase-root MuiFilledInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-mzk13l-MuiInputBase-root-MuiFilledInput-root"
+          >
+            <input
+              aria-invalid="false"
+              aria-readonly="false"
+              autocomplete="current-password"
+              class="MuiInputBase-input MuiFilledInput-input MuiInputBase-inputAdornedEnd css-tuna93-MuiInputBase-input-MuiFilledInput-input"
+              id=":r3:"
+              placeholder="Пароль"
+              type="password"
+              value=""
+            />
+            <div
+              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-filled MuiInputAdornment-sizeMedium css-jv61v3-MuiInputAdornment-root"
+            >
+              <button
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-yvetkp-MuiButtonBase-root-MuiIconButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall css-5z9s59-MuiSvgIcon-root"
+                  data-testid="VisibilityOutlinedIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4m0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="MuiStack-root css-gmwslw-MuiStack-root"
+  >
+    <div
+      class="MuiBox-root css-0"
+      data-mui-internal-clone-element="true"
+    >
+      <label
+        class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-qr77c8-MuiFormControlLabel-root"
+      >
+        <span
+          class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-1a7qjma-MuiButtonBase-root-MuiCheckbox-root"
+        >
+          <input
+            class="PrivateSwitchBase-input css-1m9pwf3"
+            data-indeterminate="false"
+            type="checkbox"
+          />
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="CheckBoxOutlineBlankIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+            />
+          </svg>
+        </span>
+        Запомнить меня
+      </label>
+    </div>
+    <a
+      class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-text MuiButton-textSecondary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorSecondary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-text MuiButton-textSecondary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorSecondary MuiButton-disableElevation  css-6dny5q-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
+      href="/auth/reset-password"
+      id=":r5:"
+      tabindex="0"
+    >
+      Забыли пароль?
+    </a>
+  </div>
+  <div
+    class="MuiStack-root css-18ohlsh-MuiStack-root"
+  >
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation  css-1vmx4fr-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
+      id=":r6:"
+      tabindex="0"
+      type="submit"
+    >
+      Войти
+    </button>
+  </div>
+</form>
+`;
