@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
-import { FallbackInfoPage } from '~/pages/fallback/fallback-info-page.component';
-import { ButtonNavigate, FallbackPageType } from '~/pages/fallback/fallback.types';
+import { FallbackInfoPage } from '~/pages/_fallbacks/fallback-info-page.component';
+import { ButtonNavigate, FallbackPageType } from '~/pages/_fallbacks/fallback.types';
 
 export const ForbiddenPage: FC = () => {
   return (

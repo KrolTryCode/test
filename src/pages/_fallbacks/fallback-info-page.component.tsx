@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { ButtonNavigate, FallbackPageProps } from '~/pages/fallback/fallback.types';
+import { ButtonNavigate, FallbackPageProps } from '~/pages/_fallbacks/fallback.types';
 import { Button } from '~/ui-components/button/button.component';
 import { Image } from '~/ui-components/carousel/image/image.component';
 import { logo } from '~/utils/configuration/logo';

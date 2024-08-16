@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 
-import { NotFoundPage } from '~/pages/fallback/_errors/not-found/not-found.component';
+import { NotFoundPage } from '~/pages/_fallbacks/errors/not-found/not-found.component';
 import { AuthLayout } from '~/routing/layouts/auth/auth.layout';
 import { MainLayout } from '~/routing/layouts/main/main.layout';
 import { authRoutes } from '~/routing/routes/auth-routes';

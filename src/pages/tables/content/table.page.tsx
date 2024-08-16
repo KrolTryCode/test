@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { EmptyCatalog } from '~/pages/fallback/_info/empty/empty-element.component';
+import { EmptyCatalog } from '~/pages/_fallbacks/info/empty/empty-element.component';
 
 //TODO
 const Table: FC = () => {

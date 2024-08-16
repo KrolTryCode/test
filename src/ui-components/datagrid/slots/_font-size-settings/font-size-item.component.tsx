@@ -43,8 +43,8 @@ export const FontSizeItem: FC<FontSizeItemProps> = ({
 
   return (
     <Box paddingInline={1} paddingBlock={1} borderBottom={'1px solid'} borderColor={'divider'}>
-      <Typography paddingInline={1} letterSpacing={0}>
-        {label}:
+      <Typography paddingInline={1} letterSpacing={0} textAlign={'center'}>
+        {label}
       </Typography>
       <ButtonGroup>
         <Button
