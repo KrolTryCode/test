@@ -1,11 +1,11 @@
-export interface ErrorPageProps {
-  pageType: ErrorPageType;
-  buttonNavigate: ButtonNavigate;
+export interface FallbackPageProps {
+  pageType: FallbackPageType;
+  buttonNavigate?: ButtonNavigate;
   showButton?: boolean;
   showLogo?: boolean;
 }
 
-export enum ErrorPageType {
+export enum FallbackPageType {
   WorkInProgress = 'WORK_IN_PROGRESS',
   NotFoundPage = 'NOT_FOUND_PAGE',
   NotFoundTask = 'NOT_FOUND_TASK',
@@ -14,6 +14,8 @@ export enum ErrorPageType {
   NotFoundLogs = 'NOT_FOUND_LOGS',
   NotFoundOrders = 'NOT_FOUND_ORDERS',
   ServerConnectionError = 'SERVER_CONNECTION_ERROR',
+  EmptyTable = 'EMPTY_TABLE',
+  EmptyCatalog = 'EMPTY_CATALOG',
 }
 
 export enum ButtonNavigate {

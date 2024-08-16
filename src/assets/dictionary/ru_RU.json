@@ -46,7 +46,9 @@
     "DECREASE": "Уменьшить {{what}}",
     "SHOW_ON_GANTT": "Показать на диаграмме Ганта",
     "RECOVER": "Восстановить",
-    "SHOW_OR_HIDE_ALL": "Показать/Скрыть все"
+    "SHOW_OR_HIDE_ALL": "Показать/Скрыть все",
+    "ADD_CATALOG": "Добавить каталог",
+    "ADD_TABLE": "Добавить таблицу"
   },
   "FILTER": {
     "AFTER": "позже",
@@ -100,7 +102,10 @@
     "NAME": "Наименование",
     "SEARCH_COLUMNS": "Поиск по столбцам"
   },
-  "DATE": { "MONTH": "Месяц", "YEAR": "Год" },
+  "DATE": {
+    "MONTH": "Месяц",
+    "YEAR": "Год"
+  },
   "FILES": {
     "UPLOAD_SUCCESS": "Файл загружен",
     "MULTIPLE_UPLOAD_SUCCESS": "Файлы загружены",
@@ -181,6 +186,14 @@
     },
     "NOT_FOUND_ORDERS": {
       "TEXT1": "Заказы не найдены",
+      "TEXT2": ""
+    },
+    "EMPTY_TABLE": {
+      "TEXT1": "Эта таблица пока пуста",
+      "TEXT2": ""
+    },
+    "EMPTY_CATALOG": {
+      "TEXT1": "Этот каталог пока пуст",
       "TEXT2": ""
     }
   },
@@ -558,7 +571,8 @@
     "TASKS_TREE": "Дерево решений",
     "FACTORIES_CARDS": "Карточки заводов",
     "ANNUAL_RESULTS": "Итоги года",
-    "FEDERAL_DISTRICT_MAP": "Карта федеральных округов"
+    "FEDERAL_DISTRICT_MAP": "Карта федеральных округов",
+    "TABLES": "Таблицы"
   },
   "JOURNAL": {
     "ACTION": "Действие",

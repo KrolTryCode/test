@@ -1,5 +1,5 @@
 {
-  "PROJECT_NAME": "KSRC",
+  "PROJECT_NAME": "Indanis",
   "BUTTON": {
     "ENTER": "Login",
     "ADD": "Add {{type}}",
@@ -38,7 +38,9 @@
     "REMOVE_FROM_BUILDING_PROGRAM": "Remove from building program",
     "ESTABLISH": "Establish {{type}}",
     "HIDE_ALL": "Hide all",
-    "EXPAND_ALL": "Expand all"
+    "EXPAND_ALL": "Expand all",
+    "ADD_CATALOG": "Add catalog",
+    "ADD_TABLE": "Add table"
   },
   "FILTER": {
     "AFTER": "after",
@@ -154,6 +156,14 @@
     "NOT_FOUND_ORDERS": {
       "TEXT1": "Orders not found",
       "TEXT2": ""
+    },
+    "EMPTY_TABLE": {
+      "TEXT1": "This table is currently empty",
+      "TEXT2": ""
+    },
+    "EMPTY_CATALOG": {
+      "TEXT1": "This catalog is currently empty",
+      "TEXT2": ""
     }
   },
   "ENTITY": {
@@ -185,7 +195,8 @@
     "INFO_COMPLETED": "Information about completed, ongoing and planned orders",
     "TEMPLATE": "Mail template",
     "NEED": "Need",
-    "MPT": "MPT {{number}}"
+    "MPT": "MPT {{number}}",
+    "TABLES": "Tables"
   },
   "EXPORT": {
     "EXPORT_TO": "Export to",
@@ -560,3 +571,5 @@
     }
   }
 }
+
+
