@@ -7,7 +7,7 @@ import { useGetContentNode } from '~/api/queries/nodes/get-content-node.query';
 import { useGetContentNodes } from '~/api/queries/nodes/get-content-nodes.query';
 import { ContentNodeTypeEnum } from '~/api/utils/api-requests';
 import { DEFAULT_PROJECT_ID } from '~/app/application.store';
-import { EmptyCatalog, EmptyTable } from '~/pages/fallback/_info/empty/empty-element.component';
+import { EmptyCatalog, EmptyTable } from '~/pages/_fallbacks/info/empty/empty-element.component';
 import { Preloader } from '~/ui-components/preloader/preloader.component';
 
 const NodeContent: FC = () => {

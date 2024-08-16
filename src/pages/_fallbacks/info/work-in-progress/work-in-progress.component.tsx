@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { FallbackInfoPage } from '~/pages/fallback/fallback-info-page.component';
+import { FallbackInfoPage } from '~/pages/_fallbacks/fallback-info-page.component';
 
 import { ButtonNavigate, FallbackPageType } from '../../fallback.types';
 

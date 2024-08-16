@@ -2,12 +2,11 @@ import { lazy, Suspense } from 'react';
 import { RouteObject, createBrowserRouter } from 'react-router-dom';
 
 import { App } from '~/app';
+import { RouteErrorBoundary } from '~/pages/_fallbacks/errors/error-boundary/error-boundary.component';
 import { TitleProvider } from '~/routing/page-title.context';
 import { routes } from '~/routing/routes/routes';
 import { RouteDescription, RouteTitleMeta } from '~/routing/routes.types';
 import { Preloader } from '~/ui-components/preloader/preloader.component';
-
-import { RouteErrorBoundary } from './error-boundary/error-boundary.component';
 
 export const router = createBrowserRouter([
   {
