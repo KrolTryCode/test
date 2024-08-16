@@ -1,10 +1,17 @@
 import { Navigate } from 'react-router-dom';
 
-import { NotFoundPage } from '~/pages/_errors/not-found/not-found.component';
+import { NotFoundPage } from '~/pages/fallback/_errors/not-found/not-found.component';
 import { AuthLayout } from '~/routing/layouts/auth/auth.layout';
 import { MainLayout } from '~/routing/layouts/main/main.layout';
 import { authRoutes } from '~/routing/routes/auth-routes';
-import { adminPath, authPath, homePath, profilePath } from '~/utils/configuration/routes-paths';
+import { tablesSubroutes } from '~/routing/routes/tables-subroutes';
+import {
+  adminPath,
+  authPath,
+  homePath,
+  profilePath,
+  tablesPath,
+} from '~/utils/configuration/routes-paths';
 
 import { RouteDescription } from '../routes.types';
 
@@ -19,6 +26,12 @@ export const routes: RouteDescription[] = [
       {
         isIndex: true,
         element: <Navigate to={adminPath} replace={true} />,
+      },
+      {
+        path: tablesPath,
+        menuDisplay: { label: 'NAVIGATION.TABLES' },
+        lazyElement: () => import('~/pages/tables/tables.page'),
+        children: tablesSubroutes,
       },
       {
         path: adminPath,

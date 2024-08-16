@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useAppSelector } from '~/app/store.hooks';
 import { selectUserLoggedIn } from '~/app/user/user.store';
-import { ForbiddenPage } from '~/pages/_errors/forbidden/forbidden.component';
+import { ForbiddenPage } from '~/pages/fallback/_errors/forbidden/forbidden.component';
 import { useRouteAccess } from '~/routing/access-checker/use-route-access';
 import { authPath, homePath, loginPath } from '~/utils/configuration/routes-paths';
 

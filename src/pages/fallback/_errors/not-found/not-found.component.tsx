@@ -1,16 +1,21 @@
 import { FC } from 'react';
 
-import { ErrorPage } from '~/pages/_errors/error-page.component';
-import { ButtonNavigate, ErrorPageType } from '~/pages/_errors/errors.types';
+import { FallbackInfoPage } from '~/pages/fallback/fallback-info-page.component';
+import { ButtonNavigate, FallbackPageType } from '~/pages/fallback/fallback.types';
 
 export const NotFoundPage: FC = () => {
-  return <ErrorPage pageType={ErrorPageType.NotFoundPage} buttonNavigate={ButtonNavigate.ToMain} />;
+  return (
+    <FallbackInfoPage
+      pageType={FallbackPageType.NotFoundPage}
+      buttonNavigate={ButtonNavigate.ToMain}
+    />
+  );
 };
 
 export const NotFoundTask: FC<{ showButton?: boolean }> = ({ showButton }) => {
   return (
-    <ErrorPage
-      pageType={ErrorPageType.NotFoundTask}
+    <FallbackInfoPage
+      pageType={FallbackPageType.NotFoundTask}
       buttonNavigate={ButtonNavigate.Back}
       showButton={showButton}
     />
@@ -19,8 +24,8 @@ export const NotFoundTask: FC<{ showButton?: boolean }> = ({ showButton }) => {
 
 export const NotFoundLogs: FC = () => {
   return (
-    <ErrorPage
-      pageType={ErrorPageType.NotFoundLogs}
+    <FallbackInfoPage
+      pageType={FallbackPageType.NotFoundLogs}
       buttonNavigate={ButtonNavigate.Back}
       showButton={false}
       showLogo={false}
@@ -30,8 +35,8 @@ export const NotFoundLogs: FC = () => {
 
 export const NotFoundOrders: FC = () => {
   return (
-    <ErrorPage
-      pageType={ErrorPageType.NotFoundOrders}
+    <FallbackInfoPage
+      pageType={FallbackPageType.NotFoundOrders}
       buttonNavigate={ButtonNavigate.Back}
       showButton={false}
       showLogo={false}
