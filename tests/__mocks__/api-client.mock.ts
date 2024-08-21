@@ -1,4 +1,9 @@
-import { AccountConfiguration, User, UserStateEnum } from '~/api/utils/api-requests';
+import {
+  AccountConfiguration,
+  User,
+  UserStateEnum,
+  UserWithPermissions,
+} from '~/api/utils/api-requests';
 import { adminRole } from '~/utils/configuration/constants-roles';
 
 export const mockApiClientLogin = vi.fn().mockImplementation((data, params) => {
@@ -23,13 +28,14 @@ export const mockGetCurrentUser = vi.fn().mockImplementation((data, params) => {
   return Promise.resolve({
     status: 200,
     user: {
-      id: 'test-3fa85f64-5717-4562-b3fc-2c963f66afa6',
+      admin: true,
+      created: '2023-10-19T19:02:00.988Z',
       email: 'test@email.com',
       firstName: 'test',
+      id: 'test-3fa85f64-5717-4562-b3fc-2c963f66afa6',
       lastName: 'systemTest',
-      createdFrom: '2023-10-19T19:02:00.988Z',
       state: UserStateEnum.Active,
-    } as User,
+    } as UserWithPermissions,
     permissions: [adminRole],
     passwordExpiresSoon: false,
   });

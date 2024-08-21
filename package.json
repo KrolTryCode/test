@@ -1,5 +1,5 @@
 {
-  "name": "ksrc",
+  "name": "indanis",
   "version": "0.2.0",
   "private": true,
   "type": "module",
@@ -40,7 +40,6 @@
     "@mui/x-date-pickers-pro": "7.5.1",
     "@mui/x-license": "7.0.0",
     "@mui/x-tree-view": "7.3.0",
-    "@reduxjs/toolkit": "1.9.5",
     "@tanstack/react-query": "5.8.3",
     "@tanstack/react-query-devtools": "5.8.3",
     "@uiw/react-codemirror": "4.21.24",
@@ -64,7 +63,6 @@
     "react-i18next": "14.1.0",
     "react-imask": "7.6.0",
     "react-modal-promise": "1.0.2",
-    "react-redux": "8.1.2",
     "react-resizable-panels": "2.0.18",
     "react-router-dom": "6.21.2",
     "react-swipeable": "7.0.1",
@@ -76,7 +74,8 @@
     "uuid": "10.0.0",
     "yup": "1.4.0",
     "zod": "3.22.4",
-    "zod-i18n-map": "2.27.0"
+    "zod-i18n-map": "2.27.0",
+    "zustand": "4.5.5"
   },
   "devDependencies": {
     "@babel/core": "7.23.2",
@@ -99,7 +98,6 @@
     "@types/node": "18.19.14",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.14",
-    "@types/redux-mock-store": "1.0.5",
     "@types/russian-nouns-js": "1.2.5",
     "@typescript-eslint/eslint-plugin": "6.12.0",
     "@typescript-eslint/parser": "6.12.0",
@@ -133,7 +131,6 @@
     "npm-run-all": "4.1.5",
     "postcss-styled-syntax": "0.5.0",
     "prettier": "3.1.0",
-    "redux-mock-store": "1.5.4",
     "storybook": "8.1.5",
     "stylelint": "15.11.0",
     "stylelint-config-recess-order": "4.4.0",

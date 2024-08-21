@@ -189,15 +189,7 @@ module.exports = {
     'sonarjs/no-small-switch': 'warn',
     'sort-imports': 'off',
     'sort-keys': 'off',
-    'no-restricted-imports': [
-      'warn',
-      'zod',
-      'devextreme',
-      'devextreme-react',
-      'styled-components',
-      'react-redux',
-      '@reduxjs/toolkit',
-    ],
+    'no-restricted-imports': ['warn', 'devextreme', 'devextreme-react', 'styled-components'],
   },
   overrides: [
     {

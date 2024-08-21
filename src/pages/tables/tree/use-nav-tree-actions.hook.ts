@@ -6,7 +6,7 @@ import { useCreateProjectNodeMutation } from '~/api/queries/nodes/create-project
 import { useDeleteNodeMutation } from '~/api/queries/nodes/delete-project-node.mutation';
 import { useUpdateProjectNodeMutation } from '~/api/queries/nodes/update-project-node.mutation';
 import { ContentNodeTypeEnum, CreateContentNodeRequestTypeEnum } from '~/api/utils/api-requests';
-import { DEFAULT_PROJECT_ID } from '~/app/application.store';
+import { DEFAULT_PROJECT_ID } from '~/app/user/user.store';
 import { nodeModal } from '~/components/modals-content/node-modal.component';
 import { NavTreeItemData } from '~/components/nav-tree/nav-tree.type';
 import { useTreeNodesUtils } from '~/pages/tables/tree/use-tree-nodes-utils.hook';
