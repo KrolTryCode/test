@@ -22,7 +22,6 @@
     "docker:local": "docker compose --profile full up",
     "docker:remote": "docker compose --profile frontend up",
     "build:api": "tsx ./scripts/build-api",
-    "build:api:linux": "swagger-typescript-api -p ${npm_config_url} -o ./src/api/utils -n api-requests.ts --axios -r --extract-enums --unwrap-response-data --module-name-first-tag",
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006 --no-open",
     "storybook:build": "storybook build",

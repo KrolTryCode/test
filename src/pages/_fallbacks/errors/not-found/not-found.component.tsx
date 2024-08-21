@@ -43,3 +43,14 @@ export const NotFoundOrders: FC = () => {
     />
   );
 };
+
+export const NotFoundNodes: FC<{ action: () => void }> = ({ action }) => {
+  return (
+    <FallbackInfoPage
+      pageType={FallbackPageType.NotFoundNodes}
+      buttonNavigate={ButtonNavigate.CreateNode}
+      createNodeAction={action}
+      logoKey={'indiana'}
+    />
+  );
+};

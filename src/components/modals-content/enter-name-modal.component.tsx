@@ -5,10 +5,9 @@ import { InstanceProps } from 'react-modal-promise';
 
 import { modal } from '~/components/modal/modal';
 import { CreateModalProps } from '~/components/modal/modal.type';
+import { FormInputText } from '~/components/react-hook-form';
 import { Button } from '~/ui-components/button/button.component';
 import { Form, FormButtons, FormItem } from '~/ui-components/form';
-
-import { FormInputText } from '../react-hook-form/form-input-text/form-input-text.component';
 
 interface EnterNameFormProps
   extends Pick<CreateModalProps<Record<string, never>>, 'onResolve' | 'onReject'> {

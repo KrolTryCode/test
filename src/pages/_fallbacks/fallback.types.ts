@@ -1,8 +1,12 @@
+import { logo } from '~/utils/configuration/logo';
+
 export interface FallbackPageProps {
   pageType: FallbackPageType;
   buttonNavigate?: ButtonNavigate;
   showButton?: boolean;
   showLogo?: boolean;
+  logoKey?: keyof typeof logo;
+  createNodeAction?: () => void;
 }
 
 export enum FallbackPageType {
@@ -13,6 +17,7 @@ export enum FallbackPageType {
   BadReport = 'BAD_REPORT',
   NotFoundLogs = 'NOT_FOUND_LOGS',
   NotFoundOrders = 'NOT_FOUND_ORDERS',
+  NotFoundNodes = 'NOT_FOUND_NODES',
   ServerConnectionError = 'SERVER_CONNECTION_ERROR',
   EmptyTable = 'EMPTY_TABLE',
   EmptyCatalog = 'EMPTY_CATALOG',
@@ -21,4 +26,5 @@ export enum FallbackPageType {
 export enum ButtonNavigate {
   Back = 'BACK',
   ToMain = 'TO_MAIN',
+  CreateNode = 'CREATE_NODE',
 }

@@ -17,6 +17,10 @@ export interface NavTreeItemProps
   onCollapseAll?: (itemId: string) => void;
   onExpandAll?: (itemId: string) => void;
   menuItems?: DropdownMenuItem[];
+  hideDropdown?: boolean;
+  disableLinks?: boolean;
+  selectedItemId?: string | undefined;
+  onHandleSelectEvent?: (itemId: string) => void;
 }
 
 export interface NavTreeItemData extends TreeViewBaseItem {

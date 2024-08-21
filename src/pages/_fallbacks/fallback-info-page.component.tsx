@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,9 +14,19 @@ const FallbackInfoPage: FC<FallbackPageProps> = ({
   buttonNavigate,
   showButton = true,
   showLogo = true,
+  createNodeAction,
+  logoKey,
 }) => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+
+  const handleClick = useCallback(() => {
+    buttonNavigate === ButtonNavigate.Back
+      ? navigate(-1)
+      : buttonNavigate === ButtonNavigate.CreateNode
+        ? createNodeAction?.()
+        : navigate(homePath);
+  }, [buttonNavigate, navigate, createNodeAction]);
 
   return (
     <Box
@@ -29,7 +39,7 @@ const FallbackInfoPage: FC<FallbackPageProps> = ({
       <Box>
         {showLogo && (
           <Box height={'300px'}>
-            <Image src={logo[i18n.language]} alt={t('PROJECT_NAME')} />
+            <Image src={logo[logoKey ?? i18n.language]} alt={t('PROJECT_NAME')} />
           </Box>
         )}
         <Typography margin={'30px auto 0'} fontSize={24}>
@@ -39,12 +49,7 @@ const FallbackInfoPage: FC<FallbackPageProps> = ({
           {t(`ERROR.${pageType}.TEXT2`)}
         </Typography>
         {showButton && (
-          <Button
-            fullWidth
-            onClick={() =>
-              buttonNavigate === ButtonNavigate.Back ? navigate(-1) : navigate(homePath)
-            }
-          >
+          <Button fullWidth onClick={handleClick}>
             {t(`BUTTON.${buttonNavigate}`)}
           </Button>
         )}
