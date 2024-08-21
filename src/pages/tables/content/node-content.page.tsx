@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useGetContentNode } from '~/api/queries/nodes/get-content-node.query';
 import { useGetContentNodes } from '~/api/queries/nodes/get-content-nodes.query';
 import { ContentNodeTypeEnum } from '~/api/utils/api-requests';
-import { DEFAULT_PROJECT_ID } from '~/app/application.store';
+import { DEFAULT_PROJECT_ID } from '~/app/user/user.store';
 import { EmptyCatalog, EmptyTable } from '~/pages/_fallbacks/info/empty/empty-element.component';
 import { Preloader } from '~/ui-components/preloader/preloader.component';
 

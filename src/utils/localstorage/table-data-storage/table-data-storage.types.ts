@@ -28,4 +28,4 @@ export const TableDataStorageSchemas = {
   [TableDataStorageKey.FontSize]: y.number().required(),
 };
 
-export const PREFIX = 'ksrcTable_';
+export const PREFIX = 'indanisTable_';

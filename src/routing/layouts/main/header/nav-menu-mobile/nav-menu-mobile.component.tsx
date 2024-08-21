@@ -1,12 +1,9 @@
 import { Box, Stack } from '@mui/material';
-import { FC, useMemo, useState } from 'react';
+import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMatches } from 'react-router-dom';
 
-import { useAppSelector } from '~/app/store.hooks';
-import { selectUserAuthorities } from '~/app/user/user.store';
-import { routes } from '~/routing/routes/routes';
-import { RouteDescription } from '~/routing/routes.types';
+import { useNavMenu } from '~/routing/layouts/main/header/use-nav-menu.hook';
 
 import { NavAccordion } from './nav-accordion/nav-accordion.component';
 import { StyledMenuIcon, StyledMenuNavLink, StyledMenuOpenIcon } from './nav-menu-mobile.style';
@@ -15,36 +12,24 @@ export const NavMenuMobile: FC = () => {
   const matches = useMatches();
 
   const [isOpened, setIsOpened] = useState(false);
+  const { topMenuRoutes } = useNavMenu();
 
-  const userAuthorities = useAppSelector(selectUserAuthorities);
   const { t } = useTranslation();
 
-  const topMenuRoutes: RouteDescription[] = useMemo(() => {
-    return (
-      routes
-        .find(({ key }) => key === 'main')
-        ?.children?.filter(({ menuDisplay, accessBy }) => {
-          return (
-            !!menuDisplay &&
-            (accessBy ? accessBy.some(role => userAuthorities.includes(role)) : true)
-          );
-        }) ?? []
-    );
-  }, [userAuthorities]);
+  const toggleOpen = () => setIsOpened(prev => !prev);
 
   return (
     <>
-      <Box display={'flex'}>
+      <Stack>
         {!isOpened ? (
-          <StyledMenuIcon onClick={() => setIsOpened(!isOpened)} />
+          <StyledMenuIcon onClick={toggleOpen} />
         ) : (
-          <StyledMenuOpenIcon onClick={() => setIsOpened(!isOpened)} />
+          <StyledMenuOpenIcon onClick={toggleOpen} />
         )}
-      </Box>
+      </Stack>
       {isOpened && (
-        <Box
-          display={'flex'}
-          flexDirection={'column'}
+        <Stack
+          direction={'column'}
           position={'absolute'}
           top={'68px'}
           left={'0'}
@@ -55,7 +40,7 @@ export const NavMenuMobile: FC = () => {
           <Stack height={'100%'} overflow={'auto'}>
             {topMenuRoutes.map(({ path, menuDisplay, children }) => (
               <Box key={path} p={2} borderBottom={'1px solid #E0E0E0'}>
-                {children && children.length > 0 ? (
+                {children?.some(ch => ch.menuDisplay) ? (
                   <NavAccordion
                     path={path}
                     menuDisplay={menuDisplay}
@@ -75,7 +60,7 @@ export const NavMenuMobile: FC = () => {
               </Box>
             ))}
           </Stack>
-        </Box>
+        </Stack>
       )}
     </>
   );

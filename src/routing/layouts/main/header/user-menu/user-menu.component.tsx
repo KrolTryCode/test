@@ -3,20 +3,18 @@ import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector } from '~/app/store.hooks';
-import { selectUserData, signOut } from '~/app/user/user.store';
+import { useUserStore } from '~/app/user/user.store';
 import { Avatar } from '~/ui-components/avatar/avatar.component';
 import { DropdownMenu } from '~/ui-components/dropdown-menu/dropdown-menu.component';
 import { profilePath } from '~/utils/configuration/routes-paths';
+import { useAuthenticate } from '~/utils/use-authenticate.hook';
 
 import { StyledMenuItem } from './user-menu.style';
 
 export const UserMenu: FC = () => {
-  const dispatch = useAppDispatch();
-  const user = useAppSelector(selectUserData);
+  const user = useUserStore(store => store.data?.user);
   const { t } = useTranslation();
-
-  const logout = () => dispatch(signOut());
+  const { onLogout } = useAuthenticate();
 
   return (
     <DropdownMenu
@@ -33,7 +31,7 @@ export const UserMenu: FC = () => {
           </Typography>
         </Stack>
       </StyledMenuItem>
-      <StyledMenuItem divider onClick={logout}>
+      <StyledMenuItem divider onClick={onLogout}>
         {t('AUTH.LOGOUT')}
       </StyledMenuItem>
     </DropdownMenu>

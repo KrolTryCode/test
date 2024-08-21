@@ -1,43 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { create } from 'zustand';
 
 import { UserWithPermissions } from '~/api/utils/api-requests';
 
-import { RootState } from '../application.store';
-
-export interface UserState {
-  data?: UserWithPermissions;
+interface UserState {
+  data: UserWithPermissions | null;
+  isLoggedIn: boolean;
 }
 
-const getStorage = () => {
-  const rememberMe = localStorage.getItem('rememberMe') === 'true';
-  return rememberMe ? localStorage : sessionStorage;
-};
+export const useUserStore = create<UserState>()(() => ({
+  data: null,
+  isLoggedIn: false,
+}));
 
-const initialState: UserState = {
-  data: {},
-};
+export const setUserData = (data: UserWithPermissions) =>
+  useUserStore.setState({ data, isLoggedIn: !!data });
 
-export const userSlice = createSlice({
-  name: 'user',
-  initialState,
-  reducers: {
-    signOut: state => {
-      getStorage().removeItem('accessToken');
-      getStorage().removeItem('refreshToken');
-      state.data = {};
-    },
-    setUser: (state, action: { payload: UserWithPermissions }) => {
-      state.data = action.payload;
-    },
-  },
-});
+export const clearUserData = () => useUserStore.setState({ data: null, isLoggedIn: false });
 
-export const { signOut, setUser } = userSlice.actions;
-
-export const selectUserData = (state: RootState) => state.user.data?.user;
-
-export const selectUserLoggedIn = (state: RootState) => !!state.user.data?.user;
-
-export const selectUserAuthorities = (state: RootState) => state.user.data?.permissions ?? [];
-
-export const userReducer = userSlice.reducer;
+// TODO Temporary
+export const DEFAULT_PROJECT_ID = '3fa85f64-5717-4562-b3fc-2c963f66afa6';

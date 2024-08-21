@@ -1,5 +1,5 @@
 import { ContentSubtree } from '~/api/utils/api-requests';
-import { DEFAULT_PROJECT_ID } from '~/app/application.store';
+import { DEFAULT_PROJECT_ID } from '~/app/user/user.store';
 import { NavTreeItemData } from '~/components/nav-tree/nav-tree.type';
 import { tablesPath } from '~/utils/configuration/routes-paths';
 

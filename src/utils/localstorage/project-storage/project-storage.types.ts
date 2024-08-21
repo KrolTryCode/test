@@ -24,4 +24,4 @@ export const ProjectStorageSchemas = {
   [ProjectStorageKey.RefreshToken]: y.string().required(),
 };
 
-export const PREFIX = 'ksrc_';
+export const PREFIX = 'indanis_';
