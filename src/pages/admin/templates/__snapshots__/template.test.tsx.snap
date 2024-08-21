@@ -398,7 +398,7 @@ exports[`Templates page > renders the templates 1`] = `
           class="MuiDataGrid-overlay css-1w53k9d-MuiDataGrid-overlay"
         >
           <span
-            class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-vhj6om-MuiCircularProgress-root"
+            class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-82r84f-MuiCircularProgress-root"
             role="progressbar"
             style="width: 40px; height: 40px;"
           >

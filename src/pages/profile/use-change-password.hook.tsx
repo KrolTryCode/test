@@ -28,7 +28,7 @@ export const useChangePassword = (user: string) => {
   };
 };
 
-export const changePasswordModal = ({
+const changePasswordModal = ({
   title,
   user,
   onSave,
