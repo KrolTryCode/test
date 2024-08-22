@@ -10,13 +10,17 @@ exports[`Templates page > renders the templates 1`] = `
   tabindex="-1"
 >
   <div
+    class="css-qtdhae"
+    data-id="gridPanelAnchor"
+    role="presentation"
+  />
+  <div
     class="MuiDataGrid-virtualScroller css-1793420-MuiDataGrid-virtualScroller"
     role="presentation"
     style="overflow-x: hidden;"
-    tabindex="-1"
   >
     <div
-      class="MuiDataGrid-topContainer MuiDataGrid-container--top css-1oudwrl"
+      class="MuiDataGrid-topContainer MuiDataGrid-container--top css-2sp4oa"
       role="presentation"
     >
       <div
@@ -25,7 +29,7 @@ exports[`Templates page > renders the templates 1`] = `
       >
         <div
           aria-rowindex="1"
-          class="css-yrdy0g-MuiDataGrid-columnHeaderRow"
+          class="MuiDataGrid-row--borderBottom css-yrdy0g-MuiDataGrid-columnHeaderRow"
           role="row"
         >
           <div
@@ -68,6 +72,7 @@ exports[`Templates page > renders the templates 1`] = `
                   <button
                     aria-label="Сортировать"
                     class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1nv32ag-MuiButtonBase-root-MuiIconButton-root"
+                    field="name"
                     tabindex="-1"
                     title="Сортировать"
                     type="button"
@@ -166,6 +171,7 @@ exports[`Templates page > renders the templates 1`] = `
                   <button
                     aria-label="Сортировать"
                     class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1nv32ag-MuiButtonBase-root-MuiIconButton-root"
+                    field="state"
                     tabindex="-1"
                     title="Сортировать"
                     type="button"
@@ -264,6 +270,7 @@ exports[`Templates page > renders the templates 1`] = `
                   <button
                     aria-label="Сортировать"
                     class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1nv32ag-MuiButtonBase-root-MuiIconButton-root"
+                    field="content"
                     tabindex="-1"
                     title="Сортировать"
                     type="button"
@@ -422,7 +429,7 @@ exports[`Templates page > renders the templates 1`] = `
     <div
       class="MuiDataGrid-virtualScrollerContent css-1kwdphh-MuiDataGrid-virtualScrollerContent"
       role="presentation"
-      style="width: auto; height: 1px;"
+      style="width: auto; height: 0px;"
     >
       <div
         class="MuiDataGrid-virtualScrollerRenderZone css-s1v7zr-MuiDataGrid-virtualScrollerRenderZone"
@@ -436,6 +443,7 @@ exports[`Templates page > renders the templates 1`] = `
     />
   </div>
   <div
+    aria-hidden="true"
     class="MuiDataGrid-scrollbar MuiDataGrid-scrollbar--horizontal css-1rtad1"
     tabindex="-1"
   >
