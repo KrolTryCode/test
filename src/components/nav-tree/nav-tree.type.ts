@@ -31,4 +31,5 @@ export interface NavTreeItemData extends TreeViewBaseItem {
 export interface DropdownMenuItem {
   label: string;
   onClick: (itemId: string) => void;
+  entityType?: ContentNodeTypeEnum;
 }

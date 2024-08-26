@@ -20,5 +20,6 @@ export const rolesPath = 'roles';
 
 export const addPath = 'add';
 export const editPath = 'edit';
+export const structurePath = 'structure';
 export const importPath = 'import';
 export const tablesPath = 'tables';

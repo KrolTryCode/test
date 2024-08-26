@@ -11,7 +11,7 @@ import { nodeModal } from '~/components/modals-content/node-modal.component';
 import { NavTreeItemData } from '~/components/nav-tree/nav-tree.type';
 import { useTreeNodesUtils } from '~/pages/tables/tree/use-tree-nodes-utils.hook';
 import { notifySuccess } from '~/ui-components/notifications/notifications';
-import { tablesPath } from '~/utils/configuration/routes-paths';
+import { editPath, structurePath, tablesPath } from '~/utils/configuration/routes-paths';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
@@ -86,7 +86,18 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
     [createNode, t],
   );
 
+  const handleEditStructure = useCallback(
+    (id?: string) => navigate(`/${tablesPath}/${editPath}/${id}/${structurePath}`),
+    [navigate],
+  );
+
   const handleDeleteNode = useCallback((id: string) => deleteNode(id), [deleteNode]);
 
-  return { handleDeleteNode, handleAddCatalog, handleAddTable, handleEditNode };
+  return {
+    handleDeleteNode,
+    handleAddCatalog,
+    handleAddTable,
+    handleEditNode,
+    handleEditStructure,
+  };
 };

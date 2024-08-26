@@ -8,50 +8,42 @@ import {
   GridRowParams,
 } from '@mui/x-data-grid-premium';
 import { GridApiPremium } from '@mui/x-data-grid-premium/models/gridApiPremium';
+import { UseMutateFunction } from '@tanstack/react-query';
 import { MutableRefObject, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useRemoveRoleMutation } from '~/api/queries/roles/remove-role.mutation';
-import { Role } from '~/api/utils/api-requests';
 import { DeleteCellButton } from '~/components/delete-cell-button/delete-cell-button.component';
-import { notifySuccess } from '~/ui-components/notifications/notifications';
-import { showErrorMessage } from '~/utils/show-error-message';
 
-export const useGetRowActions = (apiRef: MutableRefObject<GridApiPremium>) => {
+export const useGetRowActions = <T extends { [key: string]: any; id?: string }>(
+  apiRef: MutableRefObject<GridApiPremium>,
+  onRemoveAction: UseMutateFunction<void | T, Error, string>,
+  onRemoveActionKey: keyof T,
+) => {
   const { t } = useTranslation();
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
 
   const editClickHandler = useCallback(
-    (id: string) => (): void => {
-      apiRef.current.startRowEditMode({ id });
-    },
+    (id: string) => () => apiRef.current.startRowEditMode({ id }),
     [apiRef],
   );
 
   const saveClickHandler = useCallback(
-    (id: string) => () => {
-      setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-    },
+    (id: string) => () => setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } }),
     [rowModesModel],
   );
 
   const cancelClickHandler = useCallback(
-    (id: string) => () => {
+    (id: string) => () =>
       setRowModesModel({
         ...rowModesModel,
         [id]: { mode: GridRowModes.View, ignoreModifications: true },
-      });
-    },
+      }),
     [rowModesModel],
   );
 
-  const { mutate: removeRole } = useRemoveRoleMutation({
-    onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
-    onError: e => showErrorMessage(e, 'ERROR.DELETION_FAILED'),
-  });
-
   const getActions = useCallback(
-    ({ row: { id } }: GridRowParams<Role>) => {
+    ({ row }: GridRowParams<T>) => {
+      const id = row.id;
       const isInEditMode = rowModesModel[id!]?.mode === GridRowModes.Edit;
 
       if (isInEditMode) {
@@ -84,10 +76,21 @@ export const useGetRowActions = (apiRef: MutableRefObject<GridApiPremium>) => {
           label={t('BUTTON.EDIT', { type: t('ENTITY.ROLE').toLowerCase() })}
           onClick={editClickHandler(id!)}
         />,
-        <DeleteCellButton key={'delete'} deleteHandler={() => removeRole(id!)} />,
+        <DeleteCellButton
+          key={'delete'}
+          deleteHandler={() => onRemoveAction(row[onRemoveActionKey])}
+        />,
       ];
     },
-    [cancelClickHandler, editClickHandler, removeRole, rowModesModel, saveClickHandler, t],
+    [
+      cancelClickHandler,
+      editClickHandler,
+      onRemoveAction,
+      onRemoveActionKey,
+      rowModesModel,
+      saveClickHandler,
+      t,
+    ],
   );
 
   return {
