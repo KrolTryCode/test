@@ -1,7 +1,7 @@
 import { MoreVert as ShowMoreIcon } from '@mui/icons-material';
 import { MenuItem } from '@mui/material';
 import Box from '@mui/material/Box';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { DropdownMenuItem, NavTreeItemData } from '~/components/nav-tree/nav-tree.type';
@@ -14,6 +14,10 @@ export const ItemDropdownMenu: FC<{
   menuItems?: DropdownMenuItem[];
 }> = ({ onCollapseAll, onExpandAll, item, menuItems }) => {
   const { t } = useTranslation();
+  const filteredMenuItems = useMemo(
+    () => menuItems?.filter(it => !it.entityType || it.entityType === item.type),
+    [menuItems, item.type],
+  );
 
   return (
     <Box
@@ -36,7 +40,7 @@ export const ItemDropdownMenu: FC<{
             {t('BUTTON.EXPAND_ALL')}
           </MenuItem>,
         ]}
-        {menuItems?.map(({ label, onClick }) => (
+        {filteredMenuItems?.map(({ label, onClick }) => (
           <MenuItem key={label} onClick={() => onClick(item.id)}>
             {label}
           </MenuItem>

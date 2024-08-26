@@ -30,7 +30,6 @@ export const routes: RouteDescription[] = [
       {
         path: tablesPath,
         menuDisplay: { label: 'NAVIGATION.TABLES' },
-        lazyElement: () => import('~/pages/tables/tables.page'),
         children: tablesSubroutes,
       },
       {

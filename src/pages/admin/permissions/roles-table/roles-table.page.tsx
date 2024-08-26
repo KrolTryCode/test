@@ -4,17 +4,17 @@ import { useTranslation } from 'react-i18next';
 
 import { useChangeRoleMutation } from '~/api/queries/roles/change-role.mutation';
 import { useFindRolesQuery } from '~/api/queries/roles/find-roles.query';
+import { useRemoveRoleMutation } from '~/api/queries/roles/remove-role.mutation';
 import { Role } from '~/api/utils/api-requests';
 import { EditTextarea } from '~/ui-components/datagrid/cells/multiline-editing-cell.component';
 import { DataGrid } from '~/ui-components/datagrid/datagrid.component';
 import { EnhancedColDef, GridPagingParams } from '~/ui-components/datagrid/datagrid.types';
 import { AddEntity } from '~/ui-components/datagrid/slots/toolbar/add/add-entity.component';
+import { useGetRowActions } from '~/ui-components/datagrid/use-get-grid-row-actions.hook';
 import { notifySuccess } from '~/ui-components/notifications/notifications';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { addRoleModal } from '../add-role/add-role.component';
-
-import { useGetRowActions } from './use-get-row-actions.hook';
 
 export const RolesTable: FC = () => {
   const apiRef = useGridApiRef();
@@ -25,6 +25,11 @@ export const RolesTable: FC = () => {
 
   const { mutateAsync: changeRoleMutation } = useChangeRoleMutation();
 
+  const { mutate: removeRole } = useRemoveRoleMutation({
+    onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
+    onError: e => showErrorMessage(e, 'ERROR.DELETION_FAILED'),
+  });
+
   const addRoleHandler = () => {
     addRoleModal({
       title: t('BUTTON.CREATE', {
@@ -33,7 +38,11 @@ export const RolesTable: FC = () => {
     });
   };
 
-  const { getActions, onRowModesModelChange, rowModesModel } = useGetRowActions(apiRef);
+  const { getActions, onRowModesModelChange, rowModesModel } = useGetRowActions<Role>(
+    apiRef,
+    removeRole,
+    'id',
+  );
 
   const changeRole = useCallback(
     async ({ title, description, id, permissions }: Role, oldRow: Role): Promise<Role> => {
