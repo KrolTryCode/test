@@ -51,11 +51,7 @@ export const NodeForm: FC<NodeFormProps> = ({ onResolve, onReject, data, isEditi
       </FormItem>
 
       {!!treeData.length && (
-        <FormItem
-          label={t('COMMON.PARENT')}
-          isDisabled={isEditing}
-          isHidden={isEditing && !data?.parentId}
-        >
+        <FormItem label={t('COMMON.PARENT')}>
           <FormSearchTree
             items={treeData}
             placeholder={t('BUTTON.SELECT')}
@@ -66,7 +62,7 @@ export const NodeForm: FC<NodeFormProps> = ({ onResolve, onReject, data, isEditi
         </FormItem>
       )}
 
-      <FormItem label={t('COMMON.TYPE')}>
+      <FormItem label={t('COMMON.TYPE')} isRequired>
         <FormSelect
           disableClearable
           items={selectNodeTypes}

@@ -52,7 +52,7 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
           type: node?.type as unknown as CreateContentNodeRequestTypeEnum, //todo
           parentId: parentId,
         },
-        onSave: data => updateNode({ nodeId: id, name: data.name }),
+        onSave: data => updateNode({ nodeId: id, name: data.name, parentNodeId: data.parentId }),
       });
     },
     [findNode, getParentsIdsList, t, updateNode],

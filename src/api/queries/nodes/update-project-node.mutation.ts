@@ -6,13 +6,17 @@ import { ContentNode } from '~/api/utils/api-requests';
 
 export const useUpdateProjectNodeMutation = (
   projectId: string,
-  options?: UseCustomMutationOptions<ContentNode, unknown, { nodeId: string; name: string }>,
+  options?: UseCustomMutationOptions<
+    ContentNode,
+    unknown,
+    { nodeId: string; name: string; parentNodeId?: string }
+  >,
 ) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ nodeId, name }) =>
-      await ApiClientSecured.contentNodeV1Controller.update(nodeId, { name }),
+    mutationFn: async ({ nodeId, name, parentNodeId }) =>
+      await ApiClientSecured.contentNodeV1Controller.update(nodeId, { name, parentNodeId }),
     ...options,
     onSuccess(data, ...args) {
       void queryClient.invalidateQueries({ queryKey: ['project', projectId, 'nodes'] });
