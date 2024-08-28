@@ -25,7 +25,7 @@ export const routes: RouteDescription[] = [
     children: [
       {
         isIndex: true,
-        element: <Navigate to={adminPath} replace={true} />,
+        element: <Navigate to={tablesPath} replace={true} />,
       },
       {
         path: tablesPath,

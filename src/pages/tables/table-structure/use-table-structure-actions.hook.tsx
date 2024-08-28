@@ -24,7 +24,7 @@ export const useTableStructureActions = (nodeId: string) => {
     onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
   });
 
-  const { mutateAsync: editColumn } = useEditNodeColumnNameMutation(nodeId);
+  const { mutateAsync: handleEditColumn } = useEditNodeColumnNameMutation(nodeId);
 
   const handleAddColumn = useCallback(() => {
     modal({
@@ -34,5 +34,5 @@ export const useTableStructureActions = (nodeId: string) => {
     });
   }, [addColumn, t]);
 
-  return { handleDropColumn: dropColumn, handleEditColumn: editColumn, handleAddColumn };
+  return { handleDropColumn: dropColumn, handleEditColumn, handleAddColumn };
 };
