@@ -72,8 +72,8 @@ export const useGetRowActions = <T extends { [key: string]: any; id?: string }>(
           key={'edit'}
           showInMenu={false}
           icon={<EditIcon />}
-          title={t('BUTTON.EDIT', { type: t('ENTITY.ROLE').toLowerCase() })}
-          label={t('BUTTON.EDIT', { type: t('ENTITY.ROLE').toLowerCase() })}
+          title={t('STRUCTURE.EDIT_COLUMN')}
+          label={t('STRUCTURE.EDIT_COLUMN')}
           onClick={editClickHandler(id!)}
         />,
         <DeleteCellButton

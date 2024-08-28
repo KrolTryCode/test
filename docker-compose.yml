@@ -37,7 +37,7 @@ services:
       - full
 
   db:
-    image: postgis/postgis:15-3.4-alpine
+    image: rg.spbpu.com/customprojects/indanis/app:postgis
     labels:
       org.springframework.boot.service-connection: postgres
     environment:

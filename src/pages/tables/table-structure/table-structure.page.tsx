@@ -1,12 +1,17 @@
 import { Typography } from '@mui/material';
-import { GridEventListener, GridRowEditStopReasons, useGridApiRef } from '@mui/x-data-grid-premium';
-import { FC, useCallback, useMemo, useState } from 'react';
+import {
+  GridEventListener,
+  GridRowEditStopReasons,
+  GridRowOrderChangeParams,
+  useGridApiRef,
+} from '@mui/x-data-grid-premium';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { useGetContentNode } from '~/api/queries/nodes/get-content-node.query';
 import { useGetNodeColumns } from '~/api/queries/nodes/structure/get-node-columns.query';
-import { ColumnMetadataWithId, selectNodeColumns } from '~/api/selectors/select-node-columns';
+import { ColumnMetadataExtended, selectNodeColumns } from '~/api/selectors/select-node-columns';
 import { ColumnDefinitionColumnTypeEnum } from '~/api/utils/api-requests';
 import { useTableStructureActions } from '~/pages/tables/table-structure/use-table-structure-actions.hook';
 import { DataGrid } from '~/ui-components/datagrid/datagrid.component';
@@ -14,6 +19,7 @@ import { EnhancedColDef, GridPagingParams } from '~/ui-components/datagrid/datag
 import { AddEntity } from '~/ui-components/datagrid/slots/toolbar/add/add-entity.component';
 import { useGetRowActions } from '~/ui-components/datagrid/use-get-grid-row-actions.hook';
 import { notifySuccess } from '~/ui-components/notifications/notifications';
+import { reorderRows } from '~/utils/reorder-rows';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 const TableStructure: FC = () => {
@@ -21,21 +27,30 @@ const TableStructure: FC = () => {
   const { t } = useTranslation();
   const { nodeId = '' } = useParams();
   const { data: nodeInfo, isLoading: isNodeLoading } = useGetContentNode(nodeId);
-  const { data: nodeColumns, isLoading: isColumnsLoading } = useGetNodeColumns(nodeId, {
+  const {
+    data: nodeColumns,
+    isLoading: isColumnsLoading,
+    isFetched: isColumnsFetched,
+  } = useGetNodeColumns(nodeId, {
     select: selectNodeColumns,
   });
 
   const { handleDropColumn, handleAddColumn, handleEditColumn } = useTableStructureActions(nodeId);
   const { getActions, onRowModesModelChange, rowModesModel } =
-    useGetRowActions<ColumnMetadataWithId>(apiRef, handleDropColumn, 'name');
+    useGetRowActions<ColumnMetadataExtended>(apiRef, handleDropColumn, 'name');
 
   const [paging, setGridPaging] = useState<GridPagingParams>();
+  const [items, setItems] = useState(nodeColumns);
 
-  const changeColumn = useCallback(
+  useEffect(() => {
+    setItems(nodeColumns);
+  }, [isColumnsFetched, nodeColumns]);
+
+  const changeTableColumn = useCallback(
     async (
-      { name }: ColumnMetadataWithId,
-      oldRow: ColumnMetadataWithId,
-    ): Promise<ColumnMetadataWithId> => {
+      { name }: ColumnMetadataExtended,
+      oldRow: ColumnMetadataExtended,
+    ): Promise<ColumnMetadataExtended> => {
       const isNameChanged = name !== oldRow.name;
       if (!isNameChanged) {
         return oldRow;
@@ -56,7 +71,7 @@ const TableStructure: FC = () => {
     [handleEditColumn, t],
   );
 
-  const structureTableColumns: EnhancedColDef<ColumnMetadataWithId>[] = useMemo(
+  const structureTableColumns: EnhancedColDef<ColumnMetadataExtended>[] = useMemo(
     () => [
       {
         field: 'name',
@@ -107,25 +122,32 @@ const TableStructure: FC = () => {
     }
   };
 
+  const handleRowOrderChange = async (params: GridRowOrderChangeParams) => {
+    const newRows = reorderRows(params.oldIndex, params.targetIndex, items ?? []);
+    setItems(newRows);
+    // TODO: update column list
+  };
+
   return (
     <>
       <Typography variant={'h3'} color={'primary'}>
         {`${t('STRUCTURE.LIST')} ${nodeInfo?.name}`}
       </Typography>
 
-      <DataGrid<ColumnMetadataWithId>
+      <DataGrid<ColumnMetadataExtended>
         ref={apiRef}
         loading={isColumnsLoading || isNodeLoading}
-        items={nodeColumns ?? []}
-        totalCount={nodeColumns?.length ?? 0}
+        items={items ?? []}
+        totalCount={items?.length ?? 0}
         editMode={'row'}
         columns={structureTableColumns}
-        processRowUpdate={changeColumn}
+        processRowUpdate={changeTableColumn}
         rowModesModel={rowModesModel}
         onRowModesModelChange={onRowModesModelChange}
         onRowEditStop={onRowEditStop}
         paging={paging}
         onPagingChanged={setGridPaging}
+        onRowOrderChange={handleRowOrderChange}
         rowReordering
         hasWidthSaving={false}
         hasColumnChooser={false}
