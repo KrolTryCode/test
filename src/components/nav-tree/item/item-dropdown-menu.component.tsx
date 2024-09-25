@@ -34,10 +34,10 @@ export const ItemDropdownMenu: FC<{
       >
         {item.children && [
           <MenuItem key={'collapse'} onClick={() => onCollapseAll?.(item.id)}>
-            {t('BUTTON.HIDE_ALL')}
+            {t('ACTION.HIDE_ALL')}
           </MenuItem>,
           <MenuItem key={'expand'} onClick={() => onExpandAll?.(item.id)}>
-            {t('BUTTON.EXPAND_ALL')}
+            {t('ACTION.EXPAND_ALL')}
           </MenuItem>,
         ]}
         {filteredMenuItems?.map(({ label, onClick }) => (

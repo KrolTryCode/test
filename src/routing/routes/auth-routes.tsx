@@ -27,17 +27,17 @@ export const authRoutes: RouteDescription[] = [
   },
   {
     path: registrationPath,
-    title: 'BUTTON.REGISTER',
+    title: 'ACTION.REGISTER',
     lazyElement: () => import('~/pages/auth/register.page'),
   },
   {
     path: accountRecoveryPath,
-    title: 'BUTTON.RECOVER',
+    title: 'ACTION.RECOVER',
     lazyElement: () => import('~/pages/auth/account-recovery.page'),
   },
   {
     path: accountReactivationPath,
-    title: 'BUTTON.REACTIVATE',
+    title: 'ACTION.REACTIVATE',
     lazyElement: () => import('~/pages/auth/account-reactivation.page'),
   },
   {

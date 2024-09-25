@@ -67,7 +67,7 @@ export const CreateAccountForm: FC<CreateAccountFormProps> = ({
         <FormInputText type={'email'} controllerProps={{ ...register('email'), control }} />
       </FormItem>
       <FormButtons>
-        <Button onClick={onReject}>{t('BUTTON.CANCEL')}</Button>
+        <Button onClick={onReject}>{t('ACTION.CANCEL')}</Button>
         <Button
           type={'submit'}
           disabled={!isValid && isSubmitted}
@@ -75,7 +75,7 @@ export const CreateAccountForm: FC<CreateAccountFormProps> = ({
           color={'primary'}
           isLoading={createUserMutation.isPending}
         >
-          {t('BUTTON.CREATE', { type: t('ENTITY.ACCOUNT').toLowerCase() })}
+          {t('ACTION.CREATE', { type: t('ENTITY.ACCOUNT').toLowerCase() })}
         </Button>
       </FormButtons>
     </Form>

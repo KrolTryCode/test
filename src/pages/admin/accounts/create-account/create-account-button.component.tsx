@@ -12,7 +12,7 @@ export const CreateAccountButton: FC = () => {
 
   return (
     <Button icon={<CreateIcon />} color={'primary'} variant={'text'} onClick={openModal}>
-      {t('BUTTON.CREATE', { type: t('ENTITY.ACCOUNT').toLowerCase() })}
+      {t('ACTION.CREATE', { type: t('ENTITY.ACCOUNT').toLowerCase() })}
     </Button>
   );
 };

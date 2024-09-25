@@ -98,7 +98,7 @@ const LoginForm = () => {
       </Stack>
       <FormButtons>
         <Button component={Link} to={`/${authPath}/${registerPath}`}>
-          {t('BUTTON.REGISTER')}
+          {t('ACTION.REGISTER')}
         </Button>
         <Button
           type={'submit'}
@@ -107,7 +107,7 @@ const LoginForm = () => {
           variant={'contained'}
           color={'primary'}
         >
-          {t('BUTTON.ENTER')}
+          {t('ACTION.ENTER')}
         </Button>
       </FormButtons>
     </Form>

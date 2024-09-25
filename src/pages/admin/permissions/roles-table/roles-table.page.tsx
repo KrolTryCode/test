@@ -32,7 +32,7 @@ export const RolesTable: FC = () => {
 
   const addRoleHandler = () => {
     addRoleModal({
-      title: t('BUTTON.CREATE', {
+      title: t('ACTION.CREATE', {
         type: t('ENTITY.ROLE').toLowerCase(),
       }),
     });

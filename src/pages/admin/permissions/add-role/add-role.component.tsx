@@ -67,7 +67,7 @@ const AddRole: FC<AddRoleProps> = ({ onResolve, onReject }) => {
         />
       </FormItem>
       <FormButtons>
-        <Button onClick={onReject}>{t(`BUTTON.CANCEL`)}</Button>
+        <Button onClick={onReject}>{t(`ACTION.CANCEL`)}</Button>
         <Button
           color={'primary'}
           variant={'contained'}
@@ -75,7 +75,7 @@ const AddRole: FC<AddRoleProps> = ({ onResolve, onReject }) => {
           isLoading={createRoleMutation.isPending}
           disabled={!isValid && isSubmitted}
         >
-          {t('BUTTON.SAVE')}
+          {t('ACTION.SAVE')}
         </Button>
       </FormButtons>
     </Form>

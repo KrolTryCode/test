@@ -27,7 +27,7 @@ export const ToggleAllButton: FC<{
   return (
     <GridPanelFooter style={{ padding: '6px 20px', justifyContent: 'center' }}>
       <Button startIcon={iconMap[visibility]} onClick={() => onClick(!allVisible)}>
-        {t('BUTTON.SHOW_OR_HIDE_ALL')}
+        {t('ACTION.SHOW_OR_HIDE_ALL')}
       </Button>
     </GridPanelFooter>
   );

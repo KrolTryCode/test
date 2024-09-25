@@ -18,7 +18,7 @@ export const useChangePassword = (user: string) => {
 
   const handleChangePassword = () =>
     changePasswordModal({
-      title: t('BUTTON.CHANGE', { type: t('AUTH.PASSWORD.NAME').toLowerCase() }),
+      title: t('ACTION.CHANGE', { type: t('AUTH.PASSWORD.NAME').toLowerCase() }),
       user,
       onSave: changePassword,
     });

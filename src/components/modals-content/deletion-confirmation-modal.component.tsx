@@ -13,8 +13,8 @@ export const confirmDeletionModal = ({ onOk, title }: ConfirmDeletionModal) => {
     title,
     renderContent: instanceProps => (
       <ConfirmActionModalContent
-        rejectText={'BUTTON.CANCEL'}
-        acceptText={'BUTTON.DELETE'}
+        rejectText={'ACTION.CANCEL'}
+        acceptText={'ACTION.DELETE'}
         {...instanceProps}
       />
     ),

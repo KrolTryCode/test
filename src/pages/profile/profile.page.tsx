@@ -78,7 +78,7 @@ const Profile: FC = () => {
       <Stack direction={'row'} gap={10}>
         <Stack gap={6}>
           <Avatar alt={t('USER.PHOTO')} size={'large'} />
-          <Button disabled>{t('BUTTON.CHANGE', { type: '$t(USER.PHOTO_SHORT)' })}</Button>
+          <Button disabled>{t('ACTION.CHANGE', { type: '$t(USER.PHOTO_SHORT)' })}</Button>
         </Stack>
         <Form
           labelPosition={'left'}
@@ -100,7 +100,7 @@ const Profile: FC = () => {
           <FormButtons>
             {!isAdminPage && (
               <Button onClick={onChangePassword}>
-                {t('BUTTON.CHANGE', {
+                {t('ACTION.CHANGE', {
                   type: t('AUTH.PASSWORD.NAME').toLowerCase(),
                 })}
               </Button>
@@ -112,7 +112,7 @@ const Profile: FC = () => {
               disabled={!isValid && isSubmitted}
               isLoading={false}
             >
-              {t('BUTTON.SAVE')}
+              {t('ACTION.SAVE')}
             </Button>
           </FormButtons>
         </Form>

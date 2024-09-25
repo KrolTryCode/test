@@ -51,7 +51,7 @@ export function FormInputFile<TFieldValues extends FieldValues = FieldValues>({
         color={fieldState.invalid ? 'error' : 'secondary'}
         onClick={handleButtonClick}
       >
-        {filename ?? t('BUTTON.SELECT', { type: t('COMMON.FILE').toLowerCase() })}
+        {filename ?? t('ACTION.SELECT', { type: t('COMMON.FILE').toLowerCase() })}
       </Button>
     </ValidationError>
   );

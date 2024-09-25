@@ -19,7 +19,7 @@ export const EditTemplate: FC = () => {
   return (
     <>
       <Typography variant={'h3'} component={'h2'}>
-        {t('BUTTON.EDIT', { type: t('ENTITY.TEMPLATE').toLowerCase() })}
+        {t('ACTION.EDIT', { type: t('ENTITY.TEMPLATE').toLowerCase() })}
       </Typography>
       <TemplateForm data={data} />
     </>

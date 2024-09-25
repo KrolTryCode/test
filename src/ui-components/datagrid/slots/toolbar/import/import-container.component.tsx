@@ -11,7 +11,7 @@ export const ImportContainer: FC<{ importToolbarContent: ReactNode }> = ({
   return (
     <DropdownMenu
       buttonSize={'medium'}
-      buttonContent={t('BUTTON.IMPORT')}
+      buttonContent={t('ACTION.IMPORT')}
       icon={<ImportIcon />}
       showArrow={false}
     >

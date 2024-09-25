@@ -53,7 +53,7 @@ export const FontSizeItem: FC<FontSizeItemProps> = ({
           onClick={decreaseFontSize}
           disabled={fs === DEFAULT_FONT_SIZE}
           icon={<TextDecreaseIcon />}
-          title={t('BUTTON.DECREASE')}
+          title={t('ACTION.DECREASE')}
         />
         <Button variant={'text'} disabled>
           {fs}px
@@ -64,7 +64,7 @@ export const FontSizeItem: FC<FontSizeItemProps> = ({
           onClick={increaseFontSize}
           disabled={fs === MAX_FONT_SIZE}
           icon={<TextIncreaseIcon />}
-          title={t('BUTTON.INCREASE')}
+          title={t('ACTION.INCREASE')}
         />
         {showDrop && (
           <Button
@@ -73,7 +73,7 @@ export const FontSizeItem: FC<FontSizeItemProps> = ({
             onClick={dropFontSize}
             disabled={fs === DEFAULT_FONT_SIZE}
             icon={<RestartIcon />}
-            title={t('BUTTON.DROP')}
+            title={t('ACTION.DROP')}
           />
         )}
       </ButtonGroup>

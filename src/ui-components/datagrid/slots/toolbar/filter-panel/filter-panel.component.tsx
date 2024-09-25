@@ -75,7 +75,7 @@ export const FilterPanel: FC<GridFilterPanelProps> = props => {
             onClick={handleClearFilterModel}
             icon={<DeleteOutline />}
           >
-            {t(`BUTTON.CLEAR_FILTERS`)}
+            {t(`ACTION.CLEAR_FILTERS`)}
           </Button>
         </Box>
       </Box>

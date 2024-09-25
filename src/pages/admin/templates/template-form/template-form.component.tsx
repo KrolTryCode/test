@@ -66,7 +66,7 @@ export const TemplateForm: FC<TemplateFormProps> = ({ data }) => {
         <FormInputRichTextEditor controllerProps={{ ...register('content'), control }} />
       </FormItem>
       <FormButtons marginTop={2}>
-        <Button onClick={() => navigate(-1)}>{t('BUTTON.CANCEL')}</Button>
+        <Button onClick={() => navigate(-1)}>{t('ACTION.CANCEL')}</Button>
         <Button
           type={'submit'}
           variant={'contained'}
@@ -74,7 +74,7 @@ export const TemplateForm: FC<TemplateFormProps> = ({ data }) => {
           disabled={!isValid && isSubmitted}
           isLoading={updateTemplateMutation.isPending}
         >
-          {t('BUTTON.SAVE')}
+          {t('ACTION.SAVE')}
         </Button>
       </FormButtons>
     </Form>

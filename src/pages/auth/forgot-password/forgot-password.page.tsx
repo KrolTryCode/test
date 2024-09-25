@@ -49,7 +49,7 @@ const ForgotPasswordPage: FC = () => {
         />
       </FormItem>
       <FormButtons>
-        <Button onClick={() => navigate(`/${authPath}/${loginPath}`)}>{t('BUTTON.CANCEL')}</Button>
+        <Button onClick={() => navigate(`/${authPath}/${loginPath}`)}>{t('ACTION.CANCEL')}</Button>
         <Button
           type={'submit'}
           color={'primary'}
@@ -57,7 +57,7 @@ const ForgotPasswordPage: FC = () => {
           disabled={!isValid && isSubmitted}
           isLoading={isPending}
         >
-          {t('BUTTON.SEND')}
+          {t('ACTION.SEND')}
         </Button>
       </FormButtons>
     </Form>

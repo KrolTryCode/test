@@ -51,15 +51,15 @@ export const useGetRowActions = <T extends { [key: string]: any; id?: string }>(
           <GridActionsCellItem
             key={'save'}
             icon={<SaveIcon />}
-            title={t('BUTTON.SAVE')}
-            label={t('BUTTON.SAVE')}
+            title={t('ACTION.SAVE')}
+            label={t('ACTION.SAVE')}
             onClick={saveClickHandler(id!)}
           />,
           <GridActionsCellItem
             key={'cancel'}
             icon={<CancelIcon />}
-            title={t('BUTTON.CANCEL')}
-            label={t('BUTTON.CANCEL')}
+            title={t('ACTION.CANCEL')}
+            label={t('ACTION.CANCEL')}
             className={'textPrimary'}
             onClick={cancelClickHandler(id!)}
             color={'inherit'}

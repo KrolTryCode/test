@@ -43,10 +43,10 @@ const PasswordExpired = forwardRef<HTMLDivElement, PasswordExpiredProps>(functio
           <Typography>{t('AUTH.PASSWORD.CHANGE')}</Typography>
           <Stack direction={'row'} justifyContent={'flex-end'}>
             <Button variant={'text'} color={'error'} onClick={() => closeSnackbar(id)}>
-              {t('BUTTON.CLOSE')}
+              {t('ACTION.CLOSE')}
             </Button>
             <Button variant={'text'} color={'primary'} onClick={handleGo}>
-              {t('BUTTON.GO')}
+              {t('ACTION.GO')}
             </Button>
           </Stack>
         </Stack>

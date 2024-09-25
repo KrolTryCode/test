@@ -45,7 +45,7 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
       const node = findNode(id);
       const parentId = getParentsIdsList(node?.id ?? '').at(1);
       nodeModal({
-        title: t('BUTTON.EDIT', { type: t('TREE.NODE').toLowerCase() }),
+        title: t('ACTION.EDIT', { type: t('TREE.NODE').toLowerCase() }),
         isEditing: true,
         data: {
           name: node?.label,
@@ -61,7 +61,7 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
   const handleAddCatalog = useCallback(
     (id?: string) => {
       nodeModal({
-        title: t('BUTTON.ADD_CATALOG'),
+        title: t('ACTION.ADD_CATALOG'),
         data: {
           type: ContentNodeTypeEnum.Directory as unknown as CreateContentNodeRequestTypeEnum, //todo
           parentId: id,
@@ -75,7 +75,7 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
   const handleAddTable = useCallback(
     (id?: string) => {
       nodeModal({
-        title: t('BUTTON.ADD_TABLE'),
+        title: t('ACTION.ADD_TABLE'),
         data: {
           type: ContentNodeTypeEnum.Table as unknown as CreateContentNodeRequestTypeEnum, //todo
           parentId: id,

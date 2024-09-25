@@ -30,7 +30,7 @@ export const SelectItemButton: FC<{
           disabled={item.type === ContentNodeTypeEnum.Table}
           sx={{ borderRadius: '12px', padding: '0 0.7em', marginLeft: 1 }}
         >
-          {t('BUTTON.SELECT')}
+          {t('ACTION.SELECT')}
         </Button>
       </Box>
     </Tooltip>

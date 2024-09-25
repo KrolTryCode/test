@@ -50,7 +50,7 @@ const FallbackInfoPage: FC<FallbackPageProps> = ({
         </Typography>
         {showButton && (
           <Button fullWidth onClick={handleClick}>
-            {t(`BUTTON.${buttonNavigate}`)}
+            {t(`ACTION.${buttonNavigate}`)}
           </Button>
         )}
       </Box>

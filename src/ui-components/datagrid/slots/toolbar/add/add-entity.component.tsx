@@ -7,7 +7,7 @@ export const AddEntity: FC<{ onClick: () => void }> = ({ onClick }) => {
   const { t } = useTranslation();
   return (
     <Button onClick={onClick} startIcon={<Add />}>
-      {t('BUTTON.ADD')}
+      {t('ACTION.ADD')}
     </Button>
   );
 };

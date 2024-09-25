@@ -55,7 +55,7 @@ const TemplatesPage: FC = () => {
           return [
             <GridActionsCellItem
               key={'edit'}
-              label={t('BUTTON.EDIT')}
+              label={t('ACTION.EDIT')}
               icon={<EditIcon />}
               onClick={() => {
                 handleEditTemplateClick(row.id as string);

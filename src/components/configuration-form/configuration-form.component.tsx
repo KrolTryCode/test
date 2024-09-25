@@ -95,7 +95,7 @@ export const ConfigurationFormComponent = (moduleDescription: EntityModelModuleC
           renderComponent(property),
         )}
         <FormButtons>
-          <Button onClick={onDrop}>{t('BUTTON.DROP')}</Button>
+          <Button onClick={onDrop}>{t('ACTION.DROP')}</Button>
           <Button
             type={'submit'}
             disabled={!isValid && isSubmitted}
@@ -103,7 +103,7 @@ export const ConfigurationFormComponent = (moduleDescription: EntityModelModuleC
             color={'primary'}
             isLoading={isPending}
           >
-            {t('BUTTON.SAVE')}
+            {t('ACTION.SAVE')}
           </Button>
         </FormButtons>
       </Form>

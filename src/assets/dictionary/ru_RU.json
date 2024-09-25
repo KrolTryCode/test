@@ -1,6 +1,6 @@
 {
   "PROJECT_NAME": "Indanis",
-  "BUTTON": {
+  "ACTION": {
     "ENTER": "Войти",
     "GO": "Перейти",
     "CLOSE": "Закрыть",

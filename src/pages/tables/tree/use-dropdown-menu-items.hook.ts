@@ -17,23 +17,23 @@ export const useDropdownMenuItems = (treeData: NavTreeItemData[]) => {
 
   const menuItems: DropdownMenuItem[] = useMemo(
     () => [
-      { label: t('BUTTON.EDIT'), onClick: handleEditNode },
+      { label: t('ACTION.EDIT'), onClick: handleEditNode },
       {
-        label: t('BUTTON.ADD_CATALOG'),
+        label: t('ACTION.ADD_CATALOG'),
         onClick: handleAddCatalog,
         entityType: ContentNodeTypeEnum.Directory,
       },
       {
-        label: t('BUTTON.ADD_TABLE'),
+        label: t('ACTION.ADD_TABLE'),
         onClick: handleAddTable,
         entityType: ContentNodeTypeEnum.Directory,
       },
       {
-        label: t('BUTTON.EDIT_STRUCTURE'),
+        label: t('ACTION.EDIT_STRUCTURE'),
         onClick: handleEditStructure,
         entityType: ContentNodeTypeEnum.Table,
       },
-      { label: t('BUTTON.DELETE'), onClick: handleDeleteNode },
+      { label: t('ACTION.DELETE'), onClick: handleDeleteNode },
     ],
     [handleAddCatalog, handleAddTable, handleDeleteNode, handleEditNode, handleEditStructure, t],
   );

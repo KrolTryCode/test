@@ -99,8 +99,8 @@ const AdminUsersPage: FC = () => {
           return [
             <GridActionsCellItem
               key={'edit'}
-              title={t('BUTTON.EDIT')}
-              label={t('BUTTON.EDIT')}
+              title={t('ACTION.EDIT')}
+              label={t('ACTION.EDIT')}
               icon={<EditIcon />}
               component={Link}
               // @ts-expect-error types
@@ -109,7 +109,7 @@ const AdminUsersPage: FC = () => {
             <GridActionsCellItem
               key={'block-unblock'}
               showInMenu
-              label={t(state === UserStateEnum.Blocked ? 'BUTTON.UNBLOCK' : 'BUTTON.BLOCK')}
+              label={t(state === UserStateEnum.Blocked ? 'ACTION.UNBLOCK' : 'ACTION.BLOCK')}
               onClick={() => {
                 void modifyAccount(
                   id as string,
@@ -122,7 +122,7 @@ const AdminUsersPage: FC = () => {
             <GridActionsCellItem
               key={'approve'}
               showInMenu
-              label={t('BUTTON.APPROVE')}
+              label={t('ACTION.APPROVE')}
               onClick={() => {
                 void approveAccount(id as string);
               }}
@@ -130,7 +130,7 @@ const AdminUsersPage: FC = () => {
             <GridActionsCellItem
               key={'decline'}
               showInMenu
-              label={t('BUTTON.DECLINE')}
+              label={t('ACTION.DECLINE')}
               onClick={() => {
                 void declineAccount(id as string);
               }}
@@ -138,7 +138,7 @@ const AdminUsersPage: FC = () => {
             <GridActionsCellItem
               key={'reactivate'}
               showInMenu
-              label={t('BUTTON.REACTIVATE')}
+              label={t('ACTION.REACTIVATE')}
               onClick={() => {
                 void startReactivation(id as string);
               }}

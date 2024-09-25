@@ -42,7 +42,7 @@ export const AddColumnForm: FC<AddColumnFormProps> = ({ onResolve, onReject }) =
         />
       </FormItem>
       <FormButtons>
-        <Button onClick={onReject}>{t('BUTTON.CANCEL')}</Button>
+        <Button onClick={onReject}>{t('ACTION.CANCEL')}</Button>
         <Button
           type={'submit'}
           color={'primary'}
@@ -50,7 +50,7 @@ export const AddColumnForm: FC<AddColumnFormProps> = ({ onResolve, onReject }) =
           disabled={!isValid && isSubmitted}
           isLoading={isSubmitting}
         >
-          {t('BUTTON.SAVE')}
+          {t('ACTION.SAVE')}
         </Button>
       </FormButtons>
     </Form>

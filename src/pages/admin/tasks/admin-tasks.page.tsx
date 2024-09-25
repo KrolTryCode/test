@@ -54,7 +54,7 @@ const AdminAllTasks = () => {
             <GridActionsCellItem
               key={'stop'}
               showInMenu={true}
-              label={t('BUTTON.STOP')}
+              label={t('ACTION.STOP')}
               onClick={() => stopTask({ taskId: id! })}
             />,
           ];

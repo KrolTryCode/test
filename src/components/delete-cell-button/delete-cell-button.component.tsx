@@ -30,8 +30,8 @@ export const DeleteCellButton: FC<DeleteCellButtonProps> = ({
       disabled={disabled}
       icon={showInMenu ? undefined : <DeleteIcon />}
       color={'error'}
-      title={t('BUTTON.DELETE')}
-      label={t('BUTTON.DELETE')}
+      title={t('ACTION.DELETE')}
+      label={t('ACTION.DELETE')}
       onClick={openDeletionConfirmationModal}
     />
   );

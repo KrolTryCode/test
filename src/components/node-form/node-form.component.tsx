@@ -54,7 +54,7 @@ export const NodeForm: FC<NodeFormProps> = ({ onResolve, onReject, data, isEditi
         <FormItem label={t('COMMON.PARENT')}>
           <FormSearchTree
             items={treeData}
-            placeholder={t('BUTTON.SELECT')}
+            placeholder={t('ACTION.SELECT')}
             noDataText={t('MESSAGE.NO_DATA')}
             isLoading={isLoading}
             controllerProps={{ ...register('parentId'), control }}
@@ -72,7 +72,7 @@ export const NodeForm: FC<NodeFormProps> = ({ onResolve, onReject, data, isEditi
       </FormItem>
 
       <FormButtons>
-        <Button onClick={onReject}>{t('BUTTON.CANCEL')}</Button>
+        <Button onClick={onReject}>{t('ACTION.CANCEL')}</Button>
         <Button
           type={'submit'}
           color={'primary'}
@@ -80,7 +80,7 @@ export const NodeForm: FC<NodeFormProps> = ({ onResolve, onReject, data, isEditi
           disabled={!isValid && isSubmitted}
           isLoading={isSubmitting}
         >
-          {t('BUTTON.SAVE')}
+          {t('ACTION.SAVE')}
         </Button>
       </FormButtons>
     </Form>
