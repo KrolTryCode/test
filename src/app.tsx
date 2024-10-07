@@ -7,7 +7,7 @@ import { useDownloadTranslations } from '~/utils/configuration/use-init-i18n.hoo
 import { Preloader } from './ui-components/preloader/preloader.component';
 import './themes/generated/theme.base.css';
 import './global-styles.scss';
-import { useAuthenticate } from './utils/use-authenticate.hook';
+import { useAuthenticate } from './utils/hooks/use-authenticate';
 
 export const App: FC = () => {
   useDownloadTranslations();

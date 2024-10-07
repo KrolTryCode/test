@@ -7,7 +7,7 @@ import { useUserStore } from '~/app/user/user.store';
 import { Avatar } from '~/ui-components/avatar/avatar.component';
 import { DropdownMenu } from '~/ui-components/dropdown-menu/dropdown-menu.component';
 import { profilePath } from '~/utils/configuration/routes-paths';
-import { useAuthenticate } from '~/utils/use-authenticate.hook';
+import { useAuthenticate } from '~/utils/hooks/use-authenticate';
 
 import { StyledMenuItem } from './user-menu.style';
 

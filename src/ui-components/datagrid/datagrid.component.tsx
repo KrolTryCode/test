@@ -1,7 +1,6 @@
 import {
   DataGridPremium as MuiDataGrid,
   DataGridPremiumProps,
-  FooterPropsOverrides,
   GridValidRowModel,
   useGridApiRef,
   useKeepGroupedColumnsHidden,
@@ -11,10 +10,7 @@ import { ForwardedRef, forwardRef, useImperativeHandle, useMemo } from 'react';
 
 import { modifyColumnGroupingModel } from '~/ui-components/datagrid/datagrid.utils';
 import { useFlatRows } from '~/ui-components/datagrid/helpers/use-flat-rows.hook';
-import {
-  ColumnsPanel,
-  ColumnsPanelProps,
-} from '~/ui-components/datagrid/slots/toolbar/columns-panel/columns-panel.component';
+import { ColumnsPanel } from '~/ui-components/datagrid/slots/toolbar/columns-panel/columns-panel.component';
 import { FilterPanel } from '~/ui-components/datagrid/slots/toolbar/filter-panel/filter-panel.component';
 import { useGridCallbacks } from '~/ui-components/datagrid/use-grid-callbacks.hook';
 
@@ -72,11 +68,9 @@ export const DataGrid = forwardRef(function DataGrid<T extends GridValidRowModel
     [columnGroupingModel],
   );
 
-  const slotProps: DataGridPremiumProps<T>['slotProps'] = useMemo(() => {
+  const slotProps = useMemo<DataGridPremiumProps<T>['slotProps']>(() => {
     return {
-      columnsPanel: {
-        columnGroupingModel: columnGroupingModel,
-      } as ColumnsPanelProps,
+      columnsPanel: { columnGroupingModel },
       toolbar: {
         hasExport,
         hasColumnChooser,
@@ -91,7 +85,7 @@ export const DataGrid = forwardRef(function DataGrid<T extends GridValidRowModel
       footer: {
         gridId,
         hasFontSizeSettings: fontSizeSettingsPlacement === 'footer',
-      } as FooterPropsOverrides,
+      },
       columnMenu: {
         slots: {
           ...(hasToolbarFilters && { columnMenuFilterItem: null }),

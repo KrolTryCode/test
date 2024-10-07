@@ -2,16 +2,14 @@ import { Box } from '@mui/material';
 import {
   GridToolbarContainer,
   GridToolbarExportContainer,
-  GridToolbarContainerProps,
-  GridExcelExportOptions,
   GridToolbarColumnsButton,
   GridToolbarFilterButton,
   GridToolbarFilterButtonProps,
   useGridApiContext,
   ColumnsStylesInterface,
+  GridSlotProps,
 } from '@mui/x-data-grid-premium';
-import { jsPDFOptions } from 'jspdf';
-import { FC, ReactNode, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ImportContainer } from '~/ui-components/datagrid/slots/toolbar/import/import-container.component';
@@ -25,19 +23,7 @@ import { GridExcelExportMenuItem } from './export/export-xlsx.component';
 
 const commonSlotProps: GridToolbarFilterButtonProps['slotProps'] = { button: { size: 'medium' } };
 
-interface GridToolbarProps extends GridToolbarContainerProps {
-  pdfExportOptions?: jsPDFOptions;
-  excelExportOptions?: GridExcelExportOptions;
-  hasColumnChooser?: boolean;
-  hasExport?: boolean;
-  customContent?: ReactNode;
-  importToolbarContent?: ReactNode;
-  hasFilters?: boolean;
-  hasFontSizeSettings?: boolean;
-  gridId?: string;
-}
-
-export const GridToolbar: FC<GridToolbarProps> = ({
+export const GridToolbar: FC<GridSlotProps['toolbar']> = ({
   pdfExportOptions,
   excelExportOptions,
   hasColumnChooser,

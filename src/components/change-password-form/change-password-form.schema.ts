@@ -2,7 +2,7 @@ import { TFunction } from 'i18next';
 import * as y from 'yup';
 
 import { AccountConfiguration } from '~/api/utils/api-requests';
-import { getPasswordSchema } from '~/utils/validation/schemas/password';
+import { getPasswordSchema } from '~/utils/validation/schemas';
 
 export interface ChangePasswordForm {
   password: string;

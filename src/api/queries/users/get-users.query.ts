@@ -2,7 +2,7 @@ import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-quer
 
 import { PageUser } from '~/api/utils/api-requests';
 import { GridPagingParams } from '~/ui-components/datagrid/datagrid.types';
-import { useServerPagingParams } from '~/utils/use-server-options.hook';
+import { useServerPagingParams } from '~/utils/hooks/use-server-options';
 
 import { UseCustomQueryOptions } from '../../typings/react-query-helpers';
 import { ApiClientSecured } from '../../utils/api-client';

@@ -1,27 +1,23 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { Box } from '@mui/material';
 import { GridActionsCellItem, GridColDef } from '@mui/x-data-grid-premium';
-import { FC, useCallback, useMemo } from 'react';
+import { FC, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { useGetTemplatesQuery } from '~/api/queries/templates/get-templates.query';
 import { Template } from '~/api/utils/api-requests';
 import { DataGrid } from '~/ui-components/datagrid/datagrid.component';
 import { editPath } from '~/utils/configuration/routes-paths';
+import { usePreventedLinks } from '~/utils/hooks/use-prevented-links';
 import { translateStatus } from '~/utils/translate-status';
 
 const TemplatesPage: FC = () => {
-  const navigate = useNavigate();
   const { t } = useTranslation();
   const { data: templates, isLoading } = useGetTemplatesQuery();
 
-  const handleEditTemplateClick = useCallback(
-    (id: string) => {
-      navigate(`${editPath}/${id}`);
-    },
-    [navigate],
-  );
+  const gridWraperRef = useRef<HTMLDivElement>();
+  usePreventedLinks(gridWraperRef);
 
   const columns = useMemo<GridColDef<Template>[]>(
     () => [
@@ -57,24 +53,27 @@ const TemplatesPage: FC = () => {
               key={'edit'}
               label={t('ACTION.EDIT')}
               icon={<EditIcon />}
-              onClick={() => {
-                handleEditTemplateClick(row.id as string);
-              }}
+              color={'primary'}
+              component={Link}
+              // @ts-expect-error types
+              to={`${editPath}/${row.id}`}
             />,
           ];
         },
       },
     ],
-    [handleEditTemplateClick, t],
+    [t],
   );
 
   return (
-    <DataGrid<Template>
-      loading={isLoading}
-      items={templates ?? []}
-      columns={columns}
-      totalCount={templates?.length}
-    />
+    <Box height={'100%'} ref={gridWraperRef}>
+      <DataGrid<Template>
+        loading={isLoading}
+        items={templates ?? []}
+        columns={columns}
+        totalCount={templates?.length}
+      />
+    </Box>
   );
 };
 

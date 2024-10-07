@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { FormInputText } from '~/components/react-hook-form/form-input-text/form-input-text.component';
 import { FormItem, Fieldset } from '~/ui-components/form';
 
-import { UpdateProfileForm } from '../profile.schema';
+import { UpdateProfileForm } from '../profile-form.schema';
 
 interface PersonalDataProps {
   control: Control<UpdateProfileForm>;

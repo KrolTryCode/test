@@ -31,26 +31,49 @@ export const FilterPanel: FC<GridFilterPanelProps> = props => {
     [apiRef],
   );
 
+  const concatGroupPrefixToColumns = useCallback(() => {
+    const refactoredCols = originalColumns.map(col => {
+      const groupPathNames = apiRef.getColumnGroupPath(col.field);
+      const groupNames = groupPathNames.map(gr => groupLookup[gr].headerName);
+
+      const combinedName =
+        groupNames.length !== 0 ? `${groupNames.join(': ')}: ${col.headerName}` : col.headerName;
+      return { ...col, headerName: combinedName };
+    });
+    updateColumns(refactoredCols);
+  }, [apiRef, groupLookup, originalColumns, updateColumns]);
+
+  const disableFilterForGroupedColumns = useCallback(() => {
+    apiRef.setState(prevState => {
+      const newColumnsLookup = { ...prevState.columns.lookup };
+      Object.keys(newColumnsLookup).forEach(key => {
+        if (key.startsWith(serviceRowGroupPrefix)) {
+          newColumnsLookup[key].filterable = false;
+        }
+      });
+      return {
+        ...prevState,
+        columns: {
+          ...prevState.columns,
+          lookup: newColumnsLookup,
+        },
+      };
+    });
+  }, [apiRef]);
+
   useLayoutEffect(() => {
     if (!isRefactored) {
-      const refactoredCols = originalColumns.map(col => {
-        const groupPathNames = apiRef.getColumnGroupPath(col.field);
-        const groupNames = groupPathNames.map(gr => groupLookup[gr].headerName);
-
-        const combinedName =
-          groupNames.length !== 0 ? `${groupNames.join(': ')}: ${col.headerName}` : col.headerName;
-        return { ...col, headerName: combinedName };
-      });
-      updateColumns(refactoredCols);
+      concatGroupPrefixToColumns();
+      disableFilterForGroupedColumns();
       setIsRefactored(true);
     }
-  }, [apiRef, isRefactored, groupLookup, originalColumns, updateColumns]);
+  }, [isRefactored, concatGroupPrefixToColumns, disableFilterForGroupedColumns]);
 
   useEffect(() => {
     if (!isOpen) {
       updateColumns(originalColumns);
     }
-  }, [apiRef, isOpen, originalColumns, updateColumns]);
+  }, [isOpen, originalColumns, updateColumns]);
 
   const handleClose = () => {
     apiRef.hideFilterPanel();

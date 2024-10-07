@@ -6,7 +6,7 @@ import { mockedNavigate } from 'tests/__mocks__/react-router-dom.mock';
 import { renderComponent } from 'tests/utils/render-component';
 import { homePath } from '~/utils/configuration/routes-paths';
 
-import { schema, defaultValues, LoginForm as ILoginForm } from './login-form.schema';
+import { schema, LoginForm as ILoginForm } from './login-form.schema';
 import LoginForm from './login.page';
 
 describe('Login form', () => {
@@ -59,6 +59,6 @@ describe('Login form data', () => {
 
   it('should fail with wrong data', async () => {
     await expect(schema.isValid({})).resolves.toBeFalsy();
-    await expect(schema.isValid(defaultValues)).resolves.toBeFalsy();
+    await expect(schema.isValid(schema.getDefault())).resolves.toBeFalsy();
   });
 });

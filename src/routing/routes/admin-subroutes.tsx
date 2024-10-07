@@ -30,7 +30,7 @@ export const adminSubroutes: RouteDescription[] = [
       {
         path: `:userId`,
         title: 'ENTITY.USER',
-        lazyElement: () => import('~/pages/profile/profile.page'),
+        lazyElement: () => import('~/pages/admin/accounts/user-account.page'),
       },
     ],
   },
