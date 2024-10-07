@@ -1,4 +1,4 @@
-import { GridFeatureMode } from '@mui/x-data-grid-premium';
+import { DataGridPremiumProps, GridFeatureMode } from '@mui/x-data-grid-premium';
 import { useCallback, useState } from 'react';
 
 import { DEFAULT_GRID_PAGING_PARAMS } from '../datagrid.consts';
@@ -15,16 +15,14 @@ interface PagingProps {
 }
 
 interface UsePagingReturn
-  extends Pick<
-    DataGridProps,
-    | 'sortingMode'
-    | 'paginationMode'
-    | 'filterMode'
-    | 'onFilterModelChange'
-    | 'onPaginationModelChange'
-    | 'onSortModelChange'
-    | 'onRowGroupingModelChange'
-  > {
+  extends Pick<DataGridProps, 'sortingMode' | 'paginationMode' | 'filterMode'>,
+    Pick<
+      DataGridPremiumProps,
+      | 'onFilterModelChange'
+      | 'onPaginationModelChange'
+      | 'onSortModelChange'
+      | 'onRowGroupingModelChange'
+    > {
   filterModel: GridPagingParams['filterModel'];
   paginationModel: GridPagingParams['paginationModel'];
   sortModel: GridPagingParams['sortModel'];

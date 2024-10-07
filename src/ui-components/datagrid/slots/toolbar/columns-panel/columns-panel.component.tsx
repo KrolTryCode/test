@@ -1,8 +1,7 @@
-import type { GridColumnsPanelProps } from '@mui/x-data-grid/components/panel/GridColumnsPanel';
 import {
-  GridColumnGroupingModel,
   GridPanelContent,
   GridPanelWrapper,
+  GridSlotProps,
   useGridApiContext,
 } from '@mui/x-data-grid-premium';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
@@ -13,16 +12,12 @@ import { ColumnsList } from '~/ui-components/datagrid/slots/toolbar/columns-pane
 import { SearchColumns } from '~/ui-components/datagrid/slots/toolbar/columns-panel/search-columns.component';
 import { ToggleAllButton } from '~/ui-components/datagrid/slots/toolbar/columns-panel/toggle-all-button.component';
 
-export interface ColumnsPanelProps extends GridColumnsPanelProps {
-  columnGroupingModel?: GridColumnGroupingModel;
-}
-
 export type ColumnAndGroup = EnhancedColDef & {
   columnGroups: string[];
   columnGroupName: string;
 };
 
-export const ColumnsPanel: FC<ColumnsPanelProps> = ({ columnGroupingModel }) => {
+export const ColumnsPanel: FC<GridSlotProps['columnsPanel']> = ({ columnGroupingModel }) => {
   const [searchText, setSearchText] = useState('');
   const { current: gridApi } = useGridApiContext();
   const columns = gridApi.getAllColumns();

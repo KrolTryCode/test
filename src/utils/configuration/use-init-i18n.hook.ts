@@ -4,10 +4,6 @@ import ruMessages from 'devextreme/localization/messages/ru.json';
 import i18n, { use } from 'i18next';
 import { useEffect } from 'react';
 import { initReactI18next, useTranslation } from 'react-i18next';
-import { setErrorMap } from 'zod';
-import { zodI18nMap } from 'zod-i18n-map';
-import zodEn from 'zod-i18n-map/locales/en/zod.json';
-import zodRu from 'zod-i18n-map/locales/ru/zod.json';
 
 import { useDownloadMessagesMapQuery } from '~/api/queries/locale/get-messages-map.query';
 
@@ -20,11 +16,9 @@ export const i18nConfig = {
   resources: {
     en: {
       translation: en_US,
-      zod: zodEn,
     },
     ru: {
       translation: ru_RU,
-      zod: zodRu,
       yup: yupRuLocale,
     },
   },
@@ -46,7 +40,6 @@ export const loadLocales = () => {
 export const useI18nInit = () => {
   void use(initReactI18next).init(i18nConfig);
   loadLocales();
-  setErrorMap(zodI18nMap);
   configureYup(i18n.language);
 };
 

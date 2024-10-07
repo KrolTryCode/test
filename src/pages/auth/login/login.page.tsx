@@ -2,42 +2,28 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Stack } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { useLoginMutation } from '~/api/queries/accounts/login.mutation';
-import { LoginResponseWithRefreshToken } from '~/api/utils/api-requests';
-import { FormCheckbox } from '~/components/react-hook-form/form-checkbox/form-checkbox.component';
-import { FormInputText } from '~/components/react-hook-form/form-input-text/form-input-text.component';
+import { FormCheckbox, FormInputText } from '~/components/react-hook-form';
 import { Button } from '~/ui-components/button/button.component';
 import { Form, FormButtons, FormItem } from '~/ui-components/form';
-import {
-  authPath,
-  homePath,
-  registerPath,
-  resetPasswordPath,
-} from '~/utils/configuration/routes-paths';
-import {
-  projectLocalStorageService,
-  projectSessionStorageService,
-} from '~/utils/localstorage/project-storage/project-storage-instance';
-import { ProjectStorageKey } from '~/utils/localstorage/project-storage/project-storage.types';
+import { authPath, registerPath, resetPasswordPath } from '~/utils/configuration/routes-paths';
+import { useAuthenticate } from '~/utils/hooks/use-authenticate';
 import { showErrorMessage } from '~/utils/show-error-message';
-import { useAuthenticate } from '~/utils/use-authenticate.hook';
 
 import { schema, LoginForm as ILoginForm } from './login-form.schema';
 
 const LoginForm = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const locationState = location.state as { from: Location };
-  const { mutateAsync: login, isPending } = useLoginMutation();
-  const { getUser } = useAuthenticate();
+
+  const { onLogin } = useAuthenticate();
 
   const {
     register,
     handleSubmit,
     control,
+    getValues,
     formState: { isValid, isSubmitted },
   } = useForm<ILoginForm>({
     mode: 'onBlur',
@@ -46,29 +32,12 @@ const LoginForm = () => {
     resolver: yupResolver(schema),
   });
 
-  const calculateLocation = async (locationState: { from: Location }) => {
-    const user = await getUser();
-    const sameUser = projectLocalStorageService.get(ProjectStorageKey.UserId) === user?.id;
-    projectLocalStorageService.set(ProjectStorageKey.UserId, user?.id ?? '');
-    return sameUser && locationState?.from ? locationState.from.pathname : homePath;
-  };
+  const { mutateAsync: login, isPending } = useLoginMutation({
+    onSuccess: data => onLogin(data, getValues('rememberMe')),
+    onError: e => showErrorMessage(e, 'ERROR.NOT_AUTHORIZED'),
+  });
 
-  const onSuccess = async (response: LoginResponseWithRefreshToken, formData: ILoginForm) => {
-    const storage = formData.rememberMe ? projectLocalStorageService : projectSessionStorageService;
-    storage.set(ProjectStorageKey.RememberMe, formData.rememberMe);
-    storage.set(ProjectStorageKey.AccessToken, response.accessTokenInfo?.token ?? '');
-    storage.set(ProjectStorageKey.RefreshToken, response.refreshTokenInfo?.token ?? '');
-
-    const location = await calculateLocation(locationState);
-    navigate(location);
-  };
-
-  const onSubmit = async (formData: ILoginForm) => {
-    await login(formData, {
-      onSuccess: res => void onSuccess(res, formData),
-      onError: e => showErrorMessage(e, 'ERROR.NOT_AUTHORIZED'),
-    });
-  };
+  const onSubmit = async (formData: ILoginForm) => await login(formData);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

@@ -11,9 +11,3 @@ export const schema: y.ObjectSchema<LoginForm> = y.object({
   password: y.string().default('').required(),
   rememberMe: y.boolean().default(false),
 });
-
-export const defaultValues: LoginForm = {
-  username: '',
-  password: '',
-  rememberMe: false,
-};

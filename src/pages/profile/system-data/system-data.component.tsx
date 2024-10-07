@@ -9,7 +9,7 @@ import { InputText } from '~/ui-components/input-text/input-text.component';
 import { Select } from '~/ui-components/select/select.component';
 import { translateStatus } from '~/utils/translate-status';
 
-import { UpdateProfileForm } from '../profile.schema';
+import { UpdateProfileForm } from '../profile-form.schema';
 
 interface SystemDataProps {
   control: Control<UpdateProfileForm>;

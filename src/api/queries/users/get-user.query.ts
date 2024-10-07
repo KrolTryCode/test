@@ -11,7 +11,6 @@ export const useGetUserQuery = (
   return useQuery({
     queryKey: ['user', userId],
     queryFn: async () => await ApiClientSecured.usersV1Controller.getUser(userId),
-    initialData: {},
     gcTime: 0,
     ...options,
   });

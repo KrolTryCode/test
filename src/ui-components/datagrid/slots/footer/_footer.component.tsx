@@ -1,6 +1,6 @@
 import {
   GridFooterContainer,
-  GridFooterContainerProps,
+  GridSlotProps,
   GridPagination,
   gridFilteredTopLevelRowCountSelector,
   useGridApiContext,
@@ -13,12 +13,7 @@ import { FontSizeSettings } from '../_font-size-settings/font-size-settings.comp
 
 import { CustomGridPagination } from './pagination.component';
 
-interface GridFooterProps extends GridFooterContainerProps {
-  gridId?: string;
-  hasFontSizeSettings?: boolean;
-}
-
-export const GridFooter = forwardRef<HTMLDivElement, GridFooterProps>(function GridFooter(
+export const GridFooter = forwardRef<HTMLDivElement, GridSlotProps['footer']>(function GridFooter(
   { gridId, hasFontSizeSettings, ...footerProps },
   ref,
 ) {

@@ -4,6 +4,7 @@ import type {
   GridFilterModel,
   GridPaginationModel,
   GridRowGroupingModel,
+  GridSingleSelectColDef,
   GridSortModel,
   GridValidRowModel,
   DataGridPremiumProps as MuiDataGridProps,
@@ -14,7 +15,16 @@ import { ReactNode } from 'react';
 export interface DataGridProps<T extends GridValidRowModel = any>
   extends Omit<
     MuiDataGridProps<T>,
-    'apiRef' | 'rows' | 'rowCount' | 'filterModel' | 'paginationModel' | 'sortModel'
+    | 'apiRef'
+    | 'rows'
+    | 'rowCount'
+    | 'filterModel'
+    | 'paginationModel'
+    | 'sortModel'
+    | 'onFilterModelChange'
+    | 'onPaginationModelChange'
+    | 'onSortModelChange'
+    | 'onRowGroupingModelChange'
   > {
   columns: EnhancedColDef<T>[];
   items: MuiDataGridProps['rows'];
@@ -45,6 +55,8 @@ export type EnhancedColDef<T extends GridValidRowModel = any> = GridColDef<T> & 
    * for action cell substitutes empty actions array if no row id (e.g. grouping row)
    */
   useCustomHideConditions?: boolean;
+
+  valueOptions?: GridSingleSelectColDef['valueOptions'];
 };
 
 export type ColumnEnhancer<T extends GridValidRowModel = any> = (

@@ -1,7 +1,7 @@
 import { html } from '@codemirror/lang-html';
 import Box from '@mui/material/Box';
 import ReactCodeMirror from '@uiw/react-codemirror';
-import { FC, FocusEventHandler } from 'react';
+import { FC, FocusEventHandler, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -9,6 +9,7 @@ import {
   PanelGroup,
   PanelResizer,
 } from '~/ui-components/resizable-panels/resizable-panels.component';
+import { usePreventedLinks } from '~/utils/hooks/use-prevented-links';
 
 export type HTMLRichEditorProps = {
   value?: string;
@@ -24,6 +25,9 @@ export const HTMLRichEditor: FC<HTMLRichEditorProps> = ({
   onBlur,
 }) => {
   const { t } = useTranslation();
+
+  const previewWrapperRef = useRef<HTMLDivElement>();
+  usePreventedLinks(previewWrapperRef);
 
   return (
     <Box
@@ -49,7 +53,11 @@ export const HTMLRichEditor: FC<HTMLRichEditorProps> = ({
         </Panel>
         <PanelResizer />
         <Panel minSize={20} style={{ overflow: 'auto' }}>
-          <Box padding={'8px'} dangerouslySetInnerHTML={{ __html: value ?? '' }} />
+          <Box
+            padding={'8px'}
+            dangerouslySetInnerHTML={{ __html: value ?? '' }}
+            ref={previewWrapperRef}
+          />
         </Panel>
       </PanelGroup>
     </Box>

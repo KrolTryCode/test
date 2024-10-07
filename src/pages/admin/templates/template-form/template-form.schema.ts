@@ -1,7 +1,7 @@
 import * as y from 'yup';
 
 import { CreateTemplateRequest } from '~/api/utils/api-requests';
-import { nonEmptyStringYup } from '~/utils/validation/schemas/non-empty-string';
+import { nonEmptyStringYup } from '~/utils/validation/schemas/strings';
 
 export const schema: y.ObjectSchema<CreateTemplateRequest> = y.object().shape({
   name: nonEmptyStringYup,
