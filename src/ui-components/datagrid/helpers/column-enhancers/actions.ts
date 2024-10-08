@@ -12,6 +12,8 @@ export const enhanceActionsColDef: ColumnEnhancer = (colDef, passedColDef) => {
     };
   }
 
+  colDef.minWidth = 50; // 1 icon in row
+  colDef.maxWidth = 84; // 2 icons in row
   colDef.resizable = false;
   colDef.hideable = false;
 };

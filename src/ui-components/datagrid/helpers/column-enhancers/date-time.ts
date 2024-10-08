@@ -4,7 +4,7 @@ import i18n, { t } from 'i18next';
 import { ColumnEnhancer } from '~/ui-components/datagrid/datagrid.types';
 import { getGridCommonDateOperators } from '~/ui-components/datagrid/filters/filter-operators';
 
-export const enhanceDateTimeColDef: ColumnEnhancer = (colDef, passedColDef) => {
+export const enhanceDateTimeColDef: ColumnEnhancer = (colDef, passedColDef, pagingMode) => {
   if (colDef.type === 'date') {
     const dateStyle = passedColDef.dateTimeFormatOptions?.dateStyle ?? 'short';
     passedColDef.dateTimeFormatOptions = { ...passedColDef.dateTimeFormatOptions, dateStyle };
@@ -37,5 +37,5 @@ export const enhanceDateTimeColDef: ColumnEnhancer = (colDef, passedColDef) => {
       return '';
     });
 
-  colDef.filterOperators = getGridCommonDateOperators(passedColDef);
+  colDef.filterOperators = getGridCommonDateOperators(passedColDef, pagingMode);
 };

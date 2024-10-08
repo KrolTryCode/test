@@ -72,6 +72,17 @@ export const MuiDataGrid: Components<Omit<Theme, 'components'>>['MuiDataGrid'] =
         },
       },
 
+      '& .MuiDataGrid-actionsCell': {
+        flexWrap: 'wrap',
+
+        '& > .MuiButtonBase-root': {
+          borderRadius: theme.shape.borderRadius,
+          '&:hover': {
+            backgroundColor: '#ffffff',
+          },
+        },
+      },
+
       '& .MuiDataGrid-booleanCell': {
         color: `${theme.palette.text.primary}80`,
       },

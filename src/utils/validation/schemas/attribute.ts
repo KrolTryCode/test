@@ -1,7 +1,7 @@
 import * as y from 'yup';
 
 export interface AttributeValues<T = any> {
-  attributeValues?: Record<string, T>;
+  attributeValues: Record<string, T>;
 }
 
 export const attributeValuesSchema = y.object().shape({

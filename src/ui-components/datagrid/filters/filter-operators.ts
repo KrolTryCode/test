@@ -2,6 +2,7 @@ import {
   getGridDateOperators,
   getGridNumericOperators,
   getGridStringOperators,
+  GridFeatureMode,
 } from '@mui/x-data-grid-premium';
 
 import { EnhancedColDef } from '~/ui-components/datagrid/datagrid.types';
@@ -22,9 +23,10 @@ export enum GridFilterOperatorValue {
   Not = 'not',
   OnOrAfter = 'onOrAfter',
   OnOrBefore = 'onOrBefore',
+  isEmpty = 'isEmpty',
 }
 
-export function getGridCommonStringOperators() {
+export function getGridCommonStringOperators(pagingMode?: GridFeatureMode) {
   return getGridStringOperators().filter(({ value }) =>
     (
       [
@@ -33,12 +35,13 @@ export function getGridCommonStringOperators() {
         GridFilterOperatorValue.EndsWith,
         GridFilterOperatorValue.Equals,
         GridFilterOperatorValue.IsAnyOf,
+        ...(pagingMode === 'client' ? [GridFilterOperatorValue.isEmpty] : []),
       ] as string[]
     ).includes(value),
   );
 }
 
-export function getGridCommonNumericOperators() {
+export function getGridCommonNumericOperators(pagingMode?: GridFeatureMode) {
   return getGridNumericOperators().filter(({ value }) =>
     (
       [
@@ -47,12 +50,16 @@ export function getGridCommonNumericOperators() {
         GridFilterOperatorValue.GTESign,
         GridFilterOperatorValue.LTESign,
         GridFilterOperatorValue.IsAnyOf,
+        ...(pagingMode === 'client' ? [GridFilterOperatorValue.isEmpty] : []),
       ] as string[]
     ).includes(value),
   );
 }
 
-export function getGridCommonDateOperators({ type = 'dateTime' }: EnhancedColDef) {
+export function getGridCommonDateOperators(
+  { type = 'dateTime' }: EnhancedColDef,
+  pagingMode?: GridFeatureMode,
+) {
   return getGridDateOperators(type === 'dateTime')
     .filter(({ value }) =>
       (
@@ -61,14 +68,20 @@ export function getGridCommonDateOperators({ type = 'dateTime' }: EnhancedColDef
           GridFilterOperatorValue.Not,
           GridFilterOperatorValue.OnOrAfter,
           GridFilterOperatorValue.OnOrBefore,
+          ...(pagingMode === 'client' ? [GridFilterOperatorValue.isEmpty] : []),
         ] as string[]
       ).includes(value),
     )
-    .map(operator => ({
-      ...operator,
-      InputComponent: GridCustomDateTimeFilter,
-      InputComponentProps: {
-        pickerType: type,
-      },
-    }));
+    .map(operator => {
+      if (operator.value === (GridFilterOperatorValue.isEmpty as string)) {
+        return operator;
+      }
+      return {
+        ...operator,
+        InputComponent: GridCustomDateTimeFilter,
+        InputComponentProps: {
+          pickerType: type,
+        },
+      };
+    });
 }

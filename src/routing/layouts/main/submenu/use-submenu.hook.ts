@@ -2,7 +2,7 @@ import { useMatches } from 'react-router-dom';
 
 import { routes } from '~/routing/routes/routes';
 
-import { MenuIcon, SidebarLink } from './submenu.types';
+import { SidebarLink } from './submenu.types';
 
 export function useSubMenu(): SidebarLink[] {
   const matches = useMatches();
@@ -27,7 +27,6 @@ export function useSubMenu(): SidebarLink[] {
     .filter(({ menuDisplay }) => !!menuDisplay /* && hasAccess */)
     .map(({ menuDisplay, path }) => ({
       path: `${currentTopMenuItem.pathname}/${path}`,
-      Icon: menuDisplay!.icon as MenuIcon,
       label: menuDisplay!.label,
     }));
 }

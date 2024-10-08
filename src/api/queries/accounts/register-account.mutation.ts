@@ -9,7 +9,6 @@ export const useRegisterAccountMutation = (
   options?: UseCustomMutationOptions<object, Error, RegisterRequest>,
 ) => {
   return useMutation<object, Error, RegisterRequest>({
-    mutationKey: ['accounts', 'register'],
     mutationFn: async data => await ApiClient.authController.register(data),
     ...options,
   });

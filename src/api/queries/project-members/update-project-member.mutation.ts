@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { FullProjectMemberInfo, ProjectMember } from '~/api/utils/api-requests';
+import { PROJECT_MEMBERS_KEY } from '~/api/utils/query-keys';
 
 import { UseCustomMutationOptions } from '../../typings/react-query-helpers';
 import { ApiClientSecured } from '../../utils/api-client';
@@ -17,7 +18,6 @@ export const useUpdateProjectMemberMutation = (
   const queryClient = useQueryClient();
 
   return useMutation<ProjectMember, unknown, UpdateProjectMemberMutationData>({
-    mutationKey: ['project-members', 'update', { projectId }],
     mutationFn: async (data: UpdateProjectMemberMutationData) =>
       await ApiClientSecured.projectMembersV1Controller.updateMember(
         projectId,
@@ -26,7 +26,7 @@ export const useUpdateProjectMemberMutation = (
       ),
     gcTime: 0,
     onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: ['project-members', { projectId }] });
+      void queryClient.invalidateQueries({ queryKey: [PROJECT_MEMBERS_KEY, { projectId }] });
       options?.onSuccess?.(...args);
     },
     ...options,

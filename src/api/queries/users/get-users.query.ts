@@ -1,6 +1,7 @@
 import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query';
 
 import { PageUser } from '~/api/utils/api-requests';
+import { USERS_KEY } from '~/api/utils/query-keys';
 import { GridPagingParams } from '~/ui-components/datagrid/datagrid.types';
 import { useServerPagingParams } from '~/utils/hooks/use-server-options';
 
@@ -14,7 +15,7 @@ export const useGetUsersQuery = <T = PageUser>(
   const serverPagingParams = useServerPagingParams(gridPagingParams);
 
   return useQuery({
-    queryKey: ['users', serverPagingParams],
+    queryKey: [USERS_KEY, serverPagingParams],
     queryFn: async () =>
       await ApiClientSecured.usersV2Controller.searchUsersFiltered(
         serverPagingParams.filters,

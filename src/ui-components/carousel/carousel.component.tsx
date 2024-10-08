@@ -95,7 +95,12 @@ export const Carousel: FC<CarouselProps> = ({
             variant={'text'}
             size={'small'}
             color={'error'}
-            onClick={() => onDelete(images[current].id)}
+            onClick={() => {
+              if (document.fullscreenEnabled) {
+                void document.exitFullscreen();
+              }
+              onDelete(images[current].id);
+            }}
           >
             <DeleteIcon />
           </Button>

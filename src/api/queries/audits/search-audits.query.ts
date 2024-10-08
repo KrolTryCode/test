@@ -8,6 +8,7 @@ import {
   PageFullAuditInfo,
   SearchRequest,
 } from '~/api/utils/api-requests';
+import { JOURNAL_KEY } from '~/api/utils/query-keys';
 
 export const useSearchAuditsQuery = <T = PageFullAuditInfo>(
   query: { types: string[]; pageable: Pageable; filter?: AuditListFilter },
@@ -16,7 +17,7 @@ export const useSearchAuditsQuery = <T = PageFullAuditInfo>(
 ): UseQueryResult<T, unknown> =>
   useQuery({
     queryKey: [
-      'journal',
+      JOURNAL_KEY,
       query.types,
       searchRequest.criteria,
       { ...query.pageable, ...query.filter },

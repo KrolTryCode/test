@@ -1,4 +1,4 @@
-import { t } from 'i18next';
+import { t, TFunction } from 'i18next';
 import {
   createContext,
   FC,
@@ -36,12 +36,14 @@ export const TitleProvider: FC<PropsWithChildren> = ({ children }) => {
   const title = useMemo(() => {
     if (entityTitle) {
       if (defaultTitle) {
-        return `${t(defaultTitle)}: ${entityTitle} - ${t('PROJECT_NAME')}`;
+        const routeTitle = getTitle(defaultTitle, t);
+        return `${routeTitle}: ${entityTitle} - ${t('PROJECT_NAME')}`;
       }
       return `${entityTitle} - ${t('PROJECT_NAME')}`;
     }
     if (defaultTitle) {
-      return `${t(defaultTitle)} - ${t('PROJECT_NAME')}`;
+      const routeTitle = getTitle(defaultTitle, t);
+      return `${routeTitle} - ${t('PROJECT_NAME')}`;
     }
     return t('PROJECT_NAME');
   }, [defaultTitle, entityTitle]);
@@ -54,3 +56,14 @@ export const TitleProvider: FC<PropsWithChildren> = ({ children }) => {
 
   return <PageTitleContext.Provider value={providerValue}>{children}</PageTitleContext.Provider>;
 };
+
+function getTitle(title: string, t: TFunction) {
+  const words = title.split(' ');
+  let toTitle = t(words[0]);
+
+  words.slice(1).forEach(word => {
+    toTitle += ` ${t(word).toLowerCase()}`;
+  });
+
+  return toTitle;
+}

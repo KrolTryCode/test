@@ -1,5 +1,5 @@
 import { DeleteOutline } from '@mui/icons-material';
-import { Box, Dialog } from '@mui/material';
+import { Box, Backdrop, styled } from '@mui/material';
 import type { GridFilterPanelProps } from '@mui/x-data-grid/components/panel/filterPanel/GridFilterPanel';
 import {
   GridColDef,
@@ -8,7 +8,8 @@ import {
   useGridApiContext,
   useGridSelector,
 } from '@mui/x-data-grid-premium';
-import { FC, useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '~/ui-components/button/button.component';
@@ -19,7 +20,6 @@ export const FilterPanel: FC<GridFilterPanelProps> = props => {
   const gridContext = useGridApiContext();
   const { lookup: groupLookup } = useGridSelector(gridContext, gridColumnGroupingSelector);
   const { current: apiRef } = gridContext;
-  const [isOpen, setIsIsOpen] = useState(true);
   const [isRefactored, setIsRefactored] = useState(false);
   const originalColumns = useMemo(
     () => apiRef.getAllColumns().filter(col => !col.field.startsWith(serviceRowGroupPrefix)),
@@ -61,7 +61,7 @@ export const FilterPanel: FC<GridFilterPanelProps> = props => {
     });
   }, [apiRef]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!isRefactored) {
       concatGroupPrefixToColumns();
       disableFilterForGroupedColumns();
@@ -70,28 +70,20 @@ export const FilterPanel: FC<GridFilterPanelProps> = props => {
   }, [isRefactored, concatGroupPrefixToColumns, disableFilterForGroupedColumns]);
 
   useEffect(() => {
-    if (!isOpen) {
+    return () => {
+      setIsRefactored(false);
       updateColumns(originalColumns);
-    }
-  }, [isOpen, originalColumns, updateColumns]);
-
-  const handleClose = () => {
-    apiRef.hideFilterPanel();
-    setIsIsOpen(false);
-  };
+    };
+  }, [originalColumns, updateColumns]);
 
   const handleClearFilterModel = useCallback(() => apiRef.setFilterModel({ items: [] }), [apiRef]);
 
   return (
-    <Dialog
-      open={isOpen}
-      onClose={handleClose}
-      maxWidth={'md'}
-      style={{ backdropFilter: 'blur(5px)' }}
-    >
+    <>
+      {createPortal(<StyledBackdrop open onClick={apiRef.hideFilterPanel} />, document.body)}{' '}
       <Box padding={1}>
-        <GridFilterPanel {...props} sx={{ width: '101%' }} />
-        <Box padding={1} right={8} bottom={4} position={'absolute'}>
+        <GridFilterPanel {...props} />
+        <Box right={8} bottom={4} position={'absolute'}>
           <Button
             color={'primary'}
             variant={'text'}
@@ -102,6 +94,11 @@ export const FilterPanel: FC<GridFilterPanelProps> = props => {
           </Button>
         </Box>
       </Box>
-    </Dialog>
+    </>
   );
 };
+
+const StyledBackdrop = styled(Backdrop)(({ theme }) => ({
+  zIndex: theme.zIndex.modal - 1,
+  backdropFilter: 'blur(2.5px)',
+}));

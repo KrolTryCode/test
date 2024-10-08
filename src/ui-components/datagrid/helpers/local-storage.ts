@@ -9,6 +9,6 @@ function replaceUUID(pathname: string) {
   return pathname.replaceAll(uuidRe, 'uuid');
 }
 
-export function getSavedPath(pathname: string, postfix = '') {
-  return `${replaceUUID(pathname)}${postfix}`;
+export function getSavedPath(pathname: string, postfix = '', replaceUuid = true) {
+  return `${replaceUuid ? replaceUUID(pathname) : pathname}:${postfix}`;
 }

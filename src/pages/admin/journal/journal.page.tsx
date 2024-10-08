@@ -45,7 +45,6 @@ const JournalPage: FC = () => {
       totalCount={auditsList?.totalCount ?? 0}
       columns={columns}
       hasExport
-      hasToolbarFilters
     />
   );
 };

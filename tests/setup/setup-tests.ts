@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
-import { LicenseInfo } from '@mui/x-data-grid-premium';
+import { LicenseInfo } from '@mui/x-license';
 
-import 'jest-styled-components';
 import { mockedMatches, mockedNavigate, mockedParams } from 'tests/__mocks__/react-router-dom.mock';
 import { setupTestLocalization } from 'tests/setup/setup-test-localization';
 
@@ -40,6 +39,10 @@ Object.defineProperty(window, 'location', {
     hash: '',
   },
   writable: true,
+});
+
+Object.defineProperty(document, 'fullscreenEnabled', {
+  value: false,
 });
 
 setupTestLocalization();

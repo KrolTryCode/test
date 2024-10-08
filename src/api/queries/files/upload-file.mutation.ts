@@ -16,7 +16,6 @@ export const useUploadFileMutation = (
   options?: UseCustomMutationOptions<File, unknown, UploadFileMutationParams>,
 ) => {
   return useMutation<File, unknown, UploadFileMutationParams>({
-    mutationKey: ['files', 'upload'],
     mutationFn: async ({ file, fileId }) =>
       await ApiClientSecured.filesV1Controller.uploadFiles(fileId, { file }),
     onError: e => {

@@ -34,6 +34,8 @@ ruGridLocale.components.MuiDataGrid.defaultProps.localeText.columnsManagementNoC
   'Нет столбцов';
 ruGridLocale.components.MuiDataGrid.defaultProps.localeText.columnsManagementShowHideAllText =
   'Показать/Скрыть все';
+ruGridLocale.components.MuiDataGrid.defaultProps.localeText.filterOperatorIsEmpty =
+  'пустое значение';
 
 //#endregion
 
