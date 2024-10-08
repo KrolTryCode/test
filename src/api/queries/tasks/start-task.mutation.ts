@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { ALL_KEY, TASKS_KEY } from '~/api/utils/query-keys';
+
 import { UseCustomMutationOptions } from '../../typings/react-query-helpers';
 import { ApiClientSecured } from '../../utils/api-client';
 import { Task } from '../../utils/api-requests';
@@ -12,11 +14,12 @@ export const useStartTaskMutation = (
   const queryClient = useQueryClient();
 
   return useMutation<Task, unknown, string>({
-    mutationKey: ['tasks', taskId],
     mutationFn: async () => await ApiClientSecured.tasksV1Controller.startTask(taskId),
     ...options,
     onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: ['tasks', invalidateAll ? 'all' : taskId] });
+      void queryClient.invalidateQueries({
+        queryKey: [TASKS_KEY, invalidateAll ? ALL_KEY : taskId],
+      });
       options?.onSuccess?.(...args);
     },
   });

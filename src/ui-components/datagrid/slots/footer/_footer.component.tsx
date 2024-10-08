@@ -18,7 +18,7 @@ export const GridFooter = forwardRef<HTMLDivElement, GridSlotProps['footer']>(fu
   ref,
 ) {
   const apiRef = useGridApiContext();
-  const { paginationMode, rowCount } = useGridRootProps();
+  const { paginationMode, rowCount, slotProps } = useGridRootProps();
 
   const visibleTopLevelRowCount = useGridSelector(apiRef, gridFilteredTopLevelRowCountSelector);
 
@@ -26,6 +26,7 @@ export const GridFooter = forwardRef<HTMLDivElement, GridSlotProps['footer']>(fu
     <GridFooterContainer {...footerProps} ref={ref}>
       {hasFontSizeSettings && <FontSizeSettings gridId={gridId} />}
       <GridPagination
+        {...slotProps?.pagination}
         ActionsComponent={CustomGridPagination}
         count={paginationMode === 'server' ? rowCount : visibleTopLevelRowCount}
       />

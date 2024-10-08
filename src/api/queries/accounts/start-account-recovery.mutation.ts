@@ -9,7 +9,6 @@ export const useStartAccountRecoveryMutation = (
   options?: UseCustomMutationOptions<void, unknown, StartRecoveryRequest>,
 ) =>
   useMutation<void, unknown, StartRecoveryRequest>({
-    mutationKey: ['accounts', 'recovery', 'start'],
     mutationFn: async data => await ApiClient.authController.startRecovery(data),
     ...options,
   });

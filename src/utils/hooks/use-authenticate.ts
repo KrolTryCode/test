@@ -53,7 +53,7 @@ export const useAuthenticate = () => {
   const onLogin = useCallback(
     async (response: LoginResponseWithRefreshToken, rememberMe: boolean) => {
       const storage = getStorage(rememberMe);
-      storage.set(ProjectStorageKey.RememberMe, rememberMe);
+      projectLocalStorageService.set(ProjectStorageKey.RememberMe, rememberMe);
       storage.set(ProjectStorageKey.AccessToken, response.accessTokenInfo?.token ?? '');
       storage.set(ProjectStorageKey.RefreshToken, response.refreshTokenInfo?.token ?? '');
       await navigateAfterLogin();
@@ -61,14 +61,15 @@ export const useAuthenticate = () => {
     [navigateAfterLogin],
   );
 
-  const removeFormStorage = useCallback(() => {
+  const removeFromStorage = useCallback(() => {
     const storage = getStorage();
+    projectLocalStorageService.remove(ProjectStorageKey.RememberMe);
     storage.remove(ProjectStorageKey.AccessToken);
     storage.remove(ProjectStorageKey.RefreshToken);
     clearUserData();
   }, []);
 
-  return { getUser, isUserFetched, onLogin, onLogout: removeFormStorage };
+  return { getUser, isUserFetched, onLogin, onLogout: removeFromStorage };
 };
 
 function getStorage(rememberMe?: boolean) {

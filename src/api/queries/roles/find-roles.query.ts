@@ -3,6 +3,7 @@ import { UseQueryResult, keepPreviousData, useQuery } from '@tanstack/react-quer
 import { UseCustomQueryOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { Pageable, PageRole } from '~/api/utils/api-requests';
+import { ROLES_KEY } from '~/api/utils/query-keys';
 import { GridPagingParams } from '~/ui-components/datagrid/datagrid.types';
 import { useServerPagingParams } from '~/utils/hooks/use-server-options';
 
@@ -13,7 +14,7 @@ export const useFindRolesQuery = <T = PageRole>(
   const serverPagingParams = useServerPagingParams(gridPagingParams);
 
   return useQuery({
-    queryKey: ['roles', serverPagingParams],
+    queryKey: [ROLES_KEY, serverPagingParams],
     queryFn: async () =>
       await ApiClientSecured.rolesV1Controller.findRoles(
         {

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import logo from '~/assets/logo/logo-small.png';
-import { planPath } from '~/utils/configuration/routes-paths';
+import { homePath } from '~/utils/configuration/routes-paths';
 
 import { QuestionMarkWrapper, StyledHeader, StyledHeaderHelp } from './header.style';
 import { NavMenuDesktop } from './nav-menu-desktop/nav-menu-desktop.components';
@@ -27,7 +27,7 @@ const Header: FC<HeaderProps> = ({ className }) => {
       {matches ? (
         <>
           <Box margin={'auto 0'}>
-            <Link to={planPath}>
+            <Link to={homePath}>
               <img src={logo} alt={t('PROJECT_NAME')} />
             </Link>
           </Box>

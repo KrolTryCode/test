@@ -30,8 +30,8 @@ export const palette: PaletteOptions = {
     light: '#f3b881',
   },
   info: {
-    main: '#ffeb3b',
-    light: '#fff49a',
+    main: '#42A5F5',
+    light: '#64B5F6',
   },
   success: {
     main: '#2cb563',

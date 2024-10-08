@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { ContentType } from '~/api/utils/api-requests';
+import { MODULE_CONFIGURATION_KEY } from '~/api/utils/query-keys';
 import { Configuration } from '~/components/configuration-form/configuration-form.type';
 
 export const useSaveConfigurationMutation = (
@@ -13,7 +14,6 @@ export const useSaveConfigurationMutation = (
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: ['configuration', 'all'],
     mutationFn: async (values: Configuration) =>
       await ApiClientSecured.request<Configuration>({
         secure: true,
@@ -25,7 +25,7 @@ export const useSaveConfigurationMutation = (
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({
-        queryKey: ['configuration', name, 'all'],
+        queryKey: [MODULE_CONFIGURATION_KEY, name],
       });
       options?.onSuccess?.(...args);
     },

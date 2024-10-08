@@ -70,7 +70,6 @@ const AdminAllTasks = () => {
       items={projectTasks ?? []}
       totalCount={projectTasks?.length ?? 0}
       columns={columns}
-      hasToolbarFilters
     />
   );
 };

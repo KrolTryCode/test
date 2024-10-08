@@ -1,4 +1,4 @@
-import { GridColDef, GridValidRowModel } from '@mui/x-data-grid-premium';
+import { GridColDef, GridFeatureMode, GridValidRowModel } from '@mui/x-data-grid-premium';
 import { useMemo } from 'react';
 
 import { enhanceActionsColDef } from '~/ui-components/datagrid/helpers/column-enhancers/actions';
@@ -13,18 +13,20 @@ interface Props<T extends GridValidRowModel> {
   columns: EnhancedColDef<T>[];
   hasWidthSaving: boolean;
   gridId?: string;
+  pagingMode?: GridFeatureMode;
 }
 
 export function useEnhancedColumns<T extends GridValidRowModel = any>({
   columns,
   hasWidthSaving,
+  pagingMode,
   gridId = '',
 }: Props<T>): GridColDef<T>[] {
   return useMemo<EnhancedColDef<T>[]>(() => {
     const widths = getStoredWidths(gridId);
 
     return columns.map(passedColDef => {
-      const colDef: EnhancedColDef = { ...passedColDef };
+      const colDef: EnhancedColDef = { ...passedColDef, pinnable: false };
       const colType = passedColDef.type ?? 'string';
 
       let enhancer: ColumnEnhancer | undefined = undefined;
@@ -46,7 +48,7 @@ export function useEnhancedColumns<T extends GridValidRowModel = any>({
           break;
       }
 
-      enhancer?.(colDef, passedColDef);
+      enhancer?.(colDef, passedColDef, pagingMode);
 
       if (hasWidthSaving && widths) {
         enhanceColDefWidth(colDef, widths);
@@ -54,5 +56,5 @@ export function useEnhancedColumns<T extends GridValidRowModel = any>({
 
       return colDef;
     });
-  }, [columns, hasWidthSaving, gridId]);
+  }, [gridId, columns, pagingMode, hasWidthSaving]);
 }

@@ -16,6 +16,7 @@ import { useGridCallbacks } from '~/ui-components/datagrid/use-grid-callbacks.ho
 
 import { gridCustomDefaultProps } from './datagrid.consts';
 import { DataGridProps } from './datagrid.types';
+import { GridFullscreen } from './grid-fullscreen/grid-fullscreen.component';
 import { useEnhancedColumns } from './helpers/column-enhancers/use-enhanced-columns.hook';
 import { usePaging } from './helpers/use-paging.hook';
 import { useSyncGridState } from './helpers/use-sync-grid-state.hook';
@@ -30,8 +31,9 @@ export const DataGrid = forwardRef(function DataGrid<T extends GridValidRowModel
     hasExport = false,
     hasColumnChooser = true,
     hasWidthSaving = true,
+    hasFullscreenMode = true,
     fontSizeSettingsPlacement = 'footer',
-    hasToolbarFilters = false,
+    hasToolbarFilters = true,
     gridId,
     columns: passedColumns,
     customToolbarContent,
@@ -49,10 +51,16 @@ export const DataGrid = forwardRef(function DataGrid<T extends GridValidRowModel
   useSyncGridState(apiRef, {
     gridId,
     saveColumnsVisibilityModel: hasColumnChooser,
+    initialState: passedProps.initialState,
   });
 
   const pagingProps = usePaging(passedProps);
-  const columns = useEnhancedColumns<T>({ columns: passedColumns, hasWidthSaving, gridId });
+  const columns = useEnhancedColumns<T>({
+    columns: passedColumns,
+    hasWidthSaving,
+    gridId,
+    pagingMode: pagingProps.paginationMode,
+  });
   const rows = useFlatRows(items as Record<string, unknown>[]) as T[];
 
   // Необходимо для скрытия сгруппированных столбцов
@@ -70,11 +78,13 @@ export const DataGrid = forwardRef(function DataGrid<T extends GridValidRowModel
 
   const slotProps = useMemo<DataGridPremiumProps<T>['slotProps']>(() => {
     return {
+      ...passedProps.slotProps,
       columnsPanel: { columnGroupingModel },
       toolbar: {
         hasExport,
         hasColumnChooser,
         excelExportOptions,
+        hasFullscreenMode,
         customContent: customToolbarContent,
         importToolbarContent: importToolbarContent,
         pdfExportOptions: printExportOptions,
@@ -100,17 +110,18 @@ export const DataGrid = forwardRef(function DataGrid<T extends GridValidRowModel
       }),
     };
   }, [
+    passedProps.slotProps,
     columnGroupingModel,
     hasExport,
     hasColumnChooser,
     excelExportOptions,
+    hasFullscreenMode,
     customToolbarContent,
     importToolbarContent,
     printExportOptions,
     hasToolbarFilters,
-    gridId,
     fontSizeSettingsPlacement,
-    passedProps.slotProps?.filterPanel,
+    gridId,
   ]);
 
   const slots = useMemo(() => {
@@ -139,19 +150,21 @@ export const DataGrid = forwardRef(function DataGrid<T extends GridValidRowModel
   ]);
 
   return (
-    <MuiDataGrid<T>
-      {...gridCustomDefaultProps}
-      {...passedProps}
-      slots={slots}
-      slotProps={slotProps}
-      rows={rows}
-      columns={columns}
-      onColumnResize={handleColumnResize}
-      onRowClick={handleRowClick}
-      apiRef={apiRef}
-      getCellClassName={getCellClassNameWrapper}
-      columnGroupingModel={modifiedColumnGroupingModel}
-      {...pagingProps}
-    />
+    <GridFullscreen hasFullscreenMode={hasFullscreenMode}>
+      <MuiDataGrid<T>
+        {...gridCustomDefaultProps}
+        {...passedProps}
+        slots={slots}
+        slotProps={slotProps}
+        rows={rows}
+        columns={columns}
+        onColumnResize={handleColumnResize}
+        onRowClick={handleRowClick}
+        apiRef={apiRef}
+        getCellClassName={getCellClassNameWrapper}
+        columnGroupingModel={modifiedColumnGroupingModel}
+        {...pagingProps}
+      />
+    </GridFullscreen>
   );
 });

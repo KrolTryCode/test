@@ -173,7 +173,6 @@ const AdminUsersPage: FC = () => {
       onPagingChanged={setGridPaging}
       pagingMode={'server'}
       processRowUpdate={updateUserRow}
-      hasToolbarFilters
       customToolbarContent={<CreateAccountButton />}
     />
   );

@@ -1,7 +1,5 @@
 import { FC, ReactNode } from 'react';
 
-import { MenuIcon } from './layouts/main/submenu/submenu.types';
-
 export interface RouteDescription {
   element?: ReactNode;
   lazyElement?: () => Promise<{ default: FC }>;
@@ -24,10 +22,6 @@ export interface RouteDescription {
  * Используется для добавления пункта в меню или подменю
  */
 export interface MenuDisplay {
-  /**
-   * Отображаемая иконка
-   */
-  icon?: MenuIcon;
   /**
    * Отображаемый текст
    */

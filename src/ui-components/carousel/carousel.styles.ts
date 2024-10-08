@@ -4,6 +4,10 @@ export const CarouselWrapper = styled(Stack)(({ theme }) => ({
   height: '300px',
   aspectRatio: '16 / 9',
 
+  '&[hidden]': {
+    display: 'none',
+  },
+
   [theme.breakpoints.down('lg')]: {
     flex: '300px',
     width: '100%',

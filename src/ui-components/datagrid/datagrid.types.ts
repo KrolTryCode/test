@@ -8,6 +8,7 @@ import type {
   GridSortModel,
   GridValidRowModel,
   DataGridPremiumProps as MuiDataGridProps,
+  GridFeatureMode,
 } from '@mui/x-data-grid-premium';
 import { jsPDFOptions } from 'jspdf';
 import { ReactNode } from 'react';
@@ -35,6 +36,7 @@ export interface DataGridProps<T extends GridValidRowModel = any>
   hasWidthSaving?: boolean;
   fontSizeSettingsPlacement?: 'footer' | 'toolbar' | 'hidden';
   hasToolbarFilters?: boolean;
+  hasFullscreenMode?: boolean;
   pdfExportOptions?: jsPDFOptions;
   excelExportOptions?: GridExcelExportOptions;
   customToolbarContent?: ReactNode;
@@ -42,6 +44,7 @@ export interface DataGridProps<T extends GridValidRowModel = any>
   importToolbarContent?: ReactNode[];
   paging?: GridPagingParams;
   onPagingChanged?: (options: GridPagingParams) => void;
+  /** Задуман, чтобы отличать таблицы на одной странице */
   gridId?: string;
 }
 
@@ -62,6 +65,7 @@ export type EnhancedColDef<T extends GridValidRowModel = any> = GridColDef<T> & 
 export type ColumnEnhancer<T extends GridValidRowModel = any> = (
   colDef: EnhancedColDef<T>,
   passedColDef: EnhancedColDef<T>,
+  pagingMode?: GridFeatureMode,
 ) => void;
 
 export interface GridPagingParams {

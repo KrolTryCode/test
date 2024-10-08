@@ -1,5 +1,4 @@
 export const homePath = '/';
-export const planPath = 'plan';
 export const authPath = 'auth';
 export const loginPath = 'login';
 export const resetPasswordPath = 'reset-password';

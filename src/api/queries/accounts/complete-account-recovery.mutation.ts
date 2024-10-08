@@ -9,7 +9,6 @@ export const useCompleteAccountRecoveryMutation = (
   options?: UseCustomMutationOptions<void, Error, RecoverPasswordRequest>,
 ) =>
   useMutation<void, Error, RecoverPasswordRequest>({
-    mutationKey: ['accounts', 'recovery', 'complete'],
     mutationFn: async data => await ApiClient.authController.completeRecovery(data),
     ...options,
   });

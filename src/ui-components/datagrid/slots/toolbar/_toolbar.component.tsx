@@ -21,7 +21,9 @@ import { FontSizeSettings } from '../_font-size-settings/font-size-settings.comp
 import { GridPdfExportMenuItem } from './export/export-pdf.component';
 import { GridExcelExportMenuItem } from './export/export-xlsx.component';
 
-const commonSlotProps: GridToolbarFilterButtonProps['slotProps'] = { button: { size: 'medium' } };
+const commonSlotProps: GridToolbarFilterButtonProps['slotProps'] = {
+  button: { size: 'medium' },
+};
 
 export const GridToolbar: FC<GridSlotProps['toolbar']> = ({
   pdfExportOptions,
@@ -33,6 +35,7 @@ export const GridToolbar: FC<GridSlotProps['toolbar']> = ({
   importToolbarContent,
   hasFontSizeSettings,
   gridId,
+  hasFullscreenMode,
   ...props
 }) => {
   const { i18n } = useTranslation();
@@ -74,8 +77,8 @@ export const GridToolbar: FC<GridSlotProps['toolbar']> = ({
 
       {customContent}
 
-      <Box marginLeft={'auto'}>
-        <FullscreenButton size={'small'} element={gridRef.current?.rootElementRef.current} />
+      <Box hidden={!hasFullscreenMode} marginLeft={'auto'}>
+        <FullscreenButton size={'small'} element={document.body} />
       </Box>
     </GridToolbarContainer>
   );

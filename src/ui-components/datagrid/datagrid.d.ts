@@ -19,6 +19,7 @@ declare module '@mui/x-data-grid-premium' {
     customContent?: ReactNode;
     importToolbarContent?: ReactNode;
     hasFilters?: boolean;
+    hasFullscreenMode?: boolean;
     hasFontSizeSettings?: boolean;
     gridId?: string;
   }

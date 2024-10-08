@@ -7,7 +7,6 @@ export const useGetImageMutation = (
   options?: UseCustomMutationOptions<string, unknown, string>,
 ) => {
   return useMutation<string, unknown, string>({
-    mutationKey: ['image'],
     mutationFn: async imageId => {
       return (await ApiClientSecured.filesV1Controller.getImage(imageId)) as string;
     },

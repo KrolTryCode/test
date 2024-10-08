@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { Role } from '~/api/utils/api-requests';
+import { ROLES_KEY } from '~/api/utils/query-keys';
 
 import { UseCustomMutationOptions } from '../../typings/react-query-helpers';
 import { ApiClientSecured } from '../../utils/api-client';
@@ -16,12 +17,11 @@ export const useAddRolePermissionsMutation = (
   const queryClient = useQueryClient();
 
   return useMutation<Role, Error, AddRolePermissions>({
-    mutationKey: ['roles', 'permissions', 'add'],
     mutationFn: async ({ id, roleId }: AddRolePermissions) =>
       await ApiClientSecured.rolesV1Controller.addRolePermissions(roleId, { id }),
     ...options,
     onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: ['roles'] });
+      void queryClient.invalidateQueries({ queryKey: [ROLES_KEY] });
       options?.onSuccess?.(...args);
     },
   });
