@@ -19,6 +19,7 @@ export const InputNumeric: FC<InputNumericProps> = ({
   max,
   min,
   step,
+  inputRef,
 }) => {
   const valueChangedHandler: ChangeEventHandler<HTMLInputElement> = event => {
     let value = event.target.valueAsNumber;
@@ -36,6 +37,7 @@ export const InputNumeric: FC<InputNumericProps> = ({
 
   return (
     <TextField
+      inputRef={inputRef}
       type={'number'}
       value={value}
       onChange={valueChangedHandler}

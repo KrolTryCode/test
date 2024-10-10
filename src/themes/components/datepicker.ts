@@ -3,13 +3,17 @@ import { Components, Theme } from '@mui/material/styles';
 export const MuiDateTimePicker: Components<Omit<Theme, 'components'>>['MuiDateTimePicker'] = {
   defaultProps: {
     slotProps: {
+      openPickerButton: { size: 'small' },
       inputAdornment: {
-        sx: {
+        sx: theme => ({
           button: {
-            marginLeft: '-0.5em',
-            paddingRight: '0.7em',
+            marginRight: 0,
+            borderRadius: '4px',
+            '&:hover': {
+              backgroundColor: `${theme.palette.text.primary}20`,
+            },
           },
-        },
+        }),
       },
     },
   },
@@ -18,13 +22,18 @@ export const MuiDateTimePicker: Components<Omit<Theme, 'components'>>['MuiDateTi
 export const MuiDatePicker: Components<Omit<Theme, 'components'>>['MuiDatePicker'] = {
   defaultProps: {
     slotProps: {
+      openPickerButton: { size: 'small' },
+      layout: { sx: { '.MuiDateCalendar-root': { height: 'fit-content' } } },
       inputAdornment: {
-        sx: {
+        sx: theme => ({
           button: {
-            marginLeft: '-0.5em',
-            paddingRight: '0.7em',
+            marginRight: 0,
+            borderRadius: '4px',
+            '&:hover': {
+              backgroundColor: `${theme.palette.text.primary}20`,
+            },
           },
-        },
+        }),
       },
     },
   },
@@ -33,13 +42,17 @@ export const MuiDatePicker: Components<Omit<Theme, 'components'>>['MuiDatePicker
 export const MuiTimePicker: Components<Omit<Theme, 'components'>>['MuiTimePicker'] = {
   defaultProps: {
     slotProps: {
+      openPickerButton: { size: 'small' },
       inputAdornment: {
-        sx: {
+        sx: theme => ({
           button: {
-            marginLeft: '-0.5em',
-            paddingRight: '0.7em',
+            marginRight: 0,
+            borderRadius: '4px',
+            '&:hover': {
+              backgroundColor: `${theme.palette.text.primary}20`,
+            },
           },
-        },
+        }),
       },
     },
   },

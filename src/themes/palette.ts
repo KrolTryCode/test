@@ -37,4 +37,8 @@ export const palette: PaletteOptions = {
     main: '#2cb563',
     light: '#92d8af',
   },
+  acceptable: {
+    main: '#ffeb3b',
+    light: '#fff49a',
+  },
 };

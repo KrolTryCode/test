@@ -53,10 +53,12 @@ function xlsToPdf(data: Workbook, options: jsPDFOptions = {}) {
     return doc;
   }
 
-  // 1-based index, so getting rid of first empty element
-  const [_empty, ...header] = worksheet.getRow(1).values as string[];
   const rows = worksheet.getRows(2, worksheet.rowCount - 1) ?? [];
   const hiddenColsNumbers = worksheet.columns.filter(col => col.hidden).map(col => col.number);
+
+  // 1-based index, so getting rid of first empty element
+  const [_empty, ...header] = worksheet.getRow(1).values as string[];
+  const filteredHeader = header.filter((_, i) => !hiddenColsNumbers.includes(i + 1));
 
   const body = rows.map(row => {
     const cellDefs: CellDef[] = [];
@@ -72,7 +74,7 @@ function xlsToPdf(data: Workbook, options: jsPDFOptions = {}) {
   });
 
   autoTable(doc, {
-    head: [header],
+    head: [filteredHeader],
     body,
     styles: {
       font: FONT_NAME,

@@ -90,7 +90,7 @@ export function Autocomplete<T extends Record<string, any>>({
       placeholder={placeholder}
       clearIcon={<CancelIcon />}
       freeSolo
-      forcePopupIcon
+      forcePopupIcon={!!items.length}
       openOnFocus
       size={size}
     />

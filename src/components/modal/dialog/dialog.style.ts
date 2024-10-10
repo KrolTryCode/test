@@ -14,4 +14,9 @@ export const StyledDialogPaper = styled(Paper)`
 
 export const StyledDialogContent = styled(DialogContent)`
   position: relative;
+  display: flex;
+
+  & > * {
+    height: 100%;
+  }
 `;

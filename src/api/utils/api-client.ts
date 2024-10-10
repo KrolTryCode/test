@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios';
+import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import i18n from 'i18next';
 import queryString from 'query-string';
 
@@ -71,37 +71,78 @@ ApiClient.instance.interceptors.request.use(request => {
   return request;
 });
 
+// https://gist.github.com/Godofbrowser/bf118322301af3fc334437c683887c5f#file-axios-refresh_token-1-js
+let isRefreshing = false;
+let failedQueue: {
+  resolve: (token: string | null) => void;
+  reject: (error: AxiosError) => void;
+}[] = [];
+
+const processQueue = (error: AxiosError | null, token: string | null = null) => {
+  failedQueue.forEach(prom => {
+    error ? prom.reject(error) : prom.resolve(token);
+  });
+  failedQueue = [];
+};
+
 // Можно задать кастомные обработчики для каждой ошибки
 ApiClientSecured.instance.interceptors.response.use(
   response => response,
   async (error: AxiosError) => {
+    const originalRequest = error.config as InternalAxiosRequestConfig<any> & { _retry: boolean };
+
     if (error.response?.status === 502) {
       showErrorMessage(error, 'ERROR.TECHNICAL_ERROR');
     }
-    if (error.response?.status === 401) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
       if (error.config?.url === '/api/v1/jwt/refresh') {
         window.location = `/${authPath}/${loginPath}` as unknown as Location;
-      } else {
-        if (window.location.pathname.startsWith(`/${authPath}`)) {
-          return Promise.reject(error);
-        }
-        const storage = getStorageService();
-        storage.remove(ProjectStorageKey.AccessToken);
-        const refreshToken = storage.get(ProjectStorageKey.RefreshToken);
-        const originalRequest = error.config;
-        let token = '';
-
-        await ApiClientSecured.tokenV1Controller
-          .regenerateAccessToken({ headers: { Authorization: `Bearer ${refreshToken ?? ''}` } })
-          .then(res => {
-            token = res.token ?? '';
-            storage.set(ProjectStorageKey.AccessToken, token);
-          });
-        return ApiClientSecured.instance.request({
-          ...originalRequest,
-          headers: { ...originalRequest?.headers, Authorization: `Bearer ${token}` },
-        });
+        return;
       }
+
+      if (window.location.pathname.startsWith(`/${authPath}`)) {
+        return Promise.reject(error);
+      }
+
+      if (isRefreshing) {
+        return new Promise(function (resolve, reject) {
+          failedQueue.push({ resolve, reject });
+        })
+          .then(token => {
+            originalRequest.headers['Authorization'] = 'Bearer ' + String(token);
+            return axios(originalRequest);
+          })
+          .catch(err => {
+            return Promise.reject(err);
+          });
+      }
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      const storage = getStorageService();
+      storage.remove(ProjectStorageKey.AccessToken);
+      const refreshToken = storage.get(ProjectStorageKey.RefreshToken);
+
+      return new Promise(function (resolve, reject) {
+        ApiClientSecured.tokenV1Controller
+          .regenerateAccessToken({ headers: { Authorization: `Bearer ${refreshToken ?? ''}` } })
+          .then(({ token }) => {
+            storage.set(ProjectStorageKey.AccessToken, token!);
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+            processQueue(null, token);
+            if (originalRequest) {
+              originalRequest.headers['Authorization'] = 'Bearer ' + token;
+              resolve(axios(originalRequest));
+            }
+          })
+          .catch((err: AxiosError) => {
+            processQueue(err, null);
+            reject(err);
+          })
+          .finally(() => {
+            isRefreshing = false;
+          });
+      });
     }
     return Promise.reject(error);
   },

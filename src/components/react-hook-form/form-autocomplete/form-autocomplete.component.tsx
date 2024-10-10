@@ -23,13 +23,18 @@ export const FormAutocomplete = <
 }: FormAutocompleteProps<T, TFieldValues, FieldPath<TFieldValues>>) => {
   const { field, fieldState } = useController(controllerProps);
 
+  const handleChange = (value: T) => {
+    field.onChange(value);
+    autocompleteProps.onChange?.(value);
+  };
+
   return (
     <ValidationError {...fieldState} placement={'top'}>
       <Autocomplete
         {...autocompleteProps}
         invalid={fieldState.invalid}
         value={field.value}
-        onChange={field.onChange}
+        onChange={handleChange}
         onBlur={field.onBlur}
       />
     </ValidationError>

@@ -1,5 +1,12 @@
-import { DataGridPremiumProps, GridFeatureMode } from '@mui/x-data-grid-premium';
-import { useCallback, useState } from 'react';
+import {
+  DataGridPremiumProps,
+  GridFeatureMode,
+  GridFilterModel,
+  GridPaginationModel,
+  GridSortModel,
+  GridRowGroupingModel,
+} from '@mui/x-data-grid-premium';
+import { useCallback, useEffect, useState } from 'react';
 
 import { DEFAULT_GRID_PAGING_PARAMS } from '../datagrid.consts';
 import { DataGridProps, GridPagingParams } from '../datagrid.types';
@@ -12,6 +19,8 @@ interface PagingProps {
   filterMode?: GridFeatureMode;
   paging?: GridPagingParams;
   onPagingChanged?: (options: GridPagingParams) => void;
+  onPagingChangeSync: (options: Partial<GridPagingParams>) => void;
+  rowGroupingModel: Pick<DataGridProps, 'rowGroupingModel'>['rowGroupingModel'];
 }
 
 interface UsePagingReturn
@@ -36,10 +45,19 @@ export const usePaging = ({
   sortingMode,
   paginationMode,
   filterMode,
-  paging = DEFAULT_GRID_PAGING_PARAMS,
+  rowGroupingModel = DEFAULT_GRID_PAGING_PARAMS.groupingModel,
   onPagingChanged,
+  onPagingChangeSync,
 }: PagingProps): UsePagingReturn => {
-  const [pagingParams, setPagingParams] = useState<GridPagingParams>(paging);
+  const initialPagingParams: GridPagingParams = {
+    ...DEFAULT_GRID_PAGING_PARAMS,
+    groupingModel: rowGroupingModel,
+  };
+  const [pagingParams, setPagingParams] = useState<GridPagingParams>(initialPagingParams);
+
+  useEffect(() => {
+    onPagingChanged?.(pagingParams);
+  }, [onPagingChangeSync, onPagingChanged, pagingParams]);
 
   const handlePagingChange = useCallback(
     (category: keyof GridPagingParams, value: GridPagingParams[keyof GridPagingParams]) => {
@@ -56,6 +74,38 @@ export const usePaging = ({
     [onPagingChanged],
   );
 
+  const onFilterModelChange = useCallback(
+    (model: GridFilterModel) => {
+      handlePagingChange('filterModel', model);
+      onPagingChangeSync({ filterModel: model });
+    },
+    [handlePagingChange, onPagingChangeSync],
+  );
+
+  const onPaginationModelChange = useCallback(
+    (model: GridPaginationModel) => {
+      handlePagingChange('paginationModel', model);
+      onPagingChangeSync({ paginationModel: model });
+    },
+    [handlePagingChange, onPagingChangeSync],
+  );
+
+  const onSortModelChange = useCallback(
+    (model: GridSortModel) => {
+      handlePagingChange('sortModel', model);
+      onPagingChangeSync({ sortModel: model });
+    },
+    [handlePagingChange, onPagingChangeSync],
+  );
+
+  const onRowGroupingModelChange = useCallback(
+    (model: GridRowGroupingModel) => {
+      handlePagingChange('groupingModel', model);
+      onPagingChangeSync({ groupingModel: model });
+    },
+    [handlePagingChange, onPagingChangeSync],
+  );
+
   return {
     rowCount: (paginationMode ?? pagingMode) === 'server' ? totalCount : undefined,
     //paging mode
@@ -64,12 +114,12 @@ export const usePaging = ({
     filterMode: filterMode ?? pagingMode,
     //paging
     filterModel: pagingParams.filterModel,
-    onFilterModelChange: model => handlePagingChange('filterModel', model),
+    onFilterModelChange,
     paginationModel: pagingParams.paginationModel,
-    onPaginationModelChange: model => handlePagingChange('paginationModel', model),
+    onPaginationModelChange,
     sortModel: pagingParams.sortModel,
-    onSortModelChange: model => handlePagingChange('sortModel', model),
+    onSortModelChange,
     rowGroupingModel: pagingParams.groupingModel,
-    onRowGroupingModelChange: model => handlePagingChange('groupingModel', model),
+    onRowGroupingModelChange,
   };
 };

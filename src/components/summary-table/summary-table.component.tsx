@@ -6,20 +6,44 @@ import { string as yString } from 'yup';
 import { getDateFromString } from '~/utils/date/get-date-from-string';
 
 import { StyledTable } from './summary-table.style';
-import { SummaryTableProps } from './summary-table.type';
+import { SummaryEntry, SummaryTableProps } from './summary-table.type';
 
 const emptySchema = yString().required();
 
-export const SummaryTable: FC<SummaryTableProps> = ({ data, heading, hideEmpty = false }) => {
-  const { i18n } = useTranslation();
+export const SummaryTable: FC<SummaryTableProps> = ({
+  data,
+  heading,
+  hideEmpty = false,
+  ...props
+}) => {
+  const { i18n, t } = useTranslation();
 
   const getLocaleDateString = (dateStr?: string) =>
     getDateFromString(dateStr)?.toLocaleDateString(i18n.language);
 
+  const getValueBasedOnType = (value: SummaryEntry['value'], type: SummaryEntry['type']) => {
+    if (value === null || value === undefined) {
+      return t('STATUS.UNDEFINED');
+    }
+
+    switch (type) {
+      case 'date': {
+        return getLocaleDateString(String(value));
+      }
+      case 'boolean': {
+        return value ? t('COMMON.YES') : t('COMMON.NO');
+      }
+      case 'string':
+      default: {
+        return value;
+      }
+    }
+  };
+
   return (
-    <StyledTable>
+    <StyledTable {...props}>
       {heading && (
-        <Typography component={'caption'} variant={'subtitle1'} textAlign={'left'}>
+        <Typography component={'caption'} variant={'subtitle1'} textAlign={'left'} lineHeight={1.2}>
           {heading}
         </Typography>
       )}
@@ -31,7 +55,7 @@ export const SummaryTable: FC<SummaryTableProps> = ({ data, heading, hideEmpty =
             hidden={hideEmpty && !emptySchema.isValidSync(value)}
           >
             <th>{title}</th>
-            <td>{type === 'date' ? getLocaleDateString(String(value)) : value}</td>
+            <td>{getValueBasedOnType(value, type)}</td>
           </Typography>
         ))}
       </tbody>

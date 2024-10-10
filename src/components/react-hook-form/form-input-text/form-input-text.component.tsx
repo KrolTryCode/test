@@ -22,13 +22,18 @@ export function FormInputText<TFieldValues extends FieldValues = FieldValues>({
   const { field, fieldState } = useController(controllerProps);
   const InputComponent = mask ? MaskedInput : InputText;
 
+  const handleChange = (value: string) => {
+    field.onChange(value);
+    inputProps.onChange?.(value);
+  };
+
   return (
     <ValidationError {...fieldState}>
       <InputComponent
         {...inputProps}
         invalid={fieldState.invalid}
         value={field.value || ''}
-        onChange={field.onChange}
+        onChange={handleChange}
         onBlur={field.onBlur}
         mask={mask!}
       />

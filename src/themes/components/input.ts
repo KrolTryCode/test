@@ -48,6 +48,10 @@ export const MuiFilledInput: Components<Omit<Theme, 'components'>>['MuiFilledInp
       '&.Mui-error': {
         backgroundColor: `${theme.palette.error.main}20`,
       },
+      '& .MuiButtonBase-root.Mui-focusVisible': {
+        borderRadius: theme.shape.borderRadius,
+        outline: `1px solid ${theme.palette.primary.main}`,
+      },
     }),
     input: ({ theme }) => ({
       borderRadius: '4px',
@@ -80,6 +84,12 @@ export const MuiOutlinedInput: Components<Omit<Theme, 'components'>>['MuiOutline
       },
       '&.Mui-error.Mui-disabled .MuiOutlinedInput-notchedOutline': {
         borderColor: `${theme.palette.error.main}50`,
+      },
+      '& .MuiButtonBase-root': {
+        borderRadius: theme.shape.borderRadius,
+        '&.Mui-focusVisible, &:hover': {
+          backgroundColor: `${theme.palette.primary.main}30`,
+        },
       },
     }),
     input: {

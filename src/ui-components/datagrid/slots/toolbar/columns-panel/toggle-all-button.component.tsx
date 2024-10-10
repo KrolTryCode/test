@@ -2,7 +2,6 @@ import { CheckBox, CheckBoxOutlineBlank, IndeterminateCheckBox } from '@mui/icon
 import { Button } from '@mui/material';
 import { GridPanelFooter } from '@mui/x-data-grid-premium';
 import { FC, ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
 
 type Visibility = 'all' | 'some' | 'none';
 
@@ -16,10 +15,15 @@ export const ToggleAllButton: FC<{
   hideableColumnsLength: number;
   groupedColumnFieldsLength: number;
   visibleColumnsLength: number;
+  buttonText: string;
   onClick: (isVisible: boolean) => void;
-}> = ({ hideableColumnsLength, visibleColumnsLength, groupedColumnFieldsLength, onClick }) => {
-  const { t } = useTranslation();
-
+}> = ({
+  hideableColumnsLength,
+  visibleColumnsLength,
+  groupedColumnFieldsLength,
+  buttonText,
+  onClick,
+}) => {
   const noneVisible = visibleColumnsLength - groupedColumnFieldsLength === 0;
   const allVisible = hideableColumnsLength === visibleColumnsLength + groupedColumnFieldsLength;
   const visibility = noneVisible ? 'none' : allVisible ? 'all' : 'some';
@@ -27,7 +31,7 @@ export const ToggleAllButton: FC<{
   return (
     <GridPanelFooter style={{ padding: '6px 20px', justifyContent: 'center' }}>
       <Button startIcon={iconMap[visibility]} onClick={() => onClick(!allVisible)}>
-        {t('ACTION.SHOW_OR_HIDE_ALL')}
+        {buttonText}
       </Button>
     </GridPanelFooter>
   );

@@ -11,7 +11,7 @@ const JournalPage: FC = () => {
   const { t } = useTranslation();
 
   const { data: auditsList, isLoading } = useSearchAuditsQuery(
-    { types: ['Task', 'ShipFactory'], pageable: { size: 99_999, page: 0 } },
+    { types: ['Connection', 'File', 'Task', 'ShipFactory'], pageable: { size: 99_999, page: 0 } },
     { criteria: [] },
     { select: selectPageableData },
   );

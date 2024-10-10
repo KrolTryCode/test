@@ -18,6 +18,7 @@ export const FormButtons: FC<FormButtonsProps> = ({ marginTop = 1, children, isS
     paddingTop={isSticky ? 1 : 0}
     paddingBottom={isSticky ? 1 : 0}
     bgcolor={theme => theme.palette.background.default}
+    boxShadow={theme => `0 -5px 5px ${theme.palette.background.default}`}
   >
     {children}
   </Stack>

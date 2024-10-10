@@ -16,10 +16,13 @@ export const DateTimePicker: FC<DateTimePickerProps> = ({
   format,
   isDisabled = false,
   minDate,
+  maxDate,
   className,
   inputRef,
   invalid,
   showClearButton,
+  views,
+  fullWidth = true,
 }) => {
   const handleValueChange = useCallback(
     (value: Date | null) => {
@@ -41,6 +44,7 @@ export const DateTimePicker: FC<DateTimePickerProps> = ({
       textField: textFieldProps,
       field: { clearable: showClearButton },
     },
+    fullWidth,
     onChange: handleValueChange,
     disabled: isDisabled,
     readOnly: !onChange,
@@ -48,16 +52,31 @@ export const DateTimePicker: FC<DateTimePickerProps> = ({
     inputRef,
     format,
     value,
+    views,
   };
 
   switch (type) {
     case 'datetime':
       return (
-        <MuiDateTimePicker {...commonProps} minDateTime={minDate} showDaysOutsideCurrentMonth />
+        <MuiDateTimePicker
+          {...commonProps}
+          minDateTime={minDate}
+          maxDate={maxDate}
+          showDaysOutsideCurrentMonth
+        />
       );
     case 'date':
-      return <MuiDatePicker {...commonProps} minDate={minDate} showDaysOutsideCurrentMonth />;
+      return (
+        // @ts-expect-error views type
+        <MuiDatePicker
+          {...commonProps}
+          minDate={minDate}
+          maxDate={maxDate}
+          showDaysOutsideCurrentMonth
+        />
+      );
     case 'time':
-      return <MuiTimePicker {...commonProps} minTime={minDate} />;
+      // @ts-expect-error views type
+      return <MuiTimePicker {...commonProps} minTime={minDate} maxTime={maxDate} />;
   }
 };
