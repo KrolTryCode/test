@@ -21,12 +21,14 @@ interface ValidationErrorProps extends Omit<ControllerFieldState, 'error'> {
   children: ReactNode;
   placement?: 'top' | 'bottom';
   error?: Error | Record<string, Error>;
+  fullWidth?: boolean;
 }
 
 export const ValidationError: FC<ValidationErrorProps> = ({
   placement = 'bottom',
   error,
   children,
+  fullWidth,
 }) => {
   const { t } = useTranslation();
 
@@ -38,7 +40,7 @@ export const ValidationError: FC<ValidationErrorProps> = ({
       placement={`${placement}-start`}
       PopperProps={PopperProps}
     >
-      <Box>{children}</Box>
+      <Box width={fullWidth ? '100%' : undefined}>{children}</Box>
     </Tooltip>
   );
 };

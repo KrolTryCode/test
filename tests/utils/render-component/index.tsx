@@ -34,6 +34,7 @@ export const renderComponent = (
   // https://testing-library.com/docs/example-react-router/#reducing-boilerplate
   if (withRouter) {
     window.history.pushState({}, 'Test page', route);
+    window.location.pathname = route ?? '/';
   }
 
   const queryClient = new QueryClient(queryClientConfig);

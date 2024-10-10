@@ -1,4 +1,4 @@
-import { Components, Theme, CSSInterpolation } from '@mui/material/styles';
+import { Components, Theme, CSSInterpolation, CSSObject } from '@mui/material/styles';
 
 export const MuiButtonGroup: Components<Omit<Theme, 'components'>>['MuiButtonGroup'] = {
   defaultProps: { disableRipple: true },
@@ -39,12 +39,11 @@ export const MuiButton: Components<Omit<Theme, 'components'>>['MuiButton'] = {
         margin: 0,
       },
     },
+
+    textPrimary: ({ theme }) => getTextButtonStyles(theme.palette.primary.main),
     textSecondary: ({ theme }) => ({
-      // remove important later
       color: `${theme.palette.text.primary} !important`,
-      '&:hover': {
-        backgroundColor: `${theme.palette.text.primary}04`,
-      },
+      ...getTextButtonStyles(theme.palette.text.primary),
     }),
     outlinedPrimary: ({ theme }) =>
       getOutlinedButtonStyles({
@@ -186,6 +185,17 @@ function getOutlinedButtonStyles({ main, hover, focus, active }: Colors): CSSInt
       color: '#fff',
       backgroundColor: active,
       borderColor: active,
+    },
+  };
+}
+
+function getTextButtonStyles(color: string): CSSObject {
+  return {
+    '&:hover': {
+      backgroundColor: `${color}04`,
+    },
+    '&:focus-visible': {
+      backgroundColor: `${color}10`,
     },
   };
 }

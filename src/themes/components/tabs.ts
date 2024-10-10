@@ -39,6 +39,9 @@ export const MuiTab: Components<Omit<Theme, 'components'>>['MuiTab'] = {
       '&:not(.MuiTab-wrapped)': {
         maxWidth: 'unset',
       },
+      '&[hidden]': {
+        display: 'none',
+      },
     }),
   },
 };

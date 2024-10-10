@@ -1,5 +1,6 @@
 import { CloseOutlined } from '@mui/icons-material';
 import { Dialog as MDialog, IconButton } from '@mui/material';
+import { useEffect } from 'react';
 
 import {
   StyledDialogPaper,
@@ -17,6 +18,15 @@ export function Dialog<Resolve, Reject>({
   fullScreen,
   ...instanceProps
 }: CreateModalProps<DialogRenderProps<Resolve, Reject>>) {
+  useEffect(() => {
+    const onUrlChanged = () => instanceProps.onReject();
+
+    window.addEventListener('popstate', onUrlChanged);
+    return () => {
+      return window.removeEventListener('popstate', onUrlChanged);
+    };
+  });
+
   return (
     <MDialog
       fullScreen={fullScreen}

@@ -5,12 +5,12 @@ import { ValidationError } from '~/components/react-hook-form/_validation-error/
 import { DateTimePicker } from '~/ui-components/date-time-picker/date-time-picker.component';
 import { DateTimePickerProps } from '~/ui-components/date-time-picker/date-time-picker.type';
 
-interface FormDateTimePickerProps<
+type FormDateTimePickerProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> extends Partial<DateTimePickerProps> {
+> = Partial<DateTimePickerProps> & {
   controllerProps: UseControllerProps<TFieldValues, TName> & { ref: unknown };
-}
+};
 
 export function FormDateTimePicker<TFieldValues extends FieldValues = FieldValues>({
   controllerProps,
@@ -23,21 +23,19 @@ export function FormDateTimePicker<TFieldValues extends FieldValues = FieldValue
 
   const onChange = useCallback(
     (value: Date | null) => {
-      const newValue = value ?? undefined;
-
-      field.onChange(newValue);
-      pickerProps.onChange?.(newValue ?? null);
+      field.onChange(value);
+      pickerProps.onChange?.(value);
       field.onBlur();
     },
     [field, pickerProps],
   );
 
   return (
-    <ValidationError {...fieldState}>
+    <ValidationError {...fieldState} fullWidth={pickerProps.fullWidth}>
       <DateTimePicker
         {...field}
         {...pickerProps}
-        value={field.value ?? null}
+        value={field.value ? new Date(field.value) : null}
         inputRef={ref}
         onChange={onChange}
         invalid={fieldState.invalid}

@@ -9,13 +9,14 @@ import {
   ColumnsStylesInterface,
   GridSlotProps,
 } from '@mui/x-data-grid-premium';
-import { FC, useMemo } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ImportContainer } from '~/ui-components/datagrid/slots/toolbar/import/import-container.component';
 import { FullscreenButton } from '~/ui-components/fullscreen-button/fullscreen-button.component';
 import { availableDateFormats, availableDateTimeFormats } from '~/utils/date/time-format';
 
+import { setFullsreenedGridId } from '../../datagrid.store';
 import { FontSizeSettings } from '../_font-size-settings/font-size-settings.component';
 
 import { GridPdfExportMenuItem } from './export/export-pdf.component';
@@ -59,6 +60,13 @@ export const GridToolbar: FC<GridSlotProps['toolbar']> = ({
     return { ...otherStyles, ...dateStyles };
   }, [columns, i18n.language, excelExportOptions?.columnsStyles]);
 
+  const onFullscreenClicked = useCallback(
+    (enabled: boolean) => {
+      setFullsreenedGridId(enabled ? gridId ?? 'main' : null);
+    },
+    [gridId],
+  );
+
   return (
     <GridToolbarContainer {...props}>
       {hasFilters && <GridToolbarFilterButton slotProps={commonSlotProps} />}
@@ -78,7 +86,7 @@ export const GridToolbar: FC<GridSlotProps['toolbar']> = ({
       {customContent}
 
       <Box hidden={!hasFullscreenMode} marginLeft={'auto'}>
-        <FullscreenButton size={'small'} element={document.body} />
+        <FullscreenButton size={'small'} element={document.body} onChange={onFullscreenClicked} />
       </Box>
     </GridToolbarContainer>
   );

@@ -2,7 +2,7 @@ import { InputHTMLAttributes, ReactNode, Ref } from 'react';
 
 import { Extract, Variant, Size } from '../_type';
 
-export type InputTextType = 'text' | 'password' | 'email';
+export type InputTextType = 'text' | 'password' | 'email' | 'tel';
 
 export interface InputTextProps
   extends Pick<InputHTMLAttributes<HTMLInputElement>, 'autoComplete' | 'autoFocus'> {

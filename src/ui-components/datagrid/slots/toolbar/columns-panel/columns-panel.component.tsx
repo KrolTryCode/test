@@ -83,6 +83,7 @@ export const ColumnsPanel: FC<GridSlotProps['columnsPanel']> = ({ columnGrouping
           hideableColumnsLength={hideableColumns.length}
           groupedColumnFieldsLength={groupedColumnFields.length}
           visibleColumnsLength={visibleColumns.length}
+          buttonText={gridApi.getLocaleText('columnsManagementShowHideAllText')}
           onClick={handleShowHideAll}
         />
       )}

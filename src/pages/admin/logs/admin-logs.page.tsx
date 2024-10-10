@@ -11,7 +11,18 @@ const LogsPage: FC = () => {
   const { t } = useTranslation();
 
   const { data: logsList, isLoading } = useSearchAuditsQuery(
-    { types: ['File', 'Connection'], pageable: { size: 99_999, page: 0 } },
+    {
+      types: [
+        'Authentication',
+        'Password',
+        'Role',
+        'User',
+        'Account',
+        'ProjectMember',
+        'GroupMember',
+      ],
+      pageable: { size: 99_999, page: 0 },
+    },
     { criteria: [] },
     { select: selectPageableData },
   );
@@ -31,25 +42,8 @@ const LogsPage: FC = () => {
         flex: 1,
       },
       {
-        field: 'component',
-        headerName: t('LOGS.COMPONENT'),
-      },
-      {
-        field: 'source',
-        headerName: t('LOGS.SOURCE'),
-      },
-      {
         field: 'authorName',
-        headerName: t('ENTITY.USER'),
-        width: 200,
-      },
-      {
-        field: 'ip',
-        headerName: t('LOGS.IP'),
-      },
-      {
-        field: 'serviceHeaders',
-        headerName: t('LOGS.SERVICE_HEADERS'),
+        headerName: t('LOGS.SOURCE'),
         width: 200,
       },
       {

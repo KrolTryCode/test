@@ -26,7 +26,7 @@ export function Select<
   );
 
   const getOptionLabel = useCallback(
-    (item: Value) => (item && displayExpr in item ? (item[displayExpr] as string) : ''),
+    (item: Value) => (displayExpr in item ? (item[displayExpr] as string) : ''),
     [displayExpr],
   );
 
@@ -53,6 +53,9 @@ export function Select<
       getOptionLabel={getOptionLabel}
       disabled={isDisabled}
       readOnly={isReadonly}
+      title={selectProps.items
+        .filter(v => [value].flat().includes(v[valueExpr]))
+        .map(v => v[displayExpr] as string)}
       {...selectProps}
     />
   );

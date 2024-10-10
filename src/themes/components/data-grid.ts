@@ -59,16 +59,12 @@ export const MuiDataGrid: Components<Omit<Theme, 'components'>>['MuiDataGrid'] =
       // wordBreak: 'break-all',
 
       '&.grouping-row-cell': {
-        backgroundColor: theme.palette.grey[300],
         color: theme.palette.text.primary,
         border: 'none',
-        borderBottom: '1px solid #d4d4d4',
 
-        '&[data-field="__tree_data_group__"]': {
-          '&:not(.expanded), &:not(.expanded) ~ .grouping-row-cell, & ~ [data-field="actions"]': {
-            backgroundColor: 'unset',
-            borderRight: '1px solid #d4d4d4',
-          },
+        '&, & ~ .MuiDataGrid-cellEmpty': {
+          backgroundColor: theme.palette.grey[300],
+          borderBottom: '1px solid #d4d4d4',
         },
       },
 
@@ -99,6 +95,9 @@ export const MuiDataGrid: Components<Omit<Theme, 'components'>>['MuiDataGrid'] =
       },
       '&.success': {
         backgroundColor: theme.palette.success.light,
+      },
+      '&.acceptable': {
+        backgroundColor: theme.palette.acceptable.main,
       },
       '&.info': {
         backgroundColor: theme.palette.info.light,
@@ -137,6 +136,7 @@ export const MuiDataGrid: Components<Omit<Theme, 'components'>>['MuiDataGrid'] =
     }),
     columnHeader: {
       padding: '0 7px',
+
       '@supports (display: -webkit-box)': {
         '& .MuiDataGrid-columnHeaderTitleContainerContent': {
           height: '100%',
@@ -151,6 +151,9 @@ export const MuiDataGrid: Components<Omit<Theme, 'components'>>['MuiDataGrid'] =
             WebkitLineClamp: '2',
           },
         },
+      },
+      '&.MuiDataGrid-columnHeaderCheckbox': {
+        paddingLeft: 4,
       },
     },
     filterForm: {

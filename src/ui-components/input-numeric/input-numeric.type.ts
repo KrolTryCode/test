@@ -1,4 +1,4 @@
-import { ChangeEvent, FocusEvent } from 'react';
+import { ChangeEvent, FocusEvent, Ref } from 'react';
 
 import { Extract, Variant } from '../_type';
 
@@ -16,4 +16,5 @@ export interface InputNumericProps {
   isReadonly?: boolean;
   invalid?: boolean;
   fullWidth?: boolean;
+  inputRef?: Ref<HTMLInputElement>;
 }

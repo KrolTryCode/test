@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
-import { GridRenderEditCellParams, useGridApiContext } from '@mui/x-data-grid-premium';
-import { FC, useCallback, useState } from 'react';
+import { GridRenderEditCellParams } from '@mui/x-data-grid-premium';
+import { FC, useCallback, useLayoutEffect, useRef, useState } from 'react';
 
 import { InputNumeric } from '~/ui-components/input-numeric/input-numeric.component';
 import { InputNumericProps } from '~/ui-components/input-numeric/input-numeric.type';
@@ -8,15 +8,15 @@ import { Tooltip } from '~/ui-components/tooltip/tooltip.component';
 
 export const NumericEditingCell: FC<
   GridRenderEditCellParams<any, number | null> & { error?: string }
-> = ({ id, field, value, formattedValue, error }) => {
+> = ({ id, field, value, formattedValue, error, hasFocus, api: apiRef }) => {
   const [valueState, setValueState] = useState(value);
-  const apiRef = useGridApiContext();
+  const ref = useRef<HTMLInputElement>(null);
 
   const handleChange = useCallback<NonNullable<InputNumericProps['onChange']>>(
     async (value, event) => {
       const newValue = value && !Number.isNaN(value) ? +value : null;
       setValueState(newValue);
-      await apiRef.current.setEditCellValue({ id, field, value: newValue, debounceMs: 200 }, event);
+      await apiRef.setEditCellValue({ id, field, value: newValue, debounceMs: 200 }, event);
     },
     [apiRef, field, id],
   );
@@ -25,12 +25,19 @@ export const NumericEditingCell: FC<
       const value = error ? formattedValue : valueState;
       if (!error) {
         setValueState(value && !Number.isNaN(value) ? +value : null);
-        await apiRef.current.setEditCellValue({ id, field, value }, event);
-        apiRef.current.stopCellEditMode({ id, field });
+
+        await apiRef.setEditCellValue({ id, field, value }, event);
+        apiRef.stopCellEditMode({ id, field });
       }
     },
     [apiRef, error, field, formattedValue, id, valueState],
   );
+
+  useLayoutEffect(() => {
+    if (hasFocus) {
+      ref.current?.focus();
+    }
+  }, [hasFocus]);
 
   return (
     <Tooltip content={error} hasOffset={false} variant={'error'} placement={'bottom-start'}>
@@ -41,6 +48,7 @@ export const NumericEditingCell: FC<
           value={valueState && !Number.isNaN(valueState) ? valueState.toString() : ''}
           onChange={handleChange}
           onBlur={handleBlur}
+          inputRef={ref}
           fullWidth
         />
       </Box>

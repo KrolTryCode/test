@@ -1,30 +1,34 @@
 import { Paper } from '@mui/material';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
+import { useGridStore, closeFullscreen } from '../datagrid.store';
+
 interface GridFullscreenProps {
-  children: JSX.Element;
+  children: JSX.Element /* Grid */;
   hasFullscreenMode: boolean;
+  gridId?: string;
 }
 
-export const GridFullscreen: FC<GridFullscreenProps> = ({ children, hasFullscreenMode }) => {
-  const [enabled, setEnabled] = useState(false);
+export const GridFullscreen: FC<GridFullscreenProps> = ({
+  children,
+  hasFullscreenMode,
+  gridId = 'main',
+}) => {
+  const isInFs = useGridStore(state => state.fullsreenedGridId === gridId);
 
   useEffect(() => {
-    if (document.fullscreenEnabled) {
-      const onFullscreenChanged = () => setEnabled(!!document.fullscreenElement);
-
-      document.addEventListener('fullscreenchange', onFullscreenChanged);
-      return () => {
+    return () => {
+      if (isInFs) {
         if (document.fullscreenElement) {
           void document.exitFullscreen();
         }
-        document.removeEventListener('fullscreenchange', onFullscreenChanged);
-      };
-    }
-  }, []);
+        closeFullscreen();
+      }
+    };
+  }, [isInFs]);
 
-  if (hasFullscreenMode && document.fullscreenEnabled && enabled) {
+  if (hasFullscreenMode && isInFs) {
     return createPortal(
       <Paper
         sx={{ position: 'fixed', top: 0, height: '100vh', left: 0, width: '100vw', zIndex: 2 }}

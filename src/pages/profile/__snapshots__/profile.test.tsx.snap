@@ -67,7 +67,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-rccg0t-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -116,7 +116,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-rccg0t-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -165,7 +165,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-rccg0t-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -218,7 +218,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-rccg0t-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -267,7 +267,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-rccg0t-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -316,7 +316,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-rccg0t-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -366,7 +366,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-1m46seq-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-iwzgqv-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -437,7 +437,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-1m46seq-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-iwzgqv-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -524,7 +524,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-rccg0t-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -562,7 +562,7 @@ exports[`Profile > renders the profile > profile 1`] = `
               class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-dx6em0-MuiFormControlLabel-root"
             >
               <span
-                class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-yv63da-MuiButtonBase-root-MuiCheckbox-root"
+                class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-i20mv2-MuiButtonBase-root-MuiCheckbox-root"
               >
                 <input
                   class="PrivateSwitchBase-input css-1m9pwf3"
@@ -607,7 +607,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-rccg0t-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-invalid="false"
@@ -670,7 +670,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                 class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-18cqwq7-MuiFormControl-root-MuiTextField-root"
               >
                 <div
-                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedEnd Mui-readOnly MuiInputBase-readOnly css-1m46seq-MuiInputBase-root-MuiOutlinedInput-root"
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedEnd Mui-readOnly MuiInputBase-readOnly css-iwzgqv-MuiInputBase-root-MuiOutlinedInput-root"
                 >
                   <input
                     aria-invalid="false"
@@ -684,11 +684,11 @@ exports[`Profile > renders the profile > profile 1`] = `
                     value=""
                   />
                   <div
-                    class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeSmall css-1d2tyhs-MuiInputAdornment-root"
+                    class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeSmall css-1cj4z8e-MuiInputAdornment-root"
                   >
                     <button
                       aria-label="Выберите дату"
-                      class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1qqlian-MuiButtonBase-root-MuiIconButton-root"
+                      class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-edgeEnd MuiIconButton-sizeSmall css-1x2tsee-MuiButtonBase-root-MuiIconButton-root"
                       disabled=""
                       tabindex="-1"
                       type="button"
@@ -739,7 +739,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                 class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-18cqwq7-MuiFormControl-root-MuiTextField-root"
               >
                 <div
-                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedEnd Mui-readOnly MuiInputBase-readOnly css-1m46seq-MuiInputBase-root-MuiOutlinedInput-root"
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedEnd Mui-readOnly MuiInputBase-readOnly css-iwzgqv-MuiInputBase-root-MuiOutlinedInput-root"
                 >
                   <input
                     aria-invalid="false"
@@ -753,11 +753,11 @@ exports[`Profile > renders the profile > profile 1`] = `
                     value=""
                   />
                   <div
-                    class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeSmall css-1d2tyhs-MuiInputAdornment-root"
+                    class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeSmall css-1cj4z8e-MuiInputAdornment-root"
                   >
                     <button
                       aria-label="Выберите дату"
-                      class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1qqlian-MuiButtonBase-root-MuiIconButton-root"
+                      class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-edgeEnd MuiIconButton-sizeSmall css-1x2tsee-MuiButtonBase-root-MuiIconButton-root"
                       disabled=""
                       tabindex="-1"
                       type="button"
@@ -808,7 +808,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                 class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
               >
                 <div
-                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-rccg0t-MuiInputBase-root-MuiOutlinedInput-root"
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
                 >
                   <input
                     aria-invalid="false"
@@ -854,7 +854,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                 class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
               >
                 <div
-                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-rccg0t-MuiInputBase-root-MuiOutlinedInput-root"
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
                 >
                   <input
                     aria-invalid="false"
@@ -900,7 +900,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                 class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
               >
                 <div
-                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-rccg0t-MuiInputBase-root-MuiOutlinedInput-root"
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
                 >
                   <input
                     aria-invalid="false"
@@ -947,12 +947,13 @@ exports[`Profile > renders the profile > profile 1`] = `
             >
               <div
                 class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-yaw09c-MuiAutocomplete-root"
+                title=""
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-1m46seq-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-iwzgqv-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <input
                       aria-autocomplete="list"
@@ -1012,7 +1013,7 @@ exports[`Profile > renders the profile > profile 1`] = `
         </fieldset>
       </fieldset>
       <div
-        class="MuiStack-root css-1v1qdkn-MuiStack-root"
+        class="MuiStack-root css-chek0q-MuiStack-root"
       >
         <button
           class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorSecondary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorSecondary MuiButton-disableElevation  css-wg7wa7-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"

@@ -1,6 +1,5 @@
 import { GridColumnVisibilityModel, GridRowGroupingModel } from '@mui/x-data-grid-premium/';
 import { GridApiPremium } from '@mui/x-data-grid-premium/models/gridApiPremium';
-import { GridInitialStatePremium } from '@mui/x-data-grid-premium/models/gridStatePremium';
 import { MutableRefObject, useCallback, useLayoutEffect, useMemo } from 'react';
 
 import { GridPagingParams } from '../datagrid.types';
@@ -14,13 +13,12 @@ import {
 interface SyncGridStateOptions {
   gridId?: string;
   saveColumnsVisibilityModel: boolean;
-  initialState?: GridInitialStatePremium;
 }
 
 // https://mui.com/x/react-data-grid/state/#save-and-restore-the-state-from-external-storage
 export const useSyncGridState = (
   gridRef: MutableRefObject<GridApiPremium>,
-  { gridId = '', saveColumnsVisibilityModel, initialState }: SyncGridStateOptions,
+  { gridId = '', saveColumnsVisibilityModel }: SyncGridStateOptions,
 ) => {
   const postfix = useMemo(() => getSavedPath(window.location.pathname, gridId), [gridId]);
   const exactPostfix = useMemo(
@@ -28,82 +26,63 @@ export const useSyncGridState = (
     [gridId],
   );
 
-  const saveSnapshot = useCallback(() => {
-    if (gridRef?.current?.exportState) {
-      const currentState = gridRef.current.exportState();
-
-      updatePagingLS(
-        {
-          paginationModel: currentState.pagination
-            ?.paginationModel as GridPagingParams['paginationModel'],
-          filterModel: currentState.filter?.filterModel,
-          groupingModel: currentState.rowGrouping?.model,
-          sortModel: currentState.sorting?.sortModel,
-        },
-        exactPostfix,
+  //#region save state to ls callbacks
+  const onColumnVisibilityModelChange = useCallback(() => {
+    const currentState = gridRef?.current?.exportState?.();
+    saveColumnsVisibilityModel &&
+      currentState &&
+      updateColumnsVisibilityModelLS(
+        currentState.columns?.columnVisibilityModel,
+        currentState.rowGrouping?.model,
+        postfix,
       );
+  }, [gridRef, postfix, saveColumnsVisibilityModel]);
 
-      saveColumnsVisibilityModel &&
-        updateColumnsVisibilityModelLS(
-          currentState.columns?.columnVisibilityModel,
-          currentState.rowGrouping?.model,
-          postfix,
-        );
-    }
-  }, [gridRef, exactPostfix, saveColumnsVisibilityModel, postfix]);
+  const onPagingChangeSync = useCallback(
+    (updated: Partial<GridPagingParams>) => updatePagingLS(updated, exactPostfix),
+    [exactPostfix],
+  );
+
+  //#endregion
 
   const setPagingFromLS = useCallback(() => {
     const paging = localStorage.get(LSKeys.PagingParams, { postfix: exactPostfix });
 
     if (paging?.filterModel) {
-      gridRef.current.setFilterModel({ items: paging.filterModel.items });
+      gridRef.current.setFilterModel(paging.filterModel);
     }
     if (paging?.groupingModel) {
-      gridRef.current.setRowGroupingModel(paging?.groupingModel);
+      gridRef.current.setRowGroupingModel(paging.groupingModel);
     }
     if (paging?.sortModel) {
-      gridRef.current.setSortModel(paging?.sortModel);
+      gridRef.current.setSortModel(paging.sortModel);
     }
     if (paging?.paginationModel) {
-      gridRef?.current?.setPaginationModel(paging?.paginationModel);
+      gridRef?.current?.setPaginationModel(paging.paginationModel);
     }
   }, [exactPostfix, gridRef]);
 
   const setColumnVisibilityModelFromLS = useCallback(() => {
-    const model = {
-      ...initialState?.columns?.columnVisibilityModel,
-      ...localStorage.get(LSKeys.ColumnsHiddenList, { postfix }),
-    };
+    const model = localStorage.get(LSKeys.ColumnsHiddenList, { postfix });
     if (model && Object.keys(model).length) {
-      gridRef.current.setColumnVisibilityModel(model);
+      gridRef?.current?.setColumnVisibilityModel(model);
     }
-  }, [gridRef, initialState?.columns?.columnVisibilityModel, postfix]);
+  }, [gridRef, postfix]);
 
   useLayoutEffect(() => {
-    setColumnVisibilityModelFromLS();
-    setPagingFromLS();
-
-    window.addEventListener('beforeunload', saveSnapshot);
-    return () => {
-      window.removeEventListener('beforeunload', saveSnapshot);
-      saveSnapshot();
+    const applyStateFromLS = () => {
+      setColumnVisibilityModelFromLS();
+      setPagingFromLS();
     };
-  }, [
-    saveSnapshot,
-    setColumnVisibilityModelFromLS,
-    setPagingFromLS,
-    initialState?.columns?.columnVisibilityModel,
-  ]);
+    applyStateFromLS();
 
-  const setColumnWidthsFromLS = () => {
-    const widths = localStorage.get(LSKeys.ColumnsWidth, { postfix });
-    widths &&
-      Object.entries(widths).forEach(([field, width]) => {
-        gridRef.current.setColumnWidth(field, width);
-      });
-  };
+    window.addEventListener('fullscreenchange', applyStateFromLS);
+    return () => {
+      window.removeEventListener('fullscreenchange', applyStateFromLS);
+    };
+  }, [gridRef, setColumnVisibilityModelFromLS, setPagingFromLS]);
 
-  return { setColumnWidthsFromLS };
+  return { onColumnVisibilityModelChange, onPagingChangeSync };
 };
 
 function updateColumnsVisibilityModelLS(
@@ -122,6 +101,12 @@ function updateColumnsVisibilityModelLS(
   }
 }
 
-function updatePagingLS(pagingParams: GridPagingParams, postfix: string) {
-  localStorage.set(LSKeys.PagingParams, pagingParams, { postfix });
+function updatePagingLS(pagingParams: Partial<GridPagingParams>, postfix: string) {
+  const prevParams = localStorage.get(LSKeys.PagingParams, { postfix });
+
+  localStorage.set(
+    LSKeys.PagingParams,
+    prevParams ? { ...prevParams, ...pagingParams } : pagingParams,
+    { postfix },
+  );
 }

@@ -9,16 +9,19 @@ interface FormSearchTreeProps<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > extends Omit<SearchTreeProps, 'onSelect' | 'onBlur' | 'error' | 'value'> {
   controllerProps: UseControllerProps<TFieldValues, TName>;
+  onChange?: (value: string) => void;
 }
 
 export function FormSearchTree<TFieldValues extends FieldValues = FieldValues>({
   controllerProps,
+  onChange,
   ...props
 }: FormSearchTreeProps<TFieldValues, FieldPath<TFieldValues>>) {
   const { field, fieldState } = useController(controllerProps);
 
   const handleSelect = (value: string) => {
     field.onChange(value);
+    onChange?.(value);
     field.onBlur();
   };
 

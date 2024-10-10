@@ -52,6 +52,10 @@ export const themeOptions: ThemeOptions = {
         root: ({ theme }) => ({
           color: theme.palette.text.primary,
           paddingBlock: 0,
+          '& input:focus-visible ~ svg': {
+            outline: '1px solid',
+            borderRadius: theme.shape.borderRadius,
+          },
         }),
       },
     },

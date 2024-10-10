@@ -9,6 +9,7 @@ import { GridApiPremium } from '@mui/x-data-grid-premium/models/gridApiPremium';
 import { ForwardedRef, forwardRef, useImperativeHandle, useMemo } from 'react';
 
 import { modifyColumnGroupingModel } from '~/ui-components/datagrid/datagrid.utils';
+import { getGroupingColDef } from '~/ui-components/datagrid/helpers/column-enhancers/grouping-columns';
 import { useFlatRows } from '~/ui-components/datagrid/helpers/use-flat-rows.hook';
 import { ColumnsPanel } from '~/ui-components/datagrid/slots/toolbar/columns-panel/columns-panel.component';
 import { FilterPanel } from '~/ui-components/datagrid/slots/toolbar/filter-panel/filter-panel.component';
@@ -39,6 +40,7 @@ export const DataGrid = forwardRef(function DataGrid<T extends GridValidRowModel
     customToolbarContent,
     importToolbarContent,
     columnGroupingModel,
+    rowGroupingModel,
     ...passedProps
   }: DataGridProps<T>,
   parentRef: ForwardedRef<GridApiPremium>,
@@ -48,13 +50,12 @@ export const DataGrid = forwardRef(function DataGrid<T extends GridValidRowModel
   useImperativeHandle(parentRef, () => apiRef.current);
 
   // saveColumnsVisibilityModel: hasColumnChooser, т.к. при отсутствии выбора колонок, колонку не вернуть!
-  useSyncGridState(apiRef, {
+  const { onColumnVisibilityModelChange, onPagingChangeSync } = useSyncGridState(apiRef, {
     gridId,
     saveColumnsVisibilityModel: hasColumnChooser,
-    initialState: passedProps.initialState,
   });
 
-  const pagingProps = usePaging(passedProps);
+  const pagingProps = usePaging({ ...passedProps, rowGroupingModel, onPagingChangeSync });
   const columns = useEnhancedColumns<T>({
     columns: passedColumns,
     hasWidthSaving,
@@ -68,6 +69,8 @@ export const DataGrid = forwardRef(function DataGrid<T extends GridValidRowModel
 
   const { handleRowClick, handleColumnResize, getCellClassNameWrapper } = useGridCallbacks({
     ...passedProps,
+    hasWidthSaving,
+    gridId,
     apiRef,
   });
 
@@ -149,8 +152,13 @@ export const DataGrid = forwardRef(function DataGrid<T extends GridValidRowModel
     importToolbarContent,
   ]);
 
+  const handleColumnVisibility: DataGridProps['onColumnVisibilityModelChange'] = (...args) => {
+    onColumnVisibilityModelChange();
+    passedProps?.onColumnVisibilityModelChange?.(...args);
+  };
+
   return (
-    <GridFullscreen hasFullscreenMode={hasFullscreenMode}>
+    <GridFullscreen hasFullscreenMode={hasFullscreenMode} gridId={gridId}>
       <MuiDataGrid<T>
         {...gridCustomDefaultProps}
         {...passedProps}
@@ -158,11 +166,13 @@ export const DataGrid = forwardRef(function DataGrid<T extends GridValidRowModel
         slotProps={slotProps}
         rows={rows}
         columns={columns}
+        onColumnVisibilityModelChange={handleColumnVisibility}
         onColumnResize={handleColumnResize}
         onRowClick={handleRowClick}
         apiRef={apiRef}
         getCellClassName={getCellClassNameWrapper}
         columnGroupingModel={modifiedColumnGroupingModel}
+        groupingColDef={getGroupingColDef}
         {...pagingProps}
       />
     </GridFullscreen>

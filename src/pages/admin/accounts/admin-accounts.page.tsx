@@ -76,10 +76,13 @@ const AdminUsersPage: FC = () => {
         field: 'state',
         headerName: t('COMMON.STATUS'),
         flex: 1,
-        sortable: false, // todo: Не работает
         valueFormatter(value: string) {
           return translateStatus(value);
         },
+        // Не работает
+        sortable: false,
+        groupable: false,
+        filterable: false,
       },
       {
         field: 'admin',
@@ -88,7 +91,10 @@ const AdminUsersPage: FC = () => {
         type: 'boolean',
         headerAlign: 'left',
         editable: true,
-        sortable: false, // todo: Не работает
+        // Не работает
+        sortable: false,
+        groupable: false,
+        filterable: false,
       },
       {
         field: 'actions',
@@ -99,6 +105,7 @@ const AdminUsersPage: FC = () => {
           return [
             <GridActionsCellItem
               key={'edit'}
+              disabled={state === UserStateEnum.WaitingForActivation}
               title={t('ACTION.EDIT')}
               label={t('ACTION.EDIT')}
               icon={<EditIcon />}
