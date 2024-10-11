@@ -1,7 +1,5 @@
+import { Autocomplete, AutocompleteProps } from '@pspod/ui-components';
 import { FieldPath, FieldValues, UseControllerProps, useController } from 'react-hook-form';
-
-import { Autocomplete } from '~/ui-components/autocomplete/autocomplete.component';
-import { AutocompleteProps } from '~/ui-components/autocomplete/autocomplete.type';
 
 import { ValidationError } from '../_validation-error/validation-error.component';
 

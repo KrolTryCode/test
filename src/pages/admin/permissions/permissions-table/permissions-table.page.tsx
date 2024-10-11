@@ -5,6 +5,7 @@ import {
   GridRenderCellParams,
   useGridApiRef,
 } from '@mui/x-data-grid-premium';
+import { notifySuccess } from '@pspod/ui-components';
 import { ChangeEvent, FC, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -14,7 +15,6 @@ import { useGetAllRolesQuery } from '~/api/queries/roles/get-all-roles.query';
 import { useRemoveRolePermissionsMutation } from '~/api/queries/roles/remove-role-permissions.mutation';
 import { DataGrid } from '~/ui-components/datagrid/datagrid.component';
 import { EnhancedColDef, GridPagingParams } from '~/ui-components/datagrid/datagrid.types';
-import { notifySuccess } from '~/ui-components/notifications/notifications';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { GridPermission } from '../permissions.type';

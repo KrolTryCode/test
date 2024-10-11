@@ -1,11 +1,11 @@
 import { MoreVert as ShowMoreIcon } from '@mui/icons-material';
 import { MenuItem } from '@mui/material';
 import Box from '@mui/material/Box';
+import { DropdownMenu } from '@pspod/ui-components';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { DropdownMenuItem, NavTreeItemData } from '~/components/nav-tree/nav-tree.type';
-import { DropdownMenu } from '~/ui-components/dropdown-menu/dropdown-menu.component';
 
 export const ItemDropdownMenu: FC<{
   item: NavTreeItemData;

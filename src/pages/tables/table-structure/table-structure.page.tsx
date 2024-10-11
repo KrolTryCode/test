@@ -5,6 +5,7 @@ import {
   GridRowOrderChangeParams,
   useGridApiRef,
 } from '@mui/x-data-grid-premium';
+import { notifySuccess } from '@pspod/ui-components';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -18,7 +19,6 @@ import { DataGrid } from '~/ui-components/datagrid/datagrid.component';
 import { EnhancedColDef, GridPagingParams } from '~/ui-components/datagrid/datagrid.types';
 import { AddEntity } from '~/ui-components/datagrid/slots/toolbar/add/add-entity.component';
 import { useGetRowActions } from '~/ui-components/datagrid/use-get-grid-row-actions.hook';
-import { notifySuccess } from '~/ui-components/notifications/notifications';
 import { reorderRows } from '~/utils/reorder-rows';
 import { showErrorMessage } from '~/utils/show-error-message';
 

@@ -1,11 +1,10 @@
 import { Stack, Typography } from '@mui/material';
+import { DropdownMenu, Avatar } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { useUserStore } from '~/app/user/user.store';
-import { Avatar } from '~/ui-components/avatar/avatar.component';
-import { DropdownMenu } from '~/ui-components/dropdown-menu/dropdown-menu.component';
 import { profilePath } from '~/utils/configuration/routes-paths';
 import { useAuthenticate } from '~/utils/hooks/use-authenticate';
 

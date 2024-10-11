@@ -8,11 +8,11 @@ import {
   useGridApiContext,
   useGridSelector,
 } from '@mui/x-data-grid-premium';
+import { Button } from '@pspod/ui-components';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 
-import { Button } from '~/ui-components/button/button.component';
 import { serviceRowGroupPrefix } from '~/ui-components/datagrid/datagrid.utils';
 
 export const FilterPanel: FC<GridFilterPanelProps> = props => {

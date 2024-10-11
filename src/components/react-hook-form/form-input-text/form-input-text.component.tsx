@@ -1,8 +1,5 @@
+import { InputText, MaskedInput, InputTextProps } from '@pspod/ui-components';
 import { FieldPath, FieldValues, UseControllerProps, useController } from 'react-hook-form';
-
-import { InputText } from '~/ui-components/input-text/input-text.component';
-import { InputTextProps } from '~/ui-components/input-text/input-text.type';
-import { MaskedInput } from '~/ui-components/masked-input/masked-input.component';
 
 import { ValidationError } from '../_validation-error/validation-error.component';
 

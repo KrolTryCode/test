@@ -1,4 +1,5 @@
 import { GridEventListener, GridRowEditStopReasons, useGridApiRef } from '@mui/x-data-grid-premium';
+import { notifySuccess } from '@pspod/ui-components';
 import { FC, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -11,7 +12,6 @@ import { DataGrid } from '~/ui-components/datagrid/datagrid.component';
 import { EnhancedColDef, GridPagingParams } from '~/ui-components/datagrid/datagrid.types';
 import { AddEntity } from '~/ui-components/datagrid/slots/toolbar/add/add-entity.component';
 import { useGetRowActions } from '~/ui-components/datagrid/use-get-grid-row-actions.hook';
-import { notifySuccess } from '~/ui-components/notifications/notifications';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { addRoleModal } from '../add-role/add-role.component';

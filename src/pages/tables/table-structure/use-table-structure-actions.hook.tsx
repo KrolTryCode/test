@@ -1,3 +1,4 @@
+import { notifySuccess } from '@pspod/ui-components';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InstanceProps } from 'react-modal-promise';
@@ -8,7 +9,6 @@ import { useEditNodeColumnNameMutation } from '~/api/queries/nodes/structure/edi
 import { ColumnDefinition } from '~/api/utils/api-requests';
 import { modal } from '~/components/modal/modal';
 import { AddColumnForm } from '~/pages/tables/table-structure/add-column/add-column-form.component';
-import { notifySuccess } from '~/ui-components/notifications/notifications';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const useTableStructureActions = (nodeId: string) => {

@@ -1,6 +1,7 @@
+import { Preloader } from '@pspod/ui-components';
+
 import { useGetModulesListQuery } from '~/api/queries/settings/get-modules-list.query';
 import { ConfigurationFormComponent } from '~/components/configuration-form/configuration-form.component';
-import { Preloader } from '~/ui-components/preloader/preloader.component';
 
 const SettingsPage = () => {
   const { data: modulesList, isLoading } = useGetModulesListQuery();

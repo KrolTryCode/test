@@ -1,4 +1,5 @@
 import { GridActionsCellItem } from '@mui/x-data-grid-premium';
+import { notifySuccess } from '@pspod/ui-components';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -7,7 +8,6 @@ import { useStopTaskMutation } from '~/api/queries/tasks/stop-task.mutation';
 import { FullTaskInfo } from '~/api/utils/api-requests';
 import { DataGrid } from '~/ui-components/datagrid/datagrid.component';
 import { EnhancedColDef } from '~/ui-components/datagrid/datagrid.types';
-import { notifySuccess } from '~/ui-components/notifications/notifications';
 import { showErrorMessage } from '~/utils/show-error-message';
 import { translateStatus } from '~/utils/translate-status';
 

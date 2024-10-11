@@ -1,3 +1,4 @@
+import { Preloader } from '@pspod/ui-components';
 import { lazy, Suspense } from 'react';
 import { RouteObject, createBrowserRouter } from 'react-router-dom';
 
@@ -6,7 +7,6 @@ import { RouteErrorBoundary } from '~/pages/_fallbacks/errors/error-boundary/err
 import { TitleProvider } from '~/routing/page-title.context';
 import { routes } from '~/routing/routes/routes';
 import { RouteDescription, RouteTitleMeta } from '~/routing/routes.types';
-import { Preloader } from '~/ui-components/preloader/preloader.component';
 
 export const router = createBrowserRouter([
   {

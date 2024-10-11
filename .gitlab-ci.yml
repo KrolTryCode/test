@@ -17,6 +17,8 @@ stages:
   image: $NODE_IMAGE
   variables:
     CI: '0'
+  before_script:
+    - echo "//gitlab.spbpu.com/api/v4/projects/487/packages/npm/:_authToken=${NPM_READ_PACKAGES}" > ~/.npmrc
   script:
     - npm ci
     - npm run build:api
@@ -26,6 +28,7 @@ stages:
       - build
       - node_modules
       - src/api/utils
+      - .npmrc
     expire_in: 3m
 
 ⚒️build:dev:
@@ -54,20 +57,18 @@ stages:
     CI: '1'
     ESLINT_CODE_QUALITY_REPORT: gl-codequality.json
   script:
-    - npm ci
     - npm run lint:eslint -- --format gitlab
   artifacts:
     reports:
       codequality: gl-codequality.json
 
 🪶lint:stylelint:
+  image: $NODE_IMAGE
   variables:
     CI: '1'
     STYLELINT_CODE_QUALITY_REPORT: gl-codequality.json
   stage: lint
-  image: $NODE_IMAGE
   script:
-    - npm ci
     - npm run lint:styles -- --custom-formatter node_modules/stylelint-formatter-gitlab
   artifacts:
     reports:

@@ -1,8 +1,8 @@
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { Tooltip } from '@pspod/ui-components';
 import { FC } from 'react';
 
 import { AccountConfiguration } from '~/api/utils/api-requests';
-import { Tooltip } from '~/ui-components/tooltip/tooltip.component';
 
 import { RuleList } from './rule-list/rule-list.component';
 

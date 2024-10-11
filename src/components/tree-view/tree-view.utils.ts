@@ -1,6 +1,5 @@
+import { TreeViewApiType, TreeViewItemData } from '@pspod/ui-components';
 import { MutableRefObject } from 'react';
-
-import { TreeViewApiType, TreeViewItemData } from '~/ui-components/tree-view/tree-view.type';
 
 export function getSelfAndAllDescendantIds(
   apiRef: MutableRefObject<TreeViewApiType | undefined>,

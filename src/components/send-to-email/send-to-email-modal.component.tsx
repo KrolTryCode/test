@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Clear } from '@mui/icons-material';
 import { Unstable_Grid2 as Grid, IconButton } from '@mui/material';
+import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
 import { t } from 'i18next';
 import { FC } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -11,8 +12,6 @@ import { modal } from '~/components/modal/modal';
 import { CreateModalProps } from '~/components/modal/modal.type';
 import { FormInputText } from '~/components/react-hook-form';
 import { schema, EmailsListType } from '~/components/send-to-email/emails.schema';
-import { Button } from '~/ui-components/button/button.component';
-import { Form, FormButtons, FormItem } from '~/ui-components/form';
 
 interface EnterEmailFormProps
   extends Pick<CreateModalProps<Record<string, never>>, 'onResolve' | 'onReject'> {

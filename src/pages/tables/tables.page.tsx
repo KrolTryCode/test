@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import { Panel, PanelGroup, PanelResizer } from '@pspod/ui-components';
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 
@@ -6,11 +7,6 @@ import { NotFoundNodes } from '~/pages/_fallbacks/errors/not-found/not-found.com
 import { NodesTree } from '~/pages/tables/tree/nodes-tree.component';
 import { useNavTreeActions } from '~/pages/tables/tree/use-nav-tree-actions.hook';
 import { useTablesMenuData } from '~/pages/tables/use-tables-menu-data.hook';
-import {
-  Panel,
-  PanelGroup,
-  PanelResizer,
-} from '~/ui-components/resizable-panels/resizable-panels.component';
 import { tablesPath } from '~/utils/configuration/routes-paths';
 
 const TablesLayout: FC = () => {

@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Form, FormItem, FormButtons, Button, notifySuccess } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -11,9 +12,6 @@ import {
 import { modal } from '~/components/modal/modal';
 import { CreateModalProps } from '~/components/modal/modal.type';
 import { FormInputText } from '~/components/react-hook-form/form-input-text/form-input-text.component';
-import { Button } from '~/ui-components/button/button.component';
-import { Form, FormItem, FormButtons } from '~/ui-components/form';
-import { notifySuccess } from '~/ui-components/notifications/notifications';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { schema, CreateAccountForm as ICreateAccountForm } from './create-account.schema';

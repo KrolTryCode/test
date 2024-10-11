@@ -1,3 +1,4 @@
+import { notifySuccess } from '@pspod/ui-components';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -8,7 +9,6 @@ import { useRemoveUserFromAdminsMutation } from '~/api/queries/accounts/remove-a
 import { useSetUserAsAdminMutation } from '~/api/queries/accounts/set-admin.mutation';
 import { useUpdateAccountMutation } from '~/api/queries/accounts/update-account.mutation';
 import { UpdateAccountRequestStateEnum, User } from '~/api/utils/api-requests';
-import { notifySuccess } from '~/ui-components/notifications/notifications';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export function useAdminAccounts() {

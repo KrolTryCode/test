@@ -1,8 +1,8 @@
+import { notifyError } from '@pspod/ui-components';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { notifyError } from '~/ui-components/notifications/notifications';
 import { authPath, loginPath } from '~/utils/configuration/routes-paths';
 
 export const useAuthSearchParams = (hasUsername = false) => {

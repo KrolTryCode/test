@@ -1,10 +1,10 @@
 import { Card, Stack, Typography } from '@mui/material';
+import { Button } from '@pspod/ui-components';
 import { SnackbarContent, CustomContentProps, enqueueSnackbar, closeSnackbar } from 'notistack';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavigateFunction } from 'react-router-dom';
 
-import { Button } from '~/ui-components/button/button.component';
 import { profilePath } from '~/utils/configuration/routes-paths';
 
 interface PasswordExpiredProps extends CustomContentProps {

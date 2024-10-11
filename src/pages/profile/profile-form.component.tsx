@@ -1,10 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Button, Form, FormButtons } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-
-import { Button } from '~/ui-components/button/button.component';
-import { Form, FormButtons } from '~/ui-components/form';
 
 import { Contacts } from './contacts/contacts.component';
 import { PersonalData } from './personal-data/personal-data.component';

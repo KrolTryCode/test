@@ -1,10 +1,10 @@
+import { FormItem, Fieldset } from '@pspod/ui-components';
 import { FC } from 'react';
 import { Control, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { FormCheckbox } from '~/components/react-hook-form/form-checkbox/form-checkbox.component';
 import { FormInputText } from '~/components/react-hook-form/form-input-text/form-input-text.component';
-import { FormItem, Fieldset } from '~/ui-components/form';
 
 import { UpdateProfileForm } from '../profile-form.schema';
 

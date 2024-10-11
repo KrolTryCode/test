@@ -28,6 +28,7 @@ src/api/utils/api-requests.ts
 src/assets/dictionary/ui_messages.properties
 src/assets/dictionary/ui_messages_en.properties
 src/assets/dictionary/ui_messages_ru.properties
+.npmrc
 
 #volumes
 db_data

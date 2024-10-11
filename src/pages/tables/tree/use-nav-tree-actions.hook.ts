@@ -1,3 +1,4 @@
+import { notifySuccess } from '@pspod/ui-components';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +11,6 @@ import { DEFAULT_PROJECT_ID } from '~/app/user/user.store';
 import { nodeModal } from '~/components/modals-content/node-modal.component';
 import { NavTreeItemData } from '~/components/nav-tree/nav-tree.type';
 import { useTreeNodesUtils } from '~/pages/tables/tree/use-tree-nodes-utils.hook';
-import { notifySuccess } from '~/ui-components/notifications/notifications';
 import { editPath, structurePath, tablesPath } from '~/utils/configuration/routes-paths';
 import { showErrorMessage } from '~/utils/show-error-message';
 

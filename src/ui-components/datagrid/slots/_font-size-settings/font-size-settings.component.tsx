@@ -1,11 +1,7 @@
 import { useGridApiContext } from '@mui/x-data-grid-premium';
+import { DropdownMenu, DropdownMenuProps } from '@pspod/ui-components';
 import { FC, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import {
-  DropdownMenu,
-  DropdownMenuProps,
-} from '~/ui-components/dropdown-menu/dropdown-menu.component';
 
 import {
   getSavedPath,
