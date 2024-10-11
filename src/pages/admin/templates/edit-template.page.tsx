@@ -1,11 +1,11 @@
 import { Typography } from '@mui/material';
+import { Preloader } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { useGetTemplateQuery } from '~/api/queries/templates/get-template.query';
 import { TemplateForm } from '~/pages/admin/templates/template-form/template-form.component';
-import { Preloader } from '~/ui-components/preloader/preloader.component';
 
 export const EditTemplate: FC = () => {
   const { t } = useTranslation();

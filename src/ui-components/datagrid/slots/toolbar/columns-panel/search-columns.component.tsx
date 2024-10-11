@@ -1,9 +1,8 @@
 import { Search } from '@mui/icons-material';
 import { GridPanelHeader } from '@mui/x-data-grid-premium';
+import { InputText } from '@pspod/ui-components';
 import { FC, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { InputText } from '~/ui-components/input-text/input-text.component';
 
 export const SearchColumns: FC<{ searchText: string; onChange: (searchValue: string) => void }> = ({
   searchText,

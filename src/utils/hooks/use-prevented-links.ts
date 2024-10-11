@@ -1,7 +1,6 @@
+import { notifyInfo } from '@pspod/ui-components';
 import { MutableRefObject, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { notifyInfo } from '~/ui-components/notifications/notifications';
 
 export function usePreventedLinks(container?: MutableRefObject<HTMLElement | undefined>) {
   const { t } = useTranslation();

@@ -1,7 +1,6 @@
+import { notifyError } from '@pspod/ui-components';
 import { AxiosError, AxiosResponse } from 'axios';
 import { t } from 'i18next';
-
-import { notifyError } from '~/ui-components/notifications/notifications';
 
 export const showErrorMessageAsync = async (e: unknown, defaultMessage: string) => {
   let message = '';

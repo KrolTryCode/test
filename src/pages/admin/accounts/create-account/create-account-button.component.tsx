@@ -1,8 +1,7 @@
 import CreateIcon from '@mui/icons-material/PersonAddAltOutlined';
+import { Button } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { Button } from '~/ui-components/button/button.component';
 
 import { createAccountModal } from './create-account-form.component';
 

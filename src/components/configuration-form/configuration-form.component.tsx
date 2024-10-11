@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Typography } from '@mui/material';
+import { Form, FormButtons, FormItem, Button, notifySuccess } from '@pspod/ui-components';
 import { ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -12,9 +13,6 @@ import {
   PropertyInfo,
 } from '~/components/configuration-form/configuration-form.type';
 import { FormCheckbox, FormInputNumeric, FormInputText } from '~/components/react-hook-form';
-import { Button } from '~/ui-components/button/button.component';
-import { Form, FormButtons, FormItem } from '~/ui-components/form';
-import { notifySuccess } from '~/ui-components/notifications/notifications';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { getSchema } from './configuration-form.schema';

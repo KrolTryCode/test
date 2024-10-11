@@ -1,12 +1,9 @@
+import { FormItem, Fieldset, Select, InputText, DateTimePicker } from '@pspod/ui-components';
 import { FC } from 'react';
 import { Control, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { User, UserStateEnum } from '~/api/utils/api-requests';
-import { DateTimePicker } from '~/ui-components/date-time-picker/date-time-picker.component';
-import { FormItem, Fieldset } from '~/ui-components/form';
-import { InputText } from '~/ui-components/input-text/input-text.component';
-import { Select } from '~/ui-components/select/select.component';
 import { translateStatus } from '~/utils/translate-status';
 
 import { UpdateProfileForm } from '../profile-form.schema';

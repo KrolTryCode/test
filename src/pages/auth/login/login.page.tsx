@@ -1,13 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Stack } from '@mui/material';
+import { Form, FormButtons, FormItem, Button } from '@pspod/ui-components';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { useLoginMutation } from '~/api/queries/accounts/login.mutation';
 import { FormCheckbox, FormInputText } from '~/components/react-hook-form';
-import { Button } from '~/ui-components/button/button.component';
-import { Form, FormButtons, FormItem } from '~/ui-components/form';
 import { authPath, registerPath, resetPasswordPath } from '~/utils/configuration/routes-paths';
 import { useAuthenticate } from '~/utils/hooks/use-authenticate';
 import { showErrorMessage } from '~/utils/show-error-message';

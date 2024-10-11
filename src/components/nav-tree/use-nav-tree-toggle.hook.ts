@@ -1,7 +1,7 @@
+import { TreeViewApiType } from '@pspod/ui-components';
 import { MutableRefObject, SyntheticEvent, useCallback, useState } from 'react';
 
-import { TreeViewApiType } from '~/ui-components/tree-view/tree-view.type';
-import { getSelfAndAllDescendantIds } from '~/ui-components/tree-view/tree-view.utils';
+import { getSelfAndAllDescendantIds } from '~/components/tree-view/tree-view.utils';
 
 export const useNavTreeToggle = (apiRef: MutableRefObject<TreeViewApiType | undefined>) => {
   const [expandedItems, setExpandedItems] = useState<string[]>([]);

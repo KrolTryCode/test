@@ -1,12 +1,11 @@
 import { Done } from '@mui/icons-material';
 import { Box } from '@mui/material';
+import { Tooltip, Button } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ContentNodeTypeEnum } from '~/api/utils/api-requests';
 import { NavTreeItemData } from '~/components/nav-tree/nav-tree.type';
-import { Button } from '~/ui-components/button/button.component';
-import { Tooltip } from '~/ui-components/tooltip/tooltip.component';
 
 export const SelectItemButton: FC<{
   item: NavTreeItemData;

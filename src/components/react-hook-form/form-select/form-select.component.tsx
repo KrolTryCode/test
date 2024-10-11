@@ -1,7 +1,5 @@
+import { Select, SelectProps } from '@pspod/ui-components';
 import { FieldPath, FieldValues, UseControllerProps, useController } from 'react-hook-form';
-
-import { Select } from '~/ui-components/select/select.component';
-import { SelectProps } from '~/ui-components/select/select.type';
 
 import { ValidationError } from '../_validation-error/validation-error.component';
 

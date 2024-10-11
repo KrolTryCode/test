@@ -1,10 +1,10 @@
 import { AttachFile } from '@mui/icons-material';
+import { Button } from '@pspod/ui-components';
 import { ChangeEvent, InputHTMLAttributes, useRef, useState } from 'react';
 import { FieldPath, FieldValues, useController, UseControllerProps } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { ValidationError } from '~/components/react-hook-form/_validation-error/validation-error.component';
-import { Button } from '~/ui-components/button/button.component';
 
 interface FormInputFileProps<
   TFieldValues extends FieldValues = FieldValues,

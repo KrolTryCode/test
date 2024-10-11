@@ -2,10 +2,9 @@ import RestartIcon from '@mui/icons-material/RestartAlt';
 import TextDecreaseIcon from '@mui/icons-material/TextDecreaseRounded';
 import TextIncreaseIcon from '@mui/icons-material/TextIncreaseRounded';
 import { ButtonGroup, Box, Typography } from '@mui/material';
+import { Button } from '@pspod/ui-components';
 import { FC, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { Button } from '~/ui-components/button/button.component';
 
 import { DEFAULT_FONT_SIZE, MAX_FONT_SIZE, STEP } from './font-size-settings.consts';
 

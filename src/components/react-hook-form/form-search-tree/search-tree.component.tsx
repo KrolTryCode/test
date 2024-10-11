@@ -1,5 +1,6 @@
 import { Cancel as CancelIcon } from '@mui/icons-material';
 import { ClickAwayListener, OutlinedInput, Typography } from '@mui/material';
+import { Button } from '@pspod/ui-components';
 import {
   ChangeEventHandler,
   FC,
@@ -13,9 +14,8 @@ import { useDebounce } from 'use-debounce';
 
 import { NavTreeItemData, NavTreeItemProps } from '~/components/nav-tree/nav-tree.type';
 import { PopperWithPaper } from '~/components/popper-with-paper/popper-with-paper.component';
+import { TreeViewIndanis } from '~/components/tree-view/tree-view-indanis.component';
 import { useTreeNodesUtils } from '~/pages/tables/tree/use-tree-nodes-utils.hook';
-import { Button } from '~/ui-components/button/button.component';
-import { TreeView } from '~/ui-components/tree-view/tree-view.component';
 
 export interface SearchTreeProps {
   items: NavTreeItemData[];
@@ -137,7 +137,7 @@ export const SearchTree: FC<SearchTreeProps> = props => {
 
         <PopperWithPaper isOpen={showTree} anchorEl={ref.current} isContentLoading={isLoading}>
           {treeList.length ? (
-            <TreeView
+            <TreeViewIndanis
               items={treeList}
               selectedItems={selectedItemId}
               expandedItems={expandedNodes}

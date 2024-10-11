@@ -1,14 +1,10 @@
 import { html } from '@codemirror/lang-html';
 import Box from '@mui/material/Box';
+import { Panel, PanelGroup, PanelResizer } from '@pspod/ui-components';
 import ReactCodeMirror from '@uiw/react-codemirror';
 import { FC, FocusEventHandler, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {
-  Panel,
-  PanelGroup,
-  PanelResizer,
-} from '~/ui-components/resizable-panels/resizable-panels.component';
 import { usePreventedLinks } from '~/utils/hooks/use-prevented-links';
 
 export type HTMLRichEditorProps = {

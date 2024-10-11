@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Form, FormItem, FormButtons, Button, notifySuccess } from '@pspod/ui-components';
 import { FC, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -8,9 +9,6 @@ import { useUpdateTemplateMutation } from '~/api/queries/templates/update-templa
 import { CreateTemplateRequest, Template } from '~/api/utils/api-requests';
 import { FormInputRichTextEditor } from '~/components/react-hook-form/form-input-rich-editor/form-input-rich-editor.component';
 import { FormInputText } from '~/components/react-hook-form/form-input-text/form-input-text.component';
-import { Button } from '~/ui-components/button/button.component';
-import { Form, FormItem, FormButtons } from '~/ui-components/form';
-import { notifySuccess } from '~/ui-components/notifications/notifications';
 import { adminPath, templatesPath } from '~/utils/configuration/routes-paths';
 import { showErrorMessage } from '~/utils/show-error-message';
 

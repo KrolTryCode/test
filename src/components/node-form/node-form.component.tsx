@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Form, FormButtons, FormItem, Button } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -12,8 +13,6 @@ import { selectNodeTypes } from '~/components/node-form/node-form.utils';
 import { FormInputText, FormSelect } from '~/components/react-hook-form';
 import { FormSearchTree } from '~/components/react-hook-form/form-search-tree/form-search-tree.component';
 import { useTablesMenuData } from '~/pages/tables/use-tables-menu-data.hook';
-import { Button } from '~/ui-components/button/button.component';
-import { Form, FormButtons, FormItem } from '~/ui-components/form';
 
 export interface NodeFormData {
   name?: string;

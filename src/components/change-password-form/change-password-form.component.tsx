@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Stack } from '@mui/material';
+import { Form, FormItem, FormButtons, Button, InputText } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -7,9 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { useGetPasswordConfigurationQuery } from '~/api/queries/settings/get-password-configuration.query';
 import { AccountConfiguration } from '~/api/utils/api-requests';
 import { FormInputText } from '~/components/react-hook-form/form-input-text/form-input-text.component';
-import { Button } from '~/ui-components/button/button.component';
-import { Form, FormItem, FormButtons } from '~/ui-components/form';
-import { InputText } from '~/ui-components/input-text/input-text.component';
 
 import {
   ChangePasswordForm as IChangePasswordForm,

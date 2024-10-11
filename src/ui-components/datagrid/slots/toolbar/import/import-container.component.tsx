@@ -1,8 +1,7 @@
 import { PublishOutlined as ImportIcon } from '@mui/icons-material';
+import { DropdownMenu } from '@pspod/ui-components';
 import { FC, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { DropdownMenu } from '~/ui-components/dropdown-menu/dropdown-menu.component';
 
 export const ImportContainer: FC<{ importToolbarContent: ReactNode }> = ({
   importToolbarContent,

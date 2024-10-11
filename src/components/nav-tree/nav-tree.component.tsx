@@ -1,10 +1,10 @@
-import { useTreeViewApiRef } from '@mui/x-tree-view';
+import { useTreeViewApiRef } from '@pspod/ui-components';
 import { FC, useEffect, useMemo, useState } from 'react';
 
 import { NavTreeSkeleton } from '~/components/nav-tree/nav-tree-skeleton.component';
 import { useNavTreeToggle } from '~/components/nav-tree/use-nav-tree-toggle.hook';
-import { TreeView } from '~/ui-components/tree-view/tree-view.component';
-import { getSelfAndAllAncestorIds } from '~/ui-components/tree-view/tree-view.utils';
+import { TreeViewIndanis } from '~/components/tree-view/tree-view-indanis.component';
+import { getSelfAndAllAncestorIds } from '~/components/tree-view/tree-view.utils';
 
 import { NavTreeItemProps, NavTreeProps } from './nav-tree.type';
 import { useNavTreeHrefLUT } from './use-nav-tree-href-lut.hook';
@@ -48,7 +48,7 @@ export const NavTree: FC<NavTreeProps> = props => {
   }
 
   return (
-    <TreeView
+    <TreeViewIndanis
       ref={apiRef}
       items={data}
       slots={slots}

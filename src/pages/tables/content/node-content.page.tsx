@@ -1,5 +1,6 @@
 import { Folder } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
+import { Preloader } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -8,7 +9,6 @@ import { useGetContentNodes } from '~/api/queries/nodes/get-content-nodes.query'
 import { ContentNodeTypeEnum } from '~/api/utils/api-requests';
 import { DEFAULT_PROJECT_ID } from '~/app/user/user.store';
 import { EmptyCatalog, EmptyTable } from '~/pages/_fallbacks/info/empty/empty-element.component';
-import { Preloader } from '~/ui-components/preloader/preloader.component';
 
 const NodeContent: FC = () => {
   const { nodeId = '' } = useParams();

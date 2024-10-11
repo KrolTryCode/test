@@ -1,10 +1,7 @@
 import { Box } from '@mui/material';
 import { GridRenderEditCellParams } from '@mui/x-data-grid-premium';
+import { Tooltip, InputNumeric, InputNumericProps } from '@pspod/ui-components';
 import { FC, useCallback, useLayoutEffect, useRef, useState } from 'react';
-
-import { InputNumeric } from '~/ui-components/input-numeric/input-numeric.component';
-import { InputNumericProps } from '~/ui-components/input-numeric/input-numeric.type';
-import { Tooltip } from '~/ui-components/tooltip/tooltip.component';
 
 export const NumericEditingCell: FC<
   GridRenderEditCellParams<any, number | null> & { error?: string }

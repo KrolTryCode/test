@@ -1,9 +1,9 @@
 import { Stack } from '@mui/material';
+import { Button } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { modal } from '~/components/modal/modal';
-import { Button } from '~/ui-components/button/button.component';
 
 interface ConfirmActionModalContent {
   onResolve: () => void;

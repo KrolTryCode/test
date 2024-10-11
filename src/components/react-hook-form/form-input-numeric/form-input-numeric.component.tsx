@@ -1,7 +1,5 @@
+import { InputNumeric, InputNumericProps } from '@pspod/ui-components';
 import { FieldPath, FieldValues, UseControllerProps, useController } from 'react-hook-form';
-
-import { InputNumeric } from '~/ui-components/input-numeric/input-numeric.component';
-import { InputNumericProps } from '~/ui-components/input-numeric/input-numeric.type';
 
 import { ValidationError } from '../_validation-error/validation-error.component';
 

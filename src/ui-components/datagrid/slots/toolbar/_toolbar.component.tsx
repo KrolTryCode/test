@@ -9,11 +9,11 @@ import {
   ColumnsStylesInterface,
   GridSlotProps,
 } from '@mui/x-data-grid-premium';
+import { FullscreenButton } from '@pspod/ui-components';
 import { FC, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ImportContainer } from '~/ui-components/datagrid/slots/toolbar/import/import-container.component';
-import { FullscreenButton } from '~/ui-components/fullscreen-button/fullscreen-button.component';
 import { availableDateFormats, availableDateTimeFormats } from '~/utils/date/time-format';
 
 import { setFullsreenedGridId } from '../../datagrid.store';

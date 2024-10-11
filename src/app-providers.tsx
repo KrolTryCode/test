@@ -1,3 +1,4 @@
+import { NotificationsProvider } from '@pspod/ui-components';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import i18n from 'i18next';
@@ -8,7 +9,6 @@ import { RouterProvider } from 'react-router-dom';
 
 import { router } from '~/routing/router';
 import { MuiThemeProvider } from '~/themes/mui-theme-provider';
-import { NotificationsProvider } from '~/ui-components/notifications/provider.component';
 import { useI18nInit } from '~/utils/configuration/use-init-i18n.hook';
 
 import PasswordExpiredContent from './components/password-expired/password-expired.component';

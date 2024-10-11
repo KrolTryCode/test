@@ -1,10 +1,9 @@
 import { Typography, Stack } from '@mui/material';
+import { Button, Avatar } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useGetCurrentUserQuery } from '~/api/queries/users/get-current-user.query';
-import { Avatar } from '~/ui-components/avatar/avatar.component';
-import { Button } from '~/ui-components/button/button.component';
 
 import { ProfileForm } from './profile-form.component';
 import { UpdateProfileForm } from './profile-form.schema';

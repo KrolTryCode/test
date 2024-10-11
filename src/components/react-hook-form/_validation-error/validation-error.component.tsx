@@ -1,10 +1,9 @@
 import { Box } from '@mui/material';
+import { Tooltip } from '@pspod/ui-components';
 import { TFunction } from 'i18next';
 import { FC, ReactNode } from 'react';
 import { ControllerFieldState, FieldError } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-
-import { Tooltip } from '~/ui-components/tooltip/tooltip.component';
 
 const PopperProps = { disablePortal: true };
 

@@ -1,3 +1,4 @@
+import { notifySuccess } from '@pspod/ui-components';
 import { useTranslation } from 'react-i18next';
 import { InstanceProps } from 'react-modal-promise';
 
@@ -5,7 +6,6 @@ import { useChangePasswordMutation } from '~/api/queries/users/change-password.m
 import { UpdatePasswordRequest } from '~/api/utils/api-requests';
 import { ChangePasswordForm } from '~/components/change-password-form/change-password-form.component';
 import { modal } from '~/components/modal/modal';
-import { notifySuccess } from '~/ui-components/notifications/notifications';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const useChangePassword = (user: string) => {
