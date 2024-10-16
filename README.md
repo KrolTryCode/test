@@ -12,7 +12,7 @@
 1. Можно выполнить команду `npm login --registry=https://gitlab.spbpu.com` и ввести логин и пароль от GitLab
 2. Логин с помощью токена GitLab:
 
-Генерация токена: **Preferences** (настройки пользователя) -> **Access Tokens** -> Выберите *read_api* и *read_registry*
+Генерация токена: **Preferences** (настройки пользователя) -> **Access Tokens** -> Выберите *read_api*, *read_repository* и *read_registry*
 в списке и нажмите *Create personal access token*.
 
 Этот токен необходимо указать в файле .env проекта, после чего выполнить скрипт ```npm run npmrc```
