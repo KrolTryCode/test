@@ -5,7 +5,7 @@ exports[`Profile > renders the profile > profile 1`] = `
   data-testid="appContainer"
 >
   <h2
-    class="MuiTypography-root MuiTypography-h3 MuiTypography-gutterBottom css-1ec63ay-MuiTypography-root"
+    class="MuiTypography-root MuiTypography-h3 MuiTypography-gutterBottom css-10p8o4e-MuiTypography-root"
   >
     Профиль
   </h2>
@@ -37,7 +37,7 @@ exports[`Profile > renders the profile > profile 1`] = `
         class="MuiStack-root css-106nt1m-MuiStack-root"
       >
         <legend
-          class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-17uy6uj-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-xgouly-MuiTypography-root"
         >
           <div
             class="MuiStack-root css-13tplj0-MuiStack-root"
@@ -64,7 +64,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                 data-mui-internal-clone-element="true"
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
                     class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
@@ -113,7 +113,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                 data-mui-internal-clone-element="true"
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
                     class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
@@ -162,7 +162,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                 data-mui-internal-clone-element="true"
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
                     class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
@@ -215,7 +215,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                 data-mui-internal-clone-element="true"
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
                     class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
@@ -264,7 +264,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                 data-mui-internal-clone-element="true"
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
                     class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
@@ -313,7 +313,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                 data-mui-internal-clone-element="true"
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
                     class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
@@ -363,7 +363,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                 data-mui-internal-clone-element="true"
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
                     class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-iwzgqv-MuiInputBase-root-MuiOutlinedInput-root"
@@ -434,7 +434,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                 data-mui-internal-clone-element="true"
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
                     class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-iwzgqv-MuiInputBase-root-MuiOutlinedInput-root"
@@ -494,7 +494,7 @@ exports[`Profile > renders the profile > profile 1`] = `
         class="MuiStack-root css-106nt1m-MuiStack-root"
       >
         <legend
-          class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-17uy6uj-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-xgouly-MuiTypography-root"
         >
           <div
             class="MuiStack-root css-13tplj0-MuiStack-root"
@@ -521,7 +521,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                 data-mui-internal-clone-element="true"
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
                     class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
@@ -604,20 +604,47 @@ exports[`Profile > renders the profile > profile 1`] = `
                 data-mui-internal-clone-element="true"
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root MuiTelInput-TextField css-igw2tk-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart css-1yk17tg-MuiInputBase-root-MuiOutlinedInput-root"
                   >
+                    <div
+                      class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-74b6xz-MuiInputAdornment-root"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                      <button
+                        aria-expanded="false"
+                        aria-haspopup="listbox"
+                        aria-label="Select country"
+                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiTelInput-IconButton css-10o7c2b-MuiButtonBase-root-MuiIconButton-root"
+                        tabindex="0"
+                        type="button"
+                      >
+                        <span
+                          class="MuiTelInput-Flag css-70qvj9"
+                          data-testid="RU"
+                        >
+                          <img
+                            alt="Russia"
+                            class="MuiTelInput-FlagImg"
+                            loading="lazy"
+                            src="https://flagcdn.com/w40/ru.webp"
+                            width="26"
+                          />
+                        </span>
+                      </button>
+                    </div>
                     <input
                       aria-invalid="false"
-                      aria-readonly="false"
-                      autocomplete="off"
-                      class="MuiInputBase-input MuiOutlinedInput-input css-1thzzby-MuiInputBase-input-MuiOutlinedInput-input"
+                      class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedStart css-z0ts0m-MuiInputBase-input-MuiOutlinedInput-input"
                       id=":rl:"
-                      placeholder="+7 (000) 000-00-00"
-                      type="text"
-                      value=""
+                      type="tel"
+                      value="+7"
                     />
                     <fieldset
                       aria-hidden="true"
@@ -644,7 +671,7 @@ exports[`Profile > renders the profile > profile 1`] = `
         class="MuiStack-root css-106nt1m-MuiStack-root"
       >
         <legend
-          class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-17uy6uj-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom css-xgouly-MuiTypography-root"
         >
           <div
             class="MuiStack-root css-13tplj0-MuiStack-root"
@@ -667,7 +694,7 @@ exports[`Profile > renders the profile > profile 1`] = `
               class="MuiBox-root css-eal7pa"
             >
               <div
-                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-18cqwq7-MuiFormControl-root-MuiTextField-root"
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1mh8opi-MuiFormControl-root-MuiTextField-root"
               >
                 <div
                   class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedEnd Mui-readOnly MuiInputBase-readOnly css-iwzgqv-MuiInputBase-root-MuiOutlinedInput-root"
@@ -736,7 +763,7 @@ exports[`Profile > renders the profile > profile 1`] = `
               class="MuiBox-root css-eal7pa"
             >
               <div
-                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-18cqwq7-MuiFormControl-root-MuiTextField-root"
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1mh8opi-MuiFormControl-root-MuiTextField-root"
               >
                 <div
                   class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedEnd Mui-readOnly MuiInputBase-readOnly css-iwzgqv-MuiInputBase-root-MuiOutlinedInput-root"
@@ -805,7 +832,7 @@ exports[`Profile > renders the profile > profile 1`] = `
               class="MuiBox-root css-eal7pa"
             >
               <div
-                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
               >
                 <div
                   class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
@@ -851,7 +878,7 @@ exports[`Profile > renders the profile > profile 1`] = `
               class="MuiBox-root css-eal7pa"
             >
               <div
-                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
               >
                 <div
                   class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
@@ -897,7 +924,7 @@ exports[`Profile > renders the profile > profile 1`] = `
               class="MuiBox-root css-eal7pa"
             >
               <div
-                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
               >
                 <div
                   class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
@@ -950,7 +977,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                 title=""
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w54es3-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
                 >
                   <div
                     class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-iwzgqv-MuiInputBase-root-MuiOutlinedInput-root"

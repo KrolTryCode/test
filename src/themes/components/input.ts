@@ -10,6 +10,12 @@ export const MuiTextField: Components<Omit<Theme, 'components'>>['MuiTextField']
       '& .MuiInputAdornment-positionStart': {
         marginRight: 0,
         '& .MuiIcon-root': { marginLeft: '8px' },
+        '& .MuiTelInput-IconButton': {
+          height: '34px',
+          '&:not(:hover)': {
+            backgroundColor: theme.palette.grey.A200,
+          },
+        },
       },
     }),
   },

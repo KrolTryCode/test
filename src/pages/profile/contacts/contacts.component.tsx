@@ -4,6 +4,7 @@ import { Control, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { FormCheckbox } from '~/components/react-hook-form/form-checkbox/form-checkbox.component';
+import { FormInputPhone } from '~/components/react-hook-form/form-input-phone/form-input-phone.component';
 import { FormInputText } from '~/components/react-hook-form/form-input-text/form-input-text.component';
 
 import { UpdateProfileForm } from '../profile-form.schema';
@@ -30,10 +31,7 @@ export const Contacts: FC<ContactsProps> = ({ control, register }) => {
 
       <Fieldset direction={'column'}>
         <FormItem label={t('USER.PHONE_NUMBER')}>
-          <FormInputText
-            mask={'+7 (000) 000-00-00'}
-            controllerProps={{ ...register('phone'), control }}
-          />
+          <FormInputPhone controllerProps={{ ...register('phone'), control }} />
         </FormItem>
       </Fieldset>
     </Fieldset>
