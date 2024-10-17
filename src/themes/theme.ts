@@ -29,7 +29,16 @@ export const themeOptions: ThemeOptions = {
     },
   },
   components: {
-    MuiTypography: { defaultProps: { gutterBottom: true } },
+    MuiTypography: {
+      defaultProps: { gutterBottom: true },
+      styleOverrides: {
+        root: ({ theme }) => ({
+          '&.MuiTelInput-Typography-calling-code': {
+            color: theme.palette.primary.main,
+          },
+        }),
+      },
+    },
     MuiAvatar: {
       styleOverrides: {
         colorDefault: ({ theme }) => ({
@@ -38,13 +47,7 @@ export const themeOptions: ThemeOptions = {
       },
     },
     MuiAccordion: {
-      styleOverrides: {
-        root: {
-          '&.Mui-disabled': {
-            backgroundColor: '#ffffff',
-          },
-        },
-      },
+      styleOverrides: { root: { '&.Mui-disabled': { backgroundColor: '#ffffff' } } },
     },
     MuiCheckbox: {
       defaultProps: { disableRipple: true },
@@ -69,12 +72,7 @@ export const themeOptions: ThemeOptions = {
         },
       },
     },
-    MuiPaper: {
-      defaultProps: { elevation: 5 },
-      styleOverrides: {
-        root: { overflow: 'hidden' },
-      },
-    },
+    MuiPaper: { defaultProps: { elevation: 5 }, styleOverrides: { root: { overflow: 'hidden' } } },
     MuiList: { styleOverrides: { root: { paddingTop: 0, paddingBottom: 0 } } },
     MuiDialogTitle: {
       defaultProps: { gutterBottom: false },
