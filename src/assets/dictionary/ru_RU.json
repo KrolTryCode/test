@@ -692,5 +692,8 @@
       "DEADWEIGHT": "Дедвейт",
       "COST": "Стоимость"
     }
+  },
+  "PERMISSIONS": {
+    "PERMISSION_CONTEXT": "Контекст права доступа"
   }
 }
