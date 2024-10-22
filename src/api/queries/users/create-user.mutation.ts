@@ -28,7 +28,7 @@ export const useCreateUserMutation = (
   const queryClient = useQueryClient();
 
   return useMutation<User, unknown, UserData>({
-    mutationFn: async userData => await ApiClientSecured.usersV1Controller.create1(userData),
+    mutationFn: async userData => await ApiClientSecured.usersV1Controller.createUser(userData),
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({ queryKey: [USERS_KEY] });
