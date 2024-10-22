@@ -8,8 +8,8 @@ export const RouteErrorBoundary = () => {
   const { t } = useTranslation();
   const error = useRouteError();
   return (
-    <Box width={'100%'} height={'100%'} display={'flex'}>
-      <Box width={'70%'} margin={'auto'}>
+    <Box height={'100dvh'} display={'flex'}>
+      <Box width={'80%'} margin={'auto'}>
         <Typography variant={'h2'}>{t('ERROR.BOUNDARY.HEADER')}</Typography>
         <Typography fontSize={18} marginBottom={'1em'}>
           {t('ERROR.BOUNDARY.DESCRIPTION')}

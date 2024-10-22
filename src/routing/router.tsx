@@ -16,6 +16,7 @@ export const router = createBrowserRouter([
       </TitleProvider>
     ),
     children: mapRouteDescriptionToReactRoutes(routes),
+    errorElement: <RouteErrorBoundary />,
   },
 ]);
 
@@ -29,7 +30,6 @@ function mapRouteDescriptionToReactRoutes(descriptions: RouteDescription[]): Rou
         menuDisplay: description.menuDisplay,
         title: description.title,
       }),
-      errorElement: <RouteErrorBoundary />,
     };
 
     if (description.element) {
