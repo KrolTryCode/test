@@ -11,7 +11,7 @@ export const useGetPasswordConfigurationQuery = (
   return useQuery({
     queryKey: [MODULE_CONFIGURATION_KEY, PASSWORD_KEY],
     queryFn: async () =>
-      await ApiClientSecured.accountConfigurationV1Controller.getAccountConfiguration(),
+      await ApiClientSecured.applicationController.accountConfiguration(),
     ...options,
   });
 };

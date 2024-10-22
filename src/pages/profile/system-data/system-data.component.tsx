@@ -18,12 +18,9 @@ interface SystemDataProps {
 export const SystemData: FC<SystemDataProps> = ({ profileData, isAdminPage }) => {
   const { t } = useTranslation();
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  const createdDate = (profileData?.created as string)
-    ? // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      new Date(profileData.created as string)
+  const createdDate = profileData?.createdFrom ? new Date(profileData.createdFrom) : null;
+  const lastLoginDate = profileData?.lastSuccessfulLoginTime
+    ? new Date(profileData.lastSuccessfulLoginTime)
     : null;
 
   return (
@@ -34,10 +31,10 @@ export const SystemData: FC<SystemDataProps> = ({ profileData, isAdminPage }) =>
         </FormItem>
 
         <FormItem label={t('USER.DATE_LAST_LOGIN')}>
-          <DateTimePicker value={createdDate} type={'datetime'} />
+          <DateTimePicker value={lastLoginDate} type={'datetime'} />
         </FormItem>
         <FormItem label={t('USER.IP_ADDRESS')}>
-          <InputText isReadonly value={''} />
+          <InputText isReadonly value={profileData?.lastIpAddress} />
         </FormItem>
         <FormItem label={t('COMMON.STATE')} isHidden={!isAdminPage}>
           <InputText
