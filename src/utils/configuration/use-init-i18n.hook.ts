@@ -6,11 +6,10 @@ import { useEffect } from 'react';
 import { initReactI18next, useTranslation } from 'react-i18next';
 
 import { useDownloadMessagesMapQuery } from '~/api/queries/locale/get-messages-map.query';
-
-import en_US from '../../assets/dictionary/en_US.json';
-import ru_RU from '../../assets/dictionary/ru_RU.json';
-import { configureYup } from '../validation/configure-yup';
-import yupRuLocale from '../validation/locales/ru-messages';
+import en_US from '~/assets/dictionary/en_US.json';
+import ru_RU from '~/assets/dictionary/ru_RU.json';
+import { configureYup } from '~/utils/validation/configure-yup';
+import yupRuLocale from '~/utils/validation/locales/ru-messages';
 
 export const i18nConfig = {
   resources: {
