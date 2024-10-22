@@ -33,23 +33,23 @@ export const projectsSubroutes: RouteDescription[] = [
       },
       {
         path: tasksPath,
-        lazyElement: () => import('~/pages/tasks/tasks.page'),
+        lazyElement: () => import('~/pages/projects/project/tasks/tasks.page'),
       },
       {
         path: reportsPath,
-        lazyElement: () => import('~/pages/reports/reports.page'),
+        lazyElement: () => import('~/pages/projects/project/reports/reports.page'),
       },
       {
         path: settingsPath,
-        lazyElement: () => import('~/pages/settings/settings.page'),
+        lazyElement: () => import('~/pages/projects/project/settings/settings.page'),
       },
       {
         path: participantsPath,
-        lazyElement: () => import('~/pages/participants/participants.page'),
+        lazyElement: () => import('~/pages/projects/project/participants/participants.page'),
       },
       {
         path: eventsPath,
-        lazyElement: () => import('~/pages/events/events.page'),
+        lazyElement: () => import('~/pages/projects/project/events/events.page'),
       },
     ],
   },
