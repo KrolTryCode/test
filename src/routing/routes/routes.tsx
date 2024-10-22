@@ -4,13 +4,13 @@ import { NotFoundPage } from '~/pages/_fallbacks/errors/not-found/not-found.comp
 import { AuthLayout } from '~/routing/layouts/auth/auth.layout';
 import { MainLayout } from '~/routing/layouts/main/main.layout';
 import { authRoutes } from '~/routing/routes/auth-routes';
-import { tablesSubroutes } from '~/routing/routes/tables-subroutes';
+import { projectsSubroutes } from '~/routing/routes/project-subroutes';
 import {
   adminPath,
   authPath,
   homePath,
   profilePath,
-  tablesPath,
+  projectsPath,
 } from '~/utils/configuration/routes-paths';
 
 import { RouteDescription } from '../routes.types';
@@ -25,18 +25,18 @@ export const routes: RouteDescription[] = [
     children: [
       {
         isIndex: true,
-        element: <Navigate to={tablesPath} replace={true} />,
-      },
-      {
-        path: tablesPath,
-        menuDisplay: { label: 'NAVIGATION.TABLES' },
-        children: tablesSubroutes,
+        element: <Navigate to={projectsPath} replace={true} />,
       },
       {
         path: adminPath,
         menuDisplay: { label: 'NAVIGATION.ADMIN' },
         children: adminSubroutes,
         accessBy: ['ADMIN'],
+      },
+      {
+        path: projectsPath,
+        menuDisplay: { label: 'ENTITY.PROJECTS' },
+        children: projectsSubroutes,
       },
       {
         path: profilePath,
