@@ -8,6 +8,7 @@ import { useStartAccountReactivationMutation } from '~/api/queries/accounts/reac
 import { useRemoveUserFromAdminsMutation } from '~/api/queries/accounts/remove-admin.mutation';
 import { useSetUserAsAdminMutation } from '~/api/queries/accounts/set-admin.mutation';
 import { useUpdateAccountMutation } from '~/api/queries/accounts/update-account.mutation';
+import { useArchiveUserMutation } from '~/api/queries/users/archive-user.mutation';
 import { UpdateAccountRequestStateEnum, User } from '~/api/utils/api-requests';
 import { showErrorMessage } from '~/utils/show-error-message';
 
@@ -41,6 +42,11 @@ export function useAdminAccounts() {
     );
   };
 
+  const { mutateAsync: deleteAccount } = useArchiveUserMutation({
+    onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
+    onError: e => showErrorMessage(e, 'ERROR.DELETION_FAILED'),
+  });
+
   const { mutateAsync: setUserAsAdmin } = useSetUserAsAdminMutation();
   const { mutateAsync: removeUserFromAdmins } = useRemoveUserFromAdminsMutation();
 
@@ -69,5 +75,6 @@ export function useAdminAccounts() {
     approveAccount,
     declineAccount,
     updateUserRow,
+    deleteAccount,
   };
 }

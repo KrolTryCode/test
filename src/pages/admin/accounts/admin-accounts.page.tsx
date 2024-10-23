@@ -32,8 +32,14 @@ const AdminUsersPage: FC = () => {
     select: selectPageableData,
   });
 
-  const { modifyAccount, startReactivation, approveAccount, declineAccount, updateUserRow } =
-    useAdminAccounts();
+  const {
+    modifyAccount,
+    startReactivation,
+    approveAccount,
+    declineAccount,
+    updateUserRow,
+    deleteAccount,
+  } = useAdminAccounts();
 
   const columns = useMemo<GridColDef<User>[]>(
     () => [
@@ -52,17 +58,22 @@ const AdminUsersPage: FC = () => {
         },
       },
       {
-        field: 'firstName',
-        headerName: t('USER.FIRST_NAME'),
-        flex: 1,
-      },
-      {
         field: 'lastName',
         headerName: t('USER.LAST_NAME'),
         flex: 1,
       },
       {
-        field: 'created',
+        field: 'firstName',
+        headerName: t('USER.FIRST_NAME'),
+        flex: 1,
+      },
+      {
+        field: 'surName',
+        headerName: t('USER.PATRONYMIC'),
+        flex: 1,
+      },
+      {
+        field: 'createdFrom',
         type: 'dateTime',
         headerName: t('COMMON.DATE_CREATED'),
         flex: 1,
@@ -150,12 +161,18 @@ const AdminUsersPage: FC = () => {
                 void startReactivation(id as string);
               }}
             />,
-            <DeleteCellButton key={'delete'} showInMenu deleteHandler={() => {} /* TODO */} />,
+            <DeleteCellButton
+              key={'delete'}
+              showInMenu
+              deleteHandler={() => {
+                void deleteAccount(id as string);
+              }}
+            />,
           ];
         },
       },
     ],
-    [approveAccount, declineAccount, modifyAccount, startReactivation, t],
+    [approveAccount, declineAccount, deleteAccount, modifyAccount, startReactivation, t],
   );
 
   const handleCellClick = ({ id, field }: GridCellParams<User>) => {

@@ -1,38 +1,69 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Form, FormButtons } from '@pspod/ui-components';
-import { FC } from 'react';
+import { Button, Form, FormButtons, notifySuccess } from '@pspod/ui-components';
+import { FC, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { useUpdateUserMutation } from '~/api/queries/users/update-user.mutation';
+import { UpdateUserRequest, User } from '~/api/utils/api-requests';
+import { confirmEmailModal } from '~/pages/profile/confirm-email-change.component';
+import { showErrorMessage } from '~/utils/show-error-message';
+
 import { Contacts } from './contacts/contacts.component';
 import { PersonalData } from './personal-data/personal-data.component';
-import { UpdateProfileForm, schema } from './profile-form.schema';
+import { schema, UpdateUserRequestNullable } from './profile-form.schema';
 import { SystemData } from './system-data/system-data.component';
 import { useChangePassword } from './use-change-password.hook';
 
 interface ProfileFormProps {
-  data?: UpdateProfileForm;
-  onSubmit: (data: UpdateProfileForm) => void;
+  userId: string;
+  data?: User;
   isLoading?: boolean;
   isCurrent?: boolean;
 }
 
-export const ProfileForm: FC<ProfileFormProps> = ({ data, isLoading, isCurrent, onSubmit }) => {
+export const ProfileForm: FC<ProfileFormProps> = ({ data, isLoading, isCurrent, userId }) => {
   const { t } = useTranslation();
 
-  const { onChangePassword } = useChangePassword(data?.email ?? '');
+  const { onChangePassword, onChangePasswordByAdmin } = useChangePassword(
+    data?.email ?? '',
+    userId,
+  );
+
+  const { mutateAsync: updateUser, isPending: isUserUpdating } = useUpdateUserMutation(userId, {
+    onSuccess: () => notifySuccess(t('MESSAGE.UPDATE_SUCCESS')),
+    onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
+  });
 
   const {
     register,
     handleSubmit,
     control,
     formState: { isValid, isSubmitted },
-  } = useForm<UpdateProfileForm>({
+  } = useForm<UpdateUserRequestNullable>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
     values: data,
+    defaultValues: schema.getDefault(),
     resolver: yupResolver(schema),
   });
+
+  const handleUpdateUser = useCallback(
+    async (values: UpdateUserRequestNullable) => {
+      await updateUser(values as UpdateUserRequest);
+    },
+    [updateUser],
+  );
+
+  const onSubmit = async (fieldValues: UpdateUserRequestNullable) => {
+    if (fieldValues.email === data?.email) {
+      void handleUpdateUser(fieldValues);
+    } else {
+      confirmEmailModal({
+        onOk: () => handleUpdateUser(fieldValues),
+      });
+    }
+  };
 
   return (
     <Form
@@ -43,7 +74,12 @@ export const ProfileForm: FC<ProfileFormProps> = ({ data, isLoading, isCurrent, 
       onSubmit={handleSubmit(onSubmit)}
       isLoading={isLoading}
     >
-      <PersonalData control={control} register={register} isAdminPage={!isCurrent} />
+      <PersonalData
+        control={control}
+        register={register}
+        onChangePassword={onChangePasswordByAdmin}
+        isAdminPage={!isCurrent}
+      />
       <Contacts control={control} register={register} />
       <SystemData
         control={control}
@@ -65,7 +101,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({ data, isLoading, isCurrent, 
           variant={'contained'}
           type={'submit'}
           disabled={!isValid && isSubmitted}
-          isLoading={false}
+          isLoading={isUserUpdating}
         >
           {t('ACTION.SAVE')}
         </Button>

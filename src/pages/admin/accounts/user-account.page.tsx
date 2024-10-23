@@ -1,13 +1,12 @@
 import { Typography, Stack } from '@mui/material';
 import { Avatar, Button } from '@pspod/ui-components';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { useGetUserQuery } from '~/api/queries/users/get-user.query';
 import { ProfileForm } from '~/pages/profile/profile-form.component';
-import { UpdateProfileForm } from '~/pages/profile/profile-form.schema';
-import { useTitleContext } from '~/routing/page-title.context';
+import { usePageTitle } from '~/utils/hooks/use-page-title';
 
 const Profile: FC = () => {
   const { t } = useTranslation();
@@ -15,21 +14,8 @@ const Profile: FC = () => {
   const { data: user, isLoading: isUserLoading } = useGetUserQuery(userId ?? '', {
     enabled: !!userId,
   });
-  const { setEntityTitle } = useTitleContext();
 
-  useEffect(() => {
-    if (user?.firstName && user.lastName) {
-      setEntityTitle(user.firstName + ' ' + user.lastName);
-    }
-    return () => {
-      setEntityTitle('');
-    };
-  }, [user, setEntityTitle]);
-
-  const onSubmit = (formData: UpdateProfileForm) => {
-    // eslint-disable-next-line no-console
-    console.table(formData);
-  };
+  usePageTitle(user?.firstName + ' ' + user?.lastName);
 
   return (
     <>
@@ -39,13 +25,8 @@ const Profile: FC = () => {
       <Stack direction={'row'} gap={10}>
         <Stack gap={6}>
           <Avatar alt={t('USER.PHOTO')} size={'large'} />
-          <Button disabled>{t('BUTTON.CHANGE', { type: '$t(USER.PHOTO_SHORT)' })}</Button>
         </Stack>
-        <ProfileForm
-          data={user as UpdateProfileForm}
-          onSubmit={onSubmit}
-          isLoading={isUserLoading}
-        />
+        <ProfileForm data={user} userId={userId ?? ''} isLoading={isUserLoading} />
       </Stack>
     </>
   );

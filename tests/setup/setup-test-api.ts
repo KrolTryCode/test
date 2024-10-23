@@ -13,7 +13,7 @@ export const setupTestApi = () => {
   ApiClient.authController.login = mockApiClientLogin;
   ApiClient.authController.register = mockRegisterAccount;
   ApiClientSecured.usersV1Controller.getCurrentUser = mockGetCurrentUser;
-  ApiClientSecured.usersV1Controller.create1 = mockCreateAccount;
+  ApiClientSecured.usersV1Controller.createUser = mockCreateAccount;
   ApiClientSecured.usersV1Controller.getUser = mockGetUser;
   ApiClientSecured.templatesV1Controller.getAllTemplates = mockGetTemplates;
 };

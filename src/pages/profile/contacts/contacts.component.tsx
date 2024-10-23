@@ -6,12 +6,11 @@ import { useTranslation } from 'react-i18next';
 import { FormCheckbox } from '~/components/react-hook-form/form-checkbox/form-checkbox.component';
 import { FormInputPhone } from '~/components/react-hook-form/form-input-phone/form-input-phone.component';
 import { FormInputText } from '~/components/react-hook-form/form-input-text/form-input-text.component';
-
-import { UpdateProfileForm } from '../profile-form.schema';
+import { UpdateUserRequestNullable } from '~/pages/profile/profile-form.schema';
 
 interface ContactsProps {
-  control: Control<UpdateProfileForm>;
-  register: UseFormRegister<UpdateProfileForm>;
+  control: Control<UpdateUserRequestNullable>;
+  register: UseFormRegister<UpdateUserRequestNullable>;
 }
 
 export const Contacts: FC<ContactsProps> = ({ control, register }) => {
@@ -20,18 +19,14 @@ export const Contacts: FC<ContactsProps> = ({ control, register }) => {
   return (
     <Fieldset legend={t('USER.CAPTION.CONTACTS')} columnGap={8}>
       <Fieldset direction={'column'}>
-        <FormItem label={t('USER.EMAIL')}>
+        <FormItem label={t('USER.EMAIL')} isRequired>
           <FormInputText type={'email'} controllerProps={{ ...register('email'), control }} />
         </FormItem>
-        <FormCheckbox
-          label={t('USER.WANT_TO_SUBSCRIBE')}
-          controllerProps={{ ...register('subscribe'), control }}
-        />
       </Fieldset>
 
       <Fieldset direction={'column'}>
         <FormItem label={t('USER.PHONE_NUMBER')}>
-          <FormInputPhone controllerProps={{ ...register('phone'), control }} />
+          <FormInputPhone controllerProps={{ ...register('phoneNumber'), control }} />
         </FormItem>
       </Fieldset>
     </Fieldset>

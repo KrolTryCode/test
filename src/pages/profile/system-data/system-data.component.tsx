@@ -1,16 +1,15 @@
-import { FormItem, Fieldset, Select, InputText, DateTimePicker } from '@pspod/ui-components';
+import { FormItem, Fieldset, InputText, DateTimePicker } from '@pspod/ui-components';
 import { FC } from 'react';
 import { Control, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { User, UserStateEnum } from '~/api/utils/api-requests';
+import { UpdateUserRequestNullable } from '~/pages/profile/profile-form.schema';
 import { translateStatus } from '~/utils/translate-status';
 
-import { UpdateProfileForm } from '../profile-form.schema';
-
 interface SystemDataProps {
-  control: Control<UpdateProfileForm>;
-  register: UseFormRegister<UpdateProfileForm>;
+  control: Control<UpdateUserRequestNullable>;
+  register: UseFormRegister<UpdateUserRequestNullable>;
   isAdminPage?: boolean;
   profileData?: User;
 }
@@ -43,25 +42,6 @@ export const SystemData: FC<SystemDataProps> = ({ profileData, isAdminPage }) =>
             value={translateStatus(profileData?.state)}
           />
         </FormItem>
-        <FormItem label={t('USER.CREATED_BY')} isHidden={!isAdminPage}>
-          <InputText isReadonly value={''} />
-        </FormItem>
-      </Fieldset>
-
-      <Fieldset direction={'column'}>
-        <FormItem label={t('USER.TIME_ZONE')}>
-          <Select items={[]} />
-        </FormItem>
-        {isAdminPage && (
-          <>
-            <FormItem label={t('USER.LANGUAGE')}>
-              <Select items={[]} />
-            </FormItem>
-            <FormItem label={t('USER.NOTES')}>
-              <InputText isMultiline value={''} />
-            </FormItem>
-          </>
-        )}
       </Fieldset>
     </Fieldset>
   );
