@@ -2,16 +2,22 @@ import { notifySuccess } from '@pspod/ui-components';
 import { useTranslation } from 'react-i18next';
 import { InstanceProps } from 'react-modal-promise';
 
+import { useChangePasswordAdminMutation } from '~/api/queries/accounts/change-password-admin.mutation';
 import { useChangePasswordMutation } from '~/api/queries/users/change-password.mutation';
 import { UpdatePasswordRequest } from '~/api/utils/api-requests';
 import { ChangePasswordForm } from '~/components/change-password-form/change-password-form.component';
 import { modal } from '~/components/modal/modal';
 import { showErrorMessage } from '~/utils/show-error-message';
 
-export const useChangePassword = (user: string) => {
+export const useChangePassword = (user: string, userId: string) => {
   const { t } = useTranslation();
 
   const { mutate: changePassword } = useChangePasswordMutation({
+    onSuccess: () => notifySuccess(t('AUTH.PASSWORD.SUCCESS')),
+    onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
+  });
+
+  const { mutate: changePasswordByAdmin } = useChangePasswordAdminMutation(userId, {
     onSuccess: () => notifySuccess(t('AUTH.PASSWORD.SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
   });
@@ -23,8 +29,16 @@ export const useChangePassword = (user: string) => {
       onSave: changePassword,
     });
 
+  const handleChangePasswordByAdmin = () =>
+    changePasswordModal({
+      title: t('BUTTON.CHANGE', { type: t('AUTH.PASSWORD.NAME').toLowerCase() }),
+      user,
+      onSave: changePasswordByAdmin,
+    });
+
   return {
     onChangePassword: handleChangePassword,
+    onChangePasswordByAdmin: handleChangePasswordByAdmin,
   };
 };
 

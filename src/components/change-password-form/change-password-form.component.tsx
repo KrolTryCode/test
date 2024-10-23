@@ -40,7 +40,7 @@ export const ChangePasswordForm: FC<ChangePasswordFormProps> = ({
     register,
     handleSubmit,
     control,
-    formState: { isValid, isSubmitted, isSubmitting },
+    formState: { isValid, isSubmitted, isLoading },
   } = useForm<IChangePasswordForm>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
@@ -84,7 +84,7 @@ export const ChangePasswordForm: FC<ChangePasswordFormProps> = ({
           color={'primary'}
           variant={'contained'}
           disabled={!isValid && isSubmitted}
-          isLoading={isPending || isSubmitting}
+          isLoading={isPending || isLoading}
         >
           {t('AUTH.PASSWORD.CREATE')}
         </Button>
