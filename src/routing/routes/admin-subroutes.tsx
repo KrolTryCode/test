@@ -8,7 +8,6 @@ import {
   permissionsPath,
   rolesPath,
   settingsPath,
-  tasksPath,
   templatesPath,
   usersPath,
 } from '~/utils/configuration/routes-paths';
@@ -55,11 +54,6 @@ export const adminSubroutes: RouteDescription[] = [
         lazyElement: () => import('~/pages/admin/permissions/roles-table/roles-table.page'),
       },
     ],
-  },
-  {
-    path: tasksPath,
-    menuDisplay: { label: 'NAVIGATION.CALCULATIONS' },
-    lazyElement: () => import('~/pages/admin/tasks/admin-tasks.page'),
   },
   {
     path: settingsPath,

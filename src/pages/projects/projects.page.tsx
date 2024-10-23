@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import WorkInProgress from '~/pages/_fallbacks/info/work-in-progress/work-in-progress.component';
+import WorkInProgress from '~/pages/_fallbacks/info/work-in-progress/work-in-progress.page';
 
 const ProjectsList: FC = () => {
   return <WorkInProgress />;

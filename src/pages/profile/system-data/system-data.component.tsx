@@ -33,7 +33,7 @@ export const SystemData: FC<SystemDataProps> = ({ profileData, isAdminPage }) =>
           <DateTimePicker value={lastLoginDate} type={'datetime'} />
         </FormItem>
         <FormItem label={t('USER.IP_ADDRESS')}>
-          <InputText isReadonly value={profileData?.lastIpAddress} />
+          <InputText isReadonly value={profileData?.lastIpAddress ?? ''} />
         </FormItem>
         <FormItem label={t('COMMON.STATE')} isHidden={!isAdminPage}>
           <InputText

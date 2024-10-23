@@ -1,25 +1,25 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { FullProjectMemberInfo, ProjectMember } from '~/api/utils/api-requests';
+import { FullProjectNodeMemberInfo, ProjectNodeMember } from '~/api/utils/api-requests';
 import { PROJECT_MEMBERS_KEY } from '~/api/utils/query-keys';
 
 import { UseCustomMutationOptions } from '../../typings/react-query-helpers';
 import { ApiClientSecured } from '../../utils/api-client';
 
 type UpdateProjectMemberMutationData = Pick<
-  FullProjectMemberInfo,
+  FullProjectNodeMemberInfo,
   'userId' | 'roleId' | 'expirationTime'
 >;
 
 export const useUpdateProjectMemberMutation = (
   projectId: string,
-  options?: UseCustomMutationOptions<ProjectMember, unknown, UpdateProjectMemberMutationData>,
+  options?: UseCustomMutationOptions<ProjectNodeMember, unknown, UpdateProjectMemberMutationData>,
 ) => {
   const queryClient = useQueryClient();
 
-  return useMutation<ProjectMember, unknown, UpdateProjectMemberMutationData>({
+  return useMutation<ProjectNodeMember, unknown, UpdateProjectMemberMutationData>({
     mutationFn: async (data: UpdateProjectMemberMutationData) =>
-      await ApiClientSecured.projectMembersV1Controller.updateMember(
+      await ApiClientSecured.projectNodeMemberV1Controller.updateMember(
         projectId,
         data.userId ?? '',
         data,
