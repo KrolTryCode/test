@@ -71,13 +71,13 @@ const EnterEmailsForm: FC<EnterEmailFormProps> = ({ isMultiple = true, onResolve
             color={'primary'}
             disabled={!isValid}
           >
-            {t('BUTTON.ADD')}
+            {t('ACTION.ADD')}
           </Button>
         </FormItem>
       )}
 
       <FormButtons>
-        <Button onClick={onReject}>{t('BUTTON.CANCEL')}</Button>
+        <Button onClick={onReject}>{t('ACTION.CANCEL')}</Button>
         <Button
           variant={'contained'}
           color={'primary'}
@@ -85,7 +85,7 @@ const EnterEmailsForm: FC<EnterEmailFormProps> = ({ isMultiple = true, onResolve
           disabled={!isValid && isSubmitted}
           isLoading={isSubmitting}
         >
-          {t('BUTTON.SEND')}
+          {t('ACTION.SEND')}
         </Button>
       </FormButtons>
     </Form>
@@ -99,7 +99,7 @@ interface SendToEmailModalProps {
 
 export const sendToEmailsModal = ({ onOk, isMultiple }: SendToEmailModalProps) => {
   modal({
-    title: t('BUTTON.SEND_TO_EMAIL'),
+    title: t('ACTION.SEND_TO_EMAIL'),
     onOk,
     renderContent: (props: InstanceProps<never>) => (
       <EnterEmailsForm isMultiple={isMultiple} {...props} />
