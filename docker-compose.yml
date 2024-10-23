@@ -63,3 +63,21 @@ services:
       - 8025:8025
     profiles:
       - full
+
+  minio:
+    image: quay.io/minio/minio:RELEASE.2024-08-26T15-33-07Z
+    container_name: minio
+    command: server --console-address ":9001" /data
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    healthcheck:
+      test: [ "CMD", "mc", "ready", "local" ]
+      interval: 3s
+      timeout: 5s
+      retries: 20
+    ports:
+      - 19000:9000
+      - 19001:9001
+    volumes:
+      - ./minio_storage:/data

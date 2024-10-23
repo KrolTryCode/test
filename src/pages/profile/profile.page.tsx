@@ -1,5 +1,5 @@
 import { Typography, Stack } from '@mui/material';
-import { Button, Avatar } from '@pspod/ui-components';
+import { Avatar } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 

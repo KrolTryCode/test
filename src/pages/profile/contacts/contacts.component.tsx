@@ -3,7 +3,6 @@ import { FC } from 'react';
 import { Control, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { FormCheckbox } from '~/components/react-hook-form/form-checkbox/form-checkbox.component';
 import { FormInputPhone } from '~/components/react-hook-form/form-input-phone/form-input-phone.component';
 import { FormInputText } from '~/components/react-hook-form/form-input-text/form-input-text.component';
 import { UpdateUserRequestNullable } from '~/pages/profile/profile-form.schema';

@@ -11,7 +11,7 @@ export const useDeleteNodeMutation = (
   const queryClient = useQueryClient();
 
   return useMutation<void, Error, string>({
-    mutationFn: async nodeId => await ApiClientSecured.contentNodeV1Controller.delete1(nodeId),
+    mutationFn: async nodeId => await ApiClientSecured.contentNodeV1Controller.delete2(nodeId),
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({ queryKey: [PROJECTS_KEY, projectId, NODES_KEY] });

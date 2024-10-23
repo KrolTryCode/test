@@ -337,148 +337,6 @@ exports[`Profile > renders the profile > profile 1`] = `
               </div>
             </div>
           </div>
-          <div
-            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
-            hidden=""
-          >
-            <label
-              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-1xtmzjf-MuiFormLabel-root"
-            >
-              Новый пароль
-            </label>
-            <div
-              class="MuiBox-root css-eal7pa"
-            >
-              <div
-                class="MuiBox-root css-0"
-                data-mui-internal-clone-element="true"
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
-                >
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-iwzgqv-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      aria-readonly="false"
-                      autocomplete="new-password"
-                      class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-18al6m3-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":re:"
-                      type="password"
-                      value=""
-                    />
-                    <div
-                      class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
-                    >
-                      <button
-                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-yvetkp-MuiButtonBase-root-MuiIconButton-root"
-                        tabindex="0"
-                        type="button"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall css-1o004fu-MuiSvgIcon-root"
-                          data-testid="VisibilityOutlinedIcon"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4m0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-ihdtdm"
-                      >
-                        <span
-                          class="notranslate"
-                        >
-                          ​
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
-            hidden=""
-          >
-            <label
-              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-1xtmzjf-MuiFormLabel-root"
-            >
-              Повтор пароля
-            </label>
-            <div
-              class="MuiBox-root css-eal7pa"
-            >
-              <div
-                class="MuiBox-root css-0"
-                data-mui-internal-clone-element="true"
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
-                >
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-iwzgqv-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      aria-readonly="false"
-                      autocomplete="new-password"
-                      class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-18al6m3-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":rg:"
-                      type="password"
-                      value=""
-                    />
-                    <div
-                      class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
-                    >
-                      <button
-                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-yvetkp-MuiButtonBase-root-MuiIconButton-root"
-                        tabindex="0"
-                        type="button"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall css-1o004fu-MuiSvgIcon-root"
-                          data-testid="VisibilityOutlinedIcon"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4m0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-ihdtdm"
-                      >
-                        <span
-                          class="notranslate"
-                        >
-                          ​
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </fieldset>
       </fieldset>
       <fieldset
@@ -610,7 +468,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedStart css-z0ts0m-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":rl:"
+                      id=":rf:"
                       type="tel"
                       value="+7"
                     />
@@ -740,7 +598,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                     aria-invalid="false"
                     autocomplete="off"
                     class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedEnd Mui-readOnly MuiInputBase-readOnly css-1u6kppm-MuiInputBase-input-MuiOutlinedInput-input"
-                    id=":ro:"
+                    id=":ri:"
                     inputmode="text"
                     placeholder="ДД.ММ.ГГГГ чч:мм"
                     readonly=""
@@ -810,7 +668,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                     aria-readonly="true"
                     autocomplete="off"
                     class="MuiInputBase-input MuiOutlinedInput-input css-1thzzby-MuiInputBase-input-MuiOutlinedInput-input"
-                    id=":rq:"
+                    id=":rk:"
                     readonly=""
                     type="text"
                     value=""
@@ -856,7 +714,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                     aria-readonly="true"
                     autocomplete="off"
                     class="MuiInputBase-input MuiOutlinedInput-input css-1thzzby-MuiInputBase-input-MuiOutlinedInput-input"
-                    id=":ri:"
+                    id=":rl:"
                     readonly=""
                     type="text"
                     value="Нет данных"
@@ -879,148 +737,22 @@ exports[`Profile > renders the profile > profile 1`] = `
               </div>
             </div>
           </div>
-          <div
-            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
-            hidden=""
-          >
-            <label
-              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-1xtmzjf-MuiFormLabel-root"
-            >
-              Кем создана учетная запись
-            </label>
-            <div
-              class="MuiBox-root css-eal7pa"
-            >
-              <div
-                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
-              >
-                <div
-                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-19kxmhd-MuiInputBase-root-MuiOutlinedInput-root"
-                >
-                  <input
-                    aria-invalid="false"
-                    aria-readonly="true"
-                    autocomplete="off"
-                    class="MuiInputBase-input MuiOutlinedInput-input css-1thzzby-MuiInputBase-input-MuiOutlinedInput-input"
-                    id=":rs:"
-                    readonly=""
-                    type="text"
-                    value=""
-                  />
-                  <fieldset
-                    aria-hidden="true"
-                    class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                  >
-                    <legend
-                      class="css-ihdtdm"
-                    >
-                      <span
-                        class="notranslate"
-                      >
-                        ​
-                      </span>
-                    </legend>
-                  </fieldset>
-                </div>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset
-          class="MuiStack-root css-1javh08-MuiStack-root"
-        >
-          <div
-            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
-          >
-            <label
-              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-1xtmzjf-MuiFormLabel-root"
-            >
-              Часовой пояс
-            </label>
-            <div
-              class="MuiBox-root css-eal7pa"
-            >
-              <div
-                class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-yaw09c-MuiAutocomplete-root"
-                title=""
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
-                >
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-iwzgqv-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-autocomplete="list"
-                      aria-expanded="false"
-                      aria-invalid="false"
-                      autocapitalize="none"
-                      autocomplete="off"
-                      class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-18al6m3-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":rt:"
-                      role="combobox"
-                      spellcheck="false"
-                      type="text"
-                      value=""
-                    />
-                    <div
-                      class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
-                    >
-                      <button
-                        aria-label="Открыть"
-                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-3p0hq5-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
-                        tabindex="-1"
-                        title="Открыть"
-                        type="button"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                          data-testid="ArrowDropDownIcon"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M7 10l5 5 5-5z"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-ihdtdm"
-                      >
-                        <span
-                          class="notranslate"
-                        >
-                          ​
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </fieldset>
       </fieldset>
       <div
         class="MuiStack-root css-chek0q-MuiStack-root"
       >
         <button
-          class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorSecondary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorSecondary MuiButton-disableElevation  css-wg7wa7-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
-          id=":rj:"
+          class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorSecondary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorSecondary MuiButton-disableElevation css-wg7wa7-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
+          id=":rm:"
           tabindex="0"
           type="button"
         >
           Изменить пароль
         </button>
         <button
-          class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation  css-83fcih-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
-          id=":rk:"
+          class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation css-83fcih-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
+          id=":rn:"
           tabindex="0"
           type="submit"
         >
