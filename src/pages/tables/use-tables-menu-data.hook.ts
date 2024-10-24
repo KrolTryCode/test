@@ -1,10 +1,18 @@
+import { useParams } from 'react-router-dom';
+
 import { useGetProjectNodesTree } from '~/api/queries/nodes/get-project-nodes-tree.query';
 import { nodesWithHrefSelector } from '~/api/selectors/nodes-with-href';
-import { DEFAULT_PROJECT_ID } from '~/app/user/user.store';
+import { projectPath, projectsPath, tablesPath } from '~/utils/configuration/routes-paths';
 
 export function useTablesMenuData() {
-  const { data = [], isLoading } = useGetProjectNodesTree(DEFAULT_PROJECT_ID, {
-    select: nodesWithHrefSelector,
+  const { projectId = '' } = useParams();
+  const { data = [], isLoading } = useGetProjectNodesTree(projectId, {
+    select: data =>
+      nodesWithHrefSelector(
+        data,
+        projectId,
+        `${projectsPath}/${projectPath}/${projectId}/${tablesPath}`,
+      ),
   });
 
   return { treeData: data, isLoading: isLoading };

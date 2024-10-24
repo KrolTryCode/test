@@ -15,6 +15,7 @@ import {
 export const projectsSubroutes: RouteDescription[] = [
   {
     isIndex: true,
+    path: ':projectGroupId?',
     title: 'ENTITY.PROJECTS',
     lazyElement: () => import('~/pages/projects/projects.page'),
   },

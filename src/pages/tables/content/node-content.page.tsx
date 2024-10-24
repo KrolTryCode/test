@@ -7,16 +7,12 @@ import { useParams } from 'react-router-dom';
 import { useGetContentNode } from '~/api/queries/nodes/get-content-node.query';
 import { useGetContentNodes } from '~/api/queries/nodes/get-content-nodes.query';
 import { ContentNodeTypeEnum } from '~/api/utils/api-requests';
-import { DEFAULT_PROJECT_ID } from '~/app/user/user.store';
 import { EmptyCatalog, EmptyTable } from '~/pages/_fallbacks/info/empty/empty-element.component';
 
 const NodeContent: FC = () => {
-  const { nodeId = '' } = useParams();
+  const { nodeId = '', projectId = '' } = useParams();
   const { data: nodeInfo, isLoading: isNodeInfoLoading } = useGetContentNode(nodeId);
-  const { data: children, isLoading: isChildrenLoading } = useGetContentNodes(
-    DEFAULT_PROJECT_ID,
-    nodeId,
-  );
+  const { data: children, isLoading: isChildrenLoading } = useGetContentNodes(projectId, nodeId);
 
   if (isChildrenLoading || isNodeInfoLoading) {
     return <Preloader />;

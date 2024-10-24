@@ -36,7 +36,7 @@ export const SearchTree: FC<SearchTreeProps> = props => {
   const [searchValue, setSearchValue] = useState('');
   const [debouncedSearchValue] = useDebounce(searchValue.toLowerCase(), 700);
   const [treeList, setTreeList] = useState<NavTreeItemData[]>([]);
-  const [selectedItemId, setSelectedItemId] = useState<string | null>('');
+  const [selectedItemId, setSelectedItemId] = useState<string | null>(value);
   const [expandedNodes, setExpandedNodes] = useState(getParentsIdsList(value));
 
   useEffect(() => {

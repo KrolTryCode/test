@@ -5,7 +5,7 @@ import { ApiClientSecured } from '~/api/utils/api-client';
 import { ContentNode, CreateContentNodeRequest } from '~/api/utils/api-requests';
 import { NODES_KEY, PROJECTS_KEY } from '~/api/utils/query-keys';
 
-export const useCreateProjectNodeMutation = (
+export const useCreateContentNodeMutation = (
   projectId: string,
   options?: UseCustomMutationOptions<ContentNode, unknown, CreateContentNodeRequest>,
 ) => {

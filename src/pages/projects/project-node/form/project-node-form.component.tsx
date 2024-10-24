@@ -1,33 +1,35 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form, FormButtons, FormItem, Button } from '@pspod/ui-components';
+import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { InstanceProps } from 'react-modal-promise';
 
-import { CreateContentNodeRequest } from '~/api/utils/api-requests';
-import { schema } from '~/components/node-form/node-form.schema';
-import { selectNodeTypes } from '~/components/node-form/node-form.utils';
+import { CreateProjectNodeRequest } from '~/api/utils/api-requests';
+import { modal } from '~/components/modal/modal';
 import { FormInputText, FormSelect } from '~/components/react-hook-form';
 import { FormSearchTree } from '~/components/react-hook-form/form-search-tree/form-search-tree.component';
-import { useTablesMenuData } from '~/pages/tables/use-tables-menu-data.hook';
+import { schema } from '~/pages/projects/project-node/form/project-node-form.schema';
+import { selectProjectNodeTypes } from '~/pages/projects/project-node/form/project-node-form.utils';
+import { useProjectsData } from '~/pages/projects/use-projects-data.hook';
 
-interface NodeFormProps {
-  data?: Partial<CreateContentNodeRequest>;
+interface ProjectNodeFormProps {
   onReject?: () => void;
-  onResolve: (values: CreateContentNodeRequest) => void;
+  data?: Partial<CreateProjectNodeRequest>;
   isEditing?: boolean;
+  onResolve: (values: CreateProjectNodeRequest) => void;
 }
 
-export const NodeForm: FC<NodeFormProps> = ({ onResolve, onReject, data, isEditing = false }) => {
+const ProjectNodeForm: FC<ProjectNodeFormProps> = ({ onResolve, onReject, data, isEditing }) => {
   const { t } = useTranslation();
-  const { treeData = [], isLoading } = useTablesMenuData();
+  const { treeData, isLoading } = useProjectsData();
 
   const {
     register,
     handleSubmit,
     control,
     formState: { isValid, isSubmitted, isSubmitting },
-  } = useForm<CreateContentNodeRequest>({
+  } = useForm<CreateProjectNodeRequest>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
     resolver: yupResolver(schema),
@@ -39,8 +41,10 @@ export const NodeForm: FC<NodeFormProps> = ({ onResolve, onReject, data, isEditi
       <FormItem label={t('COMMON.TITLE')} isRequired>
         <FormInputText controllerProps={{ ...register('name'), control }} />
       </FormItem>
-
-      {!!treeData.length && (
+      <FormItem label={t('COMMON.DESCRIPTION')}>
+        <FormInputText controllerProps={{ ...register('description'), control }} />
+      </FormItem>
+      {!!treeData.length && !isEditing && (
         <FormItem label={t('COMMON.PARENT')}>
           <FormSearchTree
             items={treeData}
@@ -51,11 +55,9 @@ export const NodeForm: FC<NodeFormProps> = ({ onResolve, onReject, data, isEditi
           />
         </FormItem>
       )}
-
       <FormItem label={t('COMMON.TYPE')} isRequired>
         <FormSelect
-          disableClearable
-          items={selectNodeTypes}
+          items={selectProjectNodeTypes}
           isReadonly={isEditing}
           controllerProps={{ ...register('type'), control }}
         />
@@ -76,3 +78,19 @@ export const NodeForm: FC<NodeFormProps> = ({ onResolve, onReject, data, isEditi
     </Form>
   );
 };
+
+interface ProjectNodeModalProps {
+  title: string;
+  data?: Partial<CreateProjectNodeRequest>;
+  isEditing?: boolean;
+  onSave: (data: CreateProjectNodeRequest) => void;
+}
+
+export const projectNodeModal = ({ title, onSave, isEditing, data }: ProjectNodeModalProps) =>
+  modal({
+    title,
+    onOk: onSave,
+    renderContent: (args: InstanceProps<CreateProjectNodeRequest, never>) => (
+      <ProjectNodeForm data={data} isEditing={isEditing} {...args} />
+    ),
+  });

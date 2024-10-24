@@ -20,32 +20,36 @@ export const ItemDropdownMenu: FC<{
   );
 
   return (
-    <Box
-      className={'dropdown-menu'}
-      onClick={event => {
-        event.stopPropagation();
-      }}
-    >
-      <DropdownMenu
-        buttonColor={'secondary'}
-        buttonContent={<ShowMoreIcon />}
-        showArrow={false}
-        buttonSize={'small'}
-      >
-        {item.children && [
-          <MenuItem key={'collapse'} onClick={() => onCollapseAll?.(item.id)}>
-            {t('ACTION.HIDE_ALL')}
-          </MenuItem>,
-          <MenuItem key={'expand'} onClick={() => onExpandAll?.(item.id)}>
-            {t('ACTION.EXPAND_ALL')}
-          </MenuItem>,
-        ]}
-        {filteredMenuItems?.map(({ label, onClick }) => (
-          <MenuItem key={label} onClick={() => onClick(item.id)}>
-            {label}
-          </MenuItem>
-        ))}
-      </DropdownMenu>
-    </Box>
+    <>
+      {(filteredMenuItems ?? item.children) && (
+        <Box
+          className={'dropdown-menu'}
+          onClick={event => {
+            event.stopPropagation();
+          }}
+        >
+          <DropdownMenu
+            buttonColor={'secondary'}
+            buttonContent={<ShowMoreIcon />}
+            showArrow={false}
+            buttonSize={'small'}
+          >
+            {item.children && [
+              <MenuItem key={'collapse'} onClick={() => onCollapseAll?.(item.id)}>
+                {t('ACTION.HIDE_ALL')}
+              </MenuItem>,
+              <MenuItem key={'expand'} onClick={() => onExpandAll?.(item.id)}>
+                {t('ACTION.EXPAND_ALL')}
+              </MenuItem>,
+            ]}
+            {filteredMenuItems?.map(({ label, onClick }) => (
+              <MenuItem key={label} onClick={() => onClick(item.id)}>
+                {label}
+              </MenuItem>
+            ))}
+          </DropdownMenu>
+        </Box>
+      )}
+    </>
   );
 };

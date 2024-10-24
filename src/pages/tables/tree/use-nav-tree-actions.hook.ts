@@ -1,41 +1,53 @@
 import { notifySuccess } from '@pspod/ui-components';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { useCreateProjectNodeMutation } from '~/api/queries/nodes/create-project-node.mutation';
-import { useDeleteNodeMutation } from '~/api/queries/nodes/delete-project-node.mutation';
-import { useUpdateProjectNodeMutation } from '~/api/queries/nodes/update-project-node.mutation';
-import { ContentNodeTypeEnum, CreateContentNodeRequestTypeEnum } from '~/api/utils/api-requests';
-import { DEFAULT_PROJECT_ID } from '~/app/user/user.store';
+import { useCreateContentNodeMutation } from '~/api/queries/nodes/create-content-node.mutation';
+import { useDeleteContentNodeMutation } from '~/api/queries/nodes/delete-content-node.mutation';
+import { useUpdateContentNodeMutation } from '~/api/queries/nodes/update-content-node.mutation';
+import {
+  ContentNodeTypeEnum,
+  ContentSubtreeTypeEnum,
+  CreateContentNodeRequestTypeEnum,
+} from '~/api/utils/api-requests';
 import { nodeModal } from '~/components/modals-content/node-modal.component';
-import { NavTreeItemData } from '~/components/nav-tree/nav-tree.type';
+import { NavTreeItemData, NavTreeItemType } from '~/components/nav-tree/nav-tree.type';
 import { useTreeNodesUtils } from '~/pages/tables/tree/use-tree-nodes-utils.hook';
-import { editPath, structurePath, tablesPath } from '~/utils/configuration/routes-paths';
+import { editPath, structurePath } from '~/utils/configuration/routes-paths';
 import { showErrorMessage } from '~/utils/show-error-message';
 
-export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
-  const { findNode, getParentsIdsList } = useTreeNodesUtils(treeData);
-  const navigate = useNavigate();
-  const { t } = useTranslation();
+const isContentSubtreeTypeEnum = (
+  contentNodeType?: NavTreeItemType,
+): contentNodeType is ContentSubtreeTypeEnum => {
+  return (
+    !!contentNodeType && Object.values<string>(ContentSubtreeTypeEnum).includes(contentNodeType)
+  );
+};
 
-  const { mutate: deleteNode } = useDeleteNodeMutation(DEFAULT_PROJECT_ID, {
+export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
+  const { t } = useTranslation();
+  const { findNode, getParentsIdsList } = useTreeNodesUtils(treeData);
+  const { projectId = '' } = useParams();
+  const navigate = useNavigate();
+
+  const { mutate: deleteNode } = useDeleteContentNodeMutation(projectId, {
     onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.DELETION_FAILED'),
   });
 
-  const { mutate: createNode } = useCreateProjectNodeMutation(DEFAULT_PROJECT_ID, {
+  const { mutate: createNode } = useCreateContentNodeMutation(projectId, {
     onSuccess: data => {
       notifySuccess(t('MESSAGE.CREATION_SUCCESS'));
-      navigate(`/${tablesPath}/${data.id}`);
+      navigate(data.id);
     },
     onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
   });
 
-  const { mutate: updateNode } = useUpdateProjectNodeMutation(DEFAULT_PROJECT_ID, {
+  const { mutate: updateNode } = useUpdateContentNodeMutation(projectId, {
     onSuccess: data => {
       notifySuccess(t('MESSAGE.UPDATE_SUCCESS'));
-      navigate(`/${tablesPath}/${data.id}`);
+      navigate(data.id);
     },
     onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
   });
@@ -43,19 +55,26 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
   const handleEditNode = useCallback(
     (id: string) => {
       const node = findNode(id);
-      const parentId = getParentsIdsList(node?.id ?? '').at(1);
-      nodeModal({
-        title: t('ACTION.EDIT', { type: t('TREE.NODE').toLowerCase() }),
-        isEditing: true,
-        data: {
-          name: node?.label,
-          type: node?.type as unknown as CreateContentNodeRequestTypeEnum, //todo
-          parentId: parentId,
-        },
-        onSave: data => updateNode({ nodeId: id, name: data.name, parentNodeId: data.parentId }),
-      });
+      if (!node) {
+        return;
+      }
+      if (isContentSubtreeTypeEnum(node.type)) {
+        const parentId = getParentsIdsList(node.id).at(1);
+        nodeModal({
+          title: t('ACTION.EDIT', { type: t('TREE.NODE').toLowerCase() }),
+          isEditing: true,
+          data: {
+            name: node.label,
+            // TODO Задача BE-35 https://tracker.yandex.ru/BE-35
+            type: node.type as unknown as CreateContentNodeRequestTypeEnum,
+            parentId: parentId,
+            projectId: projectId,
+          },
+          onSave: data => updateNode({ nodeId: id, name: data.name, parentNodeId: data.parentId }),
+        });
+      }
     },
-    [findNode, getParentsIdsList, t, updateNode],
+    [findNode, getParentsIdsList, projectId, t, updateNode],
   );
 
   const handleAddCatalog = useCallback(
@@ -65,11 +84,12 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
         data: {
           type: ContentNodeTypeEnum.Directory as unknown as CreateContentNodeRequestTypeEnum, //todo
           parentId: id,
+          projectId: projectId,
         },
         onSave: createNode,
       });
     },
-    [createNode, t],
+    [createNode, projectId, t],
   );
 
   const handleAddTable = useCallback(
@@ -79,15 +99,16 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
         data: {
           type: ContentNodeTypeEnum.Table as unknown as CreateContentNodeRequestTypeEnum, //todo
           parentId: id,
+          projectId: projectId,
         },
         onSave: createNode,
       });
     },
-    [createNode, t],
+    [createNode, projectId, t],
   );
 
   const handleEditStructure = useCallback(
-    (id?: string) => navigate(`/${tablesPath}/${editPath}/${id}/${structurePath}`),
+    (id?: string) => navigate(`${editPath}/${id}/${structurePath}`),
     [navigate],
   );
 
