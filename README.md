@@ -1,7 +1,5 @@
 # Indanis UI
 
-## Запуск приложения
-
 ### Для разработки
 
 Убедитесь, что у вас установлен [NodeJS](https://nodejs.org/en) (при развертывании используется v18),
@@ -12,7 +10,8 @@
 1. Можно выполнить команду `npm login --registry=https://gitlab.spbpu.com` и ввести логин и пароль от GitLab
 2. Логин с помощью токена GitLab:
 
-Генерация токена: **Preferences** (настройки пользователя) -> **Access Tokens** -> Выберите *read_api*, *read_repository* и *read_registry*
+Генерация токена: **Preferences** (настройки пользователя) -> **Access Tokens** -> Выберите *read_api*,
+*read_repository* и *read_registry*
 в списке и нажмите *Create personal access token*.
 
 Этот токен необходимо указать в файле .env проекта, после чего выполнить скрипт ```npm run npmrc```
@@ -59,30 +58,30 @@ npm ci
 Для генерации API при локальном запуске используется `CORE_URL` из файла `.env`. В общем виде, для генерации будет
 использоваться url вида `CORE_URL/v3/api-docs`.
 Обновить API можно командой `npm run build:api`.
-Для запуска в гитлабе сохранён скрипт `npm run build:api:linux` с параметром  `--url=%ссылка на api-docs%`.
+Для запуска в гитлабе сохранен скрипт `npm run build:api:linux` с параметром  `--url=%ссылка на api-docs%`.
 
-#### 4. Запуск в дев-режиме
+### Запуск приложения в дев-режиме
 
 Существует два с половиной варианта в зависимости от того, где запущен бэкенд.  
 В обоих случаях клиент будет доступен на `localhost:9000`, сервер на `localhost:9000/api`
 
-##### Удаленно развернутый бэкенд
+#### 1. Удаленно развернутый бэкенд
 
 - задать переменной окружения `CORE_URL` значение URL развернутого на удаленном сервере бэкенда,
-  например, https://ksrc-dev.spbpu.com
+  например, https://indanis.spbpu.com/
 - запустить дев-сервер командой `npm run dev` (или явно `npm run dev:remote`)
 
-##### Локально развернутый бэкенд (image из docker-compose)
+#### 2. Локально развернутый бэкенд (image из docker-compose)
 
 - задать переменной окружения `CORE_URL` значение URL развернутого локально бэкенда: `http://host.docker.internal:8080`
 - запустить дев-сервер командой `npm run dev` (или явно `npm run dev:remote`)
 
 В переменной окружения `BACKEND_IMAGE` должно быть задано имя образа бэкенда, по
-умолчанию - `rg.spbpu.com/customprojects/ksrc/app:latest`. Для скачивания образа необходимо выполнить
+умолчанию - `rg.spbpu.com/customprojects/indanis/app:latest`. Для скачивания образа необходимо выполнить
 команду `docker login` и ввести логин и пароль от GitLab.
 Пример: `docker login -u ivan.ivanov@spbpu.com -p yourpassword rg.spbpu.com`
-
-##### Локально разрабатываемый бэкенд (debug из исходников)
+ 
+##### 2.1. Локально разрабатываемый бэкенд (debug из исходников)
 
 - указать в `CORE_URL` URL бэкенда, по умолчанию - `http://host.docker.internal:8080`
 - запустить фронтенд с помощью команды `npm run dev:remote`
@@ -150,19 +149,6 @@ ts-кода и стилей.
   ```
   - [расширение](https://marketplace.visualstudio.com/items?itemName=styled-components.vscode-styled-components)
 
-### Заметки на будущее
-
-#### Проверки именования файлов
-
-Есть плагин [eslint-plugin-filenames](https://www.npmjs.com/package/eslint-plugin-filenames), но он работает только с
-файлами, которые включены в eslint. То есть, плагин не будет проверять именование файлов стилей. Поэтому пока
-придерживаемся гайдлайнов по именованию файлов.
-
-#### Можно рассмотреть
-
-- https://github.com/javierbrea/eslint-plugin-boundaries
-- https://github.com/amilajack/eslint-plugin-compat
-
 ## Именование файлов
 
 Принцип: `file-name[.suffix].ext`
@@ -205,23 +191,38 @@ ts-кода и стилей.
 Скрипты для работы со словарем:
 
 - Для обеспечения бэкенда свежими переводами использовать:
-  - ```npm run dictionary:build``` - запускает скрипт для парсинга словарей UI и трансформации их из .json в .properties Resource Bundle файлы
+  - ```npm run dictionary:build``` - запускает скрипт для парсинга словарей UI и трансформации их из .json в .properties
+    Resource Bundle файлы
   - ```npm run dictionary:remove``` - удаляет сгенерированные переводы .properties
 
-Сгенерированные файлы необходимо вручную добавить в проект [indanis_app](https://gitlab.spbpu.com/customprojects/indanis/app)
+Сгенерированные файлы необходимо вручную добавить в
+проект [indanis_app](https://gitlab.spbpu.com/customprojects/indanis/app)
 
 - Для поддержания актуальности переводов на UI следует
   пользоваться [специальной библиотекой i18n-unused](https://www.npmjs.com/package/i18n-unused):
-  - ```npm run dictionary:unused``` - скрипт печатает в консоль все неиспользуемые переводы (для каждого словаря отдельно)
+  - ```npm run dictionary:unused``` - скрипт печатает в консоль все неиспользуемые переводы (для каждого словаря
+    отдельно)
   - ```npm run dictionary:mark``` - скрипт добавляет приставку *[UNUSED]* перед всеми неиспользуемыми ключами в словарях
   - ```npm run dictionary:missed``` - скрипт печатает в консоль отсутствующие ключи в словарях
 
 P.S.: Пользоваться библиотекой с особой внимательностью - возможны ошибки в работе (и ошибочные [UNUSED] приставки), так
 как библиотека не учитывает все кейсы использования i18n (например, если ключ для перевода передается в другой компонент
 через пропсы, минуя t, или как в следующем примере)
+
 ```
   const a = { name: 'TREE.DATA' };
   const name = t(a.name);
 ```
 
+## Заметки на будущее
 
+### Проверки именования файлов
+
+Есть плагин [eslint-plugin-filenames](https://www.npmjs.com/package/eslint-plugin-filenames), но он работает только с
+файлами, которые включены в eslint. То есть, плагин не будет проверять именование файлов стилей. Поэтому пока
+придерживаемся гайдлайнов по именованию файлов.
+
+### Можно рассмотреть
+
+- https://github.com/javierbrea/eslint-plugin-boundaries
+- https://github.com/amilajack/eslint-plugin-compat
