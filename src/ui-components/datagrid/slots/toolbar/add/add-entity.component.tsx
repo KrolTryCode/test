@@ -3,11 +3,14 @@ import { Button } from '@mui/material';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const AddEntity: FC<{ onClick: () => void }> = ({ onClick }) => {
+export const AddEntity: FC<{ onClick: () => void; customText?: string }> = ({
+  onClick,
+  customText,
+}) => {
   const { t } = useTranslation();
   return (
     <Button onClick={onClick} startIcon={<Add />}>
-      {t('ACTION.ADD')}
+      {t(customText ?? 'ACTION.ADD')}
     </Button>
   );
 };

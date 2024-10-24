@@ -1,19 +1,20 @@
-import { ContentSubtree } from '~/api/utils/api-requests';
-import { DEFAULT_PROJECT_ID } from '~/app/user/user.store';
+import { ContentSubtree, ProjectSubtree } from '~/api/utils/api-requests';
 import { NavTreeItemData } from '~/components/nav-tree/nav-tree.type';
-import { tablesPath } from '~/utils/configuration/routes-paths';
 
-export const nodesWithHrefSelector = (data: ContentSubtree[]) => {
-  const transformNode = (projectId: string, node: ContentSubtree): NavTreeItemData => ({
+type NodeType = ContentSubtree | ProjectSubtree;
+
+export const nodesWithHrefSelector = (data: NodeType[], projectId: string, path: string) => {
+  const transformNode = (projectId: string, node: NodeType): NavTreeItemData => ({
     id: node.id,
     type: node.type,
     label: node.name,
-    href: `/${tablesPath}/${node.id}`,
+    href: `/${path}/${node.id}`,
+    description: 'description' in node ? node.description : '',
     children:
       node.children.length !== 0
         ? node.children.map(child => transformNode(projectId, child))
         : undefined,
   });
 
-  return data.map(node => transformNode(DEFAULT_PROJECT_ID, node));
+  return data.map(node => transformNode(projectId, node));
 };

@@ -11,8 +11,8 @@ import { TreeItem2Provider } from '@mui/x-tree-view/TreeItem2Provider';
 import { unstable_useTreeItem2 as useTreeItem2 } from '@mui/x-tree-view/useTreeItem2';
 import { forwardRef, Ref, useMemo } from 'react';
 
-import { ContentNodeTypeEnum } from '~/api/utils/api-requests';
 import { ItemDropdownMenu } from '~/components/nav-tree/item/item-dropdown-menu.component';
+import { isFolderType } from '~/components/nav-tree/item/nav-tree-item.utils';
 import { SelectItemButton } from '~/components/nav-tree/item/select-item-button.component';
 
 import { StyledLink, StyledTreeItemLabel } from '../nav-tree.style';
@@ -66,9 +66,7 @@ export const NavTreeItem = forwardRef(function NavTreeItem(
           )}
           <Stack gap={1} direction={'row'} flexGrow={'1'}>
             <StyledTreeItemLabel {...getLabelProps()}>
-              {item.type === ContentNodeTypeEnum.Directory && (
-                <Folder color={'primary'} sx={{ marginRight: 0.5 }} />
-              )}
+              {isFolderType(item.type) && <Folder color={'primary'} sx={{ marginRight: 0.5 }} />}
               {item.href && !disableLinks ? <StyledLink to={item.href}>{label}</StyledLink> : label}
               {item.id === selectedItemId && onHandleSelectEvent !== undefined && (
                 <SelectItemButton item={item} onHandleSelect={onHandleSelectEvent} />
@@ -84,7 +82,12 @@ export const NavTreeItem = forwardRef(function NavTreeItem(
             )}
           </Stack>
         </TreeItem2Content>
-        {children && <TreeItem2GroupTransition {...getGroupTransitionProps()} />}
+        {children && (
+          <TreeItem2GroupTransition
+            sx={theme => ({ paddingLeft: theme.spacing(4) })}
+            {...getGroupTransitionProps()}
+          />
+        )}
       </TreeItem2Root>
     </TreeItem2Provider>
   );

@@ -1,9 +1,71 @@
-import { FC } from 'react';
+import { Preloader } from '@pspod/ui-components';
+import { FC, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import WorkInProgress from '~/pages/_fallbacks/info/work-in-progress/work-in-progress.page';
+import { ProjectNode } from '~/api/utils/api-requests';
+import { NotFoundNodes } from '~/pages/_fallbacks/errors/not-found/not-found.component';
+import { useProjectsActions } from '~/pages/projects/use-projects-actions.hook';
+import { useProjectsData } from '~/pages/projects/use-projects-data.hook';
+import { DataGrid } from '~/ui-components/datagrid/datagrid.component';
+import { EnhancedColDef } from '~/ui-components/datagrid/datagrid.types';
 
 const ProjectsList: FC = () => {
-  return <WorkInProgress />;
+  const { t } = useTranslation();
+  const { treeData, isLoading, projectNodesByParent } = useProjectsData();
+  const { getActions, handleAddProjectNode, ProjectsListToolbarContent } =
+    useProjectsActions(treeData);
+
+  const columns = useMemo<EnhancedColDef<ProjectNode>[]>(
+    () => [
+      {
+        field: 'name',
+        headerName: t('COMMON.TITLE'),
+        flex: 1,
+      },
+      {
+        field: 'description',
+        headerName: t('COMMON.DESCRIPTION'),
+        flex: 3,
+      },
+      {
+        field: 'type',
+        headerName: t('COMMON.TYPE'),
+        flex: 2,
+      },
+      {
+        field: 'created',
+        headerName: t('JOURNAL.DATE'),
+        type: 'dateTime',
+        flex: 1,
+      },
+      {
+        field: 'actions',
+        width: 90,
+        type: 'actions',
+        getActions,
+      },
+    ],
+    [getActions, t],
+  );
+
+  if (isLoading) {
+    return <Preloader />;
+  }
+
+  if (!projectNodesByParent.length && !isLoading) {
+    return <NotFoundNodes action={handleAddProjectNode} />;
+  }
+
+  return (
+    <DataGrid<ProjectNode>
+      items={projectNodesByParent}
+      columns={columns}
+      totalCount={projectNodesByParent.length}
+      hasColumnChooser={false}
+      pinnedColumns={{ right: ['actions'] }}
+      customToolbarContent={<ProjectsListToolbarContent />}
+    />
+  );
 };
 
 export default ProjectsList;
