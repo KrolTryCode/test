@@ -12,7 +12,7 @@ export const useGetProjectNodesByParent = <T = ProjectNode[]>(
   return useQuery({
     queryKey: [PROJECTS_KEY, parentNodeId],
     queryFn: async () =>
-      await ApiClientSecured.projectNodeV1Controller.getProjectNodesByParent({ parentNodeId }),
+      await ApiClientSecured.projectNodeV1Controller.getChildrenByParent({ parentNodeId }),
     ...options,
   });
 };
