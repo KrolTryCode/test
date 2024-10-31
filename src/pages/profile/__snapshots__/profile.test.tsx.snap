@@ -760,6 +760,40 @@ exports[`Profile > renders the profile > profile 1`] = `
         </button>
       </div>
     </form>
+    <div
+      aria-hidden="true"
+      class="MuiBackdrop-root css-megsf6-MuiBackdrop-root"
+      style="opacity: 0; visibility: hidden;"
+    >
+      <div
+        class="MuiStack-root css-19rwzzo-MuiStack-root"
+      >
+        <span
+          class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-82r84f-MuiCircularProgress-root"
+          role="progressbar"
+          style="width: 40px; height: 40px;"
+        >
+          <svg
+            class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+            viewBox="22 22 44 44"
+          >
+            <circle
+              class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate MuiCircularProgress-circleDisableShrink css-79nvmn-MuiCircularProgress-circle"
+              cx="44"
+              cy="44"
+              fill="none"
+              r="20.2"
+              stroke-width="3.6"
+            />
+          </svg>
+        </span>
+        <p
+          class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-1oh53cw-MuiTypography-root"
+        >
+          Загрузка...
+        </p>
+      </div>
+    </div>
   </div>
 </div>
 `;

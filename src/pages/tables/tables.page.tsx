@@ -24,7 +24,11 @@ const TablesLayout: FC = () => {
 
   return (
     <Box>
-      <PersistentDrawer open={openDrawer} handleDrawerClose={() => setOpenDrawer(false)}>
+      <PersistentDrawer
+        open={openDrawer}
+        handleDrawerClose={() => setOpenDrawer(false)}
+        paperMargin={'14em 0 0 0'}
+      >
         <NodesTree />
       </PersistentDrawer>
       <IconButton onClick={() => setOpenDrawer(true)} color={'primary'}>
