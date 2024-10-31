@@ -7,7 +7,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import { useGetProjectNode } from '~/api/queries/projects/get-project-node.query';
 import { useGetParents } from '~/api/queries/projects/get-projects-parents.query';
-import { projectsPath, projectPath } from '~/utils/configuration/routes-paths';
+import { projectPath, projectsPath } from '~/utils/configuration/routes-paths';
 import { usePageTitle } from '~/utils/hooks/use-page-title';
 
 export const ProjectHeader: FC = () => {
@@ -61,13 +61,13 @@ export const ProjectHeader: FC = () => {
             </MuiLink>
           ))}
           <MuiLink
-            href={`/${projectPath}/${projectData?.id}`}
+            href={`/${projectsPath}/${projectPath}/${projectData?.id}`}
             underline={'hover'}
             color={'inherit'}
           >
             {projectData?.name}
           </MuiLink>
-        </Breadcrumbs>{' '}
+        </Breadcrumbs>
       </Stack>
     </Stack>
   );
