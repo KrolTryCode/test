@@ -4,10 +4,6 @@
 * http://js.devexpress.com/ThemeBuilder/
 */
 
-.dx-theme-generic-typography a.MuiButton-outlinedSecondary {
-  color: inherit;
-}
-
 .dx-validationsummary-item {
   cursor: pointer;
 }
@@ -108,9 +104,6 @@
 .dx-theme-generic-typography small {
   font-weight: 800;
   font-size: 12px;
-}
-.dx-theme-generic-typography a {
-  color: #0054a5;
 }
 .dx-icon-add,
 .dx-icon-addcolumnleft,

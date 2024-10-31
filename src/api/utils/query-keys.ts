@@ -12,6 +12,8 @@ export const PROJECT_MEMBERS_KEY = 'project-members';
 export const JOURNAL_KEY = 'journal';
 export const TASKS_KEY = 'tasks';
 export const TASKS_TREE_KEY = 'tasks-tree';
+export const PROJECT_PARENTS_KEY = 'project-parents';
+export const PROJECT_CHILDREN_KEY = 'project-children';
 
 //reports
 export const ANNUAL_KEY = 'annual';
