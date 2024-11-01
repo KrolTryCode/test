@@ -1,6 +1,6 @@
 import { ArrowBack } from '@mui/icons-material';
-import { Breadcrumbs, Link as MuiLink, Stack, Typography } from '@mui/material';
-import { Button, Preloader } from '@pspod/ui-components';
+import { Breadcrumbs, Link as MuiLink, Skeleton, Stack, Typography } from '@mui/material';
+import { Button } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
@@ -18,10 +18,17 @@ export const ProjectHeader: FC = () => {
   usePageTitle(projectData?.name);
 
   const { t } = useTranslation();
-  const { data: parents, isLoading: isParentsLoading } = useGetParents(projectData?.id ?? '');
+  const { data: parents = [], isLoading: isParentsLoading } = useGetParents(projectData?.id ?? '', {
+    select: data => [...data].reverse(),
+  });
 
   if (isParentsLoading || isProjectDataLoading) {
-    return <Preloader />;
+    return (
+      <>
+        <Skeleton width={'90%'} height={32} />
+        <Skeleton width={'80%'} height={32} />
+      </>
+    );
   }
 
   const backPath = projectData?.parentId
