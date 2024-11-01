@@ -15,7 +15,6 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:sonarjs/recommended',
     'plugin:react/recommended',
-    'plugin:storybook/recommended',
     'plugin:react-hooks/recommended',
   ],
   plugins: ['@typescript-eslint', 'prettier', 'import', 'sonarjs'],
