@@ -1,14 +1,11 @@
 import { describe, expect, it } from 'vitest';
 
-import {
-  CreateProjectNodeRequest,
-  CreateProjectNodeRequestTypeEnum,
-} from '~/api/utils/api-requests';
+import { CreateProjectNodeRequest, ProjectNodeType } from '~/api/utils/api-requests';
 import { schema } from '~/pages/projects/project-node/form/project-node-form.schema';
 
 const correctFormData: CreateProjectNodeRequest = {
   name: 'Название проекта',
-  type: CreateProjectNodeRequestTypeEnum.Project,
+  type: ProjectNodeType.Project,
   description: 'Описание проекта',
   parentId: '5ef97281-0fa0-4669-b1a9-bbc53191ba5c',
 };

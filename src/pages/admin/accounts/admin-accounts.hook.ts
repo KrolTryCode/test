@@ -9,7 +9,7 @@ import { useRemoveUserFromAdminsMutation } from '~/api/queries/accounts/remove-a
 import { useSetUserAsAdminMutation } from '~/api/queries/accounts/set-admin.mutation';
 import { useUpdateAccountMutation } from '~/api/queries/accounts/update-account.mutation';
 import { useArchiveUserMutation } from '~/api/queries/users/archive-user.mutation';
-import { UpdateAccountRequestStateEnum, User } from '~/api/utils/api-requests';
+import { User, AccountState } from '~/api/utils/api-requests';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export function useAdminAccounts() {
@@ -32,7 +32,7 @@ export function useAdminAccounts() {
 
   const { mutateAsync: updateAccount } = useUpdateAccountMutation();
 
-  const modifyAccount = async (userId: string, state: UpdateAccountRequestStateEnum) => {
+  const modifyAccount = async (userId: string, state: AccountState) => {
     await updateAccount(
       { userId, state },
       {

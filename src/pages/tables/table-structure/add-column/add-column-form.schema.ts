@@ -1,12 +1,12 @@
 import * as y from 'yup';
 
-import { ColumnDefinition, ColumnDefinitionColumnTypeEnum } from '~/api/utils/api-requests';
+import { ColumnDefinition, ColumnType } from '~/api/utils/api-requests';
 
 export const schema: y.ObjectSchema<ColumnDefinition> = y.object({
   name: y.string().required().default(''),
   columnType: y
-    .mixed<ColumnDefinitionColumnTypeEnum>()
-    .oneOf(Object.values(ColumnDefinitionColumnTypeEnum))
-    .default(ColumnDefinitionColumnTypeEnum.Varchar)
+    .mixed<ColumnType>()
+    .oneOf(Object.values(ColumnType))
+    .default(ColumnType.Varchar)
     .required(),
 });

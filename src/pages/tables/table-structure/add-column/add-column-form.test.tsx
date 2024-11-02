@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
 
-import { ColumnDefinition, ColumnDefinitionColumnTypeEnum } from '~/api/utils/api-requests';
+import { ColumnDefinition, ColumnType } from '~/api/utils/api-requests';
 import { schema } from '~/pages/tables/table-structure/add-column/add-column-form.schema';
 
 const correctFormData: ColumnDefinition = {
   name: 'Столбец123',
-  columnType: ColumnDefinitionColumnTypeEnum.Integer,
+  columnType: ColumnType.Integer,
 };
 
 describe('Add column form', () => {

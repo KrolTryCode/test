@@ -5,12 +5,7 @@ import { FC, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
-import {
-  CreateProjectNodeRequestTypeEnum,
-  ProjectNode,
-  ProjectNodeTypeEnum,
-  ProjectSubtreeTypeEnum,
-} from '~/api/utils/api-requests';
+import { ProjectNode, ProjectNodeType } from '~/api/utils/api-requests';
 import { NavTreeItemData, NavTreeItemType } from '~/components/nav-tree/nav-tree.type';
 import { projectNodeModal } from '~/pages/projects/project-node/form/project-node-form.component';
 import { useProjectsActionsMutations } from '~/pages/projects/use-projects-actions-mutations.hook';
@@ -19,10 +14,8 @@ import { projectPath, projectsPath } from '~/utils/configuration/routes-paths';
 
 const isProjectSubtreeTypeEnum = (
   projectNodeType?: NavTreeItemType,
-): projectNodeType is ProjectSubtreeTypeEnum => {
-  return (
-    !!projectNodeType && Object.values<string>(ProjectSubtreeTypeEnum).includes(projectNodeType)
-  );
+): projectNodeType is ProjectNodeType => {
+  return !!projectNodeType && Object.values<string>(ProjectNodeType).includes(projectNodeType);
 };
 
 export const useProjectsActions = (treeData: NavTreeItemData[]) => {
@@ -35,7 +28,7 @@ export const useProjectsActions = (treeData: NavTreeItemData[]) => {
     projectNodeModal({
       onSave: createProjectNode,
       title: t('ACTION.ADD_PROJECT'),
-      data: { type: CreateProjectNodeRequestTypeEnum.Project, parentId: projectGroupId },
+      data: { type: ProjectNodeType.Project, parentId: projectGroupId },
     });
   }, [createProjectNode, projectGroupId, t]);
 
@@ -43,7 +36,7 @@ export const useProjectsActions = (treeData: NavTreeItemData[]) => {
     projectNodeModal({
       onSave: createProjectNode,
       title: t('ACTION.CREATE_GROUP'),
-      data: { type: CreateProjectNodeRequestTypeEnum.Group, parentId: projectGroupId },
+      data: { type: ProjectNodeType.Group, parentId: projectGroupId },
     });
   }, [createProjectNode, projectGroupId, t]);
 
@@ -60,8 +53,7 @@ export const useProjectsActions = (treeData: NavTreeItemData[]) => {
           data: {
             name: projectNode.label,
             description: projectNode.description,
-            // TODO Задача BE-35 https://tracker.yandex.ru/BE-35
-            type: projectNode.type as unknown as CreateProjectNodeRequestTypeEnum,
+            type: projectNode.type,
           },
           onSave: data =>
             updateProjectNode({ nodeId: id, name: data.name, description: data.description }),
@@ -86,7 +78,7 @@ export const useProjectsActions = (treeData: NavTreeItemData[]) => {
   const getActions = useCallback(
     ({ row: { id, type } }: GridRowParams<ProjectNode>) => {
       const path = `/${projectsPath}/${
-        type === ProjectNodeTypeEnum.Group ? '' : `${projectPath}/`
+        type === ProjectNodeType.Group ? '' : `${projectPath}/`
       }${id}`;
       return [
         <GridActionsCellItem

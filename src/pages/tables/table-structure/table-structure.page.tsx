@@ -19,7 +19,7 @@ import { useParams } from 'react-router-dom';
 import { useGetContentNode } from '~/api/queries/nodes/get-content-node.query';
 import { useGetNodeColumns } from '~/api/queries/nodes/structure/get-node-columns.query';
 import { ColumnMetadataExtended, selectNodeColumns } from '~/api/selectors/select-node-columns';
-import { ColumnDefinitionColumnTypeEnum } from '~/api/utils/api-requests';
+import { ColumnType } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { useTableStructureActions } from '~/pages/tables/table-structure/use-table-structure-actions.hook';
 import { reorderRows } from '~/utils/reorder-rows';
@@ -89,7 +89,7 @@ const TableStructure: FC = () => {
         headerName: t('STRUCTURE.TYPE'),
         flex: 1,
         type: 'singleSelect',
-        valueOptions: Object.values(ColumnDefinitionColumnTypeEnum),
+        valueOptions: Object.values(ColumnType),
       },
       // TODO API, определить формат данных
       // {

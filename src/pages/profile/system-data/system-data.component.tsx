@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { Control, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { User, UserStateEnum } from '~/api/utils/api-requests';
+import { User, UserState } from '~/api/utils/api-requests';
 import { UpdateUserRequestNullable } from '~/pages/profile/profile-form.schema';
 import { translateStatus } from '~/utils/translate-status';
 
@@ -37,7 +37,7 @@ export const SystemData: FC<SystemDataProps> = ({ profileData, isAdminPage }) =>
         </FormItem>
         <FormItem label={t('COMMON.STATE')} isHidden={!isAdminPage}>
           <InputText
-            invalid={profileData?.state === UserStateEnum.Blocked}
+            invalid={profileData?.state === UserState.Blocked}
             isReadonly
             value={translateStatus(profileData?.state)}
           />

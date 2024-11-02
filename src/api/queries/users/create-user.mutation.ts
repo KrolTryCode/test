@@ -13,7 +13,7 @@ export const useSelfCreateUserMutation = (
 
   return useMutation<User, unknown, UserData>({
     mutationFn: async userData =>
-      await ApiClientSecured.userRegistrationV1Controller.create(userData),
+      await ApiClientSecured.userRegistrationV1Controller.selfCreateUser(userData),
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({ queryKey: [USERS_KEY] });

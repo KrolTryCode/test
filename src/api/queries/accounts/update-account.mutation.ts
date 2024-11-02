@@ -19,7 +19,7 @@ export const useUpdateAccountMutation = (
   const queryClient = useQueryClient();
   return useMutation<Account, AxiosError<ErrorResponse>, UpdateAccountMutationPayload>({
     mutationFn: async ({ userId, ...data }) =>
-      await ApiClientSecured.accountV1Controller.update2(userId, data),
+      await ApiClientSecured.accountV1Controller.updateAccount(userId, data),
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({ queryKey: [USERS_KEY] });

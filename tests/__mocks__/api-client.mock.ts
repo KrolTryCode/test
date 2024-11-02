@@ -1,7 +1,7 @@
 import {
   AccountConfiguration,
   User,
-  UserStateEnum,
+  UserState,
   UserWithPermissions,
 } from '~/api/utils/api-requests';
 import { adminRole } from '~/utils/configuration/constants-roles';
@@ -34,7 +34,7 @@ export const mockGetCurrentUser = vi.fn().mockImplementation((data, params) => {
       firstName: 'test',
       id: 'test-3fa85f64-5717-4562-b3fc-2c963f66afa6',
       lastName: 'systemTest',
-      state: UserStateEnum.Active,
+      state: UserState.Active,
     } as UserWithPermissions,
     permissions: [adminRole],
     passwordExpiresSoon: false,
@@ -48,7 +48,7 @@ export const mockGetUser = vi.fn().mockImplementation((data, params) => {
     firstName: 'admin',
     lastName: 'admin',
     createdFrom: '2020-10-19T19:02:00.988Z',
-    state: UserStateEnum.Active,
+    state: UserState.Active,
   } as User);
 });
 
