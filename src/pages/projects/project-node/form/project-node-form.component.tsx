@@ -1,12 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
+import { Button, Form, FormButtons, FormItem, modal } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { InstanceProps } from 'react-modal-promise';
 
 import { CreateProjectNodeRequest } from '~/api/utils/api-requests';
-import { modal } from '~/components/modal/modal';
 import { FormInputText, FormSelect } from '~/components/react-hook-form';
 import { FormSearchTree } from '~/components/react-hook-form/form-search-tree/form-search-tree.component';
 import { schema } from '~/pages/projects/project-node/form/project-node-form.schema';

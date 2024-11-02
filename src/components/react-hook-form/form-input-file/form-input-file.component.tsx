@@ -4,7 +4,7 @@ import { ChangeEvent, InputHTMLAttributes, useRef, useState } from 'react';
 import { FieldPath, FieldValues, useController, UseControllerProps } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { ValidationError } from '~/components/react-hook-form/_validation-error/validation-error.component';
+import { ValidationError } from '../_validation-error/validation-error.component';
 
 interface FormInputFileProps<
   TFieldValues extends FieldValues = FieldValues,

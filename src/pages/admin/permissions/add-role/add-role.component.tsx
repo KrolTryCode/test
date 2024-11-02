@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form, FormItem, FormButtons, Button, notifySuccess } from '@pspod/ui-components';
+import { Form, FormItem, FormButtons, Button, notifySuccess, modal } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -8,9 +8,7 @@ import { InstanceProps } from 'react-modal-promise';
 import { useCreateRoleMutation } from '~/api/queries/roles/create-role.mutation';
 import { useGetAllPermissionsQuery } from '~/api/queries/roles/get-all-permissions.query';
 import { CreateRole } from '~/api/utils/api-requests';
-import { modal } from '~/components/modal/modal';
-import { FormInputText } from '~/components/react-hook-form/form-input-text/form-input-text.component';
-import { FormSelect } from '~/components/react-hook-form/form-select/form-select.component';
+import { FormInputText, FormSelect } from '~/components/react-hook-form';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { schema, defaultValues } from './add-role.schema';

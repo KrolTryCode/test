@@ -1,11 +1,11 @@
+import { EnhancedColDef } from '@pspod/ui-components';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useSearchAuditsQuery } from '~/api/queries/audits/search-audits.query';
 import { selectPageableData } from '~/api/selectors/pageable';
 import { FullAuditInfo } from '~/api/utils/api-requests';
-import { DataGrid } from '~/ui-components/datagrid/datagrid.component';
-import { EnhancedColDef } from '~/ui-components/datagrid/datagrid.types';
+import { DataGrid } from '~/components/datagrid/datagrid.component';
 
 const JournalPage: FC = () => {
   const { t } = useTranslation();

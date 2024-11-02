@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { useStartAccountRecoveryMutation } from '~/api/queries/accounts/start-account-recovery.mutation';
-import { FormInputText } from '~/components/react-hook-form/form-input-text/form-input-text.component';
+import { FormInputText } from '~/components/react-hook-form';
 import { authPath, loginPath } from '~/utils/configuration/routes-paths';
 import { showErrorMessage } from '~/utils/show-error-message';
 

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
+import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { usePermissionsTable } from '~/pages/admin/permissions/permissions-table/use-permissions-table.hook';
-import { DataGrid } from '~/ui-components/datagrid/datagrid.component';
 
 import { GridPermission } from '../permissions.type';
 

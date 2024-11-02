@@ -5,7 +5,7 @@ import {
   GridRenderCellParams,
   useGridApiRef,
 } from '@mui/x-data-grid-premium';
-import { notifySuccess } from '@pspod/ui-components';
+import { notifySuccess, EnhancedColDef, GridPagingParams } from '@pspod/ui-components';
 import { ChangeEvent, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -14,7 +14,6 @@ import { useFindPermissionsQuery } from '~/api/queries/roles/find-permissions.qu
 import { useGetAllRolesQuery } from '~/api/queries/roles/get-all-roles.query';
 import { useRemoveRolePermissionsMutation } from '~/api/queries/roles/remove-role-permissions.mutation';
 import { GridPermission } from '~/pages/admin/permissions/permissions.type';
-import { EnhancedColDef, GridPagingParams } from '~/ui-components/datagrid/datagrid.types';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const usePermissionsTable = () => {

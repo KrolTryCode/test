@@ -2,7 +2,7 @@ import { DateTimePicker, DateTimePickerProps } from '@pspod/ui-components';
 import { useCallback } from 'react';
 import { FieldPath, FieldValues, UseControllerProps, useController } from 'react-hook-form';
 
-import { ValidationError } from '~/components/react-hook-form/_validation-error/validation-error.component';
+import { ValidationError } from '../_validation-error/validation-error.component';
 
 type FormDateTimePickerProps<
   TFieldValues extends FieldValues = FieldValues,

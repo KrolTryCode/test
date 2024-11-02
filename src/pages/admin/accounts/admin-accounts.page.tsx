@@ -7,6 +7,7 @@ import {
   GridCellParams,
   GridCellModes,
 } from '@mui/x-data-grid-premium';
+import { GridPagingParams, AvatarCell, DeleteCellButton } from '@pspod/ui-components';
 import { FC, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -14,10 +15,7 @@ import { Link } from 'react-router-dom';
 import { useGetUsersQuery } from '~/api/queries/users/get-users.query';
 import { selectPageableData } from '~/api/selectors/pageable';
 import { UpdateAccountRequestStateEnum, User, UserStateEnum } from '~/api/utils/api-requests';
-import { DeleteCellButton } from '~/components/delete-cell-button/delete-cell-button.component';
-import { AvatarCell } from '~/ui-components/datagrid/cells/avatar.component';
-import { DataGrid } from '~/ui-components/datagrid/datagrid.component';
-import { GridPagingParams } from '~/ui-components/datagrid/datagrid.types';
+import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { translateStatus } from '~/utils/translate-status';
 
 import { useAdminAccounts } from './admin-accounts.hook';

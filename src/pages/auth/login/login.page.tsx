@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { useLoginMutation } from '~/api/queries/accounts/login.mutation';
-import { FormCheckbox, FormInputText } from '~/components/react-hook-form';
+import { FormInputText, FormCheckbox } from '~/components/react-hook-form';
 import { authPath, registerPath, resetPasswordPath } from '~/utils/configuration/routes-paths';
 import { useAuthenticate } from '~/utils/hooks/use-authenticate';
 import { showErrorMessage } from '~/utils/show-error-message';

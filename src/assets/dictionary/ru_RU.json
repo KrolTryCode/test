@@ -1,5 +1,7 @@
 {
   "PROJECT_NAME": "Indanis",
+  "DATE_FORMAT": "dd.MM.yyyy",
+  "DATE_TIME_FORMAT": "dd.MM.yyyy HH:mm",
   "ACTION": {
     "ENTER": "Войти",
     "GO": "Перейти",
@@ -90,6 +92,7 @@
     "INFO": "Общая информация",
     "CONTENT": "Содержание",
     "ENTER_TEXT": "Введите текст",
+    "ENTER_FILENAME": "Введите имя файла",
     "PREVIEW": "Предпросмотр",
     "PRIORITY": "Приоритет",
     "FILE": "Файл",

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 import { useGetTemplatesQuery } from '~/api/queries/templates/get-templates.query';
 import { Template } from '~/api/utils/api-requests';
-import { DataGrid } from '~/ui-components/datagrid/datagrid.component';
+import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { editPath } from '~/utils/configuration/routes-paths';
 import { usePreventedLinks } from '~/utils/hooks/use-prevented-links';
 import { translateStatus } from '~/utils/translate-status';

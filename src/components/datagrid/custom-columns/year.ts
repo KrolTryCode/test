@@ -1,6 +1,5 @@
 import { GridValidRowModel } from '@mui/x-data-grid-premium';
-
-import { EnhancedColDef } from '~/ui-components/datagrid/datagrid.types';
+import { EnhancedColDef } from '@pspod/ui-components';
 
 export const getYearColDef = <T extends GridValidRowModel = any>(
   options: Omit<EnhancedColDef<T>, 'type'>,

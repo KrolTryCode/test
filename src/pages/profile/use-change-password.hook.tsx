@@ -1,4 +1,4 @@
-import { notifySuccess } from '@pspod/ui-components';
+import { notifySuccess, modal } from '@pspod/ui-components';
 import { useTranslation } from 'react-i18next';
 import { InstanceProps } from 'react-modal-promise';
 
@@ -6,7 +6,6 @@ import { useChangePasswordAdminMutation } from '~/api/queries/accounts/change-pa
 import { useChangePasswordMutation } from '~/api/queries/users/change-password.mutation';
 import { UpdatePasswordRequest } from '~/api/utils/api-requests';
 import { ChangePasswordForm } from '~/components/change-password-form/change-password-form.component';
-import { modal } from '~/components/modal/modal';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const useChangePassword = (user: string, userId: string) => {
