@@ -7,7 +7,7 @@ import {
 } from '@pspod/ui-components';
 import { useDeferredValue, useMemo } from 'react';
 
-import { SearchCriteriaOperationEnum, SearchRequest } from '~/api/utils/api-requests';
+import { SearchOperation, SearchRequest } from '~/api/utils/api-requests';
 
 export interface ServerPagingParams {
   filters: SearchRequest;
@@ -63,7 +63,7 @@ export function useServerPagingParams(gridPagingParams: GridPagingParams = {}): 
             key: field,
             operation: getServerFilterOperator(
               operator as GridFilterOperatorValue,
-            ) as SearchCriteriaOperationEnum,
+            ) as SearchOperation,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             value,
             orPredicate: filterModel.logicOperator === GridLogicOperator.Or,
@@ -79,38 +79,36 @@ export function useServerPagingParams(gridPagingParams: GridPagingParams = {}): 
   };
 }
 
-function getServerFilterOperator(
-  operator: GridFilterOperatorValue,
-): SearchCriteriaOperationEnum | null {
+function getServerFilterOperator(operator: GridFilterOperatorValue): SearchOperation | null {
   switch (operator) {
     case GridFilterOperatorValue.EqualSign:
     case GridFilterOperatorValue.Is:
     case GridFilterOperatorValue.Equals:
-      return SearchCriteriaOperationEnum.Equals;
+      return SearchOperation.Equals;
 
     case GridFilterOperatorValue.NotEqualSign:
     case GridFilterOperatorValue.Not:
-      return SearchCriteriaOperationEnum.NotEquals;
+      return SearchOperation.NotEquals;
 
     case GridFilterOperatorValue.GTESign:
     case GridFilterOperatorValue.OnOrAfter:
-      return SearchCriteriaOperationEnum.GreaterOrEquals;
+      return SearchOperation.GreaterOrEquals;
 
     case GridFilterOperatorValue.LTESign:
     case GridFilterOperatorValue.OnOrBefore:
-      return SearchCriteriaOperationEnum.LessOrEquals;
+      return SearchOperation.LessOrEquals;
 
     case GridFilterOperatorValue.Contains:
-      return SearchCriteriaOperationEnum.Contains;
+      return SearchOperation.Contains;
 
     case GridFilterOperatorValue.StartsWith:
-      return SearchCriteriaOperationEnum.StartWith;
+      return SearchOperation.StartWith;
 
     case GridFilterOperatorValue.EndsWith:
-      return SearchCriteriaOperationEnum.EndWith;
+      return SearchOperation.EndWith;
 
     case GridFilterOperatorValue.IsAnyOf:
-      return SearchCriteriaOperationEnum.In;
+      return SearchOperation.In;
 
     default:
       console.warn(

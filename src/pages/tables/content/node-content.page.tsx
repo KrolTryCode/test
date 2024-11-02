@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 
 import { useGetContentNode } from '~/api/queries/nodes/get-content-node.query';
 import { useGetContentNodes } from '~/api/queries/nodes/get-content-nodes.query';
-import { ContentNodeTypeEnum } from '~/api/utils/api-requests';
+import { ContentNodeType } from '~/api/utils/api-requests';
 import { EmptyCatalog, EmptyTable } from '~/pages/_fallbacks/info/empty/empty-element.component';
 
 const NodeContent: FC = () => {
@@ -19,7 +19,7 @@ const NodeContent: FC = () => {
   }
 
   if (children?.length === 0) {
-    if (nodeInfo?.type === ContentNodeTypeEnum.Table) {
+    if (nodeInfo?.type === ContentNodeType.Table) {
       return <EmptyTable />;
     } else {
       return <EmptyCatalog />;
@@ -30,7 +30,7 @@ const NodeContent: FC = () => {
     <Box padding={1}>
       {children?.map(c => (
         <Box key={c.id} display={'flex'}>
-          {c.type === ContentNodeTypeEnum.Directory && (
+          {c.type === ContentNodeType.Directory && (
             <Folder color={'primary'} sx={{ marginRight: 0.5 }} />
           )}
           <Typography gutterBottom={false}>{c.name}</Typography>

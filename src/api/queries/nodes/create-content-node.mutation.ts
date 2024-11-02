@@ -13,7 +13,7 @@ export const useCreateContentNodeMutation = (
 
   return useMutation({
     mutationFn: async (data: CreateContentNodeRequest) =>
-      await ApiClientSecured.contentNodeV1Controller.create3(data),
+      await ApiClientSecured.contentNodeV1Controller.createContentNode(data),
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({ queryKey: [PROJECTS_KEY, projectId, NODES_KEY] });

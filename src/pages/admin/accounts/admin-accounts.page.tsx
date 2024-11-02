@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 
 import { useGetUsersQuery } from '~/api/queries/users/get-users.query';
 import { selectPageableData } from '~/api/selectors/pageable';
-import { UpdateAccountRequestStateEnum, User, UserStateEnum } from '~/api/utils/api-requests';
+import { AccountState, User, UserState } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { translateStatus } from '~/utils/translate-status';
 
@@ -114,7 +114,7 @@ const AdminUsersPage: FC = () => {
           return [
             <GridActionsCellItem
               key={'edit'}
-              disabled={state === UserStateEnum.WaitingForActivation}
+              disabled={state === UserState.WaitingForActivation}
               title={t('ACTION.EDIT')}
               label={t('ACTION.EDIT')}
               icon={<EditIcon />}
@@ -125,13 +125,11 @@ const AdminUsersPage: FC = () => {
             <GridActionsCellItem
               key={'block-unblock'}
               showInMenu
-              label={t(state === UserStateEnum.Blocked ? 'ACTION.UNBLOCK' : 'ACTION.BLOCK')}
+              label={t(state === UserState.Blocked ? 'ACTION.UNBLOCK' : 'ACTION.BLOCK')}
               onClick={() => {
                 void modifyAccount(
                   id as string,
-                  state === UserStateEnum.Blocked
-                    ? UpdateAccountRequestStateEnum.Active
-                    : UpdateAccountRequestStateEnum.Blocked,
+                  state === UserState.Blocked ? AccountState.Active : AccountState.Blocked,
                 );
               }}
             />,
@@ -189,7 +187,7 @@ const AdminUsersPage: FC = () => {
       items={usersList?.items ?? []}
       totalCount={usersList?.totalCount ?? 0}
       columns={columns}
-      getRowClassName={({ row: { state } }) => (state === UserStateEnum.Blocked ? 'error' : '')}
+      getRowClassName={({ row: { state } }) => (state === UserState.Blocked ? 'error' : '')}
       onCellClick={handleCellClick}
       paging={gridPaging}
       onPagingChanged={setGridPaging}

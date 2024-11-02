@@ -17,7 +17,10 @@ export const useUpdateContentNodeMutation = (
 
   return useMutation({
     mutationFn: async ({ nodeId, name, parentNodeId }) =>
-      await ApiClientSecured.contentNodeV1Controller.update1(nodeId, { name, parentNodeId }),
+      await ApiClientSecured.contentNodeV1Controller.updateContentNode(nodeId, {
+        name,
+        parentNodeId,
+      }),
     ...options,
     onSuccess(data, ...args) {
       void queryClient.invalidateQueries({ queryKey: [PROJECTS_KEY, projectId, NODES_KEY] });

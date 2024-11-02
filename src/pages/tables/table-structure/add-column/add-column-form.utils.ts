@@ -1,5 +1,3 @@
-import { ColumnDefinitionColumnTypeEnum } from '~/api/utils/api-requests';
+import { ColumnType } from '~/api/utils/api-requests';
 
-export const selectColumnTypes = Object.entries(ColumnDefinitionColumnTypeEnum).map(
-  ([id, name]) => ({ id, name }),
-);
+export const selectColumnTypes = Object.entries(ColumnType).map(([id, name]) => ({ id, name }));

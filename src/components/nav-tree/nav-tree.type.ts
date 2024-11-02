@@ -1,11 +1,7 @@
 import { RichTreeViewSlots, TreeViewBaseItem, UseTreeItem2Parameters } from '@mui/x-tree-view';
 import { HTMLAttributes } from 'react';
 
-import {
-  ContentNodeTypeEnum,
-  ContentSubtreeTypeEnum,
-  ProjectSubtreeTypeEnum,
-} from '~/api/utils/api-requests';
+import { ContentNodeType, ProjectNodeType } from '~/api/utils/api-requests';
 
 export interface NavTreeProps {
   isLoading?: boolean;
@@ -27,7 +23,7 @@ export interface NavTreeItemProps
   onHandleSelectEvent?: (itemId: string) => void;
 }
 
-export type NavTreeItemType = ContentNodeTypeEnum | ContentSubtreeTypeEnum | ProjectSubtreeTypeEnum;
+export type NavTreeItemType = ContentNodeType | ProjectNodeType;
 
 export interface NavTreeItemData extends TreeViewBaseItem {
   href?: string;

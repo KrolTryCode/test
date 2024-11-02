@@ -16,7 +16,7 @@ export const useUpdateProjectNodeMutation = (
 
   return useMutation({
     mutationFn: async ({ nodeId, name, description }) =>
-      await ApiClientSecured.projectNodeV1Controller.update(nodeId, {
+      await ApiClientSecured.projectNodeV1Controller.updateProjectNode(nodeId, {
         name,
         description,
       }),

@@ -11,7 +11,7 @@ export const useCreateProjectNodeMutation = (
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: CreateProjectNodeRequest) =>
-      await ApiClientSecured.projectNodeV1Controller.create1(data),
+      await ApiClientSecured.projectNodeV1Controller.createProjectNode(data),
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({ queryKey: [PROJECTS_KEY] });
