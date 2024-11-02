@@ -1,5 +1,6 @@
 import { Preview as PreviewIcon } from '@mui/icons-material';
 import { GridActionsCellItem, GridRowParams } from '@mui/x-data-grid-premium';
+import { AddEntity, ImportProject, DeleteCellButton } from '@pspod/ui-components';
 import { FC, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
@@ -10,13 +11,10 @@ import {
   ProjectNodeTypeEnum,
   ProjectSubtreeTypeEnum,
 } from '~/api/utils/api-requests';
-import { DeleteCellButton } from '~/components/delete-cell-button/delete-cell-button.component';
 import { NavTreeItemData, NavTreeItemType } from '~/components/nav-tree/nav-tree.type';
 import { projectNodeModal } from '~/pages/projects/project-node/form/project-node-form.component';
 import { useProjectsActionsMutations } from '~/pages/projects/use-projects-actions-mutations.hook';
 import { useTreeNodesUtils } from '~/pages/tables/tree/use-tree-nodes-utils.hook';
-import { AddEntity } from '~/ui-components/datagrid/slots/toolbar/add/add-entity.component';
-import { ImportProject } from '~/ui-components/datagrid/slots/toolbar/import/import-project.component';
 import { projectPath, projectsPath } from '~/utils/configuration/routes-paths';
 
 const isProjectSubtreeTypeEnum = (

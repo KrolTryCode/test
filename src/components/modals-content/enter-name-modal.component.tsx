@@ -1,11 +1,9 @@
-import { Form, FormButtons, FormItem, Button } from '@pspod/ui-components';
+import { Form, FormButtons, FormItem, Button, modal, CreateModalProps } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { InstanceProps } from 'react-modal-promise';
 
-import { modal } from '~/components/modal/modal';
-import { CreateModalProps } from '~/components/modal/modal.type';
 import { FormInputText } from '~/components/react-hook-form';
 
 interface EnterNameFormProps

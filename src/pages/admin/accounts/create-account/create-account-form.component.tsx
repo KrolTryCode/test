@@ -1,5 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form, FormItem, FormButtons, Button, notifySuccess } from '@pspod/ui-components';
+import {
+  Form,
+  FormItem,
+  FormButtons,
+  Button,
+  notifySuccess,
+  CreateModalProps,
+  modal,
+} from '@pspod/ui-components';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -9,9 +17,7 @@ import {
   useCreateUserMutation,
   useSelfCreateUserMutation,
 } from '~/api/queries/users/create-user.mutation';
-import { modal } from '~/components/modal/modal';
-import { CreateModalProps } from '~/components/modal/modal.type';
-import { FormInputText } from '~/components/react-hook-form/form-input-text/form-input-text.component';
+import { FormInputText } from '~/components/react-hook-form';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { schema, CreateAccountForm as ICreateAccountForm } from './create-account.schema';

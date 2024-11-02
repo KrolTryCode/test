@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useGetPasswordConfigurationQuery } from '~/api/queries/settings/get-password-configuration.query';
 import { AccountConfiguration } from '~/api/utils/api-requests';
-import { FormInputText } from '~/components/react-hook-form/form-input-text/form-input-text.component';
+import { FormInputText } from '~/components/react-hook-form';
 
 import {
   ChangePasswordForm as IChangePasswordForm,

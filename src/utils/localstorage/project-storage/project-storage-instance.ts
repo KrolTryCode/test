@@ -1,4 +1,4 @@
-import { StorageService } from '~/utils/_localstorage/storage';
+import { StorageService } from '@pspod/ui-components';
 
 import { PREFIX, ProjectStorageModel, ProjectStorageSchemas } from './project-storage.types';
 

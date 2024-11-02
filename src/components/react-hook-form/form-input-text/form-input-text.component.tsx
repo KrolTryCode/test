@@ -1,7 +1,9 @@
-import { InputText, MaskedInput, InputTextProps } from '@pspod/ui-components';
+import { InputText, InputTextProps } from '@pspod/ui-components';
 import { FieldPath, FieldValues, UseControllerProps, useController } from 'react-hook-form';
 
 import { ValidationError } from '../_validation-error/validation-error.component';
+
+import { MaskedInput } from './masked-input/masked-input.component';
 
 interface FormInputTextProps<
   TFieldValues extends FieldValues = FieldValues,

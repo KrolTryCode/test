@@ -1,15 +1,14 @@
-import { Preloader } from '@pspod/ui-components';
+import { Preloader, EnhancedColDef } from '@pspod/ui-components';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { ProjectNode } from '~/api/utils/api-requests';
+import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { NotFoundNodes } from '~/pages/_fallbacks/errors/not-found/not-found.component';
 import { ProjectHeader } from '~/pages/projects/project-header/project-header.component';
 import { useProjectsActions } from '~/pages/projects/use-projects-actions.hook';
 import { useProjectsData } from '~/pages/projects/use-projects-data.hook';
-import { DataGrid } from '~/ui-components/datagrid/datagrid.component';
-import { EnhancedColDef } from '~/ui-components/datagrid/datagrid.types';
 
 const ProjectsList: FC = () => {
   const { t } = useTranslation();

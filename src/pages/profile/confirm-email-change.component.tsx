@@ -1,10 +1,7 @@
 import { Stack, Typography } from '@mui/material';
-import { Button } from '@pspod/ui-components';
+import { Button, modal, CreateModalProps } from '@pspod/ui-components';
 import { t } from 'i18next';
 import { FC } from 'react';
-
-import { modal } from '~/components/modal/modal';
-import { CreateModalProps } from '~/components/modal/modal.type';
 
 export const ConfirmEmailChange: FC<
   Pick<CreateModalProps<Record<string, never>>, 'onResolve' | 'onReject'>

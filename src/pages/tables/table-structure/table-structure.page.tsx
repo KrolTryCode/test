@@ -5,7 +5,13 @@ import {
   GridRowOrderChangeParams,
   useGridApiRef,
 } from '@mui/x-data-grid-premium';
-import { notifySuccess } from '@pspod/ui-components';
+import {
+  notifySuccess,
+  EnhancedColDef,
+  GridPagingParams,
+  AddEntity,
+  useGetRowActions,
+} from '@pspod/ui-components';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -14,11 +20,8 @@ import { useGetContentNode } from '~/api/queries/nodes/get-content-node.query';
 import { useGetNodeColumns } from '~/api/queries/nodes/structure/get-node-columns.query';
 import { ColumnMetadataExtended, selectNodeColumns } from '~/api/selectors/select-node-columns';
 import { ColumnDefinitionColumnTypeEnum } from '~/api/utils/api-requests';
+import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { useTableStructureActions } from '~/pages/tables/table-structure/use-table-structure-actions.hook';
-import { DataGrid } from '~/ui-components/datagrid/datagrid.component';
-import { EnhancedColDef, GridPagingParams } from '~/ui-components/datagrid/datagrid.types';
-import { AddEntity } from '~/ui-components/datagrid/slots/toolbar/add/add-entity.component';
-import { useGetRowActions } from '~/ui-components/datagrid/use-get-grid-row-actions.hook';
 import { reorderRows } from '~/utils/reorder-rows';
 import { showErrorMessage } from '~/utils/show-error-message';
 
@@ -37,7 +40,9 @@ const TableStructure: FC = () => {
 
   const { handleDropColumn, handleAddColumn, handleEditColumn } = useTableStructureActions(nodeId);
   const { getActions, onRowModesModelChange, rowModesModel } =
-    useGetRowActions<ColumnMetadataExtended>(apiRef, handleDropColumn, 'name');
+    useGetRowActions<ColumnMetadataExtended>(apiRef, (row: ColumnMetadataExtended) =>
+      handleDropColumn(row.name),
+    );
 
   const [paging, setGridPaging] = useState<GridPagingParams>();
   const [items, setItems] = useState(nodeColumns);

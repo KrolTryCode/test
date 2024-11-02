@@ -1,5 +1,12 @@
 import { GridEventListener, GridRowEditStopReasons, useGridApiRef } from '@mui/x-data-grid-premium';
-import { notifySuccess } from '@pspod/ui-components';
+import {
+  notifySuccess,
+  EditTextarea,
+  EnhancedColDef,
+  GridPagingParams,
+  AddEntity,
+  useGetRowActions,
+} from '@pspod/ui-components';
 import { FC, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -7,11 +14,7 @@ import { useChangeRoleMutation } from '~/api/queries/roles/change-role.mutation'
 import { useFindRolesQuery } from '~/api/queries/roles/find-roles.query';
 import { useRemoveRoleMutation } from '~/api/queries/roles/remove-role.mutation';
 import { Role } from '~/api/utils/api-requests';
-import { EditTextarea } from '~/ui-components/datagrid/cells/multiline-editing-cell.component';
-import { DataGrid } from '~/ui-components/datagrid/datagrid.component';
-import { EnhancedColDef, GridPagingParams } from '~/ui-components/datagrid/datagrid.types';
-import { AddEntity } from '~/ui-components/datagrid/slots/toolbar/add/add-entity.component';
-import { useGetRowActions } from '~/ui-components/datagrid/use-get-grid-row-actions.hook';
+import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { addRoleModal } from '../add-role/add-role.component';
@@ -40,8 +43,7 @@ export const RolesTable: FC = () => {
 
   const { getActions, onRowModesModelChange, rowModesModel } = useGetRowActions<Role>(
     apiRef,
-    removeRole,
-    'id',
+    (row: Role) => removeRole(row.id!),
   );
 
   const changeRole = useCallback(

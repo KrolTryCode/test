@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { useUpdateTemplateMutation } from '~/api/queries/templates/update-template.mutation';
 import { CreateTemplateRequest, Template } from '~/api/utils/api-requests';
+import { FormInputText } from '~/components/react-hook-form';
 import { FormInputRichTextEditor } from '~/components/react-hook-form/form-input-rich-editor/form-input-rich-editor.component';
-import { FormInputText } from '~/components/react-hook-form/form-input-text/form-input-text.component';
 import { adminPath, templatesPath } from '~/utils/configuration/routes-paths';
 import { showErrorMessage } from '~/utils/show-error-message';
 

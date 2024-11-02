@@ -1,11 +1,13 @@
 import { GridLogicOperator, GridSortDirection } from '@mui/x-data-grid-premium';
+import {
+  DEFAULT_GRID_PAGING_PARAMS,
+  GridPagingParams,
+  serviceRowGroupPrefix,
+  GridFilterOperatorValue,
+} from '@pspod/ui-components';
 import { useDeferredValue, useMemo } from 'react';
 
 import { SearchCriteriaOperationEnum, SearchRequest } from '~/api/utils/api-requests';
-import { DEFAULT_GRID_PAGING_PARAMS } from '~/ui-components/datagrid/datagrid.consts';
-import { GridPagingParams } from '~/ui-components/datagrid/datagrid.types';
-import { serviceRowGroupPrefix } from '~/ui-components/datagrid/datagrid.utils';
-import { GridFilterOperatorValue } from '~/ui-components/datagrid/filters/filter-operators';
 
 export interface ServerPagingParams {
   filters: SearchRequest;

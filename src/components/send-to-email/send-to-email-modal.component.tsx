@@ -1,15 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Clear } from '@mui/icons-material';
 import { Unstable_Grid2 as Grid, IconButton } from '@mui/material';
-import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
+import { Button, Form, FormButtons, FormItem, modal, CreateModalProps } from '@pspod/ui-components';
 import { t } from 'i18next';
 import { FC } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { InstanceProps } from 'react-modal-promise';
 
-import { modal } from '~/components/modal/modal';
-import { CreateModalProps } from '~/components/modal/modal.type';
 import { FormInputText } from '~/components/react-hook-form';
 import { schema, EmailsListType } from '~/components/send-to-email/emails.schema';
 

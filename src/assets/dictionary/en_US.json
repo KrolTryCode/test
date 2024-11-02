@@ -1,5 +1,7 @@
 {
-  "PROJECT_NAME": "Indanis"
+  "PROJECT_NAME": "Indanis",
+  "DATE_FORMAT": "MM/dd/yyyy",
+  "DATE_TIME_FORMAT": "MM/dd/yyyy HH:mm"
 }
 
 

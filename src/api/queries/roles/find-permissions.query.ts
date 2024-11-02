@@ -1,10 +1,10 @@
+import { GridPagingParams } from '@pspod/ui-components';
 import { UseQueryResult, keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { UseCustomQueryOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { Pageable, PageRole } from '~/api/utils/api-requests';
 import { PERMISSIONS_KEY, ROLES_KEY } from '~/api/utils/query-keys';
-import { GridPagingParams } from '~/ui-components/datagrid/datagrid.types';
 import { useServerPagingParams } from '~/utils/hooks/use-server-options';
 
 export const useFindPermissionsQuery = <T = PageRole>(
