@@ -3,6 +3,7 @@ export const ALL_KEY = 'all';
 export const EVENTS_KEY = 'events';
 export const REPORTS_KEY = 'reports';
 export const TEMPLATES_KEY = 'templates';
+export const TIMEZONES_KEY = 'timezones';
 export const IMAGES_KEY = 'images';
 export const FILES_KEY = 'files';
 export const NODES_KEY = 'nodes';

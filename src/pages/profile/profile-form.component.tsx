@@ -43,7 +43,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({ data, isLoading, isCurrent, 
   } = useForm<UpdateUserRequestNullable>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
-    values: data,
+    values: data ? getFormData(data) : undefined,
     defaultValues: schema.getDefault(),
     resolver: yupResolver(schema),
   });
@@ -109,3 +109,17 @@ export const ProfileForm: FC<ProfileFormProps> = ({ data, isLoading, isCurrent, 
     </Form>
   );
 };
+
+function getFormData(user: User): UpdateUserRequestNullable {
+  return {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    surName: user.surName,
+    email: user.email,
+    company: user.company,
+    division: user.division,
+    position: user.position,
+    phoneNumber: user.phoneNumber,
+    timeZoneId: user.userTimeZone!.id,
+  };
+}
