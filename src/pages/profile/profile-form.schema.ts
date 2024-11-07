@@ -12,6 +12,7 @@ export interface UpdateUserRequestNullable {
   division?: string | null;
   position?: string | null;
   phoneNumber?: string | null;
+  timeZoneId?: number | null;
 }
 
 export const schema: y.ObjectSchema<UpdateUserRequestNullable> = y.object({
@@ -24,4 +25,6 @@ export const schema: y.ObjectSchema<UpdateUserRequestNullable> = y.object({
   division: y.string().nullable(),
   position: y.string().nullable(),
   phoneNumber: phoneSchema,
+
+  timeZoneId: y.number().nullable(),
 });

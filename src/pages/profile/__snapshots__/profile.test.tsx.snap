@@ -514,6 +514,89 @@ exports[`Profile > renders the profile > profile 1`] = `
             <label
               class="MuiFormLabel-root MuiFormLabel-colorPrimary css-1xtmzjf-MuiFormLabel-root"
             >
+              Часовой пояс
+            </label>
+            <div
+              class="MuiBox-root css-eal7pa"
+            >
+              <div
+                class="MuiBox-root css-0"
+                data-mui-internal-clone-element="true"
+              >
+                <div
+                  class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-yaw09c-MuiAutocomplete-root"
+                  title=""
+                >
+                  <div
+                    class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-igw2tk-MuiFormControl-root-MuiTextField-root"
+                  >
+                    <div
+                      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-iwzgqv-MuiInputBase-root-MuiOutlinedInput-root"
+                    >
+                      <input
+                        aria-autocomplete="list"
+                        aria-expanded="false"
+                        aria-invalid="false"
+                        autocapitalize="none"
+                        autocomplete="off"
+                        class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-18al6m3-MuiInputBase-input-MuiOutlinedInput-input"
+                        disabled=""
+                        id=":rh:"
+                        role="combobox"
+                        spellcheck="false"
+                        type="text"
+                        value=""
+                      />
+                      <div
+                        class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
+                      >
+                        <button
+                          aria-label="Открыть"
+                          class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-3p0hq5-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                          disabled=""
+                          tabindex="-1"
+                          title="Открыть"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                            data-testid="ArrowDropDownIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M7 10l5 5 5-5z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                      <fieldset
+                        aria-hidden="true"
+                        class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                      >
+                        <legend
+                          class="css-ihdtdm"
+                        >
+                          <span
+                            class="notranslate"
+                          >
+                            ​
+                          </span>
+                        </legend>
+                      </fieldset>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiFormControl-root css-k8zdik-MuiFormControl-root"
+          >
+            <label
+              class="MuiFormLabel-root MuiFormLabel-colorPrimary css-1xtmzjf-MuiFormLabel-root"
+            >
               Дата регистрации
             </label>
             <div
@@ -529,7 +612,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                     aria-invalid="false"
                     autocomplete="off"
                     class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedEnd Mui-readOnly MuiInputBase-readOnly css-1u6kppm-MuiInputBase-input-MuiOutlinedInput-input"
-                    id=":rg:"
+                    id=":rj:"
                     inputmode="text"
                     placeholder="ДД.ММ.ГГГГ чч:мм"
                     readonly=""
@@ -598,7 +681,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                     aria-invalid="false"
                     autocomplete="off"
                     class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedEnd Mui-readOnly MuiInputBase-readOnly css-1u6kppm-MuiInputBase-input-MuiOutlinedInput-input"
-                    id=":ri:"
+                    id=":rl:"
                     inputmode="text"
                     placeholder="ДД.ММ.ГГГГ чч:мм"
                     readonly=""
@@ -668,7 +751,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                     aria-readonly="true"
                     autocomplete="off"
                     class="MuiInputBase-input MuiOutlinedInput-input css-1thzzby-MuiInputBase-input-MuiOutlinedInput-input"
-                    id=":rk:"
+                    id=":rn:"
                     readonly=""
                     type="text"
                     value=""
@@ -714,7 +797,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                     aria-readonly="true"
                     autocomplete="off"
                     class="MuiInputBase-input MuiOutlinedInput-input css-1thzzby-MuiInputBase-input-MuiOutlinedInput-input"
-                    id=":rl:"
+                    id=":ro:"
                     readonly=""
                     type="text"
                     value="Нет данных"
@@ -744,7 +827,7 @@ exports[`Profile > renders the profile > profile 1`] = `
       >
         <button
           class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorSecondary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorSecondary MuiButton-disableElevation css-wg7wa7-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
-          id=":rm:"
+          id=":rp:"
           tabindex="0"
           type="button"
         >
@@ -752,7 +835,7 @@ exports[`Profile > renders the profile > profile 1`] = `
         </button>
         <button
           class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation css-83fcih-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
-          id=":rn:"
+          id=":rq:"
           tabindex="0"
           type="submit"
         >

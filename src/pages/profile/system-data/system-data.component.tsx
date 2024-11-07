@@ -3,7 +3,9 @@ import { FC } from 'react';
 import { Control, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { useGetTimeZoneListQuery } from '~/api/queries/users/get-timezone-list.query';
 import { User, UserState } from '~/api/utils/api-requests';
+import { FormSelect } from '~/components/react-hook-form';
 import { UpdateUserRequestNullable } from '~/pages/profile/profile-form.schema';
 import { translateStatus } from '~/utils/translate-status';
 
@@ -14,8 +16,15 @@ interface SystemDataProps {
   profileData?: User;
 }
 
-export const SystemData: FC<SystemDataProps> = ({ profileData, isAdminPage }) => {
+export const SystemData: FC<SystemDataProps> = ({
+  profileData,
+  isAdminPage,
+  control,
+  register,
+}) => {
   const { t } = useTranslation();
+
+  const { data: timezoneList = [], isLoading } = useGetTimeZoneListQuery();
 
   const createdDate = profileData?.createdFrom ? new Date(profileData.createdFrom) : null;
   const lastLoginDate = profileData?.lastSuccessfulLoginTime
@@ -25,6 +34,14 @@ export const SystemData: FC<SystemDataProps> = ({ profileData, isAdminPage }) =>
   return (
     <Fieldset legend={t('USER.CAPTION.SYSTEM_DATA')} columnGap={8}>
       <Fieldset direction={'column'}>
+        <FormItem label={t('USER.TIME_ZONE')}>
+          <FormSelect
+            controllerProps={{ ...register('timeZoneId'), control }}
+            items={timezoneList}
+            displayExpr={'title'}
+            isDisabled={isLoading}
+          />
+        </FormItem>
         <FormItem label={t('USER.REGISTRATION_DATE')}>
           <DateTimePicker value={createdDate} type={'datetime'} />
         </FormItem>
