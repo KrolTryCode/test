@@ -8,14 +8,14 @@ export const StyledAccordion = styled(Accordion)(({ theme }) => ({
 
 export const StyledAccordionSummary = styled(AccordionSummary)(
   ({ theme }) => `
-  background-color: ${theme.palette.primary.main};
   height: 30px;
   min-height: 30px !important;
   padding: 0 0 0 5px !important;
   font-size: 14px;
+  font-weight: 500;
   color: white !important;
-  cursor: pointer
-  fontWeight: 500;
+  cursor: pointer;
+  background-color: ${theme.palette.primary.main};
 `,
 );
 
@@ -24,9 +24,9 @@ export const StyledAccordionNavLink = styled(NavLink)(
   display: flex;
   padding: 5px;
   font-size: 14px;
+  color: white !important;
   text-decoration: none;
   text-wrap: nowrap;
-  color: white !important;
 
   &.active {
     color: ${theme.palette.primary.main} !important;

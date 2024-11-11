@@ -22,7 +22,8 @@ export function FormInputNumeric<TFieldValues extends FieldValues = FieldValues>
   const { field, fieldState } = useController(controllerProps);
 
   const onChange = (value: string) => {
-    const newValue = value && !Number.isNaN(value) ? +value : controllerProps.defaultValue ?? null;
+    const newValue =
+      value && !Number.isNaN(value) ? +value : (controllerProps.defaultValue ?? null);
     field.onChange(newValue);
     inputProps.onChange?.(newValue);
   };

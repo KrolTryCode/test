@@ -12,6 +12,7 @@ export const getSchema = (properties: PropertyInfo[]) =>
             return [prop.name, y.number().integer().min(0)];
           case 'Boolean':
             return [prop.name, y.boolean()];
+          case undefined:
           default:
             return [prop.name, nonEmptyStringYup];
         }

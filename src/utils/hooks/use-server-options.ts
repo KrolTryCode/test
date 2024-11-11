@@ -110,6 +110,10 @@ function getServerFilterOperator(operator: GridFilterOperatorValue): SearchOpera
     case GridFilterOperatorValue.IsAnyOf:
       return SearchOperation.In;
 
+    case GridFilterOperatorValue.isEmpty: {
+      //TODO: implement
+      throw new Error('Not implemented yet: GridFilterOperatorValue.isEmpty case');
+    }
     default:
       console.warn(
         `Unprocessed grid operator "${operator as string}". The expression will be ignored`,

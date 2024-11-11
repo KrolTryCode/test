@@ -1,6 +1,7 @@
-import { styled, Box, BoxProps } from '@mui/material';
+import { styled, BoxProps } from '@mui/material';
 
-export const StyledList = styled((props: BoxProps) => <Box {...props} component={'ul'} />)`
+//@ts-expect-error ul ref typing
+export const StyledList = styled((props: BoxProps) => <ul {...props} />)`
   width: 290px;
   padding-left: 15px;
   margin: 0;
@@ -9,7 +10,8 @@ export const StyledList = styled((props: BoxProps) => <Box {...props} component=
 `;
 
 export const StyledListItem = styled((props: BoxProps) => (
-  <Box {...props} component={'li'} paddingRight={1} />
+  //@ts-expect-error li ref typing
+  <li {...props} style={{ paddingRight: 1 }} />
 ))`
   &:not(:last-child) {
     margin-bottom: 4px;
