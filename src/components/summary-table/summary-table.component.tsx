@@ -34,6 +34,8 @@ export const SummaryTable: FC<SummaryTableProps> = ({
         return value ? t('COMMON.YES') : t('COMMON.NO');
       }
       case 'string':
+      case 'number':
+      case undefined:
       default: {
         return value;
       }

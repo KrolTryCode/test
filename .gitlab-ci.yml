@@ -69,7 +69,7 @@ stages:
     STYLELINT_CODE_QUALITY_REPORT: gl-codequality.json
   stage: lint
   script:
-    - npm run lint:styles -- --custom-formatter node_modules/stylelint-formatter-gitlab
+    - npm run lint:styles -- --custom-formatter node_modules/@studiometa/stylelint-formatter-gitlab/src/index.js
   artifacts:
     reports:
       codequality: gl-codequality.json

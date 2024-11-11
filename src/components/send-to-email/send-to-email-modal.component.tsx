@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Clear } from '@mui/icons-material';
-import { Unstable_Grid2 as Grid, IconButton } from '@mui/material';
+import { Grid2 as Grid, IconButton } from '@mui/material';
 import { Button, Form, FormButtons, FormItem, modal, CreateModalProps } from '@pspod/ui-components';
 import { t } from 'i18next';
 import { FC } from 'react';
@@ -45,7 +45,7 @@ const EnterEmailsForm: FC<EnterEmailFormProps> = ({ isMultiple = true, onResolve
       {fields.map((entry, index) => (
         <FormItem key={entry.id} isRequired label={t('USER.EMAIL_ADDRESS')}>
           <Grid key={entry.id} container direction={'row'} alignItems={'flex-end'}>
-            <Grid xs={11}>
+            <Grid size={{ xs: 11 }}>
               <FormInputText
                 controllerProps={{
                   ...register(`emails.${index}.email` as const),

@@ -15,11 +15,11 @@ export const StyledHeaderNav = styled('nav')(
 
 export const StyledHeaderNavLink = styled(NavLink)(
   ({ theme }) => `
-  margin: 12px 4px 0;
-  padding: 0 15px;
   height: 2.5em;
-  line-height: 2.5em;
+  padding: 0 15px;
+  margin: 12px 4px 0;
   font-size: 16px;
+  line-height: 2.5em;
   color: white !important;
   text-decoration: none;
   white-space: nowrap;

@@ -48,7 +48,6 @@ const API_CONFIG_SECURE: ApiConfig = {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         res = { ...res, ...params[key] };
       } else {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         res[key] = params[key];
       }
     }
@@ -80,6 +79,7 @@ let failedQueue: {
 
 const processQueue = (error: AxiosError | null, token: string | null = null) => {
   failedQueue.forEach(prom => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     error ? prom.reject(error) : prom.resolve(token);
   });
   failedQueue = [];
@@ -112,7 +112,7 @@ ApiClientSecured.instance.interceptors.response.use(
             originalRequest.headers['Authorization'] = 'Bearer ' + String(token);
             return axios(originalRequest);
           })
-          .catch(err => {
+          .catch((err: Error) => {
             return Promise.reject(err);
           });
       }

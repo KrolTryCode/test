@@ -20,6 +20,7 @@ const FallbackInfoPage: FC<FallbackPageProps> = ({
   const navigate = useNavigate();
 
   const handleClick = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     buttonNavigate === ButtonNavigate.Back
       ? navigate(-1)
       : buttonNavigate === ButtonNavigate.CreateNode

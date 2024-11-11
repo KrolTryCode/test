@@ -65,6 +65,7 @@ export const ConfigurationFormComponent = (moduleDescription: EntityModelModuleC
         break;
       }
       //String
+      case undefined:
       default: {
         component = <FormInputText controllerProps={{ ...register(property.name!), control }} />;
       }
@@ -88,10 +89,7 @@ export const ConfigurationFormComponent = (moduleDescription: EntityModelModuleC
         labelWidth={8}
         isLoading={!values}
       >
-        {/*TODO: temporary cast because of incorrect API description*/}
-        {(moduleDescription.properties as unknown as PropertyInfo[]).map(property =>
-          renderComponent(property),
-        )}
+        {(moduleDescription.properties ?? []).map(property => renderComponent(property))}
         <FormButtons>
           <Button onClick={onDrop}>{t('ACTION.DROP')}</Button>
           <Button

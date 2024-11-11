@@ -53,9 +53,6 @@ export const NavTreeItem = forwardRef(function NavTreeItem(
   }, [itemId, publicAPI]);
 
   return (
-    // Странная ошибка с типами при билде
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
     <TreeItem2Provider itemId={itemId}>
       <TreeItem2Root {...getRootProps(other)}>
         <TreeItem2Content {...getContentProps()}>
