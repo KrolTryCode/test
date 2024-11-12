@@ -124,5 +124,5 @@ export const useProjectsActions = (treeData: NavTreeItemData[]) => {
     );
   };
 
-  return { getActions, handleAddProjectNode, ProjectsListToolbarContent };
+  return { getActions, handleAddProjectGroup, ProjectsListToolbarContent };
 };

@@ -25,6 +25,3 @@ export const setUserInfo = (user: User) =>
   );
 
 export const clearUserData = () => useUserStore.setState({ data: null, isLoggedIn: false });
-
-// TODO Temporary
-export const DEFAULT_PROJECT_ID = '3fa85f64-5717-4562-b3fc-2c963f66afa6';
