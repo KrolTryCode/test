@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useUpdateUserMutation } from '~/api/queries/users/update-user.mutation';
 import { UpdateUserRequest, User } from '~/api/utils/api-requests';
+import { setUserInfo } from '~/app/user/user.store';
 import { confirmEmailModal } from '~/pages/profile/confirm-email-change.component';
 import { showErrorMessage } from '~/utils/show-error-message';
 
@@ -50,9 +51,13 @@ export const ProfileForm: FC<ProfileFormProps> = ({ data, isLoading, isCurrent, 
 
   const handleUpdateUser = useCallback(
     async (values: UpdateUserRequestNullable) => {
-      await updateUser(values as UpdateUserRequest);
+      const user = await updateUser(values as UpdateUserRequest);
+
+      if (isCurrent && user) {
+        setUserInfo(user);
+      }
     },
-    [updateUser],
+    [updateUser, isCurrent],
   );
 
   const onSubmit = async (fieldValues: UpdateUserRequestNullable) => {

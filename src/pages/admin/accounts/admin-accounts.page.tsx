@@ -16,6 +16,7 @@ import { useGetUsersQuery } from '~/api/queries/users/get-users.query';
 import { selectPageableData } from '~/api/selectors/pageable';
 import { AccountState, User, UserState } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
+import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
 import { translateStatus } from '~/utils/translate-status';
 
 import { useAdminAccounts } from './admin-accounts.hook';
@@ -75,6 +76,7 @@ const AdminUsersPage: FC = () => {
         type: 'dateTime',
         headerName: t('COMMON.DATE_CREATED'),
         flex: 1,
+        valueGetter: getColDateWithTz,
       },
       {
         field: 'email',
@@ -85,9 +87,7 @@ const AdminUsersPage: FC = () => {
         field: 'state',
         headerName: t('COMMON.STATUS'),
         flex: 1,
-        valueFormatter(value: string) {
-          return translateStatus(value);
-        },
+        valueFormatter: translateStatus,
         // Не работает
         sortable: false,
         groupable: false,
@@ -107,7 +107,7 @@ const AdminUsersPage: FC = () => {
       },
       {
         field: 'actions',
-        width: 80,
+        width: 82,
         type: 'actions',
         disableReorder: true,
         getActions({ row: { state, id } }) {

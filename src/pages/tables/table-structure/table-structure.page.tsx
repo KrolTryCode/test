@@ -22,7 +22,7 @@ import { ColumnMetadataExtended, selectNodeColumns } from '~/api/selectors/selec
 import { ColumnType } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { useTableStructureActions } from '~/pages/tables/table-structure/use-table-structure-actions.hook';
-import { reorderRows } from '~/utils/reorder-rows';
+import { reorderRows } from '~/utils/datagrid/reorder-rows';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 const TableStructure: FC = () => {
@@ -114,7 +114,7 @@ const TableStructure: FC = () => {
       {
         field: 'actions',
         type: 'actions',
-        width: 80,
+        width: 82,
         getActions,
       },
     ],

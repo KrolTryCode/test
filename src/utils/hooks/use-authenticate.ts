@@ -43,8 +43,8 @@ export const useAuthenticate = () => {
   const navigateAfterLogin = useCallback(async () => {
     const user = await getUser();
     if (user?.id) {
-      const sameUser = projectLocalStorageService.get(ProjectStorageKey.UserId) === user?.id;
-      projectLocalStorageService.set(ProjectStorageKey.UserId, user?.id);
+      const sameUser = projectLocalStorageService.get(ProjectStorageKey.UserId) === user.id;
+      projectLocalStorageService.set(ProjectStorageKey.UserId, user.id);
       const navigateTo = sameUser && locationState?.from ? locationState.from.pathname : homePath;
       navigate(navigateTo);
     }
