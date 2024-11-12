@@ -9,6 +9,7 @@ import { NotFoundNodes } from '~/pages/_fallbacks/errors/not-found/not-found.com
 import { ProjectHeader } from '~/pages/projects/project-header/project-header.component';
 import { useProjectsActions } from '~/pages/projects/use-projects-actions.hook';
 import { useProjectsData } from '~/pages/projects/use-projects-data.hook';
+import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
 
 const ProjectsList: FC = () => {
   const { t } = useTranslation();
@@ -40,6 +41,7 @@ const ProjectsList: FC = () => {
         headerName: t('JOURNAL.DATE'),
         type: 'dateTime',
         flex: 1,
+        valueGetter: getColDateWithTz,
       },
       {
         field: 'actions',

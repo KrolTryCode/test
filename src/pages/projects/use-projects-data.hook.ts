@@ -7,8 +7,20 @@ import { projectsPath } from '~/utils/configuration/routes-paths';
 
 export function useProjectsData() {
   const { projectGroupId, projectId = '' } = useParams();
-  const { data: childrenNodes = [], isLoading: isChildrenLoading } =
-    useGetProjectNodesByParent(projectGroupId);
+  const { data: childrenNodes = [], isLoading: isChildrenLoading } = useGetProjectNodesByParent(
+    projectGroupId,
+    {
+      // временное устранение задвоения(?) данных
+      select: data => {
+        return data.reduce<typeof data>((acc, cur) => {
+          if (acc.some(v => v.id === cur.id)) {
+            return acc;
+          }
+          return [...acc, cur];
+        }, []);
+      },
+    },
+  );
   const { data: treeData = [], isLoading: isTreeLoading } = useGetProjectNodesTree({
     select: data => nodesWithHrefSelector(data, projectId, projectsPath),
   });
