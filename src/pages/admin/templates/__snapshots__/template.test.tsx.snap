@@ -98,7 +98,7 @@ exports[`Templates page > renders the templates 1`] = `
                   aria-label="Меню"
                   class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall MuiDataGrid-menuIconButton css-1p0j4z7-MuiButtonBase-root-MuiIconButton-root"
                   data-mui-internal-clone-element="true"
-                  id=":r4:"
+                  id=":r7:"
                   tabindex="-1"
                   type="button"
                 >
@@ -198,7 +198,7 @@ exports[`Templates page > renders the templates 1`] = `
                   aria-label="Меню"
                   class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall MuiDataGrid-menuIconButton css-1p0j4z7-MuiButtonBase-root-MuiIconButton-root"
                   data-mui-internal-clone-element="true"
-                  id=":ra:"
+                  id=":rd:"
                   tabindex="-1"
                   type="button"
                 >
@@ -298,7 +298,7 @@ exports[`Templates page > renders the templates 1`] = `
                   aria-label="Меню"
                   class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall MuiDataGrid-menuIconButton css-1p0j4z7-MuiButtonBase-root-MuiIconButton-root"
                   data-mui-internal-clone-element="true"
-                  id=":rg:"
+                  id=":rj:"
                   tabindex="-1"
                   type="button"
                 >

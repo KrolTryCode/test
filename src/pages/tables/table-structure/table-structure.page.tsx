@@ -155,7 +155,6 @@ const TableStructure: FC = () => {
         onRowOrderChange={handleRowOrderChange}
         rowReordering
         hasWidthSaving={false}
-        hasColumnChooser={false}
         customToolbarContent={<AddEntity onClick={handleAddColumn} />}
       />
     </>

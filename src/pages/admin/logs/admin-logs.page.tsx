@@ -74,7 +74,6 @@ const LogsPage: FC = () => {
       totalCount={logsList?.totalCount ?? 0}
       columns={columns}
       hasExport
-      hasToolbarFilters
     />
   );
 };

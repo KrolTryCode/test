@@ -72,7 +72,6 @@ const TemplatesPage: FC = () => {
         items={templates ?? []}
         columns={columns}
         totalCount={templates?.length}
-        hasToolbarFilters={false}
       />
     </Box>
   );

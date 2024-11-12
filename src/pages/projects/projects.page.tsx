@@ -68,7 +68,6 @@ const ProjectsList: FC = () => {
         items={projectNodesByParent}
         columns={columns}
         totalCount={projectNodesByParent.length}
-        hasColumnChooser={false}
         pinnedColumns={{ right: ['actions'] }}
         customToolbarContent={<ProjectsListToolbarContent />}
       />
