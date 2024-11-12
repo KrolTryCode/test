@@ -16,7 +16,7 @@ const ProjectsList: FC = () => {
   const { projectGroupId } = useParams();
 
   const { treeData, isLoading, projectNodesByParent } = useProjectsData();
-  const { getActions, handleAddProjectNode, ProjectsListToolbarContent } =
+  const { getActions, handleAddProjectGroup, ProjectsListToolbarContent } =
     useProjectsActions(treeData);
 
   const columns = useMemo<EnhancedColDef<ProjectNode>[]>(
@@ -58,7 +58,7 @@ const ProjectsList: FC = () => {
   }
 
   if (!projectNodesByParent.length && !isLoading) {
-    return <NotFoundNodes action={handleAddProjectNode} />;
+    return <NotFoundNodes action={handleAddProjectGroup} />;
   }
 
   return (
