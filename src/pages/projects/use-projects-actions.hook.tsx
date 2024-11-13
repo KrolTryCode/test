@@ -1,9 +1,15 @@
 import { Preview as PreviewIcon } from '@mui/icons-material';
-import { GridActionsCellItem, GridRowParams } from '@mui/x-data-grid-premium';
-import { AddEntity, ImportProject, DeleteCellButton } from '@pspod/ui-components';
+import { MenuItem } from '@mui/material';
+import { GridActionsCellItem, GridAddIcon, GridRowParams } from '@mui/x-data-grid-premium';
+import {
+  DeleteCellButton,
+  ImportProject,
+  DropdownGridToolbarContainer,
+} from '@pspod/ui-components';
 import { FC, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
+import { Case, Gender } from 'russian-nouns-js';
 
 import { ProjectNode, ProjectNodeType } from '~/api/utils/api-requests';
 import { NavTreeItemData, NavTreeItemType } from '~/components/nav-tree/nav-tree.type';
@@ -11,6 +17,7 @@ import { projectNodeModal } from '~/pages/projects/project-node/form/project-nod
 import { useProjectsActionsMutations } from '~/pages/projects/use-projects-actions-mutations.hook';
 import { useTreeNodesUtils } from '~/pages/tables/tree/use-tree-nodes-utils.hook';
 import { projectPath, projectsPath } from '~/utils/configuration/routes-paths';
+import { useNounDeclination } from '~/utils/hooks/use-noun-declination';
 
 const isProjectSubtreeTypeEnum = (
   projectNodeType?: NavTreeItemType,
@@ -24,10 +31,16 @@ export const useProjectsActions = (treeData: NavTreeItemData[]) => {
   const { findNode } = useTreeNodesUtils(treeData);
   const { createProjectNode, deleteProjectNode, updateProjectNode } = useProjectsActionsMutations();
 
+  const addGroupText = useNounDeclination({
+    text: 'ENTITY.GROUP',
+    gender: Gender.FEMININE,
+    morphologicalCase: Case.ACCUSATIVE,
+  });
+
   const handleAddProjectNode = useCallback(() => {
     projectNodeModal({
       onSave: createProjectNode,
-      title: t('ACTION.ADD_PROJECT'),
+      title: t('ACTION.CREATE', { type: t('ENTITY.PROJECT').toLowerCase() }),
       data: { type: ProjectNodeType.Project, parentId: projectGroupId },
     });
   }, [createProjectNode, projectGroupId, t]);
@@ -35,10 +48,10 @@ export const useProjectsActions = (treeData: NavTreeItemData[]) => {
   const handleAddProjectGroup = useCallback(() => {
     projectNodeModal({
       onSave: createProjectNode,
-      title: t('ACTION.CREATE_GROUP'),
+      title: t('ACTION.CREATE', { type: addGroupText.toLowerCase() }),
       data: { type: ProjectNodeType.Group, parentId: projectGroupId },
     });
-  }, [createProjectNode, projectGroupId, t]);
+  }, [addGroupText, createProjectNode, projectGroupId, t]);
 
   const handleEditProjectNode = useCallback(
     (id: string) => {
@@ -117,8 +130,14 @@ export const useProjectsActions = (treeData: NavTreeItemData[]) => {
   const ProjectsListToolbarContent: FC = () => {
     return (
       <>
-        <AddEntity customText={`ACTION.ADD_PROJECT`} onClick={handleAddProjectNode} />
-        <AddEntity customText={'ACTION.CREATE_GROUP'} onClick={handleAddProjectGroup} />
+        <DropdownGridToolbarContainer text={'ACTION.CREATE'} icon={<GridAddIcon />}>
+          <MenuItem key={1} onClick={handleAddProjectGroup}>
+            {addGroupText}
+          </MenuItem>
+          <MenuItem key={2} onClick={handleAddProjectNode}>
+            {t('ENTITY.PROJECT')}
+          </MenuItem>
+        </DropdownGridToolbarContainer>
         <ImportProject onClick={handleImportProject} />
       </>
     );

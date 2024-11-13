@@ -6,10 +6,9 @@ import { useTranslation } from 'react-i18next';
 import { InstanceProps } from 'react-modal-promise';
 
 import { CreateProjectNodeRequest } from '~/api/utils/api-requests';
-import { FormInputText, FormSelect } from '~/components/react-hook-form';
+import { FormInputText } from '~/components/react-hook-form';
 import { FormSearchTree } from '~/components/react-hook-form/form-search-tree/form-search-tree.component';
 import { schema } from '~/pages/projects/project-node/form/project-node-form.schema';
-import { selectProjectNodeTypes } from '~/pages/projects/project-node/form/project-node-form.utils';
 import { useProjectsData } from '~/pages/projects/use-projects-data.hook';
 
 interface ProjectNodeFormProps {
@@ -54,13 +53,6 @@ const ProjectNodeForm: FC<ProjectNodeFormProps> = ({ onResolve, onReject, data, 
           />
         </FormItem>
       )}
-      <FormItem label={t('COMMON.TYPE')} isRequired>
-        <FormSelect
-          items={selectProjectNodeTypes}
-          isReadonly={isEditing}
-          controllerProps={{ ...register('type'), control }}
-        />
-      </FormItem>
 
       <FormButtons>
         <Button onClick={onReject}>{t('ACTION.CANCEL')}</Button>
