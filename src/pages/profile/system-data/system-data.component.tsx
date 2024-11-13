@@ -7,7 +7,7 @@ import { useGetTimeZoneListQuery } from '~/api/queries/users/get-timezone-list.q
 import { User, UserState } from '~/api/utils/api-requests';
 import { FormSelect } from '~/components/react-hook-form';
 import { UpdateUserRequestNullable } from '~/pages/profile/profile-form.schema';
-import { translateStatus } from '~/utils/translate-status';
+import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 
 interface SystemDataProps {
   control: Control<UpdateUserRequestNullable>;
@@ -23,6 +23,7 @@ export const SystemData: FC<SystemDataProps> = ({
   register,
 }) => {
   const { t } = useTranslation();
+  const { translateStatus } = useCustomTranslations();
 
   const { data: timezoneList = [], isLoading } = useGetTimeZoneListQuery();
 

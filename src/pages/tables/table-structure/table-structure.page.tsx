@@ -19,15 +19,16 @@ import { useParams } from 'react-router-dom';
 import { useGetContentNode } from '~/api/queries/nodes/get-content-node.query';
 import { useGetNodeColumns } from '~/api/queries/nodes/structure/get-node-columns.query';
 import { ColumnMetadataExtended, selectNodeColumns } from '~/api/selectors/select-node-columns';
-import { ColumnType } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { useTableStructureActions } from '~/pages/tables/table-structure/use-table-structure-actions.hook';
 import { reorderRows } from '~/utils/datagrid/reorder-rows';
+import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 const TableStructure: FC = () => {
   const apiRef = useGridApiRef();
   const { t } = useTranslation();
+  const { translateColumnType } = useCustomTranslations();
   const { nodeId = '' } = useParams();
   const { data: nodeInfo, isLoading: isNodeLoading } = useGetContentNode(nodeId);
   const {
@@ -89,7 +90,7 @@ const TableStructure: FC = () => {
         headerName: t('STRUCTURE.TYPE'),
         flex: 1,
         type: 'singleSelect',
-        valueOptions: Object.values(ColumnType),
+        valueFormatter: translateColumnType,
       },
       // TODO API, определить формат данных
       // {
@@ -118,7 +119,7 @@ const TableStructure: FC = () => {
         getActions,
       },
     ],
-    [getActions, t],
+    [getActions, t, translateColumnType],
   );
 
   const onRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {

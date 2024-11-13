@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { ColumnDefinition } from '~/api/utils/api-requests';
 import { FormInputText, FormSelect } from '~/components/react-hook-form';
 import { schema } from '~/pages/tables/table-structure/add-column/add-column-form.schema';
-import { selectColumnTypes } from '~/pages/tables/table-structure/add-column/add-column-form.utils';
+import { useSelectColumnTypes } from '~/pages/tables/table-structure/add-column/use-select-column-types.hook';
 
 interface AddColumnFormProps {
   onReject?: () => void;
@@ -16,6 +16,7 @@ interface AddColumnFormProps {
 
 export const AddColumnForm: FC<AddColumnFormProps> = ({ onResolve, onReject }) => {
   const { t } = useTranslation();
+  const { selectColumnTypes } = useSelectColumnTypes();
 
   const {
     register,

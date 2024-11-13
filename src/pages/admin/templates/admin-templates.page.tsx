@@ -9,11 +9,12 @@ import { useGetTemplatesQuery } from '~/api/queries/templates/get-templates.quer
 import { Template } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { editPath } from '~/utils/configuration/routes-paths';
+import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 import { usePreventedLinks } from '~/utils/hooks/use-prevented-links';
-import { translateStatus } from '~/utils/translate-status';
 
 const TemplatesPage: FC = () => {
   const { t } = useTranslation();
+  const { translateStatus } = useCustomTranslations();
   const { data: templates, isLoading } = useGetTemplatesQuery();
 
   const gridWraperRef = useRef<HTMLDivElement>();
@@ -30,9 +31,7 @@ const TemplatesPage: FC = () => {
         field: 'state',
         headerName: t('COMMON.STATE'),
         flex: 1,
-        valueFormatter(value) {
-          return translateStatus(value);
-        },
+        valueFormatter: translateStatus,
       },
       {
         field: 'content',
@@ -62,7 +61,7 @@ const TemplatesPage: FC = () => {
         },
       },
     ],
-    [t],
+    [t, translateStatus],
   );
 
   return (
