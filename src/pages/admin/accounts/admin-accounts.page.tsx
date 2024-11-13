@@ -17,13 +17,14 @@ import { selectPageableData } from '~/api/selectors/pageable';
 import { AccountState, User, UserState } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
-import { translateStatus } from '~/utils/translate-status';
+import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 
 import { useAdminAccounts } from './admin-accounts.hook';
 import { CreateAccountButton } from './create-account/create-account-button.component';
 
 const AdminUsersPage: FC = () => {
   const { t } = useTranslation();
+  const { translateStatus } = useCustomTranslations();
   const apiRef = useGridApiRef();
 
   const [gridPaging, setGridPaging] = useState<GridPagingParams>();
@@ -168,7 +169,15 @@ const AdminUsersPage: FC = () => {
         },
       },
     ],
-    [approveAccount, declineAccount, deleteAccount, modifyAccount, startReactivation, t],
+    [
+      approveAccount,
+      declineAccount,
+      deleteAccount,
+      modifyAccount,
+      startReactivation,
+      t,
+      translateStatus,
+    ],
   );
 
   const handleCellClick = ({ id, field }: GridCellParams<User>) => {

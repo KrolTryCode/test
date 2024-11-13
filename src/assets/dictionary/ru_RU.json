@@ -367,6 +367,17 @@
     "PLACED": "Размещен",
     "OPTION": "Опцион"
   },
+  "COLUMN_TYPE": {
+    "BOOLEAN": "Логический",
+    "DATE": "Дата",
+    "DOUBLE": "Дробное число",
+    "GEOMETRY": "Точки и полигоны",
+    "INTEGER": "Целое число",
+    "TIMESTAMP": "Время",
+    "VARCHAR": "Текст",
+    "UUID": "Номер/Код",
+    "UNDEFINED": "Нет данных"
+  },
   "TREE": {
     "NODE": "Узел"
   },
