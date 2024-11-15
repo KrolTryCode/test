@@ -7,7 +7,8 @@ import { createAccountModal } from './create-account-form.component';
 
 export const CreateAccountButton: FC = () => {
   const { t } = useTranslation();
-  const openModal = () => createAccountModal({ title: t('ACCOUNT.CREATION_TITLE') });
+  const openModal = () =>
+    createAccountModal({ title: t('ACTION.CREATE', { type: t('ENTITY.ACCOUNT').toLowerCase() }) });
 
   return (
     <Button icon={<CreateIcon />} color={'primary'} variant={'text'} onClick={openModal}>

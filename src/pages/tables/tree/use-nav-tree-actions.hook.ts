@@ -2,6 +2,7 @@ import { notifySuccess } from '@pspod/ui-components';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Gender, Case } from 'russian-nouns-js';
 
 import { useCreateContentNodeMutation } from '~/api/queries/nodes/create-content-node.mutation';
 import { useDeleteContentNodeMutation } from '~/api/queries/nodes/delete-content-node.mutation';
@@ -11,6 +12,7 @@ import { nodeModal } from '~/components/modals-content/node-modal.component';
 import { NavTreeItemData, NavTreeItemType } from '~/components/nav-tree/nav-tree.type';
 import { useTreeNodesUtils } from '~/pages/tables/tree/use-tree-nodes-utils.hook';
 import { editPath, structurePath } from '~/utils/configuration/routes-paths';
+import { useNounDeclination } from '~/utils/hooks/use-noun-declination';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 const isContentSubtreeTypeEnum = (
@@ -24,6 +26,16 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
   const { findNode, getParentsIdsList } = useTreeNodesUtils(treeData);
   const { projectId = '' } = useParams();
   const navigate = useNavigate();
+
+  const useDeclinatedText = (text: string) =>
+    useNounDeclination({
+      text,
+      gender: Gender.FEMININE,
+      morphologicalCase: Case.ACCUSATIVE,
+    });
+
+  const declinatedTableText = useDeclinatedText('ENTITY.TABLE');
+  const declinatedDirectoryText = useDeclinatedText('ENTITY.DIRECTORY');
 
   const { mutate: deleteNode } = useDeleteContentNodeMutation(projectId, {
     onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
@@ -54,8 +66,10 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
       }
       if (isContentSubtreeTypeEnum(node.type)) {
         const parentId = getParentsIdsList(node.id).at(1);
+        const declinatedType =
+          node.type === ContentNodeType.Directory ? declinatedDirectoryText : declinatedTableText;
         nodeModal({
-          title: t('ACTION.EDIT', { type: t('TREE.NODE').toLowerCase() }),
+          title: t('ACTION.EDIT', { type: t(declinatedType).toLowerCase() }),
           isEditing: true,
           data: {
             name: node.label,
@@ -67,13 +81,21 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
         });
       }
     },
-    [findNode, getParentsIdsList, projectId, t, updateNode],
+    [
+      declinatedDirectoryText,
+      declinatedTableText,
+      findNode,
+      getParentsIdsList,
+      projectId,
+      t,
+      updateNode,
+    ],
   );
 
   const handleAddCatalog = useCallback(
     (id?: string) => {
       nodeModal({
-        title: t('ACTION.ADD_CATALOG'),
+        title: t('ACTION.ADD', { type: t('ENTITY.CATALOGUE').toLowerCase() }),
         data: {
           type: ContentNodeType.Directory,
           parentId: id,
@@ -88,7 +110,7 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
   const handleAddTable = useCallback(
     (id?: string) => {
       nodeModal({
-        title: t('ACTION.ADD_TABLE'),
+        title: declinatedTableText.toLowerCase(),
         data: {
           type: ContentNodeType.Table,
           parentId: id,
@@ -97,7 +119,7 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
         onSave: createNode,
       });
     },
-    [createNode, projectId, t],
+    [declinatedTableText, createNode, projectId],
   );
 
   const handleEditStructure = useCallback(
