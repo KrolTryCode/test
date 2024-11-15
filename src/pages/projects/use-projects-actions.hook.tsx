@@ -60,9 +60,13 @@ export const useProjectsActions = (treeData: NavTreeItemData[]) => {
         return;
       }
       if (isProjectSubtreeTypeEnum(projectNode.type)) {
+        const title =
+          projectNode.type === ProjectNodeType.Project
+            ? t('ACTION.EDIT', { type: t('ENTITY.PROJECT').toLowerCase() })
+            : t('ACTION.EDIT', { type: addGroupText.toLowerCase() });
         projectNodeModal({
           isEditing: true,
-          title: t('ACTION.EDIT'),
+          title,
           data: {
             name: projectNode.label,
             description: projectNode.description,
@@ -73,7 +77,7 @@ export const useProjectsActions = (treeData: NavTreeItemData[]) => {
         });
       }
     },
-    [findNode, t, updateProjectNode],
+    [addGroupText, findNode, t, updateProjectNode],
   );
 
   const handleImportProject = useCallback(() => {
@@ -128,6 +132,11 @@ export const useProjectsActions = (treeData: NavTreeItemData[]) => {
   );
 
   const ProjectsListToolbarContent: FC = () => {
+    const addGroupText = useNounDeclination({
+      text: 'ENTITY.GROUP',
+      gender: Gender.FEMININE,
+      morphologicalCase: Case.ACCUSATIVE,
+    });
     return (
       <>
         <DropdownGridToolbarContainer text={'ACTION.CREATE'} icon={<GridAddIcon />}>
