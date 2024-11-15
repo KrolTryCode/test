@@ -5,7 +5,6 @@ import { UseCustomQueryOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { UserWithPermissions } from '~/api/utils/api-requests';
 import { CURRENT_KEY, USERS_KEY } from '~/api/utils/query-keys';
-import { getTz } from '~/utils/date/apply-tz-offset';
 
 export const useGetCurrentUserQuery = (options?: UseCustomQueryOptions<UserWithPermissions>) =>
   useQuery({
@@ -19,7 +18,7 @@ export const useGetCurrentUserQuery = (options?: UseCustomQueryOptions<UserWithP
         return data;
       }
 
-      const tz = getTz(data.user?.userTimeZone?.title);
+      const tz = data.user?.userTimeZone?.systemTitle ?? 'Z';
       const user = selectUserTimezone(tz, data.user, ['lastSuccessfulLoginTime', 'createdFrom']);
 
       let updatedData: UserWithPermissions = { ...data, user };
