@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 
 import { UserWithPermissions, User } from '~/api/utils/api-requests';
-import { getTz } from '~/utils/date/apply-tz-offset';
 
 interface UserState {
   data: UserWithPermissions | null;
@@ -14,7 +13,7 @@ export const useUserStore = create<UserState>()(() => ({
 }));
 
 export const getCurrentUserTimezone = () =>
-  getTz(useUserStore.getState().data?.user?.userTimeZone?.title);
+  useUserStore.getState().data?.user?.userTimeZone?.systemTitle ?? 'Z';
 
 export const setUserData = (data: UserWithPermissions) =>
   useUserStore.setState({ data, isLoggedIn: !!data });
