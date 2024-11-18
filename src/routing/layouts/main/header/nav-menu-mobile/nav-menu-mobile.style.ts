@@ -1,6 +1,6 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material';
 
 import { StyledAccordionNavLink } from './nav-accordion/nav-accordion.style';
 

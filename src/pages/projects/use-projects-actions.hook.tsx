@@ -1,10 +1,14 @@
-import { Preview as PreviewIcon } from '@mui/icons-material';
+import {
+  Preview as PreviewIcon,
+  PeopleAltOutlined as PeopleAltOutlinedIcon,
+} from '@mui/icons-material';
 import { MenuItem } from '@mui/material';
 import { GridActionsCellItem, GridAddIcon, GridRowParams } from '@mui/x-data-grid-premium';
 import {
   DeleteCellButton,
   ImportProject,
   DropdownGridToolbarContainer,
+  Button,
 } from '@pspod/ui-components';
 import { FC, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +20,7 @@ import { NavTreeItemData, NavTreeItemType } from '~/components/nav-tree/nav-tree
 import { projectNodeModal } from '~/pages/projects/project-node/form/project-node-form.component';
 import { useProjectsActionsMutations } from '~/pages/projects/use-projects-actions-mutations.hook';
 import { useTreeNodesUtils } from '~/pages/tables/tree/use-tree-nodes-utils.hook';
-import { projectPath, projectsPath } from '~/utils/configuration/routes-paths';
+import { participantsPath, projectPath, projectsPath } from '~/utils/configuration/routes-paths';
 import { useNounDeclination } from '~/utils/hooks/use-noun-declination';
 
 const isProjectSubtreeTypeEnum = (
@@ -35,6 +39,12 @@ export const useProjectsActions = (treeData: NavTreeItemData[]) => {
     text: 'ENTITY.GROUP',
     gender: Gender.FEMININE,
     morphologicalCase: Case.ACCUSATIVE,
+  });
+
+  const groupGenitive = useNounDeclination({
+    text: 'ENTITY.GROUP',
+    gender: Gender.FEMININE,
+    morphologicalCase: Case.GENITIVE,
   });
 
   const handleAddProjectNode = useCallback(() => {
@@ -148,6 +158,16 @@ export const useProjectsActions = (treeData: NavTreeItemData[]) => {
           </MenuItem>
         </DropdownGridToolbarContainer>
         <ImportProject onClick={handleImportProject} />
+        <Button
+          variant={'text'}
+          color={'primary'}
+          icon={<PeopleAltOutlinedIcon />}
+          component={Link}
+          to={participantsPath}
+          hidden={!projectGroupId}
+        >
+          {t('NAVIGATION.PARTICIPANTS')} {groupGenitive.toLowerCase()}
+        </Button>
       </>
     );
   };

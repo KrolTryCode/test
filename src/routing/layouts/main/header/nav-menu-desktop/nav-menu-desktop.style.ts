@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
 export const StyledHeaderNav = styled('nav')(

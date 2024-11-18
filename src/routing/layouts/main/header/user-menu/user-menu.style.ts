@@ -1,5 +1,4 @@
-import { MenuItem, MenuItemProps } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { styled, MenuItem, MenuItemProps } from '@mui/material';
 
 export const StyledMenuItem = styled(MenuItem)<MenuItemProps>(({ theme }) => ({
   width: '230px',

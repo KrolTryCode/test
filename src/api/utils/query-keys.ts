@@ -15,6 +15,7 @@ export const TASKS_KEY = 'tasks';
 export const TASKS_TREE_KEY = 'tasks-tree';
 export const PROJECT_PARENTS_KEY = 'project-parents';
 export const PROJECT_CHILDREN_KEY = 'project-children';
+export const ACTIVE_KEY = 'active';
 
 //reports
 export const ANNUAL_KEY = 'annual';
