@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 export const StyledHeader = styled('header')(

@@ -11,7 +11,7 @@ export const useGetProjectMembersQuery = (
   options?: UseCustomQueryOptions<FullProjectNodeMemberInfo[]>,
 ): UseQueryResult<FullProjectNodeMemberInfo[], unknown> => {
   return useQuery({
-    queryKey: [PROJECT_MEMBERS_KEY, { projectId: projectId }],
+    queryKey: [PROJECT_MEMBERS_KEY, projectId],
     queryFn: async () =>
       await ApiClientSecured.projectNodeMemberV1Controller.getAllMembers(projectId),
     enabled: projectId !== '',

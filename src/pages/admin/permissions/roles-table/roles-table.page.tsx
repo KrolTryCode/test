@@ -41,10 +41,10 @@ export const RolesTable: FC = () => {
     });
   };
 
-  const { getActions, onRowModesModelChange, rowModesModel } = useGetRowActions<Role>(
+  const { getActions, onRowModesModelChange, rowModesModel } = useGetRowActions<Role>({
     apiRef,
-    (row: Role) => removeRole(row.id!),
-  );
+    deleteHandler: (row: Role) => removeRole(row.id!),
+  });
 
   const changeRole = useCallback(
     async ({ title, description, id, permissions }: Role, oldRow: Role): Promise<Role> => {
@@ -89,7 +89,7 @@ export const RolesTable: FC = () => {
       {
         field: 'actions',
         type: 'actions',
-        width: 80,
+        width: 82,
         getActions,
       },
     ],

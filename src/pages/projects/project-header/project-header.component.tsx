@@ -10,7 +10,11 @@ import { useGetParents } from '~/api/queries/projects/get-projects-parents.query
 import { projectPath, projectsPath } from '~/utils/configuration/routes-paths';
 import { usePageTitle } from '~/utils/hooks/use-page-title';
 
-export const ProjectHeader: FC = () => {
+interface ProjectHeaderProps {
+  backPath?: string;
+}
+
+export const ProjectHeader: FC<ProjectHeaderProps> = ({ backPath = '' }) => {
   const { projectGroupId, projectId = '' } = useParams();
   const { data: projectData, isLoading: isProjectDataLoading } = useGetProjectNode(
     projectGroupId ?? projectId,
@@ -31,13 +35,19 @@ export const ProjectHeader: FC = () => {
     );
   }
 
-  const backPath = projectData?.parentId
+  const defaultBackPath = projectData?.parentId
     ? `/${projectsPath}/${projectData.parentId}`
     : `/${projectsPath}`;
 
   return (
     <Stack padding={1} gap={2} direction={'row'} justifyContent={'space-between'}>
-      <Button component={Link} size={'large'} variant={'text'} to={backPath} icon={<ArrowBack />} />
+      <Button
+        component={Link}
+        size={'large'}
+        variant={'text'}
+        to={backPath || defaultBackPath}
+        icon={<ArrowBack />}
+      />
       <Stack flex={1} overflow={'hidden'}>
         <Stack direction={'row'} gap={1} alignItems={'flex-start'}>
           <Typography variant={'h2'} overflow={'hidden'} textOverflow={'ellipsis'}>

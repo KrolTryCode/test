@@ -1,5 +1,4 @@
-import { Accordion, AccordionSummary } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Accordion, AccordionSummary, styled } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
 export const StyledAccordion = styled(Accordion)(({ theme }) => ({

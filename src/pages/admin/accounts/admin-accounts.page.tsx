@@ -108,7 +108,7 @@ const AdminUsersPage: FC = () => {
       },
       {
         field: 'actions',
-        width: 82,
+        width: 84,
         type: 'actions',
         disableReorder: true,
         getActions({ row: { state, id } }) {

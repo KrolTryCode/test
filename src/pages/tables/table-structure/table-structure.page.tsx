@@ -41,9 +41,10 @@ const TableStructure: FC = () => {
 
   const { handleDropColumn, handleAddColumn, handleEditColumn } = useTableStructureActions(nodeId);
   const { getActions, onRowModesModelChange, rowModesModel } =
-    useGetRowActions<ColumnMetadataExtended>(apiRef, (row: ColumnMetadataExtended) =>
-      handleDropColumn(row.name),
-    );
+    useGetRowActions<ColumnMetadataExtended>({
+      apiRef,
+      deleteHandler: (row: ColumnMetadataExtended) => handleDropColumn(row.name),
+    });
 
   const [paging, setGridPaging] = useState<GridPagingParams>();
   const [items, setItems] = useState(nodeColumns);
