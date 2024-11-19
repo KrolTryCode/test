@@ -1,4 +1,4 @@
-import { ArrowBack } from '@mui/icons-material';
+import { ArrowBack, Delete, Edit } from '@mui/icons-material';
 import { Breadcrumbs, Link as MuiLink, Skeleton, Stack, Typography } from '@mui/material';
 import { Button } from '@pspod/ui-components';
 import { FC } from 'react';
@@ -7,6 +7,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import { useGetProjectNode } from '~/api/queries/projects/get-project-node.query';
 import { useGetParents } from '~/api/queries/projects/get-projects-parents.query';
+import { useProjectHeaderActions } from '~/pages/projects/project-header/use-project-header-actions.hook';
 import { projectPath, projectsPath } from '~/utils/configuration/routes-paths';
 import { usePageTitle } from '~/utils/hooks/use-page-title';
 
@@ -15,16 +16,18 @@ interface ProjectHeaderProps {
 }
 
 export const ProjectHeader: FC<ProjectHeaderProps> = ({ backPath = '' }) => {
+  const { t } = useTranslation();
   const { projectGroupId, projectId = '' } = useParams();
   const { data: projectData, isLoading: isProjectDataLoading } = useGetProjectNode(
     projectGroupId ?? projectId,
   );
   usePageTitle(projectData?.name);
 
-  const { t } = useTranslation();
   const { data: parents = [], isLoading: isParentsLoading } = useGetParents(projectData?.id ?? '', {
     select: data => [...data].reverse(),
   });
+
+  const { onUpdateProjectNode, onDeleteProjectNode } = useProjectHeaderActions(projectData);
 
   if (isParentsLoading || isProjectDataLoading) {
     return (
@@ -49,10 +52,26 @@ export const ProjectHeader: FC<ProjectHeaderProps> = ({ backPath = '' }) => {
         icon={<ArrowBack />}
       />
       <Stack flex={1} overflow={'hidden'}>
-        <Stack direction={'row'} gap={1} alignItems={'flex-start'}>
-          <Typography variant={'h2'} overflow={'hidden'} textOverflow={'ellipsis'}>
+        <Stack direction={'row'} gap={0.5} alignItems={'flex-start'}>
+          <Typography variant={'h2'} overflow={'hidden'} textOverflow={'ellipsis'} paddingRight={1}>
             {projectData?.name ?? t('TREE.NODE')}
           </Typography>
+          <Button
+            size={'small'}
+            color={'primary'}
+            title={t('ACTION.EDIT')}
+            onClick={onUpdateProjectNode}
+            variant={'text'}
+            icon={<Edit />}
+          />
+          <Button
+            size={'small'}
+            color={'error'}
+            title={t('ACTION.DELETE')}
+            variant={'text'}
+            icon={<Delete />}
+            onClick={onDeleteProjectNode}
+          />
         </Stack>
         <Typography
           whiteSpace={'break-spaces'}
@@ -64,14 +83,7 @@ export const ProjectHeader: FC<ProjectHeaderProps> = ({ backPath = '' }) => {
         </Typography>
       </Stack>
       <Stack alignItems={'flex-end'} flex={1}>
-        <Breadcrumbs
-          separator={'›'}
-          sx={({ palette }) => {
-            return {
-              color: palette.primary.main,
-            };
-          }}
-        >
+        <Breadcrumbs separator={'›'} sx={({ palette: { primary } }) => ({ color: primary.main })}>
           {parents?.map(({ name, id }) => (
             <MuiLink key={id} href={`/${projectsPath}/${id}`} underline={'hover'} color={'inherit'}>
               {name}

@@ -5,40 +5,32 @@ import {
 import { MenuItem } from '@mui/material';
 import { GridActionsCellItem, GridAddIcon, GridRowParams } from '@mui/x-data-grid-premium';
 import {
-  DeleteCellButton,
-  ImportProject,
-  DropdownGridToolbarContainer,
   Button,
+  ImportProject,
+  notifySuccess,
+  DropdownGridToolbarContainer,
 } from '@pspod/ui-components';
 import { FC, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import { Case, Gender } from 'russian-nouns-js';
 
+import { useCreateProjectNodeMutation } from '~/api/queries/projects/create-project-node.mutation';
 import { ProjectNode, ProjectNodeType } from '~/api/utils/api-requests';
-import { NavTreeItemData, NavTreeItemType } from '~/components/nav-tree/nav-tree.type';
 import { projectNodeModal } from '~/pages/projects/project-node/form/project-node-form.component';
-import { useProjectsActionsMutations } from '~/pages/projects/use-projects-actions-mutations.hook';
-import { useTreeNodesUtils } from '~/pages/tables/tree/use-tree-nodes-utils.hook';
 import { participantsPath, projectPath, projectsPath } from '~/utils/configuration/routes-paths';
+import { useDeclinatedText } from '~/utils/hooks/use-declinated-text';
 import { useNounDeclination } from '~/utils/hooks/use-noun-declination';
+import { showErrorMessage } from '~/utils/show-error-message';
 
-const isProjectSubtreeTypeEnum = (
-  projectNodeType?: NavTreeItemType,
-): projectNodeType is ProjectNodeType => {
-  return !!projectNodeType && Object.values<string>(ProjectNodeType).includes(projectNodeType);
-};
-
-export const useProjectsActions = (treeData: NavTreeItemData[]) => {
+export const useProjectsActions = () => {
   const { t } = useTranslation();
   const { projectGroupId } = useParams();
-  const { findNode } = useTreeNodesUtils(treeData);
-  const { createProjectNode, deleteProjectNode, updateProjectNode } = useProjectsActionsMutations();
+  const { declinatedGroupText } = useDeclinatedText();
 
-  const addGroupText = useNounDeclination({
-    text: 'ENTITY.GROUP',
-    gender: Gender.FEMININE,
-    morphologicalCase: Case.ACCUSATIVE,
+  const { mutate: createProjectNode } = useCreateProjectNodeMutation({
+    onSuccess: () => notifySuccess(t('MESSAGE.CREATION_SUCCESS')),
+    onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
   });
 
   const groupGenitive = useNounDeclination({
@@ -58,37 +50,10 @@ export const useProjectsActions = (treeData: NavTreeItemData[]) => {
   const handleAddProjectGroup = useCallback(() => {
     projectNodeModal({
       onSave: createProjectNode,
-      title: t('ACTION.CREATE', { type: addGroupText.toLowerCase() }),
+      title: t('ACTION.CREATE', { type: declinatedGroupText.toLowerCase() }),
       data: { type: ProjectNodeType.Group, parentId: projectGroupId },
     });
-  }, [addGroupText, createProjectNode, projectGroupId, t]);
-
-  const handleEditProjectNode = useCallback(
-    (id: string) => {
-      const projectNode = findNode(id);
-      if (!projectNode) {
-        return;
-      }
-      if (isProjectSubtreeTypeEnum(projectNode.type)) {
-        const title =
-          projectNode.type === ProjectNodeType.Project
-            ? t('ACTION.EDIT', { type: t('ENTITY.PROJECT').toLowerCase() })
-            : t('ACTION.EDIT', { type: addGroupText.toLowerCase() });
-        projectNodeModal({
-          isEditing: true,
-          title,
-          data: {
-            name: projectNode.label,
-            description: projectNode.description,
-            type: projectNode.type,
-          },
-          onSave: data =>
-            updateProjectNode({ nodeId: id, name: data.name, description: data.description }),
-        });
-      }
-    },
-    [addGroupText, findNode, t, updateProjectNode],
-  );
+  }, [declinatedGroupText, createProjectNode, projectGroupId, t]);
 
   const handleImportProject = useCallback(() => {
     console.log('TODO import project');
@@ -119,12 +84,6 @@ export const useProjectsActions = (treeData: NavTreeItemData[]) => {
         />,
         <GridActionsCellItem
           showInMenu
-          key={'edit'}
-          label={t('ACTION.EDIT')}
-          onClick={() => handleEditProjectNode(id)}
-        />,
-        <GridActionsCellItem
-          showInMenu
           key={'move'}
           label={t('ACTION.MOVE')}
           onClick={() => handleMoveProjectNode(id)}
@@ -135,23 +94,18 @@ export const useProjectsActions = (treeData: NavTreeItemData[]) => {
           label={t('ACTION.EXPORT')}
           onClick={() => handleExportProjectNode(id)}
         />,
-        <DeleteCellButton key={'delete'} showInMenu deleteHandler={() => deleteProjectNode(id)} />,
       ];
     },
-    [deleteProjectNode, handleEditProjectNode, handleExportProjectNode, handleMoveProjectNode, t],
+    [handleExportProjectNode, handleMoveProjectNode, t],
   );
 
   const ProjectsListToolbarContent: FC = () => {
-    const addGroupText = useNounDeclination({
-      text: 'ENTITY.GROUP',
-      gender: Gender.FEMININE,
-      morphologicalCase: Case.ACCUSATIVE,
-    });
+    const { declinatedGroupText } = useDeclinatedText();
     return (
       <>
         <DropdownGridToolbarContainer text={'ACTION.CREATE'} icon={<GridAddIcon />}>
           <MenuItem key={1} onClick={handleAddProjectGroup}>
-            {addGroupText}
+            {declinatedGroupText}
           </MenuItem>
           <MenuItem key={2} onClick={handleAddProjectNode}>
             {t('ENTITY.PROJECT')}
