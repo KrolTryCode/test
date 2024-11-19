@@ -14,10 +14,8 @@ import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
 const ProjectsList: FC = () => {
   const { t } = useTranslation();
   const { projectGroupId } = useParams();
-
-  const { treeData, isLoading, projectNodesByParent } = useProjectsData();
-  const { getActions, handleAddProjectGroup, ProjectsListToolbarContent } =
-    useProjectsActions(treeData);
+  const { isLoading, projectNodesByParent } = useProjectsData();
+  const { getActions, handleAddProjectGroup, ProjectsListToolbarContent } = useProjectsActions();
 
   const columns = useMemo<EnhancedColDef<ProjectNode>[]>(
     () => [

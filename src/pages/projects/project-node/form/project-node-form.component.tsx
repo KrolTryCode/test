@@ -26,7 +26,7 @@ const ProjectNodeForm: FC<ProjectNodeFormProps> = ({ onResolve, onReject, data, 
     register,
     handleSubmit,
     control,
-    formState: { isValid, isSubmitted, isSubmitting },
+    formState: { isValid, isSubmitted, isSubmitting, isDirty },
   } = useForm<CreateProjectNodeRequest>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
@@ -60,7 +60,7 @@ const ProjectNodeForm: FC<ProjectNodeFormProps> = ({ onResolve, onReject, data, 
           type={'submit'}
           color={'primary'}
           variant={'contained'}
-          disabled={!isValid && isSubmitted}
+          disabled={(!isValid && isSubmitted) || !isDirty}
           isLoading={isSubmitting}
         >
           {t('ACTION.SAVE')}

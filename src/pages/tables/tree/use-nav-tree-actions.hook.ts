@@ -2,7 +2,6 @@ import { notifySuccess } from '@pspod/ui-components';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Gender, Case } from 'russian-nouns-js';
 
 import { useCreateContentNodeMutation } from '~/api/queries/nodes/create-content-node.mutation';
 import { useDeleteContentNodeMutation } from '~/api/queries/nodes/delete-content-node.mutation';
@@ -12,7 +11,7 @@ import { nodeModal } from '~/components/modals-content/node-modal.component';
 import { NavTreeItemData, NavTreeItemType } from '~/components/nav-tree/nav-tree.type';
 import { useTreeNodesUtils } from '~/pages/tables/tree/use-tree-nodes-utils.hook';
 import { editPath, structurePath } from '~/utils/configuration/routes-paths';
-import { useNounDeclination } from '~/utils/hooks/use-noun-declination';
+import { useDeclinatedText } from '~/utils/hooks/use-declinated-text';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 const isContentSubtreeTypeEnum = (
@@ -25,17 +24,8 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
   const { t } = useTranslation();
   const { findNode, getParentsIdsList } = useTreeNodesUtils(treeData);
   const { projectId = '' } = useParams();
+  const { declinatedTableText, declinatedDirectoryText } = useDeclinatedText();
   const navigate = useNavigate();
-
-  const useDeclinatedText = (text: string) =>
-    useNounDeclination({
-      text,
-      gender: Gender.FEMININE,
-      morphologicalCase: Case.ACCUSATIVE,
-    });
-
-  const declinatedTableText = useDeclinatedText('ENTITY.TABLE');
-  const declinatedDirectoryText = useDeclinatedText('ENTITY.DIRECTORY');
 
   const { mutate: deleteNode } = useDeleteContentNodeMutation(projectId, {
     onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
@@ -110,7 +100,7 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
   const handleAddTable = useCallback(
     (id?: string) => {
       nodeModal({
-        title: declinatedTableText.toLowerCase(),
+        title: t('ACTION.ADD', { type: declinatedTableText.toLowerCase() }),
         data: {
           type: ContentNodeType.Table,
           parentId: id,
@@ -119,7 +109,7 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
         onSave: createNode,
       });
     },
-    [declinatedTableText, createNode, projectId],
+    [t, declinatedTableText, projectId, createNode],
   );
 
   const handleEditStructure = useCallback(

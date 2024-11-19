@@ -1,11 +1,10 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Gender, Case } from 'russian-nouns-js';
 
 import { ContentNodeType } from '~/api/utils/api-requests';
 import { DropdownMenuItem, NavTreeItemData } from '~/components/nav-tree/nav-tree.type';
 import { useNavTreeActions } from '~/pages/tables/tree/use-nav-tree-actions.hook';
-import { useNounDeclination } from '~/utils/hooks/use-noun-declination';
+import { useDeclinatedText } from '~/utils/hooks/use-declinated-text';
 
 export const useDropdownMenuItems = (treeData: NavTreeItemData[]) => {
   const { t } = useTranslation();
@@ -17,15 +16,7 @@ export const useDropdownMenuItems = (treeData: NavTreeItemData[]) => {
     handleEditStructure,
   } = useNavTreeActions(treeData);
 
-  const useDeclinatedText = (text: string) =>
-    useNounDeclination({
-      text,
-      gender: Gender.FEMININE,
-      morphologicalCase: Case.ACCUSATIVE,
-    });
-
-  const declinedTableText = useDeclinatedText('ENTITY.TABLE');
-  const declinedStructureText = useDeclinatedText('ENTITY.STRUCTURE');
+  const { declinatedTableText, declinatedStructureText } = useDeclinatedText();
 
   const menuItems: DropdownMenuItem[] = useMemo(
     () => [
@@ -36,20 +27,20 @@ export const useDropdownMenuItems = (treeData: NavTreeItemData[]) => {
         entityType: ContentNodeType.Directory,
       },
       {
-        label: t('ACTION.ADD', { type: declinedTableText.toLowerCase() }),
+        label: t('ACTION.ADD', { type: declinatedTableText.toLowerCase() }),
         onClick: handleAddTable,
         entityType: ContentNodeType.Directory,
       },
       {
-        label: t('ACTION.EDIT', { type: declinedStructureText.toLowerCase() }),
+        label: t('ACTION.EDIT', { type: declinatedStructureText.toLowerCase() }),
         onClick: handleEditStructure,
         entityType: ContentNodeType.Table,
       },
       { label: t('ACTION.DELETE'), onClick: handleDeleteNode },
     ],
     [
-      declinedStructureText,
-      declinedTableText,
+      declinatedStructureText,
+      declinatedTableText,
       handleAddCatalog,
       handleAddTable,
       handleDeleteNode,
