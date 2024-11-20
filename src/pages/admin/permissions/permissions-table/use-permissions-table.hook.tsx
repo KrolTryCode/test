@@ -53,7 +53,7 @@ export const usePermissionsTable = () => {
         field: r.title!,
         headerName: r.title,
         description: r.description,
-        editable: true,
+        editable: !r.protectedPermissions,
         type: 'boolean',
         headerAlign: 'left',
         sortable: false,
