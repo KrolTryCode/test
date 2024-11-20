@@ -44,6 +44,7 @@ export const RolesTable: FC = () => {
   const { getActions, onRowModesModelChange, rowModesModel } = useGetRowActions<Role>({
     apiRef,
     deleteHandler: (row: Role) => removeRole(row.id!),
+    protectedKey: 'protectedPermissions',
   });
 
   const changeRole = useCallback(
