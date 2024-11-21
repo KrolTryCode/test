@@ -1,5 +1,5 @@
 import { TabList, TabContext } from '@mui/lab';
-import { Tab, Typography } from '@mui/material';
+import { Box, Tab, Typography } from '@mui/material';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useOutletContext, useLocation, NavLink, Outlet } from 'react-router-dom';
@@ -74,7 +74,9 @@ export const ProjectTabs: FC = () => {
           label={renderLabel('NAVIGATION.EVENTS')}
         />
       </TabList>
-      <Outlet context={outletContext} />
+      <Box height={'100%'}>
+        <Outlet context={outletContext} />
+      </Box>
     </TabContext>
   );
 };

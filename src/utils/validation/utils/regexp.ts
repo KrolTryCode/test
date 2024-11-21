@@ -5,3 +5,4 @@ export const specialCharRe = new RegExp(/[!"#$%&'()*+,-./:;<=>?@[\\\]^_{|}~`]/);
 export const getNRepetitionsRe = (n: number) => new RegExp(`(.)\\1{${n},}`, 'g');
 export const noWhitespaceRe = new RegExp(/^[^\s]*$/);
 export const emailRe = new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+$/);
+export const uuidRe = new RegExp(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);

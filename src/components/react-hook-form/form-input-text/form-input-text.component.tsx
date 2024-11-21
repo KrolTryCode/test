@@ -10,6 +10,7 @@ interface FormInputTextProps<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > extends Partial<InputTextProps> {
   mask?: string;
+  definitions?: Record<string, RegExp>;
   controllerProps: UseControllerProps<TFieldValues, TName>;
 }
 

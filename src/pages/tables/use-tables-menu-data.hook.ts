@@ -6,7 +6,11 @@ import { projectPath, projectsPath, tablesPath } from '~/utils/configuration/rou
 
 export function useTablesMenuData() {
   const { projectId = '' } = useParams();
-  const { data = [], isLoading } = useGetProjectNodesTree(projectId, {
+  const {
+    data = [],
+    isLoading,
+    isFetched,
+  } = useGetProjectNodesTree(projectId, {
     select: data =>
       nodesWithHrefSelector(
         data,
@@ -15,5 +19,5 @@ export function useTablesMenuData() {
       ),
   });
 
-  return { treeData: data, isLoading: isLoading };
+  return { treeData: data, isLoading, isFetched };
 }

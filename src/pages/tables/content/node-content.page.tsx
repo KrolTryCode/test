@@ -7,23 +7,32 @@ import { useParams } from 'react-router-dom';
 import { useGetContentNode } from '~/api/queries/nodes/get-content-node.query';
 import { useGetContentNodes } from '~/api/queries/nodes/get-content-nodes.query';
 import { ContentNodeType } from '~/api/utils/api-requests';
-import { EmptyCatalog, EmptyTable } from '~/pages/_fallbacks/info/empty/empty-element.component';
+import { EmptyCatalog } from '~/pages/_fallbacks/info/empty/empty-element.component';
+
+import { Table } from './table.component';
 
 const NodeContent: FC = () => {
   const { nodeId = '', projectId = '' } = useParams();
-  const { data: nodeInfo, isLoading: isNodeInfoLoading } = useGetContentNode(nodeId);
+  const { data: nodeInfo, isLoading: isNodeInfoLoading } = useGetContentNode(nodeId, {
+    enabled: !!nodeId,
+  });
   const { data: children, isLoading: isChildrenLoading } = useGetContentNodes(projectId, nodeId);
 
   if (isChildrenLoading || isNodeInfoLoading) {
     return <Preloader />;
   }
 
+  // ничего не выбрано
+  if (!nodeId) {
+    return <></>;
+  }
+
+  if (nodeInfo?.type === ContentNodeType.Table) {
+    return <Table nodeInfo={nodeInfo} />;
+  }
+
   if (children?.length === 0) {
-    if (nodeInfo?.type === ContentNodeType.Table) {
-      return <EmptyTable />;
-    } else {
-      return <EmptyCatalog />;
-    }
+    return <EmptyCatalog />;
   }
 
   return (

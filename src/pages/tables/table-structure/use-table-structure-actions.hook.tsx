@@ -6,6 +6,7 @@ import { InstanceProps } from 'react-modal-promise';
 import { useAddNodeColumnMutation } from '~/api/queries/nodes/structure/add-node-column.mutation';
 import { useDeleteNodeColumnMutation } from '~/api/queries/nodes/structure/delete-node-column.mutation';
 import { useEditNodeColumnNameMutation } from '~/api/queries/nodes/structure/edit-node-column.mutation';
+import { useAddTableViewMutation } from '~/api/queries/tables/add-table-view.mutation';
 import { ColumnDefinition } from '~/api/utils/api-requests';
 import { AddColumnForm } from '~/pages/tables/table-structure/add-column/add-column-form.component';
 import { showErrorMessage } from '~/utils/show-error-message';
@@ -25,6 +26,11 @@ export const useTableStructureActions = (nodeId: string) => {
 
   const { mutateAsync: handleEditColumn } = useEditNodeColumnNameMutation(nodeId);
 
+  const { mutate: addView, isPending: isAddingView } = useAddTableViewMutation(nodeId, {
+    onSuccess: () => notifySuccess(t('MESSAGE.CREATION_SUCCESS')),
+    onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
+  });
+
   const handleAddColumn = useCallback(() => {
     modal({
       onOk: addColumn,
@@ -33,5 +39,5 @@ export const useTableStructureActions = (nodeId: string) => {
     });
   }, [addColumn, t]);
 
-  return { handleDropColumn: dropColumn, handleEditColumn, handleAddColumn };
+  return { handleDropColumn: dropColumn, handleEditColumn, handleAddColumn, addView, isAddingView };
 };

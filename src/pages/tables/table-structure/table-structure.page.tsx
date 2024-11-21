@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import {
   GridEventListener,
   GridRowEditStopReasons,
@@ -11,14 +11,16 @@ import {
   GridPagingParams,
   AddEntity,
   useGetRowActions,
+  Button,
 } from '@pspod/ui-components';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { useGetContentNode } from '~/api/queries/nodes/get-content-node.query';
-import { useGetNodeColumns } from '~/api/queries/nodes/structure/get-node-columns.query';
+import { useGetTableMetadataColumns } from '~/api/queries/tables/get-table-metadata.query';
 import { ColumnMetadataExtended, selectNodeColumns } from '~/api/selectors/select-node-columns';
+import { PairStringColumnType } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { useTableStructureActions } from '~/pages/tables/table-structure/use-table-structure-actions.hook';
 import { reorderRows } from '~/utils/datagrid/reorder-rows';
@@ -35,11 +37,12 @@ const TableStructure: FC = () => {
     data: nodeColumns,
     isLoading: isColumnsLoading,
     isFetched: isColumnsFetched,
-  } = useGetNodeColumns(nodeId, {
+  } = useGetTableMetadataColumns(nodeId, {
     select: selectNodeColumns,
   });
 
-  const { handleDropColumn, handleAddColumn, handleEditColumn } = useTableStructureActions(nodeId);
+  const { handleDropColumn, handleAddColumn, handleEditColumn, addView, isAddingView } =
+    useTableStructureActions(nodeId);
   const { getActions, onRowModesModelChange, rowModesModel } =
     useGetRowActions<ColumnMetadataExtended>({
       apiRef,
@@ -135,17 +138,25 @@ const TableStructure: FC = () => {
     // TODO: update column list
   };
 
+  const handleAddView = () => {
+    if (items) {
+      const view = items.map<PairStringColumnType>(v => ({ first: v.name, second: v.type }));
+      addView(view);
+    }
+  };
+
   return (
-    <>
+    <Stack height={'100%'} gap={1}>
       <Typography variant={'h3'} color={'primary'}>
         {`${t('STRUCTURE.LIST')} ${nodeInfo?.name}`}
       </Typography>
 
       <DataGrid<ColumnMetadataExtended>
         ref={apiRef}
-        loading={isColumnsLoading || isNodeLoading}
+        loading={isColumnsLoading || isNodeLoading || isAddingView}
         items={items ?? []}
         totalCount={items?.length ?? 0}
+        isCellEditable={({ row }) => row.name !== 'id'}
         editMode={'row'}
         columns={structureTableColumns}
         processRowUpdate={changeTableColumn}
@@ -159,7 +170,18 @@ const TableStructure: FC = () => {
         hasWidthSaving={false}
         customToolbarContent={<AddEntity onClick={handleAddColumn} />}
       />
-    </>
+
+      <Stack alignSelf={'flex-end'}>
+        <Button
+          variant={'contained'}
+          color={'primary'}
+          onClick={handleAddView}
+          isLoading={isAddingView}
+        >
+          {t('ACTION.SAVE')}
+        </Button>
+      </Stack>
+    </Stack>
   );
 };
 
