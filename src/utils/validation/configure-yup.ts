@@ -1,9 +1,7 @@
 import * as Yup from 'yup';
 
-import { UUID_REGEXP_PATTERN } from '~/utils/helpers/uuid-regexp';
-
 import { ruLocale } from './locales/ru-locale';
-import { emailRe } from './utils/regexp';
+import { emailRe, uuidRe } from './utils/regexp';
 
 export const configureYup = (language: string) => {
   Yup.setLocale(language === 'ru' ? ruLocale : Yup.defaultLocale);
@@ -18,7 +16,7 @@ function setCustomMethods() {
   });
 
   Yup.addMethod(Yup.string, 'uuid', function validateUuid(message?: string) {
-    return this.matches(UUID_REGEXP_PATTERN, {
+    return this.matches(uuidRe, {
       message: message ?? { key: 'yup:string.uuid' },
       name: 'uuid',
       excludeEmptyString: true,

@@ -10,7 +10,7 @@ import { ContentNodeType } from '~/api/utils/api-requests';
 import { nodeModal } from '~/components/modals-content/node-modal.component';
 import { NavTreeItemData, NavTreeItemType } from '~/components/nav-tree/nav-tree.type';
 import { useTreeNodesUtils } from '~/pages/tables/tree/use-tree-nodes-utils.hook';
-import { editPath, structurePath } from '~/utils/configuration/routes-paths';
+import { structurePath } from '~/utils/configuration/routes-paths';
 import { useDeclinatedText } from '~/utils/hooks/use-declinated-text';
 import { showErrorMessage } from '~/utils/show-error-message';
 
@@ -113,7 +113,7 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
   );
 
   const handleEditStructure = useCallback(
-    (id?: string) => navigate(`${editPath}/${id}/${structurePath}`),
+    (id?: string) => navigate(`${id}/${structurePath}`),
     [navigate],
   );
 
