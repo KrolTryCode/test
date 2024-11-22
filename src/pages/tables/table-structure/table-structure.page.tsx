@@ -18,7 +18,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { useGetContentNode } from '~/api/queries/nodes/get-content-node.query';
-import { useGetTableMetadataColumns } from '~/api/queries/tables/get-table-metadata.query';
+import { useGetTableMetadataColumns } from '~/api/queries/tables/structure/get-table-metadata.query';
 import { ColumnMetadataExtended, selectNodeColumns } from '~/api/selectors/select-node-columns';
 import { PairStringColumnType } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
