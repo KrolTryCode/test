@@ -1,4 +1,4 @@
-import { ArrowBack, Delete, Edit } from '@mui/icons-material';
+import { ArrowBack, Edit, DeleteOutline } from '@mui/icons-material';
 import { Skeleton, Stack, Typography } from '@mui/material';
 import { Button } from '@pspod/ui-components';
 import { FC } from 'react';
@@ -56,7 +56,7 @@ export const ProjectHeader: FC<ProjectHeaderProps> = ({ projectId }) => {
             color={'error'}
             title={t('ACTION.DELETE')}
             variant={'text'}
-            icon={<Delete />}
+            icon={<DeleteOutline />}
             onClick={() => deleteProjectOrGroup(projectData!)}
           />
         </Stack>
