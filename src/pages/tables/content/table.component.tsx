@@ -84,7 +84,7 @@ export const Table: FC<TableProps> = ({ nodeInfo }) => {
       <Alert severity={'info'} color={'warning'} sx={{ width: 'fit-content' }}>
         <AlertTitle>{metadata.length ? t('STRUCTURE.NOT_SAVED') : t('STRUCTURE.EMPTY')}</AlertTitle>
         <Button variant={'outlined'} color={'primary'} component={Link} to={structurePath}>
-          {t('ACTION.VIEW')}
+          {t('ACTION.GO')}
         </Button>
       </Alert>
     );
