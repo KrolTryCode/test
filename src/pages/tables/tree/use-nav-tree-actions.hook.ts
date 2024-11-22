@@ -1,4 +1,4 @@
-import { notifySuccess } from '@pspod/ui-components';
+import { notifySuccess, confirmActionModal, confirmDeletionModal } from '@pspod/ui-components';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useCreateContentNodeMutation } from '~/api/queries/nodes/create-content-node.mutation';
 import { useDeleteContentNodeMutation } from '~/api/queries/nodes/delete-content-node.mutation';
 import { useUpdateContentNodeMutation } from '~/api/queries/nodes/update-content-node.mutation';
+import { useGetTableMetadataColumns } from '~/api/queries/tables/structure/get-table-metadata.mutation';
 import { ContentNodeType } from '~/api/utils/api-requests';
 import { nodeModal } from '~/components/modals-content/node-modal.component';
 import { NavTreeItemData, NavTreeItemType } from '~/components/nav-tree/nav-tree.type';
@@ -46,6 +47,10 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
       navigate(data.id);
     },
     onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
+  });
+
+  const { mutateAsync: getTableMetadata } = useGetTableMetadataColumns({
+    onError: e => showErrorMessage(e, 'ERROR.RETRIEVE_FAILED'),
   });
 
   const handleEditNode = useCallback(
@@ -117,7 +122,43 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
     [navigate],
   );
 
-  const handleDeleteNode = useCallback((id: string) => deleteNode(id), [deleteNode]);
+  const handleDeleteNode = useCallback(
+    async (id: string) => {
+      const node = findNode(id);
+      let hasChildren = node?.children && node.children?.length > 0;
+
+      const callAdditionalConfirmationModal = (onOk: () => void) => {
+        const notEmptyNode = `MESSAGE.NOT_EMPTY_${node?.type?.toUpperCase()}`;
+        const title = `${t(notEmptyNode)} ${t('MESSAGE.CONFIRM_CONTINUE_DELETE')}`;
+        confirmDeletionModal({ title, onOk });
+      };
+
+      if (node?.type === ContentNodeType.Table) {
+        const tableColumns = await getTableMetadata(node.id);
+        if (tableColumns?.columnsMetadata && tableColumns?.columnsMetadata?.length > 0) {
+          hasChildren = true;
+        }
+      }
+      const title =
+        node?.type === ContentNodeType.Directory ? declinatedDirectoryText : declinatedTableText;
+
+      const onDelete = () => deleteNode(id);
+
+      const onOk = () => {
+        if (hasChildren) {
+          callAdditionalConfirmationModal(onDelete);
+        } else {
+          onDelete();
+        }
+      };
+
+      return confirmActionModal({
+        onOk,
+        title: t('MESSAGE.CONFIRM_DELETE_ENTITY', { what: title.toLowerCase() }),
+      });
+    },
+    [declinatedDirectoryText, declinatedTableText, deleteNode, findNode, getTableMetadata, t],
+  );
 
   return {
     handleDeleteNode,

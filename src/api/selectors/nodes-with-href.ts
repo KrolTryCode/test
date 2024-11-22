@@ -12,10 +12,10 @@ export const nodesWithHrefSelector = (data: NodeType[], projectId: string, path:
     label: node.name,
     href: `/${path}/${node.id}`,
     description: 'description' in node ? node.description : '',
-    children: undefined,
-    // node.children.length !== 0
-    //   ? node.children.map(child => transformNode(projectId, child))
-    //   : undefined,
+    children:
+      'children' in node && node.children.length !== 0
+        ? node.children.map(child => transformNode(projectId, child))
+        : undefined,
   });
 
   return data.map(node => transformNode(projectId, node));
