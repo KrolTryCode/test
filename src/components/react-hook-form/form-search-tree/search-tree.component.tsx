@@ -21,6 +21,7 @@ export interface SearchTreeProps {
   items: NavTreeItemData[];
   noDataText?: string;
   isLoading?: boolean;
+  disablePortal?: boolean;
   placeholder?: string;
   error: boolean;
   value: string;
@@ -29,7 +30,17 @@ export interface SearchTreeProps {
 }
 
 export const SearchTree: FC<SearchTreeProps> = props => {
-  const { items, isLoading, value, noDataText, placeholder, error, onSelect, onBlur } = props;
+  const {
+    items,
+    isLoading,
+    disablePortal,
+    value,
+    noDataText,
+    placeholder,
+    error,
+    onSelect,
+    onBlur,
+  } = props;
   const { findNode, getParentsIdsList, getAllIds, filterNodes } = useTreeNodesUtils(items);
   const ref = useRef<HTMLInputElement>();
   const [showTree, setShowTree] = useState(false);
@@ -135,7 +146,12 @@ export const SearchTree: FC<SearchTreeProps> = props => {
           }
         />
 
-        <PopperWithPaper isOpen={showTree} anchorEl={ref.current} isContentLoading={isLoading}>
+        <PopperWithPaper
+          isOpen={showTree}
+          anchorEl={ref.current}
+          isContentLoading={isLoading}
+          disablePortal={disablePortal}
+        >
           {treeList.length ? (
             <TreeViewIndanis
               items={treeList}

@@ -45,6 +45,7 @@ const ProjectNodeForm: FC<ProjectNodeFormProps> = ({ onResolve, onReject, data, 
       {!!treeData.length && !isEditing && (
         <FormItem label={t('COMMON.PARENT')}>
           <FormSearchTree
+            disablePortal={false}
             items={treeData}
             placeholder={t('ACTION.SELECT')}
             noDataText={t('MESSAGE.NO_DATA')}
