@@ -7,20 +7,27 @@ import { Link } from 'react-router-dom';
 
 import { useGetProjectNode } from '~/api/queries/projects/get-project-node.query';
 import { ProjectNodeBreadcrumbs } from '~/components/breadcrumbs/breadcrumbs.component';
+import { CreateMenu } from '~/pages/projects/group-header/create-menu.component';
 import { useProjectsTreeActions } from '~/pages/projects/use-projects-tree-actions.hook';
 import { projectsPath } from '~/utils/configuration/routes-paths';
 import { usePageTitle } from '~/utils/hooks/use-page-title';
 
-interface ProjectHeaderProps {
-  projectId: string;
+interface GroupHeaderProps {
+  groupId?: string;
 }
 
-export const ProjectHeader: FC<ProjectHeaderProps> = ({ projectId }) => {
+export const GroupHeader: FC<GroupHeaderProps> = ({ groupId }) => {
   const { t } = useTranslation();
-  const { data: projectData, isLoading: isProjectDataLoading } = useGetProjectNode(projectId);
+  const { data: projectData, isLoading: isProjectDataLoading } = useGetProjectNode(groupId!, {
+    enabled: !!groupId,
+  });
   usePageTitle(projectData?.name);
 
-  const { updateProjectOrGroup, deleteProjectOrGroup } = useProjectsTreeActions();
+  const { deleteProjectOrGroup, updateProjectOrGroup } = useProjectsTreeActions();
+
+  const backPath = projectData?.parentId
+    ? `/${projectsPath}/${projectData.parentId}`
+    : `/${projectsPath}`;
 
   if (isProjectDataLoading) {
     return (
@@ -31,9 +38,14 @@ export const ProjectHeader: FC<ProjectHeaderProps> = ({ projectId }) => {
     );
   }
 
-  const backPath = projectData?.parentId
-    ? `/${projectsPath}/${projectData.parentId}`
-    : `/${projectsPath}`;
+  /* Корневой каталог */
+  if (!groupId) {
+    return (
+      <Stack padding={1} gap={2} direction={'row'} justifyContent={'flex-start'}>
+        <CreateMenu />
+      </Stack>
+    );
+  }
 
   return (
     <Stack padding={1} gap={2} direction={'row'} justifyContent={'space-between'}>
@@ -51,6 +63,7 @@ export const ProjectHeader: FC<ProjectHeaderProps> = ({ projectId }) => {
             variant={'text'}
             icon={<Edit />}
           />
+          <CreateMenu />
           <Button
             size={'small'}
             color={'error'}
@@ -70,7 +83,7 @@ export const ProjectHeader: FC<ProjectHeaderProps> = ({ projectId }) => {
         </Typography>
       </Stack>
       <Stack alignItems={'flex-end'} flex={1}>
-        <ProjectNodeBreadcrumbs projectNodeId={projectId} />
+        <ProjectNodeBreadcrumbs projectNodeId={groupId} />
       </Stack>
     </Stack>
   );

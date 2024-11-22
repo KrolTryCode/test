@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { FullProjectNodeMemberInfo } from '~/api/utils/api-requests';
-import { projectsPath } from '~/utils/configuration/routes-paths';
 import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
 
 import { ProjectHeader } from '../project-header/project-header.component';
@@ -88,9 +87,7 @@ const ParticipantsList: FC = () => {
 
   return (
     <>
-      {projectGroupId && !projectId && (
-        <ProjectHeader backPath={`/${projectsPath}/${projectGroupId}`} />
-      )}
+      {projectGroupId && !projectId && <ProjectHeader projectId={projectId} />}
       <DataGrid<FullProjectNodeMemberInfo>
         ref={apiRef}
         loading={isDataLoading}
