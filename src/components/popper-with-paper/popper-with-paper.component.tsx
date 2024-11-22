@@ -5,6 +5,7 @@ interface PopperWithPaperProps extends PropsWithChildren {
   anchorEl?: HTMLElement;
   isOpen: boolean;
   isContentLoading?: boolean;
+  disablePortal?: boolean;
 }
 
 export const PopperWithPaper: FC<PopperWithPaperProps> = ({
@@ -12,12 +13,13 @@ export const PopperWithPaper: FC<PopperWithPaperProps> = ({
   isOpen,
   isContentLoading,
   anchorEl,
+  disablePortal = true,
 }) => (
   <Popper
     open={isOpen}
     anchorEl={anchorEl}
     transition
-    disablePortal
+    disablePortal={disablePortal}
     sx={({ zIndex }) => ({ zIndex: zIndex.tooltip + 1 })}
   >
     {({ TransitionProps }) => (
