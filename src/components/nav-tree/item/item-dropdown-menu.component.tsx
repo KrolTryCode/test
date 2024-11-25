@@ -42,8 +42,8 @@ export const ItemDropdownMenu: FC<{
                 {t('ACTION.EXPAND_ALL')}
               </MenuItem>,
             ]}
-            {filteredMenuItems?.map(({ label, onClick }) => (
-              <MenuItem key={label} onClick={() => onClick(item.id)}>
+            {filteredMenuItems?.map(({ label, onClick, color }) => (
+              <MenuItem key={label} onClick={() => onClick(item.id)} color={color}>
                 {label}
               </MenuItem>
             ))}
