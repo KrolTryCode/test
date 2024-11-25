@@ -44,7 +44,7 @@ export const useI18nInit = () => {
 
 export const useDownloadTranslations = () => {
   const { t, i18n } = useTranslation();
-  const { data } = useDownloadMessagesMapQuery();
+  const { data } = useDownloadMessagesMapQuery(i18n.language);
 
   useEffect(() => {
     document.documentElement.setAttribute('lang', i18n.language);

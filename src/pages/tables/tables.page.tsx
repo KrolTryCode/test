@@ -3,7 +3,7 @@ import { PersistentDrawer, Preloader, useGetDrawerThemeWidth } from '@pspod/ui-c
 import { FC, useEffect, useState } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 
-import { useGetProjectNode } from '~/api/queries/projects/get-project-node.query';
+import { useGetProjectNodeQuery } from '~/api/queries/projects/get-project-node.query';
 import { NotFoundNodes } from '~/pages/_fallbacks/errors/not-found/not-found.component';
 import { NodesTree } from '~/pages/tables/tree/nodes-tree.component';
 import { useNavTreeActions } from '~/pages/tables/tree/use-nav-tree-actions.hook';
@@ -14,7 +14,7 @@ const TablesLayout: FC = () => {
   const { handleAddCatalog } = useNavTreeActions([]);
   const { drawerWidth } = useGetDrawerThemeWidth();
   const { projectId } = useParams();
-  const { data: projectData, isLoading: isProjectDataLoading } = useGetProjectNode(projectId!);
+  const { data: projectData, isLoading: isProjectDataLoading } = useGetProjectNodeQuery(projectId!);
 
   const [isDrawerOpened, setIsDrawerOpened] = useState(true);
 

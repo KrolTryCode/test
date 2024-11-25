@@ -3,7 +3,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { ProjectNode } from '~/api/utils/api-requests';
-import { PROJECTS_KEY } from '~/api/utils/query-keys';
+
+import { projectQueries } from './queries';
 
 export const useUpdateProjectNodeMutation = (
   options?: UseCustomMutationOptions<
@@ -15,14 +16,14 @@ export const useUpdateProjectNodeMutation = (
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ nodeId, name, description }) =>
-      await ApiClientSecured.projectNodeV1Controller.updateProjectNode(nodeId, {
+    mutationFn: ({ nodeId, name, description }) =>
+      ApiClientSecured.projectNodeV1Controller.updateProjectNode(nodeId, {
         name,
         description,
       }),
     ...options,
     onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: [PROJECTS_KEY] });
+      void queryClient.invalidateQueries({ queryKey: projectQueries._def });
       options?.onSuccess?.(...args);
     },
   });

@@ -9,8 +9,8 @@ export const useGetTableMetadataColumns = (
   options?: UseCustomMutationOptions<TableMetadata, unknown, string>,
 ) => {
   return useMutation({
-    mutationFn: async nodeId =>
-      await ApiClientSecured.contentNodeV1Controller.getTableMetadata(nodeId, { withId: true }),
+    mutationFn: nodeId =>
+      ApiClientSecured.contentNodeV1Controller.getTableMetadata(nodeId, { withId: true }),
     ...options,
   });
 };

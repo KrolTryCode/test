@@ -4,7 +4,7 @@ import { Preloader } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useGetContentNode } from '~/api/queries/nodes/get-content-node.query';
+import { useGetContentNodeQuery } from '~/api/queries/nodes/get-content-node.query';
 import { useGetContentNodes } from '~/api/queries/nodes/get-content-nodes.query';
 import { ContentNodeType } from '~/api/utils/api-requests';
 import { EmptyCatalog } from '~/pages/_fallbacks/info/empty/empty-element.component';
@@ -13,7 +13,7 @@ import { Table } from './table.component';
 
 const NodeContent: FC = () => {
   const { nodeId = '', projectId = '' } = useParams();
-  const { data: nodeInfo, isLoading: isNodeInfoLoading } = useGetContentNode(nodeId, {
+  const { data: nodeInfo, isLoading: isNodeInfoLoading } = useGetContentNodeQuery(nodeId, {
     enabled: !!nodeId,
   });
   const { data: children, isLoading: isChildrenLoading } = useGetContentNodes(projectId, nodeId);

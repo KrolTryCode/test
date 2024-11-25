@@ -9,8 +9,7 @@ export const useStartAccountReactivationMutation = (
   options?: UseCustomMutationOptions<void, Error, string>,
 ) => {
   return useMutation<void, Error, string>({
-    mutationFn: async (userId: string) =>
-      await ApiClientSecured.accountV1Controller.startReactivation(userId),
+    mutationFn: (userId: string) => ApiClientSecured.accountV1Controller.startReactivation(userId),
     ...options,
   });
 };
@@ -19,6 +18,6 @@ export const useCompleteAccountReactivationMutation = (
   options?: UseCustomMutationOptions<void, Error, ReactivateAccountRequest>,
 ) =>
   useMutation<void, Error, RecoverPasswordRequest>({
-    mutationFn: async data => await ApiClient.authController.reactivate(data),
+    mutationFn: data => ApiClient.authController.reactivate(data),
     ...options,
   });

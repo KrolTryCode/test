@@ -2,7 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
-import { PROJECTS_KEY } from '~/api/utils/query-keys';
+
+import { projectQueries } from './queries';
 
 export const useDeleteProjectNodeMutation = (
   options?: UseCustomMutationOptions<void, Error, string>,
@@ -10,11 +11,10 @@ export const useDeleteProjectNodeMutation = (
   const queryClient = useQueryClient();
 
   return useMutation<void, Error, string>({
-    mutationFn: async nodeId =>
-      await ApiClientSecured.projectNodeV1Controller.deleteProject1Node(nodeId),
+    mutationFn: nodeId => ApiClientSecured.projectNodeV1Controller.deleteProject1Node(nodeId),
     ...options,
     onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: [PROJECTS_KEY] });
+      void queryClient.invalidateQueries({ queryKey: projectQueries._def });
       options?.onSuccess?.(...args);
     },
   });

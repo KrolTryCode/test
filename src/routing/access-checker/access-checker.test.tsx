@@ -52,7 +52,7 @@ describe('Access checker', () => {
     expect(await screen.findByText(PROTECTED_CONTENT)).toBeInTheDocument();
   });
 
-  it('should redirect to login page when not logged in', async () => {
+  it('should redirect to login page when not logged in', () => {
     clearUserData();
 
     renderComponent(<AccessChecker>{PROTECTED_CONTENT}</AccessChecker>, {
@@ -63,7 +63,7 @@ describe('Access checker', () => {
     expect(mockedNavigate).toHaveBeenCalledWith(`/${authPath}/${loginPath}`);
   });
 
-  it('should redirect to home page when logged in and on login page', async () => {
+  it('should redirect to home page when logged in and on login page', () => {
     setUserData({ permissions: ['admin'] });
 
     renderComponent(<AccessChecker>{PROTECTED_CONTENT}</AccessChecker>, {

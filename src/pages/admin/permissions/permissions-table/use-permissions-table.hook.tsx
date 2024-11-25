@@ -14,19 +14,21 @@ import { useFindPermissionsQuery } from '~/api/queries/roles/find-permissions.qu
 import { useGetAllRolesQuery } from '~/api/queries/roles/get-all-roles.query';
 import { useRemoveRolePermissionsMutation } from '~/api/queries/roles/remove-role-permissions.mutation';
 import { GridPermission } from '~/pages/admin/permissions/permissions.type';
+import { useServerPagingParams } from '~/utils/hooks/use-server-options';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const usePermissionsTable = () => {
   const { t } = useTranslation();
   const apiRef = useGridApiRef();
   const [paging, setGridPaging] = useState<GridPagingParams>();
+  const serverPagingParams = useServerPagingParams(paging);
 
   const { mutate: addPermissions } = useAddRolePermissionsMutation();
   const { mutate: removePermissions } = useRemoveRolePermissionsMutation();
 
   const { data: roles = [], isLoading: isRoleListLoading } = useGetAllRolesQuery();
   const { data: permissions, isLoading: isPermissionListLoading } = useFindPermissionsQuery(
-    paging,
+    serverPagingParams,
     {
       enabled: !!roles,
       select: data => {

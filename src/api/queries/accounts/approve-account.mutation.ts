@@ -9,8 +9,8 @@ export const useApproveAccountMutation = (
   options?: UseCustomMutationOptions<UserRegistrationEntity, AxiosError<ErrorResponse>, string>,
 ) => {
   return useMutation<UserRegistrationEntity, AxiosError<ErrorResponse>, string>({
-    mutationFn: async userId =>
-      await ApiClientSecured.userRegistrationV1Controller.approveUserRegistration(userId),
+    mutationFn: userId =>
+      ApiClientSecured.userRegistrationV1Controller.approveUserRegistration(userId),
     ...options,
   });
 };

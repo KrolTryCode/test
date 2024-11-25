@@ -8,7 +8,7 @@ export const useLoginMutation = (
   options?: UseCustomMutationOptions<LoginResponseWithRefreshToken, Error, LoginRequest>,
 ) => {
   return useMutation<LoginResponseWithRefreshToken, Error, LoginRequest>({
-    mutationFn: async data => await ApiClient.authController.loginWithRefreshToken(data),
+    mutationFn: data => ApiClient.authController.loginWithRefreshToken(data),
     ...options,
   });
 };

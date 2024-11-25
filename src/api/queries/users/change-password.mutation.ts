@@ -9,8 +9,7 @@ export const useChangePasswordMutation = (
   options?: UseCustomMutationOptions<object, unknown, UpdatePasswordRequest>,
 ) => {
   return useMutation<object, unknown, UpdatePasswordRequest>({
-    mutationFn: async passwordData =>
-      await ApiClientSecured.accountV1Controller.changePassword(passwordData),
+    mutationFn: passwordData => ApiClientSecured.accountV1Controller.changePassword(passwordData),
     gcTime: 0,
     ...options,
   });

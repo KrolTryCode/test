@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { userQueries } from '~/api/queries/users/queries';
 import { Account } from '~/api/utils/api-requests';
-import { USERS_KEY } from '~/api/utils/query-keys';
 
 import { UseCustomMutationOptions } from '../../typings/react-query-helpers';
 import { ApiClientSecured } from '../../utils/api-client';
@@ -12,10 +12,10 @@ export const useRemoveUserFromAdminsMutation = (
   const queryClient = useQueryClient();
 
   return useMutation<Account, Error, string>({
-    mutationFn: async userId => await ApiClientSecured.accountV1Controller.removeAdmin(userId),
+    mutationFn: userId => ApiClientSecured.accountV1Controller.removeAdmin(userId),
     ...options,
     onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: [USERS_KEY] });
+      void queryClient.invalidateQueries({ queryKey: userQueries._def });
       options?.onSuccess?.(...args);
     },
   });

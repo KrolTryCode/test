@@ -2,14 +2,13 @@ import { useQuery } from '@tanstack/react-query';
 
 import { selectUserTimezone } from '~/api/selectors/select-user-timezone';
 import { UseCustomQueryOptions } from '~/api/typings/react-query-helpers';
-import { ApiClientSecured } from '~/api/utils/api-client';
 import { UserWithPermissions } from '~/api/utils/api-requests';
-import { CURRENT_KEY, USERS_KEY } from '~/api/utils/query-keys';
+
+import { userQueries } from './queries';
 
 export const useGetCurrentUserQuery = (options?: UseCustomQueryOptions<UserWithPermissions>) =>
   useQuery({
-    queryKey: [USERS_KEY, CURRENT_KEY],
-    queryFn: async () => await ApiClientSecured.usersV1Controller.getCurrentUser(),
+    ...userQueries.current,
     initialData: {},
     gcTime: 0,
     ...options,

@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { useGetProjectNode } from '~/api/queries/projects/get-project-node.query';
+import { useGetProjectNodeQuery } from '~/api/queries/projects/get-project-node.query';
 import { ProjectNodeBreadcrumbs } from '~/components/breadcrumbs/breadcrumbs.component';
 import { useProjectsTreeActions } from '~/pages/projects/use-projects-tree-actions.hook';
 import { projectsPath } from '~/utils/configuration/routes-paths';
@@ -17,7 +17,7 @@ interface ProjectHeaderProps {
 
 export const ProjectHeader: FC<ProjectHeaderProps> = ({ projectId }) => {
   const { t } = useTranslation();
-  const { data: projectData, isLoading: isProjectDataLoading } = useGetProjectNode(projectId);
+  const { data: projectData, isLoading: isProjectDataLoading } = useGetProjectNodeQuery(projectId);
   usePageTitle(projectData?.name);
 
   const { updateProjectOrGroup, deleteProjectOrGroup } = useProjectsTreeActions();

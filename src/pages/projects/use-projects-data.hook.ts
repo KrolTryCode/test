@@ -1,15 +1,14 @@
 import { useParams } from 'react-router-dom';
 
-import { useGetProjectNodesByParent } from '~/api/queries/projects/get-project-nodes-by-parent.query';
-import { useGetProjectNodesTree } from '~/api/queries/projects/get-project-nodes-tree.query';
+import { useGetProjectNodesByParentQuery } from '~/api/queries/projects/get-project-nodes-by-parent.query';
+import { useGetProjectNodesTreeQuery } from '~/api/queries/projects/get-project-nodes-tree.query';
 import { nodesWithHrefSelector } from '~/api/selectors/nodes-with-href';
 import { projectsPath } from '~/utils/configuration/routes-paths';
 
 export function useProjectsData() {
   const { projectGroupId, projectId = '' } = useParams();
-  const { data: childrenNodes = [], isLoading: isChildrenLoading } = useGetProjectNodesByParent(
-    projectGroupId,
-    {
+  const { data: childrenNodes = [], isLoading: isChildrenLoading } =
+    useGetProjectNodesByParentQuery(projectGroupId, {
       // временное устранение задвоения(?) данных
       select: data => {
         return data.reduce<typeof data>((acc, cur) => {
@@ -19,9 +18,8 @@ export function useProjectsData() {
           return [...acc, cur];
         }, []);
       },
-    },
-  );
-  const { data: treeData = [], isLoading: isTreeLoading } = useGetProjectNodesTree({
+    });
+  const { data: treeData = [], isLoading: isTreeLoading } = useGetProjectNodesTreeQuery({
     select: data => nodesWithHrefSelector(data, projectId, projectsPath),
   });
 

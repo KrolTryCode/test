@@ -2,7 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
-import { USERS_KEY } from '~/api/utils/query-keys';
+
+import { userQueries } from './queries';
 
 export const useArchiveUserMutation = (
   options?: UseCustomMutationOptions<object, Error, string>,
@@ -10,11 +11,12 @@ export const useArchiveUserMutation = (
   const queryClient = useQueryClient();
 
   return useMutation<object, Error, string>({
-    mutationFn: async userId => await ApiClientSecured.usersV1Controller.archiveUser(userId),
+    mutationFn: userId => ApiClientSecured.usersV1Controller.archiveUser(userId),
     ...options,
-    onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: [USERS_KEY] });
-      options?.onSuccess?.(...args);
+    onSuccess(data, userId, ctx) {
+      void queryClient.invalidateQueries({ queryKey: userQueries.list._def });
+      void queryClient.invalidateQueries({ queryKey: userQueries.single(userId).queryKey });
+      options?.onSuccess?.(data, userId, ctx);
     },
   });
 };

@@ -3,7 +3,7 @@ import { Stack, Typography } from '@mui/material';
 import { Button, Preloader } from '@pspod/ui-components';
 import { FC, useMemo, useState } from 'react';
 
-import { useGetProjectNodesByParent } from '~/api/queries/projects/get-project-nodes-by-parent.query';
+import { useGetProjectNodesByParentQuery } from '~/api/queries/projects/get-project-nodes-by-parent.query';
 import { ProjectNode, ProjectNodeType } from '~/api/utils/api-requests';
 
 import {
@@ -20,7 +20,7 @@ interface ProjectTreeItemProps {
 export const ProjectTreeItem: FC<ProjectTreeItemProps> = ({ projectTreeNode }) => {
   const [isOpened, setIsOpened] = useState(false);
 
-  const { data: childNodes = [], isLoading } = useGetProjectNodesByParent(projectTreeNode.id, {
+  const { data: childNodes = [], isLoading } = useGetProjectNodesByParentQuery(projectTreeNode.id, {
     enabled: projectTreeNode.hasChildren && isOpened,
   });
 

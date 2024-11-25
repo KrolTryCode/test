@@ -1,8 +1,8 @@
 import { Breadcrumbs, Link as MuiLink } from '@mui/material';
 import { FC } from 'react';
 
-import { useGetProjectNode } from '~/api/queries/projects/get-project-node.query';
-import { useGetParents } from '~/api/queries/projects/get-projects-parents.query';
+import { useGetProjectNodeQuery } from '~/api/queries/projects/get-project-node.query';
+import { useGetParentsQuery } from '~/api/queries/projects/get-projects-parents.query';
 import { projectPath, projectsPath } from '~/utils/configuration/routes-paths';
 
 interface ProjectNodeBreadcrumbsProps {
@@ -10,8 +10,8 @@ interface ProjectNodeBreadcrumbsProps {
 }
 
 export const ProjectNodeBreadcrumbs: FC<ProjectNodeBreadcrumbsProps> = ({ projectNodeId }) => {
-  const { data: parents = [] } = useGetParents(projectNodeId ?? '');
-  const { data: projectData } = useGetProjectNode(projectNodeId, {
+  const { data: parents = [] } = useGetParentsQuery(projectNodeId ?? '');
+  const { data: projectData } = useGetProjectNodeQuery(projectNodeId, {
     enabled: !!projectNodeId,
   });
 

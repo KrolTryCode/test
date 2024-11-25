@@ -2,7 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
-import { COLUMNS_KEY, NODES_KEY, TABLE_KEY } from '~/api/utils/query-keys';
+
+import { tableQueries } from '../queries';
 
 export const useDeleteNodeColumnMutation = (
   nodeId: string,
@@ -10,11 +11,11 @@ export const useDeleteNodeColumnMutation = (
 ) => {
   const queryClient = useQueryClient();
   return useMutation<void, Error, string>({
-    mutationFn: async columnName =>
-      await ApiClientSecured.contentNodeV1Controller.dropColumn(nodeId, { columnName }),
+    mutationFn: columnName =>
+      ApiClientSecured.contentNodeV1Controller.dropColumn(nodeId, { columnName }),
     ...options,
     onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: [NODES_KEY, nodeId, TABLE_KEY, COLUMNS_KEY] });
+      void queryClient.invalidateQueries({ queryKey: tableQueries.metadata(nodeId).queryKey });
       options?.onSuccess?.(...args);
     },
   });
