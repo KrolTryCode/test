@@ -93,7 +93,7 @@ export const themeOptions: ThemeOptions = {
         }),
       },
     },
-    MuiDrawer: { styleOverrides: { paper: { width: 240 } } },
+    MuiDrawer: { styleOverrides: { paper: { width: 340 } } },
     MuiCircularProgress: { defaultProps: { disableShrink: true } },
     MuiTabs,
     MuiTab,

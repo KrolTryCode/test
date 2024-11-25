@@ -1,9 +1,9 @@
-import MenuIcon from '@mui/icons-material/Menu';
-import { Box, IconButton } from '@mui/material';
+import { Box } from '@mui/material';
 import { PersistentDrawer, Preloader, useGetDrawerThemeWidth } from '@pspod/ui-components';
 import { FC, useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 
+import { useGetProjectNode } from '~/api/queries/projects/get-project-node.query';
 import { NotFoundNodes } from '~/pages/_fallbacks/errors/not-found/not-found.component';
 import { NodesTree } from '~/pages/tables/tree/nodes-tree.component';
 import { useNavTreeActions } from '~/pages/tables/tree/use-nav-tree-actions.hook';
@@ -13,16 +13,18 @@ const TablesLayout: FC = () => {
   const { treeData, isFetched, isLoading } = useTablesMenuData();
   const { handleAddCatalog } = useNavTreeActions([]);
   const { drawerWidth } = useGetDrawerThemeWidth();
+  const { projectId } = useParams();
+  const { data: projectData, isLoading: isProjectDataLoading } = useGetProjectNode(projectId!);
 
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const [isDrawerOpened, setIsDrawerOpened] = useState(true);
 
   useEffect(() => {
     if (isFetched) {
-      setOpenDrawer(!!treeData.length);
+      setIsDrawerOpened(!!treeData.length);
     }
   }, [isFetched, treeData.length]);
 
-  if (isLoading) {
+  if (isLoading || isProjectDataLoading) {
     return <Preloader />;
   }
 
@@ -31,16 +33,17 @@ const TablesLayout: FC = () => {
   return (
     <>
       <PersistentDrawer
-        open={openDrawer}
-        handleDrawerClose={() => setOpenDrawer(false)}
-        paperMargin={'14em 0 0 0'}
+        isInitialOpen={true}
+        paperMargin={`${projectData?.description ? 13.5 : 12}em 0 0 0`}
+        onDrawerOpenState={setIsDrawerOpened}
       >
         <NodesTree />
       </PersistentDrawer>
-      <IconButton onClick={() => setOpenDrawer(true)} color={'primary'} disabled={!treeData.length}>
-        <MenuIcon />
-      </IconButton>
-      <Box marginLeft={openDrawer ? `${drawerWidth}px` : 0} height={'calc(100% - 40px)'}>
+      <Box
+        height={'100%'}
+        marginLeft={isDrawerOpened ? `${drawerWidth}px` : '34px'}
+        sx={{ transition: 'margin-left 0.3s ease' }}
+      >
         {!treeData.length ? <NotFoundNodes action={handleAddCatalog} /> : <Outlet />}
       </Box>
     </>

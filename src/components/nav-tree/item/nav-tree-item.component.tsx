@@ -1,5 +1,5 @@
-import { Folder } from '@mui/icons-material';
-import { Stack } from '@mui/material';
+import { Folder, TableChart } from '@mui/icons-material';
+import { Stack, SvgIconProps } from '@mui/material';
 import {
   TreeItem2Content,
   TreeItem2GroupTransition,
@@ -16,7 +16,7 @@ import { isFolderType } from '~/components/nav-tree/item/nav-tree-item.utils';
 import { SelectItemButton } from '~/components/nav-tree/item/select-item-button.component';
 
 import { StyledLink, StyledTreeItemLabel } from '../nav-tree.style';
-import { NavTreeItemData, NavTreeItemProps } from '../nav-tree.type';
+import { NavTreeItemData, NavTreeItemProps, NavTreeItemType } from '../nav-tree.type';
 
 export const NavTreeItem = forwardRef(function NavTreeItem(
   props: NavTreeItemProps,
@@ -52,6 +52,15 @@ export const NavTreeItem = forwardRef(function NavTreeItem(
     return publicAPI.getItem(itemId) as NavTreeItemData;
   }, [itemId, publicAPI]);
 
+  const renderItemIcon = (itemType: NavTreeItemType | undefined) => {
+    const iconProps: SvgIconProps = { color: 'primary', sx: { marginRight: 0.5 } };
+    if (isFolderType(itemType)) {
+      return <Folder {...iconProps} />;
+    } else {
+      return <TableChart {...iconProps} />;
+    }
+  };
+
   return (
     <TreeItem2Provider itemId={itemId}>
       <TreeItem2Root {...getRootProps(other)}>
@@ -63,7 +72,7 @@ export const NavTreeItem = forwardRef(function NavTreeItem(
           )}
           <Stack gap={1} direction={'row'} flexGrow={'1'}>
             <StyledTreeItemLabel {...getLabelProps()}>
-              {isFolderType(item.type) && <Folder color={'primary'} sx={{ marginRight: 0.5 }} />}
+              {renderItemIcon(item.type)}
               {item.href && !disableLinks ? <StyledLink to={item.href}>{label}</StyledLink> : label}
               {item.id === selectedItemId && onHandleSelectEvent !== undefined && (
                 <SelectItemButton item={item} onHandleSelect={onHandleSelectEvent} />

@@ -36,7 +36,7 @@ export const useDropdownMenuItems = (treeData: NavTreeItemData[]) => {
         onClick: handleEditStructure,
         entityType: ContentNodeType.Table,
       },
-      { label: t('ACTION.DELETE'), onClick: handleDeleteNode },
+      { label: t('ACTION.DELETE'), onClick: handleDeleteNode, color: 'error' },
     ],
     [
       declinatedStructureText,
