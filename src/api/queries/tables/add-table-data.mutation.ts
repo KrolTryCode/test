@@ -2,7 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
-import { NODES_KEY, TABLE_KEY } from '~/api/utils/query-keys';
+
+import { tableQueries } from './queries';
 
 export const useAddTableDataMutation = (
   nodeId: string,
@@ -11,12 +12,12 @@ export const useAddTableDataMutation = (
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: Record<string, any>) =>
-      await ApiClientSecured.contentNodeV1Controller.insertValues(nodeId, data),
+    mutationFn: (data: Record<string, any>) =>
+      ApiClientSecured.contentNodeV1Controller.insertValues(nodeId, data),
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({
-        queryKey: [NODES_KEY, nodeId, TABLE_KEY],
+        queryKey: tableQueries.content(nodeId).queryKey,
       });
       options?.onSuccess?.(...args);
     },

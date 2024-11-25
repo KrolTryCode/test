@@ -2,7 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
-import { COLUMNS_KEY, NODES_KEY, TABLE_KEY } from '~/api/utils/query-keys';
+
+import { tableQueries } from '../queries';
 
 interface EditNodeColumnNameVariables {
   columnName: string;
@@ -15,14 +16,14 @@ export const useEditNodeColumnNameMutation = (
 ) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ columnName, newColumnName }: EditNodeColumnNameVariables) =>
-      await ApiClientSecured.contentNodeV1Controller.updateColumnName(nodeId, {
+    mutationFn: ({ columnName, newColumnName }) =>
+      ApiClientSecured.contentNodeV1Controller.updateColumnName(nodeId, {
         columnName,
         newColumnName,
       }),
     ...options,
     onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: [NODES_KEY, nodeId, TABLE_KEY, COLUMNS_KEY] });
+      void queryClient.invalidateQueries({ queryKey: tableQueries.metadata(nodeId).queryKey });
       options?.onSuccess?.(...args);
     },
   });

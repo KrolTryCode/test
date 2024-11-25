@@ -3,7 +3,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { ContentNode } from '~/api/utils/api-requests';
-import { NODES_KEY, PROJECTS_KEY } from '~/api/utils/query-keys';
+
+import { nodeQueries } from './queries';
 
 export const useUpdateContentNodeMutation = (
   projectId: string,
@@ -16,15 +17,15 @@ export const useUpdateContentNodeMutation = (
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ nodeId, name, parentNodeId }) =>
-      await ApiClientSecured.contentNodeV1Controller.updateContentNode(nodeId, {
+    mutationFn: ({ nodeId, name, parentNodeId }) =>
+      ApiClientSecured.contentNodeV1Controller.updateContentNode(nodeId, {
         name,
         parentNodeId,
       }),
     ...options,
     onSuccess(data, ...args) {
-      void queryClient.invalidateQueries({ queryKey: [PROJECTS_KEY, projectId, NODES_KEY] });
-      void queryClient.invalidateQueries({ queryKey: [NODES_KEY, data.id] });
+      void queryClient.invalidateQueries({ queryKey: nodeQueries.list(projectId).queryKey });
+      void queryClient.invalidateQueries({ queryKey: nodeQueries.tree(projectId).queryKey });
       options?.onSuccess?.(data, ...args);
     },
   });

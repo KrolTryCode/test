@@ -9,8 +9,8 @@ export const useDeclineAccountMutation = (
   options?: UseCustomMutationOptions<UserRegistrationEntity, AxiosError<ErrorResponse>, string>,
 ) => {
   return useMutation<UserRegistrationEntity, AxiosError<ErrorResponse>, string>({
-    mutationFn: async userId =>
-      await ApiClientSecured.userRegistrationV1Controller.declineUserRegistration(userId),
+    mutationFn: userId =>
+      ApiClientSecured.userRegistrationV1Controller.declineUserRegistration(userId),
     ...options,
   });
 };

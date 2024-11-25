@@ -29,7 +29,7 @@ const API_CONFIG: ApiConfig = {
 
 const API_CONFIG_SECURE: ApiConfig = {
   baseURL: BASE_API_URL,
-  securityWorker: async () => {
+  securityWorker: () => {
     const token = getStorageService().get(ProjectStorageKey.AccessToken);
 
     if (token) {

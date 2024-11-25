@@ -16,8 +16,8 @@ export const useUploadFileMutation = (
   options?: UseCustomMutationOptions<File, unknown, UploadFileMutationParams>,
 ) => {
   return useMutation<File, unknown, UploadFileMutationParams>({
-    mutationFn: async ({ file, fileId }) =>
-      await ApiClientSecured.filesV1Controller.uploadFiles(fileId, { file }),
+    mutationFn: ({ file, fileId }) =>
+      ApiClientSecured.filesV1Controller.uploadFiles(fileId, { file }),
     onError: e => {
       if (e instanceof AxiosError && e.response?.status === 413) {
         showErrorMessage(e, 'FILES.ERROR.TOO_BIG');

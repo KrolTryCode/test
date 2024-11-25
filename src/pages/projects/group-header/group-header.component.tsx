@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { useGetProjectNode } from '~/api/queries/projects/get-project-node.query';
+import { useGetProjectNodeQuery } from '~/api/queries/projects/get-project-node.query';
 import { ProjectNodeBreadcrumbs } from '~/components/breadcrumbs/breadcrumbs.component';
 import { CreateMenu } from '~/pages/projects/group-header/create-menu.component';
 import { useProjectsTreeActions } from '~/pages/projects/use-projects-tree-actions.hook';
@@ -18,7 +18,7 @@ interface GroupHeaderProps {
 
 export const GroupHeader: FC<GroupHeaderProps> = ({ groupId }) => {
   const { t } = useTranslation();
-  const { data: projectData, isLoading: isProjectDataLoading } = useGetProjectNode(groupId!, {
+  const { data: projectData, isLoading: isProjectDataLoading } = useGetProjectNodeQuery(groupId!, {
     enabled: !!groupId,
   });
   usePageTitle(projectData?.name);

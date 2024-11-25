@@ -15,6 +15,7 @@ import { useFindRolesQuery } from '~/api/queries/roles/find-roles.query';
 import { useRemoveRoleMutation } from '~/api/queries/roles/remove-role.mutation';
 import { Role } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
+import { useServerPagingParams } from '~/utils/hooks/use-server-options';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { addRoleModal } from '../add-role/add-role.component';
@@ -24,7 +25,8 @@ export const RolesTable: FC = () => {
   const { t } = useTranslation();
 
   const [paging, setGridPaging] = useState<GridPagingParams>();
-  const { data: roles, isLoading } = useFindRolesQuery(paging);
+  const serverPagingParams = useServerPagingParams(paging);
+  const { data: roles, isLoading } = useFindRolesQuery(serverPagingParams);
 
   const { mutateAsync: changeRoleMutation } = useChangeRoleMutation();
 

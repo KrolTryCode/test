@@ -44,7 +44,7 @@ export const useParticipants = (nodeId: string) => {
     onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
   });
 
-  const onAddParticipantClick = useCallback(async () => {
+  const onAddParticipantClick = useCallback(() => {
     const onSave = async (data: IAddParticipantForm) => {
       const promises = data.usersId.map(userId =>
         addParticipant({

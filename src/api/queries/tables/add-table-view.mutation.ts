@@ -3,7 +3,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { PairStringColumnType } from '~/api/utils/api-requests';
-import { NODES_KEY, TABLE_KEY } from '~/api/utils/query-keys';
+
+import { tableQueries } from './queries';
 
 export const useAddTableViewMutation = (
   nodeId: string,
@@ -12,13 +13,11 @@ export const useAddTableViewMutation = (
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: PairStringColumnType[]) =>
-      await ApiClientSecured.contentNodeV1Controller.createOrReplaceView(nodeId, data),
+    mutationFn: data => ApiClientSecured.contentNodeV1Controller.createOrReplaceView(nodeId, data),
     ...options,
     onSuccess(...args) {
-      void queryClient.invalidateQueries({
-        queryKey: [NODES_KEY, nodeId, TABLE_KEY],
-      });
+      void queryClient.invalidateQueries({ queryKey: tableQueries.metadata(nodeId).queryKey });
+      void queryClient.invalidateQueries({ queryKey: tableQueries.content(nodeId).queryKey });
       options?.onSuccess?.(...args);
     },
   });

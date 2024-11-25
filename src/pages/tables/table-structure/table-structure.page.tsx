@@ -17,7 +17,7 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { useGetContentNode } from '~/api/queries/nodes/get-content-node.query';
+import { useGetContentNodeQuery } from '~/api/queries/nodes/get-content-node.query';
 import { useGetTableMetadataColumns } from '~/api/queries/tables/structure/get-table-metadata.query';
 import { ColumnMetadataExtended, selectNodeColumns } from '~/api/selectors/select-node-columns';
 import { PairStringColumnType } from '~/api/utils/api-requests';
@@ -32,7 +32,7 @@ const TableStructure: FC = () => {
   const { t } = useTranslation();
   const { translateColumnType } = useCustomTranslations();
   const { nodeId = '' } = useParams();
-  const { data: nodeInfo, isLoading: isNodeLoading } = useGetContentNode(nodeId);
+  const { data: nodeInfo, isLoading: isNodeLoading } = useGetContentNodeQuery(nodeId);
   const {
     data: nodeColumns,
     isLoading: isColumnsLoading,
@@ -132,7 +132,7 @@ const TableStructure: FC = () => {
     }
   };
 
-  const handleRowOrderChange = async (params: GridRowOrderChangeParams) => {
+  const handleRowOrderChange = (params: GridRowOrderChangeParams) => {
     const newRows = reorderRows(params.oldIndex, params.targetIndex, items ?? []);
     setItems(newRows);
     // TODO: update column list

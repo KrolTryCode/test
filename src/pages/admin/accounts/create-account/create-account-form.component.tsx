@@ -56,8 +56,7 @@ export const CreateAccountForm: FC<CreateAccountFormProps> = ({
     onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
   });
 
-  const onSubmit = async (values: ICreateAccountForm) =>
-    await createUserMutation.mutateAsync(values);
+  const onSubmit = (values: ICreateAccountForm) => createUserMutation.mutateAsync(values);
 
   return (
     <Form showColonAfterLabel onSubmit={handleSubmit(onSubmit)}>

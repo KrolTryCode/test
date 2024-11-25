@@ -60,7 +60,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({ data, isLoading, isCurrent, 
     [updateUser, isCurrent],
   );
 
-  const onSubmit = async (fieldValues: UpdateUserRequestNullable) => {
+  const onSubmit = (fieldValues: UpdateUserRequestNullable) => {
     if (fieldValues.email === data?.email) {
       void handleUpdateUser(fieldValues);
     } else {

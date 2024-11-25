@@ -31,7 +31,7 @@ const EnterNameForm: FC<EnterNameFormProps> = ({
     defaultValues: { name: suggestedName },
   });
 
-  const onSubmit = async (values: { name: string }) => {
+  const onSubmit = (values: { name: string }) => {
     onResolve(values.name);
   };
 

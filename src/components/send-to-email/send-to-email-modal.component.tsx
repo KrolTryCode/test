@@ -36,7 +36,7 @@ const EnterEmailsForm: FC<EnterEmailFormProps> = ({ isMultiple = true, onResolve
     control,
   });
 
-  const onSubmit = async (data: EmailsListType) => {
+  const onSubmit = (data: EmailsListType) => {
     onResolve(data.emails.map(value => value.email));
   };
 

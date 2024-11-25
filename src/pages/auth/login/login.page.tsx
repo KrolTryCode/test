@@ -36,7 +36,7 @@ const LoginForm = () => {
     onError: e => showErrorMessage(e, 'ERROR.NOT_AUTHORIZED'),
   });
 
-  const onSubmit = async (formData: ILoginForm) => await login(formData);
+  const onSubmit = (formData: ILoginForm) => login(formData);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

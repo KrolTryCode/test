@@ -1,14 +1,16 @@
-import { fixupConfigRules, fixupPluginRules } from '@eslint/compat';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
-import prettier from 'eslint-plugin-prettier';
-import _import from 'eslint-plugin-import';
-// import sonarjs from 'eslint-plugin-sonarjs';
-import globals from 'globals';
-import tsParser from '@typescript-eslint/parser';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import js from '@eslint/js';
+
+import { fixupConfigRules, fixupPluginRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
+import js from '@eslint/js';
+import typescriptEslint from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
+import _import from 'eslint-plugin-import';
+import prettier from 'eslint-plugin-prettier';
+import globals from 'globals';
+
+// import sonarjs from 'eslint-plugin-sonarjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,6 +20,7 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 });
 
+// eslint-disable-next-line import/no-default-export
 export default [
   ...fixupConfigRules(
     compat.extends(
@@ -103,7 +106,7 @@ export default [
       '@typescript-eslint/prefer-optional-chain': 'warn',
       '@typescript-eslint/prefer-promise-reject-errors': 'warn',
       '@typescript-eslint/prefer-regexp-exec': 'off',
-      '@typescript-eslint/require-await': 'off',
+      '@typescript-eslint/require-await': 'warn',
       '@typescript-eslint/restrict-plus-operands': 'error',
       '@typescript-eslint/switch-exhaustiveness-check': 'error',
       '@typescript-eslint/typedef': [
@@ -146,6 +149,7 @@ export default [
             '**/*.test.{ts,tsx}',
             'scripts/**',
             'vitest.config.ts',
+            'eslint.config.mjs',
           ],
         },
       ],
@@ -223,6 +227,7 @@ export default [
       'sort-imports': 'off',
       'sort-keys': 'off',
       'no-restricted-imports': ['warn', 'devextreme', 'devextreme-react', 'styled-components'],
+      'no-return-await': 'warn',
     },
   },
   {

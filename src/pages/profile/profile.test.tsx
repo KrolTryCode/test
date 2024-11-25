@@ -11,7 +11,7 @@ describe('Profile', () => {
     renderComponent(<Profile />, { withRouter: true });
   });
 
-  it('renders the profile', async () => {
+  it('renders the profile', () => {
     const container = screen.getByTestId('appContainer');
     expect(container).toMatchSnapshot('profile');
   });

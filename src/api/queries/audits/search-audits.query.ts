@@ -1,14 +1,14 @@
 import { UseQueryResult, keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { UseCustomQueryOptions } from '~/api/typings/react-query-helpers';
-import { ApiClientSecured } from '~/api/utils/api-client';
 import {
   AuditListFilter,
   Pageable,
   PageFullAuditInfo,
   SearchRequest,
 } from '~/api/utils/api-requests';
-import { JOURNAL_KEY } from '~/api/utils/query-keys';
+
+import { auditQueries } from './queries';
 
 export const useSearchAuditsQuery = <T = PageFullAuditInfo>(
   query: { types: string[]; pageable: Pageable; filter?: AuditListFilter },
@@ -16,14 +16,7 @@ export const useSearchAuditsQuery = <T = PageFullAuditInfo>(
   options?: UseCustomQueryOptions<PageFullAuditInfo, unknown, T>,
 ): UseQueryResult<T, unknown> =>
   useQuery({
-    queryKey: [
-      JOURNAL_KEY,
-      query.types,
-      searchRequest.criteria,
-      { ...query.pageable, ...query.filter },
-    ],
-    queryFn: async () =>
-      await ApiClientSecured.auditV2Controller.searchAudits(query, searchRequest),
+    ...auditQueries.list(query, searchRequest),
     placeholderData: keepPreviousData,
     ...options,
   });
