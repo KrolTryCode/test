@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { useLoginMutation } from '~/api/queries/accounts/login.mutation';
+import { useAppConfigurationQuery } from '~/api/queries/app/app-configuration.query';
 import { FormInputText, FormCheckbox } from '~/components/react-hook-form';
 import { authPath, registerPath, resetPasswordPath } from '~/utils/configuration/routes-paths';
 import { useAuthenticate } from '~/utils/hooks/use-authenticate';
@@ -15,7 +16,7 @@ import { schema, LoginForm as ILoginForm } from './login-form.schema';
 
 const LoginForm = () => {
   const { t } = useTranslation();
-
+  const { data: config } = useAppConfigurationQuery();
   const { onLogin } = useAuthenticate();
 
   const {
@@ -65,9 +66,11 @@ const LoginForm = () => {
         </Button>
       </Stack>
       <FormButtons>
-        <Button component={Link} to={`/${authPath}/${registerPath}`}>
-          {t('ACTION.REGISTER')}
-        </Button>
+        {config?.userSelfRegistration && (
+          <Button component={Link} to={`/${authPath}/${registerPath}`}>
+            {t('ACTION.REGISTER')}
+          </Button>
+        )}
         <Button
           type={'submit'}
           isLoading={isPending}

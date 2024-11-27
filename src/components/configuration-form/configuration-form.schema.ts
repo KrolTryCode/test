@@ -1,7 +1,6 @@
 import * as y from 'yup';
 
 import { PropertyInfo } from '~/components/configuration-form/configuration-form.type';
-import { nonEmptyStringYup } from '~/utils/validation/schemas/strings';
 
 export const getSchema = (properties: PropertyInfo[]) =>
   y.object().shape(
@@ -14,7 +13,7 @@ export const getSchema = (properties: PropertyInfo[]) =>
             return [prop.name, y.boolean()];
           case undefined:
           default:
-            return [prop.name, nonEmptyStringYup];
+            return [prop.name];
         }
       }),
     ),
