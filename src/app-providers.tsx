@@ -9,7 +9,8 @@ import { RouterProvider } from 'react-router-dom';
 
 import { router } from '~/routing/router';
 import { MuiThemeProvider } from '~/themes/mui-theme-provider';
-import { useI18nInit } from '~/utils/configuration/use-init-i18n.hook';
+import { DeclinatedTranslationsProvider } from '~/utils/configuration/translations/declinated-translations-provider';
+import { useI18nInit } from '~/utils/configuration/translations/use-init-i18n.hook';
 
 import PasswordExpiredContent from './components/password-expired/password-expired.component';
 
@@ -27,14 +28,16 @@ export const AppWithProviders: FC = () => {
 
   return (
     <I18nextProvider i18n={i18n}>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} buttonPosition={'top-left'} />
-        <MuiThemeProvider>
-          <NotificationsProvider CustomComponents={{ passwordExpired: PasswordExpiredContent }} />
-          <RouterProvider router={router} />
-          <ModalContainer />
-        </MuiThemeProvider>
-      </QueryClientProvider>
+      <DeclinatedTranslationsProvider>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} buttonPosition={'top-left'} />
+          <MuiThemeProvider>
+            <NotificationsProvider CustomComponents={{ passwordExpired: PasswordExpiredContent }} />
+            <RouterProvider router={router} />
+            <ModalContainer />
+          </MuiThemeProvider>
+        </QueryClientProvider>
+      </DeclinatedTranslationsProvider>
     </I18nextProvider>
   );
 };

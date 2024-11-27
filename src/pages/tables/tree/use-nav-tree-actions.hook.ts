@@ -12,7 +12,7 @@ import { nodeModal } from '~/components/modals-content/node-modal.component';
 import { NavTreeItemData, NavTreeItemType } from '~/components/nav-tree/nav-tree.type';
 import { useTreeNodesUtils } from '~/pages/tables/tree/use-tree-nodes-utils.hook';
 import { structurePath } from '~/utils/configuration/routes-paths';
-import { useDeclinatedText } from '~/utils/hooks/use-declinated-text';
+import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 const isContentSubtreeTypeEnum = (
@@ -25,7 +25,7 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
   const { t } = useTranslation();
   const { findNode, getParentsIdsList } = useTreeNodesUtils(treeData);
   const { projectId = '' } = useParams();
-  const { declinatedTableText, declinatedDirectoryText } = useDeclinatedText();
+  const declinatedTranslations = useDeclinatedTranslationsContext();
   const navigate = useNavigate();
 
   const { mutate: deleteNode } = useDeleteContentNodeMutation(projectId, {
@@ -61,10 +61,12 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
       }
       if (isContentSubtreeTypeEnum(node.type)) {
         const parentId = getParentsIdsList(node.id).at(1);
-        const declinatedType =
-          node.type === ContentNodeType.Directory ? declinatedDirectoryText : declinatedTableText;
+        const entity =
+          declinatedTranslations[node.type === ContentNodeType.Directory ? 'DIRECTORY' : 'TABLE']
+            .ACCUSATIVE;
+        const title = t('ACTION.EDIT', { type: entity.toLowerCase() });
         nodeModal({
-          title: t('ACTION.EDIT', { type: t(declinatedType).toLowerCase() }),
+          title,
           isEditing: true,
           data: {
             name: node.label,
@@ -76,15 +78,7 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
         });
       }
     },
-    [
-      declinatedDirectoryText,
-      declinatedTableText,
-      findNode,
-      getParentsIdsList,
-      projectId,
-      t,
-      updateNode,
-    ],
+    [declinatedTranslations, findNode, getParentsIdsList, projectId, t, updateNode],
   );
 
   const handleAddCatalog = useCallback(
@@ -104,8 +98,10 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
 
   const handleAddTable = useCallback(
     (id?: string) => {
+      const entity = declinatedTranslations.TABLE.ACCUSATIVE;
+      const title = t('ACTION.ADD', { type: entity.toLowerCase() });
       nodeModal({
-        title: t('ACTION.ADD', { type: declinatedTableText.toLowerCase() }),
+        title,
         data: {
           type: ContentNodeType.Table,
           parentId: id,
@@ -114,7 +110,7 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
         onSave: createNode,
       });
     },
-    [t, declinatedTableText, projectId, createNode],
+    [declinatedTranslations.TABLE.ACCUSATIVE, t, projectId, createNode],
   );
 
   const handleEditStructure = useCallback(
@@ -139,8 +135,6 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
           hasChildren = true;
         }
       }
-      const title =
-        node?.type === ContentNodeType.Directory ? declinatedDirectoryText : declinatedTableText;
 
       const onDelete = () => deleteNode(id);
 
@@ -152,12 +146,13 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
         }
       };
 
-      return confirmActionModal({
-        onOk,
-        title: t('MESSAGE.CONFIRM_DELETE_ENTITY', { what: title.toLowerCase() }),
-      });
+      const entity =
+        declinatedTranslations[node?.type === ContentNodeType.Directory ? 'DIRECTORY' : 'TABLE']
+          .ACCUSATIVE;
+      const title = t('MESSAGE.CONFIRM_DELETE_ENTITY', { what: entity.toLowerCase() });
+      return confirmActionModal({ title, onOk });
     },
-    [declinatedDirectoryText, declinatedTableText, deleteNode, findNode, getTableMetadata, t],
+    [declinatedTranslations, deleteNode, findNode, getTableMetadata, t],
   );
 
   return {

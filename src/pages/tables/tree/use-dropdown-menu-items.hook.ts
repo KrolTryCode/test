@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ContentNodeType } from '~/api/utils/api-requests';
 import { DropdownMenuItem, NavTreeItemData } from '~/components/nav-tree/nav-tree.type';
 import { useNavTreeActions } from '~/pages/tables/tree/use-nav-tree-actions.hook';
-import { useDeclinatedText } from '~/utils/hooks/use-declinated-text';
+import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 
 export const useDropdownMenuItems = (treeData: NavTreeItemData[]) => {
   const { t } = useTranslation();
@@ -16,7 +16,7 @@ export const useDropdownMenuItems = (treeData: NavTreeItemData[]) => {
     handleEditStructure,
   } = useNavTreeActions(treeData);
 
-  const { declinatedTableText, declinatedStructureText } = useDeclinatedText();
+  const declinatedTranslations = useDeclinatedTranslationsContext();
 
   const menuItems: DropdownMenuItem[] = useMemo(
     () => [
@@ -30,12 +30,14 @@ export const useDropdownMenuItems = (treeData: NavTreeItemData[]) => {
         entityType: ContentNodeType.Directory,
       },
       {
-        label: t('ACTION.ADD', { type: declinatedTableText.toLowerCase() }),
+        label: t('ACTION.ADD', { type: declinatedTranslations.TABLE.ACCUSATIVE.toLowerCase() }),
         onClick: handleAddTable,
         entityType: ContentNodeType.Directory,
       },
       {
-        label: t('ACTION.EDIT', { type: declinatedStructureText.toLowerCase() }),
+        label: t('ACTION.EDIT', {
+          type: declinatedTranslations.STRUCTURE.ACCUSATIVE.toLowerCase(),
+        }),
         onClick: handleEditStructure,
         entityType: ContentNodeType.Table,
       },
@@ -46,8 +48,8 @@ export const useDropdownMenuItems = (treeData: NavTreeItemData[]) => {
       },
     ],
     [
-      declinatedStructureText,
-      declinatedTableText,
+      declinatedTranslations.STRUCTURE.ACCUSATIVE,
+      declinatedTranslations.TABLE.ACCUSATIVE,
       handleAddCatalog,
       handleAddTable,
       handleDeleteNode,

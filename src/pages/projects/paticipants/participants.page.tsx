@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { FullProjectNodeMemberInfo } from '~/api/utils/api-requests';
+import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
 
 import { ProjectHeader } from '../project-header/project-header.component';
@@ -14,11 +15,11 @@ import { useParticipants } from './use-participants.hook';
 const ParticipantsList: FC = () => {
   const { t } = useTranslation();
   const { projectGroupId = '', projectId = '' } = useParams();
+  const declinatedTranslations = useDeclinatedTranslationsContext();
   const apiRef = useGridApiRef();
 
   const {
     roles,
-    participantGenitive,
     participants,
     isDataLoading,
     deleteParticipant,
@@ -29,7 +30,7 @@ const ParticipantsList: FC = () => {
   const { getActions, onRowModesModelChange, rowModesModel } = useGetRowActions({
     apiRef,
     idKey: 'userId',
-    entityGenitive: participantGenitive,
+    entityGenitive: declinatedTranslations.PARTICIPANT.GENITIVE.toLowerCase(),
     deleteHandler: (row: FullProjectNodeMemberInfo) => deleteParticipant(row.userId),
   });
 
@@ -102,7 +103,9 @@ const ParticipantsList: FC = () => {
         processRowUpdate={onUpdateParticipant}
         customToolbarContent={
           <AddEntity
-            customText={t('ACTION.ADD', { type: participantGenitive.toLowerCase() })}
+            customText={t('ACTION.ADD', {
+              type: declinatedTranslations.PARTICIPANT.GENITIVE.toLowerCase(),
+            })}
             onClick={onAddParticipantClick}
           />
         }

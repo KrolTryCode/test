@@ -6,6 +6,7 @@ import ModalContainer from 'react-modal-promise';
 import { BrowserRouter } from 'react-router-dom';
 
 import { MuiThemeProvider } from '~/themes/mui-theme-provider';
+import { DeclinatedTranslationsProvider } from '~/utils/configuration/translations/declinated-translations-provider';
 
 const queryClientConfig = {
   defaultOptions: {
@@ -41,12 +42,14 @@ export const renderComponent = (
 
   return render(
     <I18nextProvider i18n={i18n}>
-      <QueryClientProvider client={queryClient}>
-        <MuiThemeProvider>
-          {component}
-          {withModal && <ModalContainer />}
-        </MuiThemeProvider>
-      </QueryClientProvider>
+      <DeclinatedTranslationsProvider>
+        <QueryClientProvider client={queryClient}>
+          <MuiThemeProvider>
+            {component}
+            {withModal && <ModalContainer />}
+          </MuiThemeProvider>
+        </QueryClientProvider>
+      </DeclinatedTranslationsProvider>
     </I18nextProvider>,
     {
       wrapper: ({ children }) => (

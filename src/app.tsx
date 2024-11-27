@@ -3,7 +3,7 @@ import { FC, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { AccessChecker } from '~/routing/access-checker/access-checker.component';
-import { useDownloadTranslations } from '~/utils/configuration/use-init-i18n.hook';
+import { useDownloadTranslations } from '~/utils/configuration/translations/use-init-i18n.hook';
 
 import './themes/generated/theme.base.css';
 import './global-styles.scss';
