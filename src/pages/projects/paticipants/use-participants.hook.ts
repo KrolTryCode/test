@@ -2,7 +2,6 @@ import { notifySuccess } from '@pspod/ui-components';
 import { isValid } from 'date-fns';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Case, Gender } from 'russian-nouns-js';
 
 import { useAddProjectMemberMutation } from '~/api/queries/project-members/add-project-member.mutation';
 import { useArchiveProjectMemberMutation } from '~/api/queries/project-members/archive-project-member.mutation';
@@ -11,8 +10,8 @@ import { useUpdateProjectMemberMutation } from '~/api/queries/project-members/up
 import { useGetAllRolesQuery } from '~/api/queries/roles/get-all-roles.query';
 import { FullProjectNodeMemberInfo } from '~/api/utils/api-requests';
 import { getCurrentUserTimezone } from '~/app/user/user.store';
+import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 import { applyTzOffsetToSystemDate } from '~/utils/date/apply-tz-offset';
-import { useNounDeclination } from '~/utils/hooks/use-noun-declination';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { addParticipantModal } from './add-participant-form.component';
@@ -20,12 +19,7 @@ import { IAddParticipantForm } from './add-participant.schema';
 
 export const useParticipants = (nodeId: string) => {
   const { t } = useTranslation();
-
-  const participantGenitive = useNounDeclination({
-    text: 'ENTITY.PARTICIPANT',
-    gender: Gender.MASCULINE,
-    morphologicalCase: Case.GENITIVE,
-  });
+  const declinatedTranslations = useDeclinatedTranslationsContext();
 
   const { data: roles = [], isLoading: isRoleListLoading } = useGetAllRolesQuery();
 
@@ -63,12 +57,12 @@ export const useParticipants = (nodeId: string) => {
     };
 
     addParticipantModal({
-      title: t('ACTION.ADD', { type: participantGenitive.toLowerCase() }),
+      title: t('ACTION.ADD', { type: declinatedTranslations.PARTICIPANT.GENITIVE.toLowerCase() }),
       alreadyParticipantsId: participants.map(v => v.userId),
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       onSave: onSave,
     });
-  }, [t, participantGenitive, participants, addParticipant]);
+  }, [t, declinatedTranslations.PARTICIPANT.GENITIVE, participants, addParticipant]);
 
   const onUpdateParticipant = useCallback(
     async (
@@ -106,7 +100,6 @@ export const useParticipants = (nodeId: string) => {
   return {
     roles,
     participants,
-    participantGenitive,
     isDataLoading: isParticipantListLoading || isRoleListLoading,
     onAddParticipantClick,
     onUpdateParticipant,

@@ -10,14 +10,14 @@ import { ProjectNode, ProjectNodeType } from '~/api/utils/api-requests';
 import { projectNodeModal } from '~/pages/projects/project-node/form/project-node-form.component';
 import { useTablesMenuData } from '~/pages/tables/use-tables-menu-data.hook';
 import { projectsPath } from '~/utils/configuration/routes-paths';
-import { useDeclinatedText } from '~/utils/hooks/use-declinated-text';
+import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const useProjectsTreeActions = () => {
   const { t } = useTranslation();
   const { projectGroupId } = useParams();
-  const { declinatedGroupText } = useDeclinatedText();
 
+  const declinatedTranslations = useDeclinatedTranslationsContext();
   const navigate = useNavigate();
 
   //#region Queries & mutations
@@ -54,12 +54,15 @@ export const useProjectsTreeActions = () => {
   }, [createProjectNode, projectGroupId, t]);
 
   const addGroup = useCallback(() => {
+    const title = t('ACTION.CREATE', {
+      type: declinatedTranslations.GROUP.ACCUSATIVE.toLowerCase(),
+    });
     projectNodeModal({
+      title,
       onSave: createProjectNode,
-      title: t('ACTION.CREATE', { type: declinatedGroupText.toLowerCase() }),
       data: { type: ProjectNodeType.Group, parentId: projectGroupId },
     });
-  }, [declinatedGroupText, createProjectNode, projectGroupId, t]);
+  }, [t, declinatedTranslations.GROUP.ACCUSATIVE, createProjectNode, projectGroupId]);
 
   const importProject = useCallback(() => {
     console.log('TODO import project');
@@ -74,27 +77,27 @@ export const useProjectsTreeActions = () => {
   }, []);
 
   const updateProjectOrGroup = useCallback(
-    (projectOrGroup: ProjectNode) => {
-      const declinatedProjectNode =
-        projectOrGroup.type === ProjectNodeType.Project ? t('ENTITY.PROJECT') : declinatedGroupText;
-      const title = t('ACTION.EDIT', { type: declinatedProjectNode.toLowerCase() });
-
+    (projectNode: ProjectNode) => {
+      const entity =
+        declinatedTranslations[projectNode.type === ProjectNodeType.Project ? 'PROJECT' : 'GROUP']
+          .ACCUSATIVE;
+      const title = t('ACTION.EDIT', { type: entity.toLowerCase() });
       projectNodeModal({
-        isEditing: true,
         title,
-        data: { name: projectOrGroup.name, description: projectOrGroup.description },
-        onSave: data => updateProjectNode({ nodeId: projectOrGroup.id, ...data }),
+        isEditing: true,
+        data: { name: projectNode.name, description: projectNode.description },
+        onSave: data => updateProjectNode({ nodeId: projectNode.id, ...data }),
       });
     },
-    [t, declinatedGroupText, updateProjectNode],
+    [declinatedTranslations, t, updateProjectNode],
   );
 
   const deleteProjectOrGroup = useCallback(
-    (projectOrGroup: ProjectNode) => {
-      const hasContent = projectOrGroup?.hasChildren ?? treeData.length !== 0;
-      const type = projectOrGroup.type;
-      const declinatedProjectNode =
-        type === ProjectNodeType.Project ? t('ENTITY.PROJECT') : declinatedGroupText;
+    (projectNode: ProjectNode) => {
+      const hasContent = projectNode?.hasChildren ?? treeData.length !== 0;
+      const type = projectNode.type;
+      const entity =
+        declinatedTranslations[type === ProjectNodeType.Project ? 'PROJECT' : 'GROUP'].ACCUSATIVE;
 
       const callAdditionalConfirmationModal = (onOk: () => void) => {
         const notEmptyNode = `MESSAGE.NOT_EMPTY_${type?.toUpperCase()}`;
@@ -103,7 +106,7 @@ export const useProjectsTreeActions = () => {
         confirmDeletionModal({ title, onOk });
       };
 
-      const onDelete = () => deleteProjectNode(projectOrGroup.id);
+      const onDelete = () => deleteProjectNode(projectNode.id);
 
       const onOk = () => {
         if (hasContent) {
@@ -115,10 +118,10 @@ export const useProjectsTreeActions = () => {
 
       confirmDeletionModal({
         onOk,
-        title: t('MESSAGE.CONFIRM_DELETE_ENTITY', { what: declinatedProjectNode.toLowerCase() }),
+        title: t('MESSAGE.CONFIRM_DELETE_ENTITY', { what: entity.toLowerCase() }),
       });
     },
-    [declinatedGroupText, deleteProjectNode, t, treeData.length],
+    [declinatedTranslations, deleteProjectNode, t, treeData.length],
   );
 
   //#endregion
