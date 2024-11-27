@@ -36,8 +36,6 @@ const AdminUsersPage: FC = () => {
     select: selectPageableData,
   });
 
-  console.log(usersList);
-
   const {
     modifyAccount,
     startReactivation,
