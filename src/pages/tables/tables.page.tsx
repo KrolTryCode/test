@@ -1,10 +1,11 @@
-import { Box } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import { PersistentDrawer, Preloader, useGetDrawerThemeWidth } from '@pspod/ui-components';
 import { FC, useEffect, useState } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 
 import { useGetProjectNodeQuery } from '~/api/queries/projects/get-project-node.query';
 import { NotFoundNodes } from '~/pages/_fallbacks/errors/not-found/not-found.component';
+import { CreateMenu } from '~/pages/tables/create-menu.component';
 import { NodesTree } from '~/pages/tables/tree/nodes-tree.component';
 import { useNavTreeActions } from '~/pages/tables/tree/use-nav-tree-actions.hook';
 import { useTablesMenuData } from '~/pages/tables/use-tables-menu-data.hook';
@@ -37,6 +38,9 @@ const TablesLayout: FC = () => {
         paperMargin={`${projectData?.description ? 13.5 : 12}em 0 0 0`}
         onDrawerOpenState={setIsDrawerOpened}
       >
+        <Stack direction={'row'}>
+          <CreateMenu />
+        </Stack>
         <NodesTree />
       </PersistentDrawer>
       <Box

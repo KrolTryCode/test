@@ -1,15 +1,18 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, FormButtons, FormItem, Button } from '@pspod/ui-components';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { useGetProjectNodesTree } from '~/api/queries/nodes/get-project-nodes-tree.query';
+import { nodesWithHrefSelector } from '~/api/selectors/nodes-with-href';
 import { CreateContentNodeRequest } from '~/api/utils/api-requests';
-import { schema } from '~/components/node-form/node-form.schema';
+import { getSchema } from '~/components/node-form/node-form.schema';
 import { selectNodeTypes } from '~/components/node-form/node-form.utils';
 import { FormInputText, FormSelect } from '~/components/react-hook-form';
 import { FormSearchTree } from '~/components/react-hook-form/form-search-tree/form-search-tree.component';
-import { useTablesMenuData } from '~/pages/tables/use-tables-menu-data.hook';
+import { useTreeNodesUtils } from '~/pages/tables/tree/use-tree-nodes-utils.hook';
+import { projectsPath, projectPath, tablesPath } from '~/utils/configuration/routes-paths';
 
 interface NodeFormProps {
   data?: Partial<CreateContentNodeRequest>;
@@ -20,8 +23,34 @@ interface NodeFormProps {
 
 export const NodeForm: FC<NodeFormProps> = ({ onResolve, onReject, data, isEditing = false }) => {
   const { t } = useTranslation();
-  const { treeData = [], isLoading } = useTablesMenuData();
+  const projectId = data?.projectId ?? '';
+  const { data: treeData = [], isLoading } = useGetProjectNodesTree(projectId, {
+    enabled: !!projectId,
+    select: data =>
+      nodesWithHrefSelector(
+        data,
+        projectId,
+        `${projectsPath}/${projectPath}/${projectId}/${tablesPath}`,
+      ),
+  });
 
+  const { findNode } = useTreeNodesUtils(treeData);
+
+  const getSiblingNames = useCallback(
+    (parentNodeId?: string): string[] => {
+      if (!parentNodeId) {
+        return treeData.map(node => node.label);
+      }
+      const parentNode = findNode(parentNodeId);
+      if (parentNode?.children && parentNode.children.length > 0) {
+        return parentNode.children.map(node => node.label);
+      }
+      return [];
+    },
+    [treeData, findNode],
+  );
+
+  const schema = getSchema(getSiblingNames(data?.parentId), t);
   const {
     register,
     handleSubmit,

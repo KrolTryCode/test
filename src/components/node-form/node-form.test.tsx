@@ -1,7 +1,8 @@
+import { t } from 'i18next';
 import { describe, expect, it } from 'vitest';
 
 import { ContentNodeType, CreateContentNodeRequest } from '~/api/utils/api-requests';
-import { schema } from '~/components/node-form/node-form.schema';
+import { getSchema } from '~/components/node-form/node-form.schema';
 
 const correctFormData: CreateContentNodeRequest = {
   name: 'Таблица на странице',
@@ -9,6 +10,8 @@ const correctFormData: CreateContentNodeRequest = {
   parentId: 'faa39179-dca8-4054-88ad-83990086b309',
   type: ContentNodeType.Table,
 };
+
+const schema = getSchema(['Таблица'], t);
 
 describe('Node form', () => {
   it('should pass with correct data', async () => {
@@ -23,6 +26,7 @@ describe('Node form', () => {
   it('should fail with wrong data', async () => {
     expect(await schema.isValid({})).toBeFalsy();
     expect(await schema.isValid({ ...correctFormData, name: '' })).toBeFalsy();
+    expect(await schema.isValid({ ...correctFormData, name: 'Таблица' })).toBeFalsy();
     expect(await schema.isValid({ ...correctFormData, type: '' })).toBeFalsy();
     expect(await schema.isValid({ ...correctFormData, projectId: '' })).toBeFalsy();
   });
