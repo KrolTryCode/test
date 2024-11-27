@@ -18,10 +18,11 @@ export const userQueries = createQueryKeys('users', {
   }),
   list: (pagingParams: ServerPagingParams) => ({
     queryKey: [{ pagingParams }],
-    queryFn: ApiClientSecured.usersV2Controller.searchUsersFiltered(
-      pagingParams.filters,
-      pagingParams.pageAndSort,
-    ),
+    queryFn: () =>
+      ApiClientSecured.usersV2Controller.searchUsersFiltered(
+        pagingParams.filters,
+        pagingParams.pageAndSort,
+      ),
   }),
   timezones: {
     queryKey: ['timezones'],
