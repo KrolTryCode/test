@@ -3,7 +3,6 @@ import { Navigate } from 'react-router-dom';
 import { RouteDescription } from '~/routing/routes.types';
 import {
   editPath,
-  journalPath,
   logsPath,
   permissionsPath,
   rolesPath,
@@ -80,10 +79,5 @@ export const adminSubroutes: RouteDescription[] = [
         lazyElement: () => import('~/pages/admin/templates/edit-template.page'),
       },
     ],
-  },
-  {
-    path: journalPath,
-    menuDisplay: { label: 'NAVIGATION.JOURNAL' },
-    lazyElement: () => import('~/pages/admin/journal/journal.page'),
   },
 ];

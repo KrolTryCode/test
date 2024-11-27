@@ -8,7 +8,6 @@ export const accountRecoveryPath = 'recovery';
 export const registerPath = 'register';
 export const profilePath = 'profile';
 export const tasksPath = 'tasks';
-export const journalPath = 'journal';
 export const adminPath = 'admin';
 export const usersPath = 'users';
 export const templatesPath = 'templates';
