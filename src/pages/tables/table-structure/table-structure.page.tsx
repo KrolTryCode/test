@@ -15,14 +15,14 @@ import {
 } from '@pspod/ui-components';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-import { useGetContentNodeQuery } from '~/api/queries/nodes/get-content-node.query';
-import { useGetTableMetadataColumns } from '~/api/queries/tables/structure/get-table-metadata.query';
-import { ColumnMetadataExtended, selectNodeColumns } from '~/api/selectors/select-node-columns';
+import { ColumnMetadataExtended } from '~/api/selectors/select-node-columns';
 import { PairStringColumnType } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { useTableStructureActions } from '~/pages/tables/table-structure/use-table-structure-actions.hook';
+import { useTableStructureData } from '~/pages/tables/table-structure/use-table-structure-data.hook';
+import { projectPath, projectsPath, tablesPath } from '~/utils/configuration/routes-paths';
 import { reorderRows } from '~/utils/datagrid/reorder-rows';
 import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 import { showErrorMessage } from '~/utils/show-error-message';
@@ -30,16 +30,11 @@ import { showErrorMessage } from '~/utils/show-error-message';
 const TableStructure: FC = () => {
   const apiRef = useGridApiRef();
   const { t } = useTranslation();
+
   const { translateColumnType } = useCustomTranslations();
-  const { nodeId = '' } = useParams();
-  const { data: nodeInfo, isLoading: isNodeLoading } = useGetContentNodeQuery(nodeId);
-  const {
-    data: nodeColumns,
-    isLoading: isColumnsLoading,
-    isFetched: isColumnsFetched,
-  } = useGetTableMetadataColumns(nodeId, {
-    select: selectNodeColumns,
-  });
+  const { projectId = '', nodeId = '' } = useParams();
+
+  const { nodeInfo, nodeColumns, isColumnsFetched, isDataLoading } = useTableStructureData(nodeId);
 
   const { handleDropColumn, handleAddColumn, handleEditColumn, addView, isAddingView } =
     useTableStructureActions(nodeId);
@@ -153,7 +148,7 @@ const TableStructure: FC = () => {
 
       <DataGrid<ColumnMetadataExtended>
         ref={apiRef}
-        loading={isColumnsLoading || isNodeLoading || isAddingView}
+        loading={isDataLoading || isAddingView}
         items={items ?? []}
         totalCount={items?.length ?? 0}
         isCellEditable={({ row }) => row.name !== 'id'}
@@ -171,7 +166,15 @@ const TableStructure: FC = () => {
         customToolbarContent={<AddEntity onClick={handleAddColumn} />}
       />
 
-      <Stack alignSelf={'flex-end'}>
+      <Stack direction={'row'} gap={1} alignSelf={'flex-end'}>
+        <Button
+          variant={'outlined'}
+          color={'primary'}
+          component={Link}
+          to={`/${projectsPath}/${projectPath}/${projectId}/${tablesPath}/${nodeId}`}
+        >
+          {t('ACTION.CANCEL')}
+        </Button>
         <Button
           variant={'contained'}
           color={'primary'}
