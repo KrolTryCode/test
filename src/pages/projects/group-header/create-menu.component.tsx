@@ -1,6 +1,5 @@
-import { Upload } from '@mui/icons-material';
-import AddIcon from '@mui/icons-material/Add';
-import { Stack } from '@mui/material';
+import { Upload, Folder, BackupTable, Add as AddIcon } from '@mui/icons-material';
+import { MenuItem } from '@mui/material';
 import { Button, DropdownMenu } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,16 +12,19 @@ export const CreateMenu: FC = () => {
 
   return (
     <>
-      <DropdownMenu buttonColor={'primary'} buttonContent={<AddIcon />}>
-        <Stack>
-          <Button color={'primary'} onClick={addGroup} variant={'text'}>
-            {t('ENTITY.GROUP')}
-          </Button>
-
-          <Button color={'primary'} onClick={addProject} variant={'text'}>
-            {t('ENTITY.PROJECT')}
-          </Button>
-        </Stack>
+      <DropdownMenu
+        buttonColor={'primary'}
+        buttonSize={'small'}
+        buttonContent={<AddIcon fontSize={'small'} />}
+      >
+        <MenuItem onClick={addGroup}>
+          <Folder color={'primary'} fontSize={'small'} />
+          &nbsp;&nbsp;&nbsp;{t('ENTITY.GROUP')}
+        </MenuItem>
+        <MenuItem onClick={addProject}>
+          <BackupTable color={'primary'} fontSize={'small'} />
+          &nbsp;&nbsp;&nbsp;{t('ENTITY.PROJECT')}
+        </MenuItem>
       </DropdownMenu>
 
       <Button

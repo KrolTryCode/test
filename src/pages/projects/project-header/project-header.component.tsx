@@ -37,28 +37,35 @@ export const ProjectHeader: FC<ProjectHeaderProps> = ({ projectId }) => {
 
   return (
     <Stack padding={1} gap={2} direction={'row'} justifyContent={'space-between'}>
-      <Button component={Link} size={'large'} variant={'text'} to={backPath} icon={<ArrowBack />} />
-      <Stack flex={1} overflow={'hidden'}>
-        <Stack direction={'row'} gap={0.5} alignItems={'flex-start'}>
-          <Typography variant={'h2'} overflow={'hidden'} textOverflow={'ellipsis'} paddingRight={1}>
+      <Button component={Link} variant={'text'} to={backPath} icon={<ArrowBack />} />
+      <Stack flex={1} gap={0.5} overflow={'hidden'}>
+        <Stack direction={'row'} gap={2} alignItems={'center'}>
+          <Typography
+            variant={'h2'}
+            overflow={'hidden'}
+            textOverflow={'ellipsis'}
+            gutterBottom={false}
+          >
             {projectData?.name ?? t('TREE.NODE')}
           </Typography>
-          <Button
-            size={'small'}
-            color={'primary'}
-            title={t('ACTION.EDIT')}
-            onClick={() => updateProjectOrGroup(projectData!)}
-            variant={'text'}
-            icon={<Edit />}
-          />
-          <Button
-            size={'small'}
-            color={'error'}
-            title={t('ACTION.DELETE')}
-            variant={'text'}
-            icon={<DeleteOutline />}
-            onClick={() => deleteProjectOrGroup(projectData!)}
-          />
+          <Stack direction={'row'} alignItems={'center'}>
+            <Button
+              size={'small'}
+              color={'primary'}
+              title={t('ACTION.EDIT')}
+              onClick={() => updateProjectOrGroup(projectData!)}
+              variant={'text'}
+              icon={<Edit />}
+            />
+            <Button
+              size={'small'}
+              color={'error'}
+              title={t('ACTION.DELETE')}
+              variant={'text'}
+              icon={<DeleteOutline />}
+              onClick={() => deleteProjectOrGroup(projectData!)}
+            />
+          </Stack>
         </Stack>
         <Typography
           whiteSpace={'break-spaces'}

@@ -1,15 +1,15 @@
-import { ArrowBack, Delete, Edit } from '@mui/icons-material';
+import { ArrowBack, Delete, Edit, People } from '@mui/icons-material';
 import { Skeleton, Stack, Typography } from '@mui/material';
 import { Button } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { useGetProjectNodeQuery } from '~/api/queries/projects/get-project-node.query';
 import { ProjectNodeBreadcrumbs } from '~/components/breadcrumbs/breadcrumbs.component';
 import { CreateMenu } from '~/pages/projects/group-header/create-menu.component';
 import { useProjectsTreeActions } from '~/pages/projects/use-projects-tree-actions.hook';
-import { projectsPath } from '~/utils/configuration/routes-paths';
+import { participantsPath, projectsPath } from '~/utils/configuration/routes-paths';
 import { usePageTitle } from '~/utils/hooks/use-page-title';
 
 interface GroupHeaderProps {
@@ -18,6 +18,7 @@ interface GroupHeaderProps {
 
 export const GroupHeader: FC<GroupHeaderProps> = ({ groupId }) => {
   const { t } = useTranslation();
+  const { pathname } = useLocation();
   const { data: projectData, isLoading: isProjectDataLoading } = useGetProjectNodeQuery(groupId!, {
     enabled: !!groupId,
   });
@@ -49,29 +50,49 @@ export const GroupHeader: FC<GroupHeaderProps> = ({ groupId }) => {
 
   return (
     <Stack padding={1} gap={2} direction={'row'} justifyContent={'space-between'}>
-      <Button component={Link} size={'large'} variant={'text'} to={backPath} icon={<ArrowBack />} />
-      <Stack flex={1} overflow={'hidden'}>
-        <Stack direction={'row'} gap={0.5} alignItems={'flex-start'}>
-          <Typography variant={'h2'} overflow={'hidden'} textOverflow={'ellipsis'} paddingRight={1}>
+      <Button component={Link} variant={'text'} to={backPath} icon={<ArrowBack />} />
+      <Stack flex={1} gap={0.5} overflow={'hidden'}>
+        <Stack direction={'row'} gap={2} alignItems={'center'}>
+          <Typography
+            variant={'h2'}
+            overflow={'hidden'}
+            textOverflow={'ellipsis'}
+            gutterBottom={false}
+          >
             {projectData?.name ?? t('TREE.NODE')}
           </Typography>
-          <Button
-            size={'small'}
-            color={'primary'}
-            title={t('ACTION.EDIT')}
-            onClick={() => updateProjectOrGroup(projectData!)}
-            variant={'text'}
-            icon={<Edit />}
-          />
-          <CreateMenu />
-          <Button
-            size={'small'}
-            color={'error'}
-            title={t('ACTION.DELETE')}
-            variant={'text'}
-            icon={<Delete />}
-            onClick={() => deleteProjectOrGroup(projectData!)}
-          />
+          <Stack direction={'row'} alignItems={'center'}>
+            <Button
+              size={'small'}
+              color={'primary'}
+              title={t('ACTION.EDIT')}
+              onClick={() => updateProjectOrGroup(projectData!)}
+              variant={'text'}
+              icon={<Edit />}
+            />
+            <CreateMenu />
+            <Button
+              size={'small'}
+              color={'primary'}
+              title={t('NAVIGATION.PARTICIPANTS')}
+              variant={pathname.includes(participantsPath) ? 'contained' : 'text'}
+              icon={<People />}
+              component={Link}
+              to={
+                pathname.includes(participantsPath)
+                  ? pathname.replace(participantsPath, '')
+                  : participantsPath
+              }
+            />
+            <Button
+              size={'small'}
+              color={'error'}
+              title={t('ACTION.DELETE')}
+              variant={'text'}
+              icon={<Delete />}
+              onClick={() => deleteProjectOrGroup(projectData!)}
+            />
+          </Stack>
         </Stack>
         <Typography
           whiteSpace={'break-spaces'}
