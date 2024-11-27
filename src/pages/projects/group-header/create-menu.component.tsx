@@ -13,7 +13,7 @@ export const CreateMenu: FC = () => {
 
   return (
     <>
-      <DropdownMenu buttonSize={'small'} buttonColor={'primary'} buttonContent={<AddIcon />}>
+      <DropdownMenu buttonColor={'primary'} buttonContent={<AddIcon />}>
         <Stack>
           <Button color={'primary'} onClick={addGroup} variant={'text'}>
             {t('ENTITY.GROUP')}
