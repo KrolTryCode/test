@@ -455,12 +455,8 @@ exports[`Profile > renders the profile > profile 1`] = `
                           class="MuiTelInput-Flag css-70qvj9"
                           data-testid="RU"
                         >
-                          <img
-                            alt="Russia"
-                            class="MuiTelInput-FlagImg"
-                            loading="lazy"
-                            src="https://flagcdn.com/w40/ru.webp"
-                            width="26"
+                          <div
+                            class="fi fi-ru MuiBox-root css-1tr8hmv"
                           />
                         </span>
                       </button>
