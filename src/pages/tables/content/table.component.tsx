@@ -1,5 +1,5 @@
 import { Edit as EditIcon } from '@mui/icons-material';
-import { Alert, AlertTitle, Button } from '@mui/material';
+import { Alert, AlertTitle } from '@mui/material';
 import { GridActionsCellItem, GridActionsColDef, GridRowParams } from '@mui/x-data-grid-premium';
 import {
   AddEntity,
@@ -7,6 +7,7 @@ import {
   DeleteCellButton,
   EnhancedColDef,
   Preloader,
+  Button,
 } from '@pspod/ui-components';
 import { FC, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';

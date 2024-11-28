@@ -11,6 +11,7 @@ export function useTablesMenuData() {
     isLoading,
     isFetched,
   } = useGetProjectNodesTree(projectId, {
+    enabled: !!projectId,
     select: data =>
       nodesWithHrefSelector(
         data,
