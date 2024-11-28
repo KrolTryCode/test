@@ -1,17 +1,12 @@
 import { UseQueryResult, keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { UseCustomQueryOptions } from '~/api/typings/react-query-helpers';
-import {
-  AuditListFilter,
-  Pageable,
-  PageFullAuditInfo,
-  SearchRequest,
-} from '~/api/utils/api-requests';
+import { Pageable, PageFullAuditInfo, SearchRequest } from '~/api/utils/api-requests';
 
 import { auditQueries } from './queries';
 
 export const useSearchAuditsQuery = <T = PageFullAuditInfo>(
-  query: { types: string[]; pageable: Pageable; filter?: AuditListFilter },
+  query: { types: string[]; pageable: Pageable },
   searchRequest: SearchRequest,
   options?: UseCustomQueryOptions<PageFullAuditInfo, unknown, T>,
 ): UseQueryResult<T, unknown> =>

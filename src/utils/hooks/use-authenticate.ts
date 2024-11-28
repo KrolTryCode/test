@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -15,6 +16,7 @@ import { ProjectStorageKey } from '~/utils/localstorage/project-storage/project-
 export const useAuthenticate = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const queryClient = useQueryClient();
   const locationState = location.state as { from: Location };
   const { refetch: getCurrentUser, isFetched: isUserFetched } = useGetCurrentUserQuery({
     enabled: false,
@@ -61,15 +63,16 @@ export const useAuthenticate = () => {
     [navigateAfterLogin],
   );
 
-  const removeFromStorage = useCallback(() => {
+  const onLogout = useCallback(() => {
     const storage = getStorage();
     projectLocalStorageService.remove(ProjectStorageKey.RememberMe);
     storage.remove(ProjectStorageKey.AccessToken);
     storage.remove(ProjectStorageKey.RefreshToken);
     clearUserData();
-  }, []);
+    void queryClient.invalidateQueries();
+  }, [queryClient]);
 
-  return { getUser, isUserFetched, onLogin, onLogout: removeFromStorage };
+  return { getUser, isUserFetched, onLogin, onLogout };
 };
 
 function getStorage(rememberMe?: boolean) {
