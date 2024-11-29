@@ -28,7 +28,7 @@ const Header: FC<HeaderProps> = ({ className }) => {
         <>
           <Box margin={'auto 0'}>
             <Link to={homePath}>
-              <img src={logo} alt={t('PROJECT_NAME')} />
+              <img className={'logo'} src={logo} alt={t('PROJECT_NAME')} />
             </Link>
           </Box>
 

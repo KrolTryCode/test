@@ -84,7 +84,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
       labelPosition={'left'}
       labelWidth={3}
       gap={6}
-      maxWidth={'1200px'}
+      maxWidth={'900px'}
       onSubmit={handleSubmit(onSubmit)}
       isLoading={isLoading}
     >
@@ -102,7 +102,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
         profileData={data}
       />
 
-      <FormButtons>
+      <FormButtons isSticky>
         {isCurrent && (
           <Button onClick={onChangePassword}>
             {t('ACTION.CHANGE', {

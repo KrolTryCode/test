@@ -13,7 +13,7 @@ export const StyledHeader = styled('header')(
     0 1px 3px rgba(0, 0, 0, 0.12),
     0 1px 2px rgba(0, 0, 0, 0.24);
 
-  img {
+  img.logo {
     width: 50px;
     height: 50px;
   }

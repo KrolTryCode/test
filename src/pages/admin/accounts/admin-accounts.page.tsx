@@ -7,34 +7,27 @@ import {
   GridCellParams,
   GridCellModes,
 } from '@mui/x-data-grid-premium';
-import { GridPagingParams, AvatarCell, DeleteCellButton } from '@pspod/ui-components';
-import { FC, useMemo, useState } from 'react';
+import { DeleteCellButton } from '@pspod/ui-components';
+import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { useGetUserListQuery } from '~/api/queries/users/get-user-list.query';
-import { selectPageableData } from '~/api/selectors/pageable';
 import { AccountState, User, UserState } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
+import { UserAvatar } from '~/components/user-avatar/user-avatar.component';
 import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
 import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
-import { useServerPagingParams } from '~/utils/hooks/use-server-options';
 
 import { useAdminAccounts } from './admin-accounts.hook';
 import { CreateAccountButton } from './create-account/create-account-button.component';
+import { useAccountsPaging } from './use-accounts-paging.hook';
 
 const AdminUsersPage: FC = () => {
   const { t } = useTranslation();
   const { translateStatus } = useCustomTranslations();
   const apiRef = useGridApiRef();
 
-  const [gridPaging, setGridPaging] = useState<GridPagingParams>();
-
-  const serverPagingParams = useServerPagingParams(gridPaging);
-
-  const { data: usersList, isLoading } = useGetUserListQuery(serverPagingParams, {
-    select: selectPageableData,
-  });
+  const { items, loading, totalCount, onPagingChanged, paging } = useAccountsPaging();
 
   const {
     modifyAccount,
@@ -57,8 +50,10 @@ const AdminUsersPage: FC = () => {
         groupable: false,
         aggregable: false,
         align: 'center',
-        renderCell({ row: { id } }: GridRenderCellParams<User>) {
-          return AvatarCell(id ?? '');
+        renderCell({ row: user }: GridRenderCellParams<User>) {
+          return (
+            <UserAvatar userId={user.id!} firstName={user.firstName} lastName={user.lastName} />
+          );
         },
       },
       {
@@ -196,14 +191,14 @@ const AdminUsersPage: FC = () => {
   return (
     <DataGrid<User>
       ref={apiRef}
-      loading={isLoading}
-      items={usersList?.items ?? []}
-      totalCount={usersList?.totalCount ?? 0}
+      loading={loading}
+      items={items}
+      totalCount={totalCount}
       columns={columns}
       getRowClassName={({ row: { state } }) => (state === UserState.Blocked ? 'error' : '')}
       onCellClick={handleCellClick}
-      paging={gridPaging}
-      onPagingChanged={setGridPaging}
+      paging={paging}
+      onPagingChanged={onPagingChanged}
       pagingMode={'server'}
       processRowUpdate={updateUserRow}
       customToolbarContent={<CreateAccountButton />}

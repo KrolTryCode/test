@@ -10,18 +10,46 @@ exports[`Profile > renders the profile > profile 1`] = `
     Профиль
   </h2>
   <div
-    class="MuiStack-root css-1on8rii-MuiStack-root"
+    class="MuiStack-root css-li8525-MuiStack-root"
   >
     <div
-      class="MuiStack-root css-wqgdpk-MuiStack-root"
+      class="MuiStack-root css-o8tcyt-MuiStack-root"
     >
       <div
         class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-n9jnos-MuiAvatar-root"
         color="primary"
+        title="Фото профиля"
       />
+      <div
+        class="MuiStack-root css-usm8zd-MuiStack-root"
+      >
+        <button
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-8jlasq-MuiButtonBase-root-MuiIconButton-root"
+          tabindex="0"
+          title="Загрузить фото профиля"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-uks7c6-MuiSvgIcon-root"
+            data-testid="PhotoCameraRoundedIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              cx="12"
+              cy="12"
+              r="3"
+            />
+            <path
+              d="M20 4h-3.17l-1.24-1.35c-.37-.41-.91-.65-1.47-.65H9.88c-.56 0-1.1.24-1.48.65L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m-8 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
     <form
-      class="MuiStack-root css-ox3dtq-MuiStack-root"
+      class="MuiStack-root css-1ig5ybw-MuiStack-root"
       role="form"
     >
       <fieldset
@@ -819,7 +847,7 @@ exports[`Profile > renders the profile > profile 1`] = `
         </fieldset>
       </fieldset>
       <div
-        class="MuiStack-root css-chek0q-MuiStack-root"
+        class="MuiStack-root css-nq6oj9-MuiStack-root"
       >
         <button
           class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorSecondary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorSecondary MuiButton-disableElevation css-83es3u-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
