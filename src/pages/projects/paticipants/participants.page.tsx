@@ -1,10 +1,16 @@
-import { GridEventListener, GridRowEditStopReasons, useGridApiRef } from '@mui/x-data-grid-premium';
+import {
+  GridEventListener,
+  GridRenderCellParams,
+  GridRowEditStopReasons,
+  useGridApiRef,
+} from '@mui/x-data-grid-premium';
 import { AddEntity, DataGrid, EnhancedColDef, useGetRowActions } from '@pspod/ui-components';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { FullProjectNodeMemberInfo } from '~/api/utils/api-requests';
+import { UserAvatar } from '~/components/user-avatar/user-avatar.component';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
 
@@ -36,6 +42,16 @@ const ParticipantsList: FC = () => {
 
   const columns = useMemo<EnhancedColDef<FullProjectNodeMemberInfo>[]>(
     () => [
+      {
+        field: 'avatar',
+        width: 70,
+        align: 'center',
+        headerName: t('USER.AVATAR'),
+        renderCell({ row: user }: GridRenderCellParams<FullProjectNodeMemberInfo>) {
+          const [firstName, lastName] = user.userName.split(' ');
+          return <UserAvatar userId={user.userId} firstName={firstName} lastName={lastName} />;
+        },
+      },
       {
         field: 'userName',
         headerName: t('ENTITY.PARTICIPANT'),

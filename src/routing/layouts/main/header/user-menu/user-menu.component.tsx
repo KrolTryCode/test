@@ -1,10 +1,11 @@
 import { Stack, Typography } from '@mui/material';
-import { DropdownMenu, Avatar } from '@pspod/ui-components';
+import { DropdownMenu } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { useUserStore } from '~/app/user/user.store';
+import { UserAvatar } from '~/components/user-avatar/user-avatar.component';
 import { profilePath } from '~/utils/configuration/routes-paths';
 import { useAuthenticate } from '~/utils/hooks/use-authenticate';
 
@@ -19,7 +20,16 @@ export const UserMenu: FC = () => {
     <DropdownMenu
       buttonSize={'medium'}
       buttonColor={'text.secondary'}
-      buttonContent={<Avatar size={'small'} withIcon color={'secondary'} />}
+      buttonContent={
+        user?.id ? (
+          <UserAvatar
+            userId={user.id}
+            firstName={user.firstName}
+            lastName={user.lastName}
+            color={'secondary'}
+          />
+        ) : undefined
+      }
     >
       {/* @ts-expect-error TODO: fix styled type */}
       <StyledMenuItem divider component={Link} to={profilePath}>
