@@ -23,7 +23,12 @@ interface ProfileFormProps {
   isCurrent?: boolean;
 }
 
-export const ProfileForm: FC<ProfileFormProps> = ({ data, isLoading, isCurrent, userId }) => {
+export const ProfileForm: FC<ProfileFormProps> = ({
+  data,
+  isLoading,
+  isCurrent = false,
+  userId,
+}) => {
   const { t } = useTranslation();
 
   const { onChangePassword, onChangePasswordByAdmin } = useChangePassword(
@@ -31,10 +36,14 @@ export const ProfileForm: FC<ProfileFormProps> = ({ data, isLoading, isCurrent, 
     userId,
   );
 
-  const { mutateAsync: updateUser, isPending: isUserUpdating } = useUpdateUserMutation(userId, {
-    onSuccess: () => notifySuccess(t('MESSAGE.UPDATE_SUCCESS')),
-    onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
-  });
+  const { mutateAsync: updateUser, isPending: isUserUpdating } = useUpdateUserMutation(
+    userId,
+    isCurrent,
+    {
+      onSuccess: () => notifySuccess(t('MESSAGE.UPDATE_SUCCESS')),
+      onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
+    },
+  );
 
   const {
     register,
