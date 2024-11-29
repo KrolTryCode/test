@@ -8,7 +8,7 @@ import { FullProjectNodeMemberInfo } from '~/api/utils/api-requests';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
 
-import { ProjectHeader } from '../project-header/project-header.component';
+import { GroupHeader } from '../group-header/group-header.component';
 
 import { useParticipants } from './use-participants.hook';
 
@@ -88,7 +88,7 @@ const ParticipantsList: FC = () => {
 
   return (
     <>
-      {projectGroupId && !projectId && <ProjectHeader projectId={projectId} />}
+      {projectGroupId && !projectId && <GroupHeader groupId={projectGroupId} />}
       <DataGrid<FullProjectNodeMemberInfo>
         ref={apiRef}
         loading={isDataLoading}
