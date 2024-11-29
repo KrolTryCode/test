@@ -7,6 +7,7 @@ import { UpdateUserRequest, User } from '~/api/utils/api-requests';
 
 export const useUpdateUserMutation = (
   userId: string,
+  isCurrent: boolean,
   options?: UseCustomMutationOptions<User, unknown, UpdateUserRequest>,
 ) => {
   const queryClient = useQueryClient();
@@ -17,6 +18,9 @@ export const useUpdateUserMutation = (
     onSuccess(...args) {
       void queryClient.invalidateQueries({ queryKey: userQueries.list._def });
       void queryClient.invalidateQueries({ queryKey: userQueries.single(userId).queryKey });
+      if (isCurrent) {
+        void queryClient.invalidateQueries({ queryKey: userQueries.current.queryKey });
+      }
       options?.onSuccess?.(...args);
     },
   });
