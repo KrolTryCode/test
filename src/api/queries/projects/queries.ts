@@ -20,4 +20,8 @@ export const projectQueries = createQueryKeys('project', {
     queryFn: () =>
       ApiClientSecured.projectNodeV1Controller.getParentsByChild({ childNodeId: projectId }),
   }),
+  tasks: (projectId: string) => ({
+    queryKey: [projectId, 'tasks'],
+    queryFn: () => ApiClientSecured.projectTasksV1Controller.getProjectTasks(projectId),
+  }),
 });
