@@ -20,13 +20,20 @@ import { getSchema } from './configuration-form.schema';
 export const ConfigurationFormComponent = (moduleDescription: EntityModelModuleConfiguration) => {
   const { t } = useTranslation();
 
-  const fetchLink = moduleDescription._links?.GET.href ?? '';
-  const saveLink = moduleDescription._links?.POST.href ?? '';
+  const fetchLink = moduleDescription._links?.GET?.href;
+  const saveLink = moduleDescription._links?.POST?.href;
 
-  const values = useGetConfigurationQuery(moduleDescription.moduleName ?? '', fetchLink).data;
+  const { data: values } = useGetConfigurationQuery(
+    moduleDescription.moduleName ?? '',
+    fetchLink!,
+    {
+      enabled: !!fetchLink,
+    },
+  );
+
   const { mutateAsync: save, isPending } = useSaveConfigurationMutation(
     moduleDescription.moduleName ?? '',
-    saveLink,
+    saveLink ?? '',
   );
 
   const {
@@ -76,6 +83,10 @@ export const ConfigurationFormComponent = (moduleDescription: EntityModelModuleC
       </FormItem>
     );
   };
+
+  if (!values) {
+    return null;
+  }
 
   return (
     <>
