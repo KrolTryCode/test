@@ -58,7 +58,7 @@ export const TableDataForm: FC<TableDataFormProps> = ({ onResolve, onReject, met
       case ColumnType.Timestamp: {
         component = (
           <FormDateTimePicker
-            type={ColumnType.Date ? 'date' : 'datetime'}
+            type={type === ColumnType.Date ? 'date' : 'datetime'}
             controllerProps={{ ...register(name), control }}
           />
         );
