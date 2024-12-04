@@ -34,13 +34,11 @@ export const ProjectTreeItem: FC<ProjectTreeItemProps> = ({ projectTreeNode }) =
 
   const icon = useMemo(
     () =>
-      projectTreeNode.logoPath ? (
-        <img src={projectTreeNode.logoPath} alt={projectTreeNode.name} />
-      ) : projectTreeNode.type === ProjectNodeType.Group ? (
-        <Folder />
-      ) : (
-        <BackupTable />
-      ),
+      //TODO: Add call to logo
+      // projectTreeNode.logoPath ? (
+      //   <img src={projectTreeNode.logoPath} alt={projectTreeNode.name} />
+      // ) :
+      projectTreeNode.type === ProjectNodeType.Group ? <Folder /> : <BackupTable />,
     [projectTreeNode],
   );
 
