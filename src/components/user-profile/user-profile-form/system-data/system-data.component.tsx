@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useGetTimeZoneListQuery } from '~/api/queries/users/get-timezone-list.query';
 import { User, UserState } from '~/api/utils/api-requests';
 import { FormSelect } from '~/components/react-hook-form';
-import { UpdateUserRequestNullable } from '~/pages/profile/profile-form.schema';
+import { UpdateUserRequestNullable } from '~/components/user-profile/user-profile-form/profile-form.schema';
 import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 
 interface SystemDataProps {

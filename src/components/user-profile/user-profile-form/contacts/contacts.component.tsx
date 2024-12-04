@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { FormInputText } from '~/components/react-hook-form';
 import { FormInputPhone } from '~/components/react-hook-form/form-input-phone/form-input-phone.component';
-import { UpdateUserRequestNullable } from '~/pages/profile/profile-form.schema';
+import { UpdateUserRequestNullable } from '~/components/user-profile/user-profile-form/profile-form.schema';
 
 interface ContactsProps {
   control: Control<UpdateUserRequestNullable>;
@@ -24,7 +24,7 @@ export const Contacts: FC<ContactsProps> = ({ control, register }) => {
       </Fieldset>
 
       <Fieldset direction={'column'}>
-        <FormItem label={t('USER.PHONE_NUMBER')}>
+        <FormItem label={t('USER.PHONE_NUMBER')} isRequired>
           <FormInputPhone controllerProps={{ ...register('phoneNumber'), control }} />
         </FormItem>
       </Fieldset>

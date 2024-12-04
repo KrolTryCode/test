@@ -1,37 +1,37 @@
-import { Typography, Stack } from '@mui/material';
 import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
 
-import { useGetCurrentUserQuery } from '~/api/queries/users/get-current-user.query';
+import { ProfileForm } from '~/components/user-profile/user-profile-form/profile-form.component';
+import {
+  UserProfileContent,
+  UserProfileHeader,
+  UserProfileLayout,
+} from '~/components/user-profile/user-profile.style';
 
 import { ProfileAvatar } from './profile-avatar/profile-avatar.component';
-import { ProfileForm } from './profile-form.component';
+import { useProfile } from './profile.hook';
 
 const Profile: FC = () => {
-  const { t } = useTranslation();
-  const { data: currentUser, isLoading } = useGetCurrentUserQuery();
-  const userId = currentUser?.user?.id ?? '';
+  const { user, isUserLoading, handleChangePassword, handleUpdateUser } = useProfile();
 
   return (
-    <>
-      <Typography variant={'h3'} component={'h2'}>
-        {t('USER.LABEL')}
-      </Typography>
-      <Stack
-        gap={6}
-        sx={({ breakpoints }) => ({
-          flexDirection: 'row',
-          [breakpoints.down('sm')]: { flexDirection: 'column', alignItems: 'center' },
-        })}
-      >
+    <UserProfileLayout>
+      <UserProfileHeader userName={user.fullName} />
+      <UserProfileContent>
         <ProfileAvatar
-          userId={userId}
-          firstName={currentUser.user?.firstName}
-          lastName={currentUser.user?.lastName}
+          userId={user.id ?? ''}
+          firstName={user?.firstName}
+          lastName={user?.lastName}
+          surName={user?.surName}
         />
-        <ProfileForm data={currentUser?.user} userId={userId} isLoading={isLoading} isCurrent />
-      </Stack>
-    </>
+        <ProfileForm
+          data={user}
+          isLoading={isUserLoading}
+          handleUpdateUser={handleUpdateUser}
+          isCurrent
+          handleChangePassword={handleChangePassword}
+        />
+      </UserProfileContent>
+    </UserProfileLayout>
   );
 };
 

@@ -6,11 +6,14 @@ import { useTranslation } from 'react-i18next';
 import { useGetFileQuery } from '~/api/queries/files/download-file.query';
 import { useGetUserAvatarIdQuery } from '~/api/queries/users/get-active-user-avatar-id.query';
 
+import { getFullName } from '../user-profile/user-profile.utils';
+
 // todo: get AvatarProps form ui-components
 interface UserAvatarProps {
   userId: string;
   firstName?: string;
   lastName?: string;
+  surName?: string;
   size?: 'small' | 'medium' | 'large' | number;
   color?: 'secondary' | 'primary';
   isLoading?: boolean;
@@ -20,6 +23,7 @@ export const UserAvatar: FC<UserAvatarProps> = ({
   userId,
   firstName,
   lastName,
+  surName,
   isLoading = false,
   size = 'small',
   color = 'primary',
@@ -32,6 +36,7 @@ export const UserAvatar: FC<UserAvatarProps> = ({
     enabled: !!avatarId,
   });
 
+  const fullName = getFullName(firstName, lastName, surName);
   let userInitialsFallback = '';
   if (!avatar) {
     userInitialsFallback += firstName?.charAt(0) ?? '';
@@ -50,8 +55,8 @@ export const UserAvatar: FC<UserAvatarProps> = ({
       withIcon={false}
       color={color}
       src={avatar ? img?.src : undefined}
-      alt={firstName || lastName ? `${firstName} ${lastName}` : t('USER.PHOTO')}
-      title={firstName || lastName ? `${firstName} ${lastName}` : t('USER.PHOTO')}
+      alt={fullName ?? t('USER.PHOTO')}
+      title={fullName ?? t('USER.PHOTO')}
     >
       {isAvatarIdLoading || isAvatarLoading || isLoading ? (
         <CircularProgress size={'inherit'} color={'secondary'} />

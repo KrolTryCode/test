@@ -4,30 +4,28 @@ import { Control, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { FormInputText } from '~/components/react-hook-form';
-import { UpdateUserRequestNullable } from '~/pages/profile/profile-form.schema';
+import { UpdateUserRequestNullable } from '~/components/user-profile/user-profile-form/profile-form.schema';
 
 interface PersonalDataProps {
   control: Control<UpdateUserRequestNullable>;
   register: UseFormRegister<UpdateUserRequestNullable>;
-  isAdminPage?: boolean;
-  onChangePassword: () => void;
+  onChangePasswordByAdmin?: () => void;
 }
 
 export const PersonalData: FC<PersonalDataProps> = ({
   control,
   register,
-  onChangePassword,
-  isAdminPage = false,
+  onChangePasswordByAdmin,
 }) => {
   const { t } = useTranslation();
 
   return (
     <Fieldset legend={t('USER.CAPTION.PERSONAL_DATA')} columnGap={8}>
       <Fieldset direction={'column'}>
-        <FormItem label={t('USER.LAST_NAME')}>
+        <FormItem label={t('USER.LAST_NAME')} isRequired>
           <FormInputText controllerProps={{ ...register('lastName'), control }} />
         </FormItem>
-        <FormItem label={t('USER.FIRST_NAME')}>
+        <FormItem label={t('USER.FIRST_NAME')} isRequired>
           <FormInputText controllerProps={{ ...register('firstName'), control }} />
         </FormItem>
         <FormItem label={t('USER.PATRONYMIC')}>
@@ -45,9 +43,9 @@ export const PersonalData: FC<PersonalDataProps> = ({
         <FormItem label={t('USER.WORK_POST')}>
           <FormInputText controllerProps={{ ...register('position'), control }} />
         </FormItem>
-        {isAdminPage && (
+        {onChangePasswordByAdmin && (
           <FormButtons>
-            <Button onClick={onChangePassword}>
+            <Button onClick={onChangePasswordByAdmin}>
               {t('ACTION.CHANGE', {
                 type: t('AUTH.PASSWORD.NAME').toLowerCase(),
               })}

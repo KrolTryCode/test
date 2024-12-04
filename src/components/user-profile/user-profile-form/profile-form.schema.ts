@@ -17,7 +17,7 @@ export interface UpdateUserRequestNullable {
 
 export const schema: y.ObjectSchema<UpdateUserRequestNullable> = y.object({
   firstName: y.string().required(),
-  lastName: y.string().nullable(),
+  lastName: y.string().required(),
   surName: y.string().nullable(),
   email: y.string().email().required().default(''),
 
