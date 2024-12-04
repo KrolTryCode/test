@@ -28,3 +28,8 @@ const mimeType: Record<UploadFilesOptions['fileType'], string> = {
     'application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   image: 'image/png, image/jpeg',
 };
+
+export const validExtensions: Record<UploadFilesOptions['fileType'], string[]> = {
+  excel: ['xlsx', 'xls'], // TODO:
+  image: ['png', 'jpeg', 'jpg'],
+};

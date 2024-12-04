@@ -1,6 +1,6 @@
 import { PhotoCameraRounded as CameraIcon, Delete as CloseIcon } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { confirmDeletionModal, notifySuccess } from '@pspod/ui-components';
+import { confirmDeletionModal, notifyError, notifySuccess } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -9,6 +9,7 @@ import { useDeleteUserAvatarMutation } from '~/api/queries/users/delete-user-ava
 import { useGetUserAvatarIdQuery } from '~/api/queries/users/get-active-user-avatar-id.query';
 import { UserAvatar } from '~/components/user-avatar/user-avatar.component';
 import { uploadFiles } from '~/utils/files';
+import { validExtensions } from '~/utils/files/upload-files';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { StyledAvatarContainer, StyledBackdrop } from './profile-avatar.style';
@@ -29,7 +30,6 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ userId, firstName, lastN
 
   const { mutateAsync: saveAvatar, isPending: isUploading } = useCreateAvatarMutation(userId, {
     onSuccess: () => notifySuccess(t('MESSAGE.UPDATE_SUCCESS')),
-    onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
   });
 
   const { mutate: deleteAvatar } = useDeleteUserAvatarMutation(userId, {
@@ -40,6 +40,12 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ userId, firstName, lastN
   const handleUploadAvatar = async () => {
     const fileList = await uploadFiles({ isMultiple: false, fileType: 'image' });
     const file = fileList[0];
+
+    const ext = file.name.split('.').slice(-1)[0].toLowerCase();
+    if (!validExtensions['image'].some(type => type.endsWith(ext))) {
+      notifyError(`${t('FILES.ERROR.WRONG_EXTENSION')}: ${ext}`);
+      return;
+    }
 
     if (file) {
       await saveAvatar({ file });

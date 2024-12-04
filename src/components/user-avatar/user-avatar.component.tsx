@@ -3,7 +3,7 @@ import { Avatar } from '@pspod/ui-components';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useGetFileQuery } from '~/api/queries/files/download-file.query';
+import { useGetImageQuery } from '~/api/queries/files/get-image.query';
 import { useGetUserAvatarIdQuery } from '~/api/queries/users/get-active-user-avatar-id.query';
 
 import { getFullName } from '../user-profile/user-profile.utils';
@@ -32,7 +32,7 @@ export const UserAvatar: FC<UserAvatarProps> = ({
   const { data: avatarId = '', isLoading: isAvatarIdLoading } = useGetUserAvatarIdQuery(userId, {
     enabled: !!userId,
   });
-  const { data: avatar, isLoading: isAvatarLoading } = useGetFileQuery(avatarId, {
+  const { data: avatar, isLoading: isAvatarLoading } = useGetImageQuery(avatarId, {
     enabled: !!avatarId,
   });
 
