@@ -8,10 +8,7 @@ export const useGetImageMutation = (
 ) => {
   return useMutation<string, unknown, string>({
     mutationFn: async imageId => {
-      // TODO: вернуть после обновления API
-      //@ts-expect-error need api fix
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      return (await ApiClientSecured.filesV1Controller.getImage(imageId)) as string;
+      return (await ApiClientSecured.filesV1Controller.downloadImage(imageId)) as string;
     },
     ...options,
   });

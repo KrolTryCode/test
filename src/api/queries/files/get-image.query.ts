@@ -5,9 +5,9 @@ import { File } from '~/api/utils/api-requests';
 
 import { fileQueries } from './queries';
 
-export const useGetFileQuery = (fileId: string, options?: UseCustomQueryOptions<File>) =>
+export const useGetImageQuery = (imageId: string, options?: UseCustomQueryOptions<File>) =>
   useQuery({
-    ...fileQueries.downloadFile(fileId),
-    enabled: !!fileId,
+    ...fileQueries.downloadImage(imageId),
+    enabled: !!imageId,
     ...options,
   });

@@ -17,4 +17,10 @@ export const fileQueries = createQueryKeys('files', {
       return ApiClientSecured.filesV1Controller.downloadFile(fileId, params);
     },
   }),
+  downloadImage: (imageId: string, params?: RequestParams) => ({
+    queryKey: [imageId],
+    queryFn: async () => {
+      return ApiClientSecured.filesV1Controller.downloadImage(imageId, params);
+    },
+  }),
 });
