@@ -1,73 +1,55 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Form, FormButtons, notifySuccess } from '@pspod/ui-components';
-import { FC, useCallback } from 'react';
+import { Button, Form, FormButtons } from '@pspod/ui-components';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { useUpdateUserMutation } from '~/api/queries/users/update-user.mutation';
-import { UpdateUserRequest, User } from '~/api/utils/api-requests';
-import { setUserInfo } from '~/app/user/user.store';
-import { confirmEmailModal } from '~/pages/profile/confirm-email-change.component';
-import { showErrorMessage } from '~/utils/show-error-message';
+import { User } from '~/api/utils/api-requests';
+import { confirmEmailModal } from '~/components/user-profile/user-profile-form/confirm-email-change.component';
 
 import { Contacts } from './contacts/contacts.component';
 import { PersonalData } from './personal-data/personal-data.component';
 import { schema, UpdateUserRequestNullable } from './profile-form.schema';
 import { SystemData } from './system-data/system-data.component';
-import { useChangePassword } from './use-change-password.hook';
 
-interface ProfileFormProps {
-  userId: string;
+interface CommonProfileFormProps {
   data?: User;
   isLoading?: boolean;
-  isCurrent?: boolean;
+  handleUpdateUser: (values: UpdateUserRequestNullable) => Promise<void>;
 }
+
+interface AccountProfileFormProps extends CommonProfileFormProps {
+  isCurrent: false;
+  handleChangeAccountPassword: () => void;
+}
+
+interface CurrentProfileFormProps extends CommonProfileFormProps {
+  isCurrent: true;
+  handleChangePassword: () => void;
+}
+
+type ProfileFormProps = AccountProfileFormProps | CurrentProfileFormProps;
 
 export const ProfileForm: FC<ProfileFormProps> = ({
   data,
   isLoading,
-  isCurrent = false,
-  userId,
+  handleUpdateUser,
+  ...specificProps
 }) => {
   const { t } = useTranslation();
-
-  const { onChangePassword, onChangePasswordByAdmin } = useChangePassword(
-    data?.email ?? '',
-    userId,
-  );
-
-  const { mutateAsync: updateUser, isPending: isUserUpdating } = useUpdateUserMutation(
-    userId,
-    isCurrent,
-    {
-      onSuccess: () => notifySuccess(t('MESSAGE.UPDATE_SUCCESS')),
-      onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
-    },
-  );
 
   const {
     register,
     handleSubmit,
     control,
-    formState: { isValid, isSubmitted },
+    formState: { isValid, isSubmitted, isSubmitting },
   } = useForm<UpdateUserRequestNullable>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
-    values: data ? getFormData(data) : undefined,
+    values: data?.id ? getFormData(data) : undefined,
     defaultValues: schema.getDefault(),
     resolver: yupResolver(schema),
   });
-
-  const handleUpdateUser = useCallback(
-    async (values: UpdateUserRequestNullable) => {
-      const user = await updateUser(values as UpdateUserRequest);
-
-      if (isCurrent && user) {
-        setUserInfo(user);
-      }
-    },
-    [updateUser, isCurrent],
-  );
 
   const onSubmit = (fieldValues: UpdateUserRequestNullable) => {
     if (fieldValues.email === data?.email) {
@@ -83,7 +65,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
     <Form
       labelPosition={'left'}
       labelWidth={3}
-      gap={6}
+      gap={5}
       maxWidth={'900px'}
       onSubmit={handleSubmit(onSubmit)}
       isLoading={isLoading}
@@ -91,31 +73,33 @@ export const ProfileForm: FC<ProfileFormProps> = ({
       <PersonalData
         control={control}
         register={register}
-        onChangePassword={onChangePasswordByAdmin}
-        isAdminPage={!isCurrent}
+        onChangePasswordByAdmin={
+          !specificProps.isCurrent ? specificProps.handleChangeAccountPassword : undefined
+        }
       />
       <Contacts control={control} register={register} />
       <SystemData
         control={control}
         register={register}
-        isAdminPage={!isCurrent}
+        isAdminPage={!specificProps.isCurrent}
         profileData={data}
       />
 
-      <FormButtons isSticky>
-        {isCurrent && (
-          <Button onClick={onChangePassword}>
-            {t('ACTION.CHANGE', {
-              type: t('AUTH.PASSWORD.NAME').toLowerCase(),
-            })}
-          </Button>
-        )}
+      <FormButtons isSticky marginTop={0}>
+        <Button
+          hidden={!specificProps.isCurrent}
+          onClick={specificProps.isCurrent ? specificProps.handleChangePassword : undefined}
+        >
+          {t('ACTION.CHANGE', {
+            type: t('AUTH.PASSWORD.NAME').toLowerCase(),
+          })}
+        </Button>
         <Button
           color={'primary'}
           variant={'contained'}
           type={'submit'}
           disabled={!isValid && isSubmitted}
-          isLoading={isUserUpdating}
+          isLoading={isSubmitting}
         >
           {t('ACTION.SAVE')}
         </Button>

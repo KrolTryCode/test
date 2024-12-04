@@ -26,6 +26,7 @@ export const UserMenu: FC = () => {
             userId={user.id}
             firstName={user.firstName}
             lastName={user.lastName}
+            surName={user.surName}
             color={'secondary'}
           />
         ) : undefined

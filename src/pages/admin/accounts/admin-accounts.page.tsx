@@ -52,7 +52,12 @@ const AdminUsersPage: FC = () => {
         align: 'center',
         renderCell({ row: user }: GridRenderCellParams<User>) {
           return (
-            <UserAvatar userId={user.id!} firstName={user.firstName} lastName={user.lastName} />
+            <UserAvatar
+              userId={user.id!}
+              firstName={user.firstName}
+              lastName={user.lastName}
+              surName={user.surName}
+            />
           );
         },
       },

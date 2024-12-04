@@ -17,9 +17,10 @@ interface ProfileAvatarProps {
   userId: string;
   firstName?: string;
   lastName?: string;
+  surName?: string;
 }
 
-export const ProfileAvatar: FC<ProfileAvatarProps> = ({ userId, firstName, lastName }) => {
+export const ProfileAvatar: FC<ProfileAvatarProps> = ({ userId, firstName, lastName, surName }) => {
   const { t } = useTranslation();
 
   const { data: avatarId = '' } = useGetUserAvatarIdQuery(userId, {
@@ -49,12 +50,13 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ userId, firstName, lastN
     confirmDeletionModal({ title: t('MESSAGE.CONFIRM_CONTINUE_DELETE'), onOk: deleteAvatar });
 
   return (
-    <StyledAvatarContainer>
+    <StyledAvatarContainer className={'profile-avatar'}>
       <UserAvatar
         size={'large'}
         userId={userId}
         firstName={firstName}
         lastName={lastName}
+        surName={surName}
         isLoading={isUploading}
       />
       <StyledBackdrop gap={1}>

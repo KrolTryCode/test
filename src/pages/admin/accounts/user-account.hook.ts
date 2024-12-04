@@ -1,0 +1,64 @@
+import { notifySuccess } from '@pspod/ui-components';
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
+
+import { useChangePasswordAdminMutation } from '~/api/queries/accounts/change-password-admin.mutation';
+import { useGetUserQuery } from '~/api/queries/users/get-user.query';
+import { useUpdateUserMutation } from '~/api/queries/users/update-user.mutation';
+import { selectUserTimezone } from '~/api/selectors/select-user-timezone';
+import { UpdateUserRequest } from '~/api/utils/api-requests';
+import { getCurrentUserTimezone } from '~/app/user/user.store';
+import { changePasswordModal } from '~/components/change-password-form/change-password.modal';
+import { UpdateUserRequestNullable } from '~/components/user-profile/user-profile-form/profile-form.schema';
+import { getFullName } from '~/components/user-profile/user-profile.utils';
+import { showErrorMessage } from '~/utils/show-error-message';
+
+export const useUserAccount = () => {
+  const { t } = useTranslation();
+  const { userId } = useParams<{ userId: string }>();
+  const { data: user, isLoading: isUserLoading } = useGetUserQuery(userId ?? '', {
+    enabled: !!userId,
+    select: data => {
+      const tz = getCurrentUserTimezone();
+      const user = selectUserTimezone(tz, data, ['lastSuccessfulLoginTime', 'createdFrom']);
+      return user;
+    },
+  });
+
+  const { mutate: changePasswordByAdmin } = useChangePasswordAdminMutation(userId!, {
+    onSuccess: () => notifySuccess(t('AUTH.PASSWORD.SUCCESS')),
+    onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
+  });
+
+  const { mutateAsync: updateUser } = useUpdateUserMutation(userId!, false, {
+    onSuccess: () => notifySuccess(t('MESSAGE.UPDATE_SUCCESS')),
+    onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
+  });
+
+  const handleUpdateUser = useCallback(
+    async (values: UpdateUserRequestNullable) => {
+      await updateUser(values as UpdateUserRequest);
+    },
+    [updateUser],
+  );
+
+  const handleChangePassword = useCallback(
+    () =>
+      changePasswordModal({
+        title: t('ACTION.CHANGE', { type: t('AUTH.PASSWORD.NAME').toLowerCase() }),
+        user: user?.email ?? '',
+        onSave: changePasswordByAdmin,
+      }),
+    [changePasswordByAdmin, t, user?.email],
+  );
+
+  const fullName = getFullName(user?.firstName, user?.lastName, user?.surName);
+
+  return {
+    user: { ...user, fullName },
+    isUserLoading,
+    handleChangePassword,
+    handleUpdateUser,
+  };
+};
