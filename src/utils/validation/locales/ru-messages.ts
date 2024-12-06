@@ -55,7 +55,6 @@ const messages: Messages = {
   },
   custom: {
     phone: 'Некорректный номер телефона',
-    okpo: 'Значение должно иметь 8 или 10 символов',
     passwordMismatch: 'Пароли не совпадают',
   },
 };

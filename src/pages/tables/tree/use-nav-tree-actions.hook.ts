@@ -84,7 +84,7 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
   const handleAddCatalog = useCallback(
     (id?: string) => {
       nodeModal({
-        title: t('ACTION.ADD', { type: t('ENTITY.CATALOGUE').toLowerCase() }),
+        title: t('ACTION.ADD', { type: declinatedTranslations.DIRECTORY.ACCUSATIVE.toLowerCase() }),
         data: {
           type: ContentNodeType.Directory,
           parentId: id,
@@ -93,7 +93,7 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
         onSave: createNode,
       });
     },
-    [createNode, projectId, t],
+    [createNode, declinatedTranslations.DIRECTORY.ACCUSATIVE, projectId, t],
   );
 
   const handleAddTable = useCallback(

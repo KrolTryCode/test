@@ -91,7 +91,9 @@ export const NodeForm: FC<NodeFormProps> = ({ onResolve, onReject, data, isEditi
       </FormItem>
 
       <FormButtons>
-        <Button onClick={onReject}>{t('ACTION.CANCEL')}</Button>
+        <Button onClick={onReject} variant={'outlined'} color={'primary'}>
+          {t('ACTION.CANCEL')}
+        </Button>
         <Button
           type={'submit'}
           color={'primary'}

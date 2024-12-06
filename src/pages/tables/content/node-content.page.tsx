@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { useGetContentNodeQuery } from '~/api/queries/nodes/get-content-node.query';
 import { useGetContentNodes } from '~/api/queries/nodes/get-content-nodes.query';
 import { ContentNodeType } from '~/api/utils/api-requests';
-import { EmptyCatalog } from '~/pages/_fallbacks/info/empty/empty-element.component';
+import { EmptyDirectory } from '~/pages/_fallbacks/info/empty/empty-element.component';
 
 import { Table } from './table.component';
 
@@ -32,7 +32,7 @@ const NodeContent: FC = () => {
   }
 
   if (children?.length === 0) {
-    return <EmptyCatalog />;
+    return <EmptyDirectory />;
   }
 
   return (

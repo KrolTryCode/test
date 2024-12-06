@@ -1,5 +1,5 @@
-import { notifySuccess } from '@pspod/ui-components';
-import { isValid } from 'date-fns';
+import { notifyError, notifySuccess } from '@pspod/ui-components';
+import { isPast, isValid } from 'date-fns';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -11,7 +11,7 @@ import { useGetAllRolesQuery } from '~/api/queries/roles/get-all-roles.query';
 import { FullProjectNodeMemberInfo } from '~/api/utils/api-requests';
 import { getCurrentUserTimezone } from '~/app/user/user.store';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
-import { applyTzOffsetToSystemDate } from '~/utils/date/apply-tz-offset';
+import { applyTzOffset, applyTzOffsetToSystemDate } from '~/utils/date/apply-tz-offset';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { addParticipantModal } from './add-participant-form.component';
@@ -29,30 +29,33 @@ export const useParticipants = (nodeId: string) => {
   const { mutateAsync: addParticipant } = useAddProjectMemberMutation(nodeId);
 
   const { mutate: deleteParticipant } = useArchiveProjectMemberMutation(nodeId, {
-    onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
-    onError: e => showErrorMessage(e, 'ERROR.DELETION_FAILED'),
+    onSuccess: () => notifySuccess(t('MESSAGE.PARTICIPANT_DELETION_SUCCESS')),
+    onError: e => showErrorMessage(e, 'ERROR.PARTICIPANT_DELETION_FAILED'),
   });
 
-  const { mutateAsync: updateParticipant } = useUpdateProjectMemberMutation(nodeId, {
-    onSuccess: () => notifySuccess(t('MESSAGE.UPDATE_SUCCESS')),
-    onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
-  });
+  const { mutateAsync: updateParticipant } = useUpdateProjectMemberMutation(nodeId);
 
   const onAddParticipantClick = useCallback(() => {
     const onSave = async (data: IAddParticipantForm) => {
+      const userTz = getCurrentUserTimezone();
+      const expTime =
+        data.expirationTime && isValid(data.expirationTime)
+          ? applyTzOffsetToSystemDate(new Date(data.expirationTime), userTz)
+          : '';
+
       const promises = data.usersId.map(userId =>
         addParticipant({
           roleId: data.roleId,
-          expirationTime: data.expirationTime,
+          expirationTime: expTime,
           userId,
         }),
       );
 
       try {
         await Promise.all(promises);
-        notifySuccess(t('MESSAGE.CREATION_SUCCESS'));
+        notifySuccess(t('MESSAGE.PARTICIPANT_CREATION_SUCCESS'));
       } catch (e) {
-        showErrorMessage(e, t('ERROR.CREATION_FAILED'));
+        showErrorMessage(e, t('ERROR.PARTICIPANT_CREATION_FAILED'));
       }
     };
 
@@ -76,10 +79,19 @@ export const useParticipants = (nodeId: string) => {
       }
 
       const userTz = getCurrentUserTimezone();
-      const expTime =
-        expirationTime && isValid(expirationTime)
-          ? applyTzOffsetToSystemDate(new Date(expirationTime), userTz)
-          : expirationTime;
+      const isValidExpTime = expirationTime && isValid(expirationTime);
+      const expTime = isValidExpTime
+        ? applyTzOffsetToSystemDate(new Date(expirationTime), userTz)
+        : expirationTime;
+
+      if (isValidExpTime) {
+        const systemDate = new Date(expTime + 'Z');
+        const currentDate = new Date(applyTzOffset(new Date().toJSON(), userTz));
+        if (isPast(systemDate)) {
+          notifyError(t('yup:date.min', { min: currentDate.toLocaleString() }));
+          return oldRow;
+        }
+      }
 
       try {
         const result = await updateParticipant({

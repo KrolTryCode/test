@@ -1,4 +1,4 @@
-import { Folder, TableChart } from '@mui/icons-material';
+import { Folder, BackupTable } from '@mui/icons-material';
 import { Stack, SvgIconProps } from '@mui/material';
 import {
   TreeItem2Content,
@@ -57,7 +57,7 @@ export const NavTreeItem = forwardRef(function NavTreeItem(
     if (isFolderType(itemType)) {
       return <Folder {...iconProps} />;
     } else {
-      return <TableChart {...iconProps} />;
+      return <BackupTable {...iconProps} />;
     }
   };
 
@@ -70,7 +70,7 @@ export const NavTreeItem = forwardRef(function NavTreeItem(
               <TreeItem2Icon status={status} />
             </TreeItem2IconContainer>
           )}
-          <Stack gap={1} direction={'row'} flexGrow={'1'}>
+          <Stack gap={1} direction={'row'} flexGrow={'1'} sx={{ wordBreak: 'break-word' }}>
             <StyledTreeItemLabel {...getLabelProps()}>
               {renderItemIcon(item.type)}
               {item.href && !disableLinks ? <StyledLink to={item.href}>{label}</StyledLink> : label}

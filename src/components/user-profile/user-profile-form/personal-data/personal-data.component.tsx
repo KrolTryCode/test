@@ -45,7 +45,7 @@ export const PersonalData: FC<PersonalDataProps> = ({
         </FormItem>
         {onChangePasswordByAdmin && (
           <FormButtons>
-            <Button onClick={onChangePasswordByAdmin}>
+            <Button onClick={onChangePasswordByAdmin} variant={'outlined'} color={'primary'}>
               {t('ACTION.CHANGE', {
                 type: t('AUTH.PASSWORD.NAME').toLowerCase(),
               })}

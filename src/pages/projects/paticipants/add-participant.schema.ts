@@ -1,14 +1,16 @@
 import * as y from 'yup';
 
 import { CreateProjectNodeMemberRequest } from '~/api/utils/api-requests';
-import { UUIDSchema } from '~/utils/validation/schemas';
+import { UUIDSchema, dateMinSchema } from '~/utils/validation/schemas';
 
-export interface IAddParticipantForm extends Omit<CreateProjectNodeMemberRequest, 'userId'> {
+export interface IAddParticipantForm
+  extends Omit<CreateProjectNodeMemberRequest, 'userId' | 'expirationTime'> {
   usersId: string[];
+  expirationTime: Date | null;
 }
 
 export const schema: y.ObjectSchema<IAddParticipantForm> = y.object().shape({
   usersId: y.array(UUIDSchema).required(),
   roleId: UUIDSchema,
-  expirationTime: y.string(),
+  expirationTime: dateMinSchema.nullable().default(null),
 });

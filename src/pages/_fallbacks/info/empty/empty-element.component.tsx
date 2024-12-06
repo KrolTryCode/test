@@ -9,10 +9,10 @@ export const EmptyTable: FC = () => {
   );
 };
 
-export const EmptyCatalog: FC = () => {
+export const EmptyDirectory: FC = () => {
   return (
     <FallbackInfoPage
-      pageType={FallbackPageType.EmptyCatalog}
+      pageType={FallbackPageType.EmptyDirectory}
       showButton={false}
       showLogo={false}
     />

@@ -25,7 +25,7 @@ export const useDropdownMenuItems = (treeData: NavTreeItemData[]) => {
         onClick: handleEditNode,
       },
       {
-        label: t('ACTION.ADD', { type: t('ENTITY.CATALOGUE').toLowerCase() }),
+        label: t('ACTION.ADD', { type: declinatedTranslations.DIRECTORY.ACCUSATIVE.toLowerCase() }),
         onClick: handleAddCatalog,
         entityType: ContentNodeType.Directory,
       },
@@ -48,6 +48,7 @@ export const useDropdownMenuItems = (treeData: NavTreeItemData[]) => {
       },
     ],
     [
+      declinatedTranslations.DIRECTORY.ACCUSATIVE,
       declinatedTranslations.STRUCTURE.ACCUSATIVE,
       declinatedTranslations.TABLE.ACCUSATIVE,
       handleAddCatalog,

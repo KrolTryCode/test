@@ -20,7 +20,7 @@ export enum FallbackPageType {
   NotFoundNodes = 'NOT_FOUND_NODES',
   ServerConnectionError = 'SERVER_CONNECTION_ERROR',
   EmptyTable = 'EMPTY_TABLE',
-  EmptyCatalog = 'EMPTY_CATALOG',
+  EmptyDirectory = 'EMPTY_DIRECTORY',
 }
 
 export enum ButtonNavigate {

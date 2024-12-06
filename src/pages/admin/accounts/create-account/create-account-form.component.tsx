@@ -70,7 +70,9 @@ export const CreateAccountForm: FC<CreateAccountFormProps> = ({
         <FormInputText type={'email'} controllerProps={{ ...register('email'), control }} />
       </FormItem>
       <FormButtons>
-        <Button onClick={onReject}>{t('ACTION.CANCEL')}</Button>
+        <Button onClick={onReject} variant={'outlined'} color={'primary'}>
+          {t('ACTION.CANCEL')}
+        </Button>
         <Button
           type={'submit'}
           disabled={!isValid && isSubmitted}

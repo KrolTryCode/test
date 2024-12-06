@@ -10,7 +10,9 @@ export const ConfirmEmailChange: FC<
     <Stack direction={'column'} gap={2} width={'100%'}>
       <Typography variant={'body1'}>{t('MESSAGE.CONFIRM_LOGIN_CHANGE.TEXT')}</Typography>
       <Stack direction={'row'} gap={2} justifyContent={'flex-end'}>
-        <Button onClick={onReject}>{t('ACTION.CANCEL')}</Button>
+        <Button onClick={onReject} variant={'outlined'} color={'primary'}>
+          {t('ACTION.CANCEL')}
+        </Button>
         <Button variant={'contained'} color={'primary'} onClick={onResolve}>
           {t('ACTION.APPROVE')}
         </Button>

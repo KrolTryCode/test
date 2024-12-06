@@ -102,7 +102,9 @@ export const ConfigurationFormComponent = (moduleDescription: EntityModelModuleC
       >
         {(moduleDescription.properties ?? []).map(property => renderComponent(property))}
         <FormButtons>
-          <Button onClick={onDrop}>{t('ACTION.DROP')}</Button>
+          <Button onClick={onDrop} variant={'outlined'} color={'primary'}>
+            {t('ACTION.DROP')}
+          </Button>
           <Button
             type={'submit'}
             disabled={!isValid && isSubmitted}

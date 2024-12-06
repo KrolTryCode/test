@@ -96,7 +96,9 @@ export const TableDataForm: FC<TableDataFormProps> = ({ onResolve, onReject, met
     >
       {metadata.map(renderComponent)}
       <FormButtons isSticky>
-        <Button onClick={onReject}>{t('ACTION.CANCEL')}</Button>
+        <Button onClick={onReject} variant={'outlined'} color={'primary'}>
+          {t('ACTION.CANCEL')}
+        </Button>
         <Button
           color={'primary'}
           variant={'contained'}
