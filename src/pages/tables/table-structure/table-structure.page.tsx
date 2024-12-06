@@ -37,7 +37,7 @@ const TableStructure: FC = () => {
   const { nodeInfo, nodeColumns, isColumnsFetched, isDataLoading } = useTableStructureData(nodeId);
 
   const { handleDropColumn, handleAddColumn, handleEditColumn, addView, isAddingView } =
-    useTableStructureActions(nodeId);
+    useTableStructureActions(nodeId, nodeColumns);
   const { getActions, onRowModesModelChange, rowModesModel } =
     useGetRowActions<ColumnMetadataExtended>({
       apiRef,
@@ -114,7 +114,7 @@ const TableStructure: FC = () => {
       {
         field: 'actions',
         type: 'actions',
-        width: 82,
+        width: 84,
         getActions,
       },
     ],

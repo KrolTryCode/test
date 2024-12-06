@@ -6,3 +6,4 @@ export { OKPOSchema } from './okpo';
 export { getPasswordSchema } from './password';
 export { phoneSchema } from './phone';
 export { UUIDSchema, optionalUUIDSchema } from './uuid';
+export { dateMinSchema } from './date';

@@ -87,6 +87,8 @@ export const ProfileForm: FC<ProfileFormProps> = ({
 
       <FormButtons isSticky marginTop={0}>
         <Button
+          variant={'outlined'}
+          color={'primary'}
           hidden={!specificProps.isCurrent}
           onClick={specificProps.isCurrent ? specificProps.handleChangePassword : undefined}
         >

@@ -4,15 +4,23 @@ import {
   GridRowEditStopReasons,
   useGridApiRef,
 } from '@mui/x-data-grid-premium';
-import { AddEntity, DataGrid, EnhancedColDef, useGetRowActions } from '@pspod/ui-components';
+import {
+  AddEntity,
+  DataGrid,
+  DateTimeEditingCell,
+  EnhancedColDef,
+  useGetRowActions,
+} from '@pspod/ui-components';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { FullProjectNodeMemberInfo } from '~/api/utils/api-requests';
+import { getCurrentUserTimezone } from '~/app/user/user.store';
 import { UserAvatar } from '~/components/user-avatar/user-avatar.component';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
+import { applyTzOffset } from '~/utils/date/apply-tz-offset';
 
 import { GroupHeader } from '../group-header/group-header.component';
 
@@ -79,6 +87,16 @@ const ParticipantsList: FC = () => {
         flex: 1,
         editable: true,
         valueGetter: getColDateWithTz,
+        renderEditCell: ({ id, field, value }) => (
+          <DateTimeEditingCell
+            id={id}
+            field={field}
+            value={value as Date}
+            // @ts-expect-error todo: fix interface (ui-components)
+            minDateTime={applyTzOffset(new Date().toJSON(), getCurrentUserTimezone())}
+            isClearable
+          />
+        ),
       },
       {
         headerName: t('ENTITY.PARTICIPANT_SOURCE'),

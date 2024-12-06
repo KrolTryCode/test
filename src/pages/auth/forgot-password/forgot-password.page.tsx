@@ -47,7 +47,13 @@ const ForgotPasswordPage: FC = () => {
         />
       </FormItem>
       <FormButtons>
-        <Button onClick={() => navigate(`/${authPath}/${loginPath}`)}>{t('ACTION.CANCEL')}</Button>
+        <Button
+          onClick={() => navigate(`/${authPath}/${loginPath}`)}
+          variant={'outlined'}
+          color={'primary'}
+        >
+          {t('ACTION.CANCEL')}
+        </Button>
         <Button
           type={'submit'}
           color={'primary'}

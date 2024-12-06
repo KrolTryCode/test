@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const _ProjectTreeItemContainer = styled('div')({
   margin: '0.5em 0',
+  wordBreak: 'break-word',
 });
 
 export const _ProjectTreeNodeLink = styled(Link)(({ theme }) => ({
@@ -26,6 +27,7 @@ export const _IconContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  marginRight: theme.spacing(1),
 
   '& > img': {
     width: '100%',

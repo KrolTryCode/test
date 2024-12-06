@@ -1,4 +1,4 @@
-import { ArrowBack, Delete, Edit, People } from '@mui/icons-material';
+import { ArrowBack, DeleteOutline, Edit, People } from '@mui/icons-material';
 import { Skeleton, Stack, Typography } from '@mui/material';
 import { Button } from '@pspod/ui-components';
 import { FC } from 'react';
@@ -89,7 +89,7 @@ export const GroupHeader: FC<GroupHeaderProps> = ({ groupId }) => {
               color={'error'}
               title={t('ACTION.DELETE')}
               variant={'text'}
-              icon={<Delete />}
+              icon={<DeleteOutline />}
               onClick={() => deleteProjectOrGroup(projectData!)}
             />
           </Stack>

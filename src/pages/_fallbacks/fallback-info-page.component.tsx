@@ -49,7 +49,7 @@ const FallbackInfoPage: FC<FallbackPageProps> = ({
           {t(`ERROR.${pageType}.TEXT2`)}
         </Typography>
         {showButton && (
-          <Button fullWidth onClick={handleClick}>
+          <Button fullWidth onClick={handleClick} variant={'outlined'} color={'primary'}>
             {t(`ACTION.${buttonNavigate}`)}
           </Button>
         )}

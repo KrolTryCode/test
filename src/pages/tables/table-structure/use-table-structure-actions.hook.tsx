@@ -7,11 +7,15 @@ import { useAddTableViewMutation } from '~/api/queries/tables/add-table-view.mut
 import { useAddNodeColumnMutation } from '~/api/queries/tables/structure/add-node-column.mutation';
 import { useDeleteNodeColumnMutation } from '~/api/queries/tables/structure/delete-node-column.mutation';
 import { useEditNodeColumnNameMutation } from '~/api/queries/tables/structure/edit-node-column.mutation';
+import { ColumnMetadataExtended } from '~/api/selectors/select-node-columns';
 import { ColumnDefinition } from '~/api/utils/api-requests';
 import { AddColumnForm } from '~/pages/tables/table-structure/add-column/add-column-form.component';
 import { showErrorMessage } from '~/utils/show-error-message';
 
-export const useTableStructureActions = (nodeId: string) => {
+export const useTableStructureActions = (
+  nodeId: string,
+  nodeCols: ColumnMetadataExtended[] = [],
+) => {
   const { t } = useTranslation();
 
   const { mutate: dropColumn } = useDeleteNodeColumnMutation(nodeId, {
@@ -35,9 +39,11 @@ export const useTableStructureActions = (nodeId: string) => {
     modal({
       onOk: addColumn,
       title: t('STRUCTURE.ADD_COLUMN'),
-      renderContent: (args: InstanceProps<ColumnDefinition, never>) => <AddColumnForm {...args} />,
+      renderContent: (args: InstanceProps<ColumnDefinition, never>) => (
+        <AddColumnForm usedNames={nodeCols.map(c => c.name)} {...args} />
+      ),
     });
-  }, [addColumn, t]);
+  }, [addColumn, nodeCols, t]);
 
   return { handleDropColumn: dropColumn, handleEditColumn, handleAddColumn, addView, isAddingView };
 };

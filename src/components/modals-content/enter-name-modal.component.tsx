@@ -49,7 +49,9 @@ const EnterNameForm: FC<EnterNameFormProps> = ({
       </FormItem>
 
       <FormButtons>
-        <Button onClick={onReject}>{t('ACTION.CANCEL')}</Button>
+        <Button onClick={onReject} variant={'outlined'} color={'primary'}>
+          {t('ACTION.CANCEL')}
+        </Button>
         <Button
           variant={'contained'}
           color={'primary'}

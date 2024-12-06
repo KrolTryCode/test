@@ -1,4 +1,4 @@
-import { PhotoCameraRounded as CameraIcon, Delete as CloseIcon } from '@mui/icons-material';
+import { PhotoCamera as CameraIcon, Delete as DeleteIcon } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { confirmDeletionModal, notifyError, notifySuccess } from '@pspod/ui-components';
 import { FC } from 'react';
@@ -79,7 +79,7 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ userId, firstName, lastN
             title={t('ACTION.DELETE', { type: t('USER.PHOTO').toLowerCase() })}
             onClick={handleDeleteAvatar}
           >
-            <CloseIcon fontSize={'large'} />
+            <DeleteIcon fontSize={'large'} />
           </IconButton>
         )}
       </StyledBackdrop>

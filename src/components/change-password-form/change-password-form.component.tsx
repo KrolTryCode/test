@@ -78,7 +78,9 @@ export const ChangePasswordForm: FC<ChangePasswordFormProps> = ({
         />
       </FormItem>
       <FormButtons>
-        <Button onClick={onReject}>{t('ACTION.CANCEL')}</Button>
+        <Button onClick={onReject} variant={'outlined'} color={'primary'}>
+          {t('ACTION.CANCEL')}
+        </Button>
         <Button
           type={'submit'}
           color={'primary'}

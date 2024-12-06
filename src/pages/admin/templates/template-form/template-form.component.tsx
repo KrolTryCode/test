@@ -64,7 +64,9 @@ export const TemplateForm: FC<TemplateFormProps> = ({ data }) => {
         <FormInputRichTextEditor controllerProps={{ ...register('content'), control }} />
       </FormItem>
       <FormButtons marginTop={2}>
-        <Button onClick={() => navigate(-1)}>{t('ACTION.CANCEL')}</Button>
+        <Button onClick={() => navigate(-1)} variant={'outlined'} color={'primary'}>
+          {t('ACTION.CANCEL')}
+        </Button>
         <Button
           type={'submit'}
           variant={'contained'}
