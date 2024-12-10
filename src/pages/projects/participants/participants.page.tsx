@@ -92,7 +92,7 @@ const ParticipantsList: FC = () => {
             id={id}
             field={field}
             value={value as Date}
-            // @ts-expect-error todo: fix interface (ui-components)
+            // @ts-expect-error type
             minDateTime={applyTzOffset(new Date().toJSON(), getCurrentUserTimezone())}
             isClearable
           />

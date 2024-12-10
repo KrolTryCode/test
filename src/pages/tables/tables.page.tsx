@@ -1,9 +1,8 @@
-import { Box, Stack } from '@mui/material';
+import { Box } from '@mui/material';
 import { PersistentDrawer, Preloader, useGetDrawerThemeWidth } from '@pspod/ui-components';
-import { FC, useEffect, useState } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { FC, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
-import { useGetProjectNodeQuery } from '~/api/queries/projects/get-project-node.query';
 import { NotFoundNodes } from '~/pages/_fallbacks/errors/not-found/not-found.component';
 import { CreateMenu } from '~/pages/tables/create-menu.component';
 import { NodesTree } from '~/pages/tables/tree/nodes-tree.component';
@@ -14,43 +13,41 @@ const TablesLayout: FC = () => {
   const { treeData, isFetched, isLoading } = useTablesMenuData();
   const { handleAddCatalog } = useNavTreeActions([]);
   const { drawerWidth } = useGetDrawerThemeWidth();
-  const { projectId } = useParams();
-  const { data: projectData, isLoading: isProjectDataLoading } = useGetProjectNodeQuery(projectId!);
 
   const [isDrawerOpened, setIsDrawerOpened] = useState(true);
 
-  useEffect(() => {
-    if (isFetched) {
-      setIsDrawerOpened(!!treeData.length);
-    }
-  }, [isFetched, treeData.length]);
-
-  if (isLoading || isProjectDataLoading) {
+  if (isLoading || !isFetched) {
     return <Preloader />;
   }
 
   // TODO Добавить поддержку изменения ширины Drawer?
 
   return (
-    <>
-      <PersistentDrawer
-        isInitialOpen={true}
-        paperMargin={`${projectData?.description ? 13.5 : 12}em 0 0 0`}
-        onDrawerOpenState={setIsDrawerOpened}
-      >
-        <Stack direction={'row'}>
+    <Box
+      sx={({ spacing }) => ({
+        position: 'relative',
+        height: `calc(100% + ${spacing(1)})`,
+        '& .MuiDrawer-paper': { position: 'absolute', top: 0 },
+      })}
+    >
+      <PersistentDrawer isInitialOpen={true} onDrawerOpenState={setIsDrawerOpened}>
+        <Box position={'absolute'}>
           <CreateMenu />
-        </Stack>
-        <NodesTree />
+        </Box>
+        <Box marginTop={1} sx={{ overflowY: 'auto', scrollbarWidth: 'thin' }}>
+          <NodesTree />
+        </Box>
       </PersistentDrawer>
       <Box
+        position={'relative'}
         height={'100%'}
-        marginLeft={isDrawerOpened ? `${drawerWidth}px` : '34px'}
+        padding={1}
+        marginLeft={isDrawerOpened ? `${drawerWidth}px` : 4}
         sx={{ transition: 'margin-left 0.3s ease' }}
       >
         {!treeData.length ? <NotFoundNodes action={handleAddCatalog} /> : <Outlet />}
       </Box>
-    </>
+    </Box>
   );
 };
 

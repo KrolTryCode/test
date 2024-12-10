@@ -1,9 +1,10 @@
-import { Breadcrumbs, Link as MuiLink } from '@mui/material';
 import { FC } from 'react';
 
 import { useGetProjectNodeQuery } from '~/api/queries/projects/get-project-node.query';
 import { useGetParentsQuery } from '~/api/queries/projects/get-projects-parents.query';
-import { projectPath, projectsPath } from '~/utils/configuration/routes-paths';
+import { projectsPath } from '~/utils/configuration/routes-paths';
+
+import { StyledMuiLink, StyledBreadcrumbs } from './breadcrumbs.style';
 
 interface ProjectNodeBreadcrumbsProps {
   projectNodeId: string;
@@ -16,19 +17,13 @@ export const ProjectNodeBreadcrumbs: FC<ProjectNodeBreadcrumbsProps> = ({ projec
   });
 
   return (
-    <Breadcrumbs separator={'›'} sx={({ palette: { primary } }) => ({ color: primary.main })}>
+    <StyledBreadcrumbs separator={'›'} maxItems={5}>
       {parents?.map(({ name, id }) => (
-        <MuiLink key={id} href={`/${projectsPath}/${id}`} underline={'hover'} color={'inherit'}>
+        <StyledMuiLink key={id} href={`/${projectsPath}/${id}`}>
           {name}
-        </MuiLink>
+        </StyledMuiLink>
       ))}
-      <MuiLink
-        href={`/${projectsPath}/${projectPath}/${projectData?.id}`}
-        underline={'hover'}
-        color={'inherit'}
-      >
-        {projectData?.name}
-      </MuiLink>
-    </Breadcrumbs>
+      <StyledMuiLink fontWeight={'bold'}>{projectData?.name}</StyledMuiLink>
+    </StyledBreadcrumbs>
   );
 };

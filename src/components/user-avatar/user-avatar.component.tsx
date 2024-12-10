@@ -1,5 +1,5 @@
 import { CircularProgress } from '@mui/material';
-import { Avatar } from '@pspod/ui-components';
+import { Avatar, AvatarProps } from '@pspod/ui-components';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -8,14 +8,11 @@ import { useGetUserAvatarIdQuery } from '~/api/queries/users/get-active-user-ava
 
 import { getFullName } from '../user-profile/user-profile.utils';
 
-// todo: get AvatarProps form ui-components
-interface UserAvatarProps {
+interface UserAvatarProps extends AvatarProps {
   userId: string;
   firstName?: string;
   lastName?: string;
   surName?: string;
-  size?: 'small' | 'medium' | 'large' | number;
-  color?: 'secondary' | 'primary';
   isLoading?: boolean;
 }
 

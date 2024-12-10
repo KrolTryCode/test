@@ -17,8 +17,8 @@ const TemplatesPage: FC = () => {
   const { translateStatus } = useCustomTranslations();
   const { data: templates, isLoading } = useGetTemplatesQuery();
 
-  const gridWraperRef = useRef<HTMLDivElement>();
-  usePreventedLinks(gridWraperRef);
+  const gridWrapperRef = useRef<HTMLDivElement>();
+  usePreventedLinks(gridWrapperRef);
 
   const columns = useMemo<GridColDef<Template>[]>(
     () => [
@@ -65,7 +65,7 @@ const TemplatesPage: FC = () => {
   );
 
   return (
-    <Box height={'100%'} ref={gridWraperRef}>
+    <Box height={'100%'} ref={gridWrapperRef}>
       <DataGrid<Template>
         loading={isLoading}
         items={templates ?? []}

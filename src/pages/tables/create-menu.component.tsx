@@ -11,7 +11,7 @@ export const CreateMenu: FC = () => {
   const { t } = useTranslation();
 
   return (
-    <DropdownMenu buttonColor={'primary'} buttonContent={<AddIcon />}>
+    <DropdownMenu buttonColor={'primary'} buttonContent={<AddIcon fontSize={'small'} />}>
       <Stack>
         <Button color={'primary'} onClick={() => handleAddCatalog()} variant={'text'}>
           {t('ENTITY.DIRECTORY')}

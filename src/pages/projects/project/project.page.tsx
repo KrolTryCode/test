@@ -1,4 +1,4 @@
-import { Divider, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -11,7 +11,6 @@ const ProjectPage: FC = () => {
   return (
     <Stack flexDirection={'column'} height={'100%'}>
       <ProjectHeader projectId={projectId!} />
-      <Divider />
       <ProjectTabs />
     </Stack>
   );

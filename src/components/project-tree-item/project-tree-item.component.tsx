@@ -1,5 +1,5 @@
 import { BackupTable, ChevronRight, Folder, KeyboardArrowDown } from '@mui/icons-material';
-import { Stack, Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 import { Button, Preloader } from '@pspod/ui-components';
 import { FC, useMemo, useState } from 'react';
 
@@ -11,6 +11,7 @@ import {
   _ProjectTreeItemContainer,
   _ProjectTreeNodeLink,
   _ToggleButtonContainer,
+  _Description,
 } from './project-tree-item.styled';
 
 interface ProjectTreeItemProps {
@@ -46,20 +47,28 @@ export const ProjectTreeItem: FC<ProjectTreeItemProps> = ({ projectTreeNode }) =
     <_ProjectTreeItemContainer>
       <Stack direction={'row'} alignItems={'center'} flex={1}>
         <_ToggleButtonContainer>
-          {projectTreeNode.hasChildren && (
-            <Button variant={'text'} onClick={() => setIsOpened(isOpened => !isOpened)}>
-              {isOpened ? <KeyboardArrowDown /> : <ChevronRight />}
-            </Button>
-          )}
+          <Button
+            hidden={!projectTreeNode.hasChildren}
+            variant={'text'}
+            size={'small'}
+            onClick={() => setIsOpened(isOpened => !isOpened)}
+          >
+            {isOpened ? <KeyboardArrowDown /> : <ChevronRight />}
+          </Button>
         </_ToggleButtonContainer>
 
         <_IconContainer>{icon}</_IconContainer>
 
         <Stack>
           <_ProjectTreeNodeLink to={link}>{projectTreeNode.name}</_ProjectTreeNodeLink>
-          {projectTreeNode.description && (
-            <Typography variant={'body1'}>{projectTreeNode.description}</Typography>
-          )}
+          <_Description
+            variant={'body1'}
+            hidden={!projectTreeNode.description}
+            title={projectTreeNode.description}
+            gutterBottom={false}
+          >
+            {projectTreeNode.description}
+          </_Description>
         </Stack>
       </Stack>
 

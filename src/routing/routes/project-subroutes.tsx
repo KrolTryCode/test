@@ -22,7 +22,7 @@ export const projectsSubroutes: RouteDescription[] = [
   {
     path: ':projectGroupId/participants',
     title: 'NAVIGATION.PARTICIPANTS',
-    lazyElement: () => import('~/pages/projects/paticipants/participants.page'),
+    lazyElement: () => import('~/pages/projects/participants/participants.page'),
   },
   {
     path: `${projectPath}/:projectId`,
@@ -55,7 +55,7 @@ export const projectsSubroutes: RouteDescription[] = [
       {
         path: participantsPath,
         title: 'NAVIGATION.PARTICIPANTS',
-        lazyElement: () => import('~/pages/projects/paticipants/participants.page'),
+        lazyElement: () => import('~/pages/projects/participants/participants.page'),
       },
       {
         path: eventsPath,
