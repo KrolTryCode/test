@@ -40,12 +40,12 @@ const ProjectNodeForm: FC<ProjectNodeFormProps> = ({ onResolve, onReject, data, 
   });
 
   return (
-    <Form onSubmit={handleSubmit(onResolve)}>
+    <Form onSubmit={handleSubmit(onResolve)} showColonAfterLabel>
       <FormItem label={t('COMMON.TITLE')} isRequired>
         <FormInputText controllerProps={{ ...register('name'), control }} />
       </FormItem>
       <FormItem label={t('COMMON.DESCRIPTION')}>
-        <FormInputText controllerProps={{ ...register('description'), control }} />
+        <FormInputText isMultiline controllerProps={{ ...register('description'), control }} />
       </FormItem>
       {!!projectList.length && !isEditing && (
         <FormItem label={t('COMMON.PARENT')}>

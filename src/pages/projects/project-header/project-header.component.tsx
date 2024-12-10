@@ -1,12 +1,11 @@
-import { ArrowBack, Edit, DeleteOutline } from '@mui/icons-material';
-import { Skeleton, Stack, Typography } from '@mui/material';
+import { Edit, DeleteOutline } from '@mui/icons-material';
+import { Skeleton } from '@mui/material';
 import { Button } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 
 import { useGetProjectNodeQuery } from '~/api/queries/projects/get-project-node.query';
-import { ProjectNodeBreadcrumbs } from '~/components/breadcrumbs/breadcrumbs.component';
+import { NodeHeader } from '~/components/node-header/node-header.component';
 import { useProjectsTreeActions } from '~/pages/projects/use-projects-tree-actions.hook';
 import { projectsPath } from '~/utils/configuration/routes-paths';
 import { usePageTitle } from '~/utils/hooks/use-page-title';
@@ -36,49 +35,32 @@ export const ProjectHeader: FC<ProjectHeaderProps> = ({ projectId }) => {
     : `/${projectsPath}`;
 
   return (
-    <Stack padding={1} gap={2} direction={'row'} justifyContent={'space-between'}>
-      <Button component={Link} variant={'text'} to={backPath} icon={<ArrowBack />} />
-      <Stack flex={1} gap={0.5} overflow={'hidden'}>
-        <Stack direction={'row'} gap={2} alignItems={'center'}>
-          <Typography
-            variant={'h2'}
-            overflow={'hidden'}
-            textOverflow={'ellipsis'}
-            gutterBottom={false}
-          >
-            {projectData?.name ?? t('TREE.NODE')}
-          </Typography>
-          <Stack direction={'row'} alignItems={'center'}>
-            <Button
-              size={'small'}
-              color={'primary'}
-              title={t('ACTION.EDIT')}
-              onClick={() => updateProjectOrGroup(projectData!)}
-              variant={'text'}
-              icon={<Edit />}
-            />
-            <Button
-              size={'small'}
-              color={'error'}
-              title={t('ACTION.DELETE')}
-              variant={'text'}
-              icon={<DeleteOutline />}
-              onClick={() => deleteProjectOrGroup(projectData!)}
-            />
-          </Stack>
-        </Stack>
-        <Typography
-          whiteSpace={'break-spaces'}
-          maxHeight={'6em'}
-          overflow={'hidden auto'}
-          gutterBottom={false}
-        >
-          {projectData?.description}
-        </Typography>
-      </Stack>
-      <Stack alignItems={'flex-end'} flex={1}>
-        <ProjectNodeBreadcrumbs projectNodeId={projectId} />
-      </Stack>
-    </Stack>
+    <NodeHeader
+      nodeId={projectId}
+      backPath={backPath}
+      description={projectData?.description}
+      actions={[
+        <Button
+          key={'edit'}
+          size={'small'}
+          color={'primary'}
+          title={t('ACTION.EDIT')}
+          onClick={() => updateProjectOrGroup(projectData!)}
+          variant={'text'}
+          icon={<Edit />}
+        />,
+        <Button
+          key={'delete'}
+          size={'small'}
+          color={'error'}
+          title={t('ACTION.DELETE')}
+          variant={'text'}
+          icon={<DeleteOutline />}
+          onClick={() => deleteProjectOrGroup(projectData!)}
+        />,
+      ]}
+    >
+      {projectData?.name ?? t('TREE.NODE')}
+    </NodeHeader>
   );
 };
