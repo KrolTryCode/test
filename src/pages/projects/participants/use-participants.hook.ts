@@ -1,5 +1,5 @@
 import { notifyError, notifySuccess } from '@pspod/ui-components';
-import { isPast, isValid } from 'date-fns';
+import { isValid } from 'date-fns';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -11,7 +11,8 @@ import { useGetAllRolesQuery } from '~/api/queries/roles/get-all-roles.query';
 import { FullProjectNodeMemberInfo } from '~/api/utils/api-requests';
 import { getCurrentUserTimezone } from '~/app/user/user.store';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
-import { applyTzOffset, applyTzOffsetToSystemDate } from '~/utils/date/apply-tz-offset';
+import { applyTzOffsetToSystemDate } from '~/utils/date/apply-tz-offset';
+import { validateMinDate } from '~/utils/date/validate-min-date';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { addParticipantModal } from './add-participant-form.component';
@@ -85,10 +86,9 @@ export const useParticipants = (nodeId: string) => {
         : expirationTime;
 
       if (isValidExpTime) {
-        const systemDate = new Date(expTime + 'Z');
-        const currentDate = new Date(applyTzOffset(new Date().toJSON(), userTz));
-        if (isPast(systemDate)) {
-          notifyError(t('yup:date.min', { min: currentDate.toLocaleString() }));
+        const error = validateMinDate(new Date(expirationTime));
+        if (error) {
+          notifyError(error);
           return oldRow;
         }
       }

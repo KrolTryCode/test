@@ -11,7 +11,7 @@ export const useDeleteProjectNodeMutation = (
   const queryClient = useQueryClient();
 
   return useMutation<void, Error, string>({
-    mutationFn: nodeId => ApiClientSecured.projectNodeV1Controller.deleteProject1Node(nodeId),
+    mutationFn: nodeId => ApiClientSecured.projectNodeV1Controller.deleteProjectNode(nodeId),
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({ queryKey: projectQueries._def });
