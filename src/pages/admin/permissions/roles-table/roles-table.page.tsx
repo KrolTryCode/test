@@ -5,7 +5,6 @@ import {
   EnhancedColDef,
   GridPagingParams,
   AddEntity,
-  useGetRowActions,
 } from '@pspod/ui-components';
 import { FC, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +14,7 @@ import { useFindRolesQuery } from '~/api/queries/roles/find-roles.query';
 import { useRemoveRoleMutation } from '~/api/queries/roles/remove-role.mutation';
 import { Role } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
+import { useGetEditRowActions } from '~/components/datagrid/use-get-edit-row-actions.hook';
 import { useServerPagingParams } from '~/utils/hooks/use-server-options';
 import { showErrorMessage } from '~/utils/show-error-message';
 
@@ -43,9 +43,8 @@ export const RolesTable: FC = () => {
     });
   };
 
-  const { getActions, onRowModesModelChange, rowModesModel } = useGetRowActions<Role>({
+  const { getActions, onRowModesModelChange, rowModesModel } = useGetEditRowActions<Role>({
     apiRef,
-    deleteHandler: (row: Role) => removeRole(row.id!),
     protectedKey: 'protectedPermissions',
   });
 
@@ -93,10 +92,10 @@ export const RolesTable: FC = () => {
         field: 'actions',
         type: 'actions',
         width: 82,
-        getActions,
+        getActions: getActions(removeRole),
       },
     ],
-    [getActions, t],
+    [getActions, removeRole, t],
   );
 
   const onRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {

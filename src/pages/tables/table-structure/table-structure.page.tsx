@@ -10,7 +10,6 @@ import {
   EnhancedColDef,
   GridPagingParams,
   AddEntity,
-  useGetRowActions,
   Button,
 } from '@pspod/ui-components';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
@@ -20,6 +19,7 @@ import { Link, useParams } from 'react-router-dom';
 import { ColumnMetadataExtended } from '~/api/selectors/select-node-columns';
 import { PairStringColumnType } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
+import { useGetEditRowActions } from '~/components/datagrid/use-get-edit-row-actions.hook';
 import { useTableStructureActions } from '~/pages/tables/table-structure/use-table-structure-actions.hook';
 import { useTableStructureData } from '~/pages/tables/table-structure/use-table-structure-data.hook';
 import { projectPath, projectsPath, tablesPath } from '~/utils/configuration/routes-paths';
@@ -39,9 +39,9 @@ const TableStructure: FC = () => {
   const { handleDropColumn, handleAddColumn, handleEditColumn, addView, isAddingView } =
     useTableStructureActions(nodeId, nodeColumns);
   const { getActions, onRowModesModelChange, rowModesModel } =
-    useGetRowActions<ColumnMetadataExtended>({
+    useGetEditRowActions<ColumnMetadataExtended>({
       apiRef,
-      deleteHandler: (row: ColumnMetadataExtended) => handleDropColumn(row.name),
+      idKey: 'name',
     });
 
   const [paging, setGridPaging] = useState<GridPagingParams>();
@@ -115,10 +115,10 @@ const TableStructure: FC = () => {
         field: 'actions',
         type: 'actions',
         width: 84,
-        getActions,
+        getActions: getActions(handleDropColumn),
       },
     ],
-    [getActions, t, translateColumnType],
+    [getActions, handleDropColumn, t, translateColumnType],
   );
 
   const onRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
@@ -152,6 +152,7 @@ const TableStructure: FC = () => {
         items={items ?? []}
         totalCount={items?.length ?? 0}
         isCellEditable={({ row }) => row.name !== 'id'}
+        getRowId={row => row.name}
         editMode={'row'}
         columns={structureTableColumns}
         processRowUpdate={changeTableColumn}

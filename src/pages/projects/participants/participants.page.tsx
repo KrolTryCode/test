@@ -1,26 +1,25 @@
 import {
   GridEventListener,
+  GridPreProcessEditCellProps,
   GridRenderCellParams,
+  GridRenderEditCellParams,
   GridRowEditStopReasons,
+  GridTreeNodeWithRender,
   useGridApiRef,
 } from '@mui/x-data-grid-premium';
-import {
-  AddEntity,
-  DataGrid,
-  DateTimeEditingCell,
-  EnhancedColDef,
-  useGetRowActions,
-} from '@pspod/ui-components';
+import { DateTimeEditingCell, AddEntity, DataGrid, EnhancedColDef } from '@pspod/ui-components';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { FullProjectNodeMemberInfo } from '~/api/utils/api-requests';
 import { getCurrentUserTimezone } from '~/app/user/user.store';
+import { useGetEditRowActions } from '~/components/datagrid/use-get-edit-row-actions.hook';
 import { UserAvatar } from '~/components/user-avatar/user-avatar.component';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
 import { applyTzOffset } from '~/utils/date/apply-tz-offset';
+import { validateMinDate } from '~/utils/date/validate-min-date';
 
 import { GroupHeader } from '../group-header/group-header.component';
 
@@ -41,12 +40,12 @@ const ParticipantsList: FC = () => {
     onAddParticipantClick,
   } = useParticipants(projectId || projectGroupId);
 
-  const { getActions, onRowModesModelChange, rowModesModel } = useGetRowActions({
-    apiRef,
-    idKey: 'userId',
-    entityGenitive: declinatedTranslations.PARTICIPANT.GENITIVE.toLowerCase(),
-    deleteHandler: (row: FullProjectNodeMemberInfo) => deleteParticipant(row.userId),
-  });
+  const { getActions, onRowModesModelChange, rowModesModel } =
+    useGetEditRowActions<FullProjectNodeMemberInfo>({
+      apiRef,
+      idKey: 'userId',
+      entityGenitive: declinatedTranslations.PARTICIPANT.GENITIVE.toLowerCase(),
+    });
 
   const columns = useMemo<EnhancedColDef<FullProjectNodeMemberInfo>[]>(
     () => [
@@ -87,16 +86,8 @@ const ParticipantsList: FC = () => {
         flex: 1,
         editable: true,
         valueGetter: getColDateWithTz,
-        renderEditCell: ({ id, field, value }) => (
-          <DateTimeEditingCell
-            id={id}
-            field={field}
-            value={value as Date}
-            // @ts-expect-error type
-            minDateTime={applyTzOffset(new Date().toJSON(), getCurrentUserTimezone())}
-            isClearable
-          />
-        ),
+        preProcessEditCellProps: preProcessDateTimeEditCellProps,
+        renderEditCell: renderDateTimeEditCell,
       },
       {
         headerName: t('ENTITY.PARTICIPANT_SOURCE'),
@@ -108,10 +99,10 @@ const ParticipantsList: FC = () => {
         field: 'actions',
         type: 'actions',
         width: 82,
-        getActions,
+        getActions: getActions(deleteParticipant),
       },
     ],
-    [t, roles, getActions, participants],
+    [t, roles, getActions, deleteParticipant, participants],
   );
 
   const onRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
@@ -149,3 +140,24 @@ const ParticipantsList: FC = () => {
 };
 
 export default ParticipantsList;
+
+function preProcessDateTimeEditCellProps(params: GridPreProcessEditCellProps<any, any>) {
+  const error =
+    params.hasChanged && params.props.value instanceof Date
+      ? validateMinDate(params.props.value)
+      : false;
+  return { ...params, error };
+}
+
+function renderDateTimeEditCell(
+  params: GridRenderEditCellParams<FullProjectNodeMemberInfo, any, any, GridTreeNodeWithRender>,
+) {
+  return (
+    <DateTimeEditingCell
+      {...params}
+      // @ts-expect-error type
+      minDateTime={applyTzOffset(new Date().toJSON(), getCurrentUserTimezone())}
+      isClearable
+    />
+  );
+}
