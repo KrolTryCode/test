@@ -4,7 +4,10 @@ import { Button } from '@pspod/ui-components';
 import { FC, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
+import { ProjectNode } from '~/api/utils/api-requests';
+
 import { ProjectNodeBreadcrumbs } from '../breadcrumbs/breadcrumbs.component';
+import { EditableNodeLogo } from '../node-logo/editable-node-logo.component';
 
 import {
   StyledActionsWrapper,
@@ -13,12 +16,10 @@ import {
   StyledHeading,
 } from './node-header.style';
 
-interface NodeHeaderProps {
+interface NodeHeaderProps extends ProjectNode {
   children: string;
   backPath?: string;
   actions?: ReactNode;
-  description?: string;
-  nodeId: string;
 }
 
 export const NodeHeader: FC<NodeHeaderProps> = ({
@@ -26,7 +27,9 @@ export const NodeHeader: FC<NodeHeaderProps> = ({
   children,
   actions,
   description,
-  nodeId,
+  id: nodeId,
+  name: nodeName,
+  type: nodeType,
 }) => {
   return (
     <Stack
@@ -44,17 +47,20 @@ export const NodeHeader: FC<NodeHeaderProps> = ({
           to={backPath}
           icon={<ArrowBack />}
         />
+        <EditableNodeLogo nodeId={nodeId} nodeName={nodeName} nodeType={nodeType} />
         <StyledHeading>{children}</StyledHeading>
         <StyledActionsWrapper hidden={!actions} direction={'row'} alignItems={'center'}>
           {actions}
         </StyledActionsWrapper>
-        <StyledDescription gutterBottom={false}>{description}</StyledDescription>
+        <StyledDescription gutterBottom={false} paddingRight={+Boolean(description)}>
+          {description}
+        </StyledDescription>
       </StyledHeader>
       <Stack
         flex={['auto', 'unset']}
         width={'fit-content'}
         maxHeight={['unset', '30vh']}
-        maxWidth={['100%', description ? '25%' : '50%']}
+        maxWidth={['100%', '25%']}
       >
         <ProjectNodeBreadcrumbs projectNodeId={nodeId} />
       </Stack>

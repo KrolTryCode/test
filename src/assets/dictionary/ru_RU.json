@@ -233,7 +233,8 @@
     "PARTICIPANT": "Участник",
     "PARTICIPANT_SOURCE": "Пригласил",
     "STRUCTURE": "Структура",
-    "TREE":"Дерево"
+    "TREE":"Дерево",
+    "LOGO": "Логотип"
   },
   "EXPORT": {
     "EXPORT_TO": "Экспортировать в формате",

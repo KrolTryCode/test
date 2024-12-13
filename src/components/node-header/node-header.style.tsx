@@ -1,34 +1,52 @@
 import { styled, Box, Typography, TypographyProps, Stack } from '@mui/material';
 
 const BACK_ARROW_GRID_AREA = 'back-arrow';
+const LOGO_GRID_AREA = 'logo';
 const HEADER_GRID_AREA = 'header';
 const ACTIONS_GRID_AREA = 'actions';
-const DESCR_GRID_AREA = 'descr';
+const DESCR_GRID_AREA = 'description';
 
 export const StyledHeader = styled(Box)(({ theme }) => ({
   display: 'grid',
-  gridTemplateAreas: `"${BACK_ARROW_GRID_AREA} ${HEADER_GRID_AREA} ${ACTIONS_GRID_AREA}" "${BACK_ARROW_GRID_AREA} ${DESCR_GRID_AREA} ${DESCR_GRID_AREA}"`,
-  '--back-arrow-size': '32px',
-  gridTemplateColumns: 'var(--back-arrow-size) auto 1fr',
-  gridAutoRows: 'min-content',
-  columnGap: theme.spacing(2),
+  gridTemplateAreas: `
+    "${BACK_ARROW_GRID_AREA} ${LOGO_GRID_AREA} ${HEADER_GRID_AREA} ${ACTIONS_GRID_AREA}"
+    "${BACK_ARROW_GRID_AREA} ${LOGO_GRID_AREA} ${DESCR_GRID_AREA} ${DESCR_GRID_AREA}"
+  `,
+  gridTemplateColumns: 'min-content auto auto 1fr',
+  gridAutoRows: 'auto',
+  columnGap: theme.spacing(1),
   rowGap: theme.spacing(1),
   overflow: 'hidden',
 
+  '--logo-size': '60px',
   '& > a': {
-    marginTop: theme.spacing(-1),
     gridArea: BACK_ARROW_GRID_AREA,
+    height: 'var(--logo-size)',
+  },
 
-    [theme.breakpoints.down('sm')]: {
-      marginTop: theme.spacing(-1 / 6),
+  '& > .project-logo': {
+    gridArea: LOGO_GRID_AREA,
+    marginRight: theme.spacing(1),
+
+    '& .MuiAvatar-root': {
+      height: 'var(--logo-size)',
+      width: 'var(--logo-size)',
     },
   },
 
   [theme.breakpoints.down('sm')]: {
     borderTop: `1px solid ${theme.palette.divider}`,
     paddingTop: theme.spacing(1),
-    gridTemplateAreas: `"${BACK_ARROW_GRID_AREA} ${ACTIONS_GRID_AREA}" "${HEADER_GRID_AREA} ${HEADER_GRID_AREA}" "${DESCR_GRID_AREA} ${DESCR_GRID_AREA}"`,
-    gridTemplateColumns: 'var(--back-arrow-size) 1fr',
+    gridTemplateAreas: `
+      "${BACK_ARROW_GRID_AREA} ${ACTIONS_GRID_AREA} ${ACTIONS_GRID_AREA}"
+      "${LOGO_GRID_AREA} ${LOGO_GRID_AREA} ${HEADER_GRID_AREA}"
+      "${LOGO_GRID_AREA} ${LOGO_GRID_AREA} ${DESCR_GRID_AREA}"
+    `,
+    gridTemplateColumns: 'min-content min-content 1fr',
+
+    '& > a': {
+      height: 'min-content',
+    },
   },
 }));
 

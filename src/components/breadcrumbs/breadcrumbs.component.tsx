@@ -4,6 +4,8 @@ import { useGetProjectNodeQuery } from '~/api/queries/projects/get-project-node.
 import { useGetParentsQuery } from '~/api/queries/projects/get-projects-parents.query';
 import { projectsPath } from '~/utils/configuration/routes-paths';
 
+import { NodeLogo } from '../node-logo/node-logo.component';
+
 import { StyledMuiLink, StyledBreadcrumbs } from './breadcrumbs.style';
 
 interface ProjectNodeBreadcrumbsProps {
@@ -18,12 +20,18 @@ export const ProjectNodeBreadcrumbs: FC<ProjectNodeBreadcrumbsProps> = ({ projec
 
   return (
     <StyledBreadcrumbs separator={'›'} maxItems={5}>
-      {parents?.map(({ name, id }) => (
+      {parents?.map(({ name, id, type }) => (
         <StyledMuiLink key={id} href={`/${projectsPath}/${id}`}>
+          <NodeLogo nodeId={id} nodeType={type} size={6.5} />
           {name}
         </StyledMuiLink>
       ))}
-      <StyledMuiLink fontWeight={'bold'}>{projectData?.name}</StyledMuiLink>
+      {projectData && (
+        <StyledMuiLink fontWeight={'bold'}>
+          <NodeLogo nodeId={projectData.id} nodeType={projectData.type} size={6.5} />
+          {projectData.name}
+        </StyledMuiLink>
+      )}
     </StyledBreadcrumbs>
   );
 };

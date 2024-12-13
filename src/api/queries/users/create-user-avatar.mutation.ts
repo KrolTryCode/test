@@ -1,8 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
 import { UserFile } from '~/api/utils/api-requests';
-import { showErrorMessage } from '~/utils/show-error-message';
+import { handleFileUploadingError } from '~/utils/files/validate-file';
 
 import { UseCustomMutationOptions } from '../../typings/react-query-helpers';
 import { ApiClientSecured } from '../../utils/api-client';
@@ -28,12 +27,7 @@ export const useCreateAvatarMutation = (
       options?.onSuccess?.(...args);
     },
     onError: (e, ...props) => {
-      if (e instanceof AxiosError && e.response?.status === 413) {
-        showErrorMessage(e, 'FILES.ERROR.TOO_BIG');
-      } else {
-        showErrorMessage(e, 'FILES.UPLOAD_FAILED');
-      }
-
+      handleFileUploadingError(e);
       options?.onError?.(e, ...props);
     },
   });
