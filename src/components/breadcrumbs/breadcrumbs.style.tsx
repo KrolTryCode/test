@@ -1,4 +1,5 @@
 import { Breadcrumbs, Link, LinkProps, styled } from '@mui/material';
+import { ReactNode } from 'react';
 
 export const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
   marginBottom: 0,
@@ -22,8 +23,8 @@ export const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
 }));
 
 export const StyledMuiLink = styled(
-  (props: Omit<LinkProps, 'children'> & { children?: string }) => (
-    <Link underline={'hover'} title={props.children} {...props} />
+  (props: Omit<LinkProps, 'children'> & { children?: [ReactNode, string] }) => (
+    <Link underline={'hover'} title={props.children?.[1]} {...props} />
   ),
 )({
   marginBottom: 0,
@@ -32,4 +33,9 @@ export const StyledMuiLink = styled(
   overflow: 'hidden',
   WebkitBoxOrient: 'vertical',
   WebkitLineClamp: '2',
+
+  '& .MuiAvatar-root': {
+    display: 'inline-flex',
+    marginRight: '4px',
+  },
 });

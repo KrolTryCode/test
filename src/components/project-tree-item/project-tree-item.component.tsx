@@ -1,10 +1,12 @@
-import { BackupTable, ChevronRight, Folder, KeyboardArrowDown } from '@mui/icons-material';
+import { ChevronRight, KeyboardArrowDown } from '@mui/icons-material';
 import { Stack } from '@mui/material';
 import { Button, Preloader } from '@pspod/ui-components';
 import { FC, useMemo, useState } from 'react';
 
 import { useGetProjectNodesByParentQuery } from '~/api/queries/projects/get-project-nodes-by-parent.query';
 import { ProjectNode, ProjectNodeType } from '~/api/utils/api-requests';
+
+import { NodeLogo } from '../node-logo/node-logo.component';
 
 import {
   _IconContainer,
@@ -33,16 +35,6 @@ export const ProjectTreeItem: FC<ProjectTreeItemProps> = ({ projectTreeNode }) =
     [projectTreeNode],
   );
 
-  const icon = useMemo(
-    () =>
-      //TODO: Add call to logo
-      // projectTreeNode.logoPath ? (
-      //   <img src={projectTreeNode.logoPath} alt={projectTreeNode.name} />
-      // ) :
-      projectTreeNode.type === ProjectNodeType.Group ? <Folder /> : <BackupTable />,
-    [projectTreeNode],
-  );
-
   return (
     <_ProjectTreeItemContainer>
       <Stack direction={'row'} alignItems={'center'} flex={1}>
@@ -57,7 +49,14 @@ export const ProjectTreeItem: FC<ProjectTreeItemProps> = ({ projectTreeNode }) =
           </Button>
         </_ToggleButtonContainer>
 
-        <_IconContainer>{icon}</_IconContainer>
+        <_IconContainer>
+          <NodeLogo
+            nodeId={projectTreeNode.id}
+            nodeName={projectTreeNode.name}
+            nodeType={projectTreeNode.type}
+            size={'small'}
+          />
+        </_IconContainer>
 
         <Stack>
           <_ProjectTreeNodeLink to={link}>{projectTreeNode.name}</_ProjectTreeNodeLink>

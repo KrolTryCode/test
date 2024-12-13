@@ -30,12 +30,6 @@ export const _IconContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-
-  '& > img': {
-    width: '100%',
-    height: '100%',
-    objectFit: 'contain',
-  },
 }));
 
 export const _Description = styled(Typography)({

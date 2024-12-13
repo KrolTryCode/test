@@ -84,12 +84,7 @@ export const GroupHeader: FC<GroupHeaderProps> = ({ groupId }) => {
   );
 
   return (
-    <NodeHeader
-      nodeId={groupId}
-      backPath={backPath}
-      description={projectData?.description}
-      actions={renderActions()}
-    >
+    <NodeHeader {...projectData!} id={groupId} backPath={backPath} actions={renderActions()}>
       {projectData?.name ?? t('TREE.NODE')}
     </NodeHeader>
   );

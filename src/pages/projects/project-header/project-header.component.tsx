@@ -36,9 +36,9 @@ export const ProjectHeader: FC<ProjectHeaderProps> = ({ projectId }) => {
 
   return (
     <NodeHeader
-      nodeId={projectId}
+      {...projectData!}
+      id={projectId}
       backPath={backPath}
-      description={projectData?.description}
       actions={[
         <Button
           key={'edit'}
