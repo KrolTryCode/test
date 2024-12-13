@@ -7,6 +7,14 @@ import { LogTextOutput } from '~/components/log-text-output/log-text-output.styl
 export const RouteErrorBoundary = () => {
   const { t } = useTranslation();
   const error = useRouteError();
+
+  if (
+    error instanceof TypeError &&
+    error.message.includes('Failed to fetch dynamically imported module')
+  ) {
+    window.location.reload();
+  }
+
   return (
     <Box height={'100dvh'} display={'flex'}>
       <Box width={'80%'} margin={'auto'}>

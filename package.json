@@ -28,7 +28,8 @@
     "dictionary:remove": "tsx ./scripts/dictionary/remove-dictionary",
     "dictionary:unused": "i18n-unused display-unused",
     "dictionary:mark": "i18n-unused mark-unused",
-    "dictionary:missed": "i18n-unused display-missed"
+    "dictionary:missed": "i18n-unused display-missed",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@codemirror/lang-html": "6.4.9",
@@ -93,16 +94,16 @@
     "@storybook/react": "8.4.2",
     "@studiometa/stylelint-formatter-gitlab": "0.0.1",
     "@testing-library/jest-dom": "6.6.3",
-    "@testing-library/react": "16.0.1",
+    "@testing-library/react": "16.1.0",
     "@types/node": "22.9.0",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
     "@types/russian-nouns-js": "1.2.5",
     "@typescript-eslint/eslint-plugin": "8.13.0",
     "@typescript-eslint/parser": "8.13.0",
-    "@vitejs/plugin-react": "4.3.3",
-    "@vitest/coverage-v8": "2.1.4",
-    "@vitest/ui": "2.1.4",
+    "@vitejs/plugin-react": "4.3.4",
+    "@vitest/coverage-v8": "2.1.8",
+    "@vitest/ui": "2.1.8",
     "babel-plugin-styled-components": "2.1.4",
     "cross-env": "7.0.3",
     "dotenv": "16.4.5",
@@ -123,6 +124,7 @@
     "identity-obj-proxy": "3.0.0",
     "jest-styled-components": "7.2.0",
     "npm-run-all": "4.1.5",
+    "patch-package": "8.0.0",
     "postcss-styled-syntax": "0.7.0",
     "prettier": "3.3.3",
     "stylelint": "16.10.0",
@@ -132,10 +134,15 @@
     "swagger-typescript-api": "13.0.22",
     "tsx": "4.19.2",
     "typescript": "5.6.3",
-    "vite": "5.4.10",
+    "vite": "6.0.3",
     "vite-plugin-svgr": "4.3.0",
-    "vite-tsconfig-paths": "5.1.0",
-    "vitest": "2.1.4"
+    "vite-tsconfig-paths": "5.1.4",
+    "vitest": "2.1.8"
+  },
+  "overrides": {
+    "vitest": {
+      "vite": "6.0.3"
+    }
   },
   "browserslist": {
     "production": [
