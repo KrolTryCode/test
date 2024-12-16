@@ -12,7 +12,7 @@ export default defineConfig({
     globals: true,
     snapshotSerializers: ['tests/utils/serializer.ts'],
     environment: 'happy-dom',
-    exclude: ['db_data', 'node_modules', 'build'],
+    exclude: ['data', 'node_modules', 'build'],
   },
   resolve: {
     alias: [

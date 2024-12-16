@@ -1,4 +1,4 @@
 node_modules
 dist
 .idea
-db_data
+data

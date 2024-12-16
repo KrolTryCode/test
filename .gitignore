@@ -31,7 +31,6 @@ src/assets/dictionary/ui_messages_ru.properties
 .npmrc
 
 #volumes
-db_data
-minio_storage
+data
 
 storybook-static
