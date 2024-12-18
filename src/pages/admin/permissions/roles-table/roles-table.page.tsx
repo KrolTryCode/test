@@ -116,6 +116,7 @@ export const RolesTable: FC = () => {
       rowModesModel={rowModesModel}
       onRowModesModelChange={onRowModesModelChange}
       onRowEditStop={onRowEditStop}
+      pagingMode={'server'}
       paging={paging}
       onPagingChanged={setGridPaging}
       hasWidthSaving={false}

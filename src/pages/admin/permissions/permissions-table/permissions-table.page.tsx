@@ -24,6 +24,7 @@ export const PermissionsTable: FC = () => {
       totalCount={permissions?.totalCount ?? 0}
       loading={isLoading}
       onCellClick={handleCellClick}
+      pagingMode={'server'}
       paging={paging}
       onPagingChanged={setGridPaging}
       hasWidthSaving={false}
