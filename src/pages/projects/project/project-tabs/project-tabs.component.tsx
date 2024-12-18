@@ -40,6 +40,13 @@ export const ProjectTabs: FC = () => {
         />
         <Tab
           component={NavLink}
+          to={PROJECT_TABS.SOLVERS}
+          value={PROJECT_TABS.SOLVERS}
+          disabled={tabValue === PROJECT_TABS.SOLVERS}
+          label={renderLabel('NAVIGATION.SOLVERS')}
+        />
+        <Tab
+          component={NavLink}
           to={PROJECT_TABS.TASKS}
           value={PROJECT_TABS.TASKS}
           disabled={tabValue === PROJECT_TABS.TASKS}
