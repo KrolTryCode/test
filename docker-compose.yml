@@ -47,7 +47,6 @@ services:
     container_name: db
     labels:
       org.springframework.boot.service-connection: postgres
-    restart: always
     environment:
       TZ: 'GMT+3'
       PGTZ: 'GMT+3'
