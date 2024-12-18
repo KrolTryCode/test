@@ -8,6 +8,7 @@ import {
   projectPath,
   reportsPath,
   settingsPath,
+  solversPath,
   tablesPath,
   tasksPath,
 } from '~/utils/configuration/routes-paths';
@@ -61,6 +62,11 @@ export const projectsSubroutes: RouteDescription[] = [
         path: eventsPath,
         title: 'NAVIGATION.EVENTS',
         lazyElement: () => import('~/pages/projects/project/events/events.page'),
+      },
+      {
+        path: solversPath,
+        title: 'NAVIGATION.SOLVERS',
+        lazyElement: () => import('~/pages/projects/project/solvers/solvers.page'),
       },
     ],
   },

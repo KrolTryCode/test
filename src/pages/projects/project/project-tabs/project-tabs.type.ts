@@ -3,6 +3,7 @@ import {
   participantsPath,
   reportsPath,
   settingsPath,
+  solversPath,
   tablesPath,
   tasksPath,
 } from '~/utils/configuration/routes-paths';
@@ -14,6 +15,7 @@ export const PROJECT_TABS = {
   SETTINGS: settingsPath,
   PARTICIPANTS: participantsPath,
   EVENTS: eventsPath,
+  SOLVERS: solversPath,
 };
 
 export type ProjectTabValue = (typeof PROJECT_TABS)[keyof typeof PROJECT_TABS];

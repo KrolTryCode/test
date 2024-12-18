@@ -58,6 +58,9 @@
     "i18next": "23.10.1",
     "jspdf": "2.5.2",
     "jspdf-autotable": "3.8.4",
+    "mirage-msw": "0.2.2",
+    "miragejs": "0.2.0-alpha.3",
+    "msw": "2.6.8",
     "mui-tel-input": "6.0.1",
     "notistack": "3.0.1",
     "query-string": "9.1.1",
@@ -144,6 +147,11 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
     ]
   }
 }

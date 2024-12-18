@@ -26,3 +26,4 @@ export const projectPath = 'project';
 export const reportsPath = 'reports';
 export const participantsPath = 'participants';
 export const eventsPath = 'events';
+export const solversPath = 'solvers';
