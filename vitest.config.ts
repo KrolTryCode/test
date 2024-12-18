@@ -10,6 +10,15 @@ export default defineConfig({
     environment: 'happy-dom',
     exclude: ['data', 'node_modules', 'build'],
   },
+
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler',
+      },
+    },
+  },
+
   resolve: {
     alias: [
       { find: '~', replacement: fileURLToPath(new URL('./src', import.meta.url)) },
