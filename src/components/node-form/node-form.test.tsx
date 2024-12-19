@@ -7,7 +7,7 @@ import { getSchema } from '~/components/node-form/node-form.schema';
 const correctFormData: CreateContentNodeRequest = {
   name: 'Таблица на странице',
   projectId: '268ea6a3-cecb-4350-a430-9d215230d93c',
-  parentId: 'faa39179-dca8-4054-88ad-83990086b309',
+  parentNodeId: 'faa39179-dca8-4054-88ad-83990086b309',
   type: ContentNodeType.Table,
 };
 

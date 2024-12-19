@@ -10,7 +10,7 @@ export const getSchema = (
   y.object({
     name: y.string().required().default('').notOneOf(siblingNames, t('ERROR.SIBLING_SAME_NAME')),
     projectId: y.string().uuid().required().default(''),
-    parentId: y.string().uuid().allowEmptyString(),
+    parentNodeId: y.string().uuid().allowEmptyString(),
     type: y
       .mixed<ContentNodeType>()
       .oneOf(Object.values(ContentNodeType))
