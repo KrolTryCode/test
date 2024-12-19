@@ -50,7 +50,7 @@ export const NodeForm: FC<NodeFormProps> = ({ onResolve, onReject, data, isEditi
     [treeData, findNode],
   );
 
-  const schema = getSchema(getSiblingNames(data?.parentId), t);
+  const schema = getSchema(getSiblingNames(data?.parentNodeId), t);
   const {
     register,
     handleSubmit,
@@ -76,7 +76,7 @@ export const NodeForm: FC<NodeFormProps> = ({ onResolve, onReject, data, isEditi
             placeholder={t('ACTION.SELECT')}
             noDataText={t('MESSAGE.NO_DATA')}
             isLoading={isLoading}
-            controllerProps={{ ...register('parentId'), control }}
+            controllerProps={{ ...register('parentNodeId'), control }}
           />
         </FormItem>
       )}
