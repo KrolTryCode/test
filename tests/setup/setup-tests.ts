@@ -6,7 +6,6 @@ import { setupTestLocalization } from 'tests/setup/setup-test-localization';
 
 import { setupTestApi } from './setup-test-api';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual('react-router-dom')),
   useNavigate: () => mockedNavigate,
@@ -14,7 +13,6 @@ vi.mock('react-router-dom', async () => ({
   useMatches: mockedMatches,
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 vi.mock('@mui/material', async () => ({
   ...(await vi.importActual('@mui/material')),
   useMediaQuery: () => true,
@@ -45,7 +43,7 @@ Object.defineProperty(document, 'fullscreenEnabled', {
   value: false,
 });
 
-setupTestLocalization();
+await setupTestLocalization();
 setupTestApi();
 LicenseInfo.setLicenseKey(
   '0bf1739d4674427cc4a3ff58a49957a8Tz1NVUktOTk5LEU9MTkyNDEwODQ1NzkwNCxTPXByZW1pdW0sTE09cGVycGV0dWFsLEtWPTI=',

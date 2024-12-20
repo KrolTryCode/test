@@ -1,0 +1,13 @@
+diff --git a/node_modules/devextreme/cjs/ui/themes.js b/node_modules/devextreme/cjs/ui/themes.js
+index f4e2c3a..6c0c9f0 100644
+--- a/node_modules/devextreme/cjs/ui/themes.js
++++ b/node_modules/devextreme/cjs/ui/themes.js
+@@ -67,7 +67,7 @@ function readThemeMarker() {
+     var element = (0, _renderer.default)("<div>", context).addClass("dx-theme-marker").appendTo(context.documentElement);
+     var result;
+     try {
+-        result = window.getComputedStyle(element.get(0)).fontFamily;
++        result = window.getComputedStyle?.(element.get(0))?.fontFamily;
+         if (!result) {
+             return null
+         }

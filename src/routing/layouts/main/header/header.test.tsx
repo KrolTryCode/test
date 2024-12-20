@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import { t } from 'i18next';
 import { it, describe, expect } from 'vitest';
 
@@ -32,10 +32,12 @@ describe('Header', () => {
   });
 
   it('renders the header with user permissions correctly', async () => {
-    useUserStore.setState({
-      data: {
-        permissions: ['USER'],
-      },
+    act(() => {
+      useUserStore.setState({
+        data: {
+          permissions: ['USER'],
+        },
+      });
     });
 
     expect(await screen.findByRole('link', { name: '?' })).toBeInTheDocument();
