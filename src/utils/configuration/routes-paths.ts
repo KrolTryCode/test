@@ -13,6 +13,7 @@ export const usersPath = 'users';
 export const templatesPath = 'templates';
 export const logsPath = 'logs';
 export const settingsPath = 'settings';
+export const securityPath = 'security';
 export const permissionsPath = 'permissions';
 export const rolesPath = 'roles';
 

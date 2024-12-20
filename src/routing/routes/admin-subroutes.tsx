@@ -6,6 +6,7 @@ import {
   logsPath,
   permissionsPath,
   rolesPath,
+  securityPath,
   settingsPath,
   templatesPath,
   usersPath,
@@ -58,6 +59,11 @@ export const adminSubroutes: RouteDescription[] = [
     path: settingsPath,
     menuDisplay: { label: 'NAVIGATION.SETTINGS' },
     lazyElement: () => import('~/pages/admin/settings/admin-settings.page'),
+  },
+  {
+    path: securityPath,
+    menuDisplay: { label: 'NAVIGATION.SECURITY' },
+    lazyElement: () => import('~/pages/admin/security/security-settings.page'),
   },
   {
     path: logsPath,

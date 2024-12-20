@@ -21,7 +21,7 @@ exports[`Profile > renders the profile > profile 1`] = `
         class="MuiStack-root profile-avatar css-o8tcyt-MuiStack-root"
       >
         <div
-          class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-n9jnos-MuiAvatar-root"
+          class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-6rxyyo-MuiAvatar-root"
           color="primary"
           title=""
         />
@@ -873,10 +873,10 @@ exports[`Profile > renders the profile > profile 1`] = `
           </fieldset>
         </fieldset>
         <div
-          class="MuiStack-root css-1gxrps2-MuiStack-root"
+          class="MuiStack-root css-1s8nmkv-MuiStack-root"
         >
           <button
-            class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation css-13tmlki-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
+            class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation css-zrn6ml-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
             id=":rp:"
             tabindex="0"
             type="button"
@@ -888,7 +888,7 @@ exports[`Profile > renders the profile > profile 1`] = `
             </span>
           </button>
           <button
-            class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation css-1onv5ad-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
+            class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation css-dw3lxo-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
             id=":rq:"
             tabindex="0"
             type="submit"

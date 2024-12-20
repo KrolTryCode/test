@@ -1,5 +1,7 @@
 import { Components, Theme, CSSInterpolation, CSSObject } from '@mui/material/styles';
 
+import { Color } from '~/themes/theme-overrides';
+
 export const MuiButtonGroup: Components<Omit<Theme, 'components'>>['MuiButtonGroup'] = {
   defaultProps: { disableRipple: true },
 };
@@ -26,176 +28,122 @@ export const MuiButton: Components<Omit<Theme, 'components'>>['MuiButton'] = {
       textTransform: 'none',
       lineHeight: 1.5,
       borderRadius: '5px',
-      '&[hidden]': {
-        visibility: 'hidden',
-      },
-      '&.Mui-disabled': {
-        opacity: 0.5,
-      },
-      '& svg': {
-        fill: 'currentColor',
-      },
-      '&.icon-button .MuiButton-startIcon': {
-        margin: 0,
-      },
+      '&[hidden]': { visibility: 'hidden' },
+      '&.Mui-disabled': { opacity: 0.5 },
+      '& svg': { fill: 'currentColor' },
+      '&.icon-button .MuiButton-startIcon': { margin: 0 },
     },
-
     textPrimary: ({ theme }) => getTextButtonStyles(theme.palette.primary.main),
     textSecondary: ({ theme }) => ({
-      color: `${theme.palette.text.primary} !important`,
+      color: theme.palette.text.primary,
       ...getTextButtonStyles(theme.palette.text.primary),
     }),
     outlinedPrimary: ({ theme }) =>
       getOutlinedButtonStyles({
         main: theme.palette.primary.main,
-        hover: '#003d77',
-        focus: '#003568',
-        active: '#001830',
+        white: theme.palette.common.white,
+        ...theme.palette.button.primary,
       }),
     containedPrimary: ({ theme }) =>
       getContainedButtonStyles({
         main: theme.palette.primary.main,
-        hover: '#003d77',
-        focus: '#003568',
-        active: '#001830',
+        white: theme.palette.common.white,
+        ...theme.palette.button.primary,
       }),
     outlinedSecondary: ({ theme }) => ({
       color: theme.palette.secondary.main,
-      borderColor: '#dddddd',
+      borderColor: theme.palette.button.secondary.outlined.border,
       '&:hover': {
-        borderColor: '#dddddd',
-        backgroundColor: '#f5f5f5',
+        borderColor: theme.palette.button.secondary.outlined.border,
+        backgroundColor: theme.palette.button.secondary.outlined.hover,
       },
       '&:focus-visible': {
-        borderColor: '#dddddd',
-        backgroundColor: '#ebebeb',
+        borderColor: theme.palette.button.secondary.outlined.border,
+        backgroundColor: theme.palette.button.secondary.outlined.focus,
       },
       '&:active': {
-        borderColor: '#dddddd',
-        backgroundColor: '#c2c2c2',
+        borderColor: theme.palette.button.secondary.outlined.border,
+        backgroundColor: theme.palette.button.secondary.outlined.active,
       },
     }),
     containedSecondary: ({ theme }) =>
       getContainedButtonStyles({
-        main: '#353535',
-        hover: '#151515',
-        focus: '#131313',
-        active: theme.palette.secondary.main,
+        main: theme.palette.secondary.main,
+        hover: theme.palette.button.secondary.contained.hover,
+        focus: theme.palette.button.secondary.contained.focus,
+        active: theme.palette.button.secondary.contained.active,
+        white: theme.palette.common.white,
       }),
-
     outlinedWarning: ({ theme }) =>
       getOutlinedButtonStyles({
         main: theme.palette.warning.main,
-        hover: '#d66e0b',
-        focus: '#c96707',
-        active: '#bb5f07',
+        white: theme.palette.common.white,
+        ...theme.palette.button.warning,
       }),
     containedWarning: ({ theme }) =>
       getContainedButtonStyles({
         main: theme.palette.warning.main,
-        hover: '#d66e0b',
-        focus: '#c96707',
-        active: '#bb5f07',
+        white: theme.palette.common.white,
+        ...theme.palette.button.warning,
       }),
     outlinedError: ({ theme }) =>
       getOutlinedButtonStyles({
         main: theme.palette.error.main,
-        hover: '#be0909',
-        focus: '#b00808',
-        active: '#7a0606',
+        white: theme.palette.common.white,
+        ...theme.palette.button.error,
       }),
     containedError: ({ theme }) =>
       getContainedButtonStyles({
         main: theme.palette.error.main,
-        hover: '#be0909',
-        focus: '#b00808',
-        active: '#7a0606',
+        white: theme.palette.common.white,
+        ...theme.palette.button.error,
       }),
     outlinedSuccess: ({ theme }) =>
       getOutlinedButtonStyles({
         main: theme.palette.success.main,
-        hover: '#23904f',
-        focus: '#208448',
-        active: '#15572f',
+        white: theme.palette.common.white,
+        ...theme.palette.button.success,
       }),
     containedSuccess: ({ theme }) =>
       getContainedButtonStyles({
         main: theme.palette.success.main,
-        hover: '#23904f',
-        focus: '#208448',
-        active: '#15572f',
+        white: theme.palette.common.white,
+        ...theme.palette.button.success,
       }),
   },
 };
 
-interface Colors {
+interface Colors extends Color {
   main: string;
-  hover: string;
-  focus: string;
-  active: string;
+  white: string;
 }
 
-function getContainedButtonStyles({ main, hover, focus, active }: Colors): CSSInterpolation {
+function getContainedButtonStyles({ main, hover, focus, active, white }: Colors): CSSInterpolation {
   return {
     '&, &.Mui-disabled': {
       backgroundColor: main,
       borderColor: main,
-      '&:not(.MuiLoadingButton-loading)': {
-        color: '#fff',
-      },
+      '&:not(.MuiLoadingButton-loading)': { color: white },
     },
-    '& .MuiLoadingButton-loadingIndicator': {
-      color: '#fff',
-    },
-    '&:hover': {
-      color: '#fff',
-      backgroundColor: hover,
-      borderColor: hover,
-    },
-    '&:focus-visible': {
-      color: '#fff',
-      backgroundColor: focus,
-      borderColor: focus,
-    },
-    '&:active': {
-      color: '#fff',
-      backgroundColor: active,
-      borderColor: active,
-    },
+    '& .MuiLoadingButton-loadingIndicator': { color: white },
+    '&:hover': { color: white, backgroundColor: hover, borderColor: hover },
+    '&:active': { color: white, backgroundColor: active, borderColor: active },
+    '&:focus-visible': { color: white, backgroundColor: focus, borderColor: focus },
   };
 }
 
-function getOutlinedButtonStyles({ main, hover, focus, active }: Colors): CSSInterpolation {
+function getOutlinedButtonStyles({ main, hover, focus, active, white }: Colors): CSSInterpolation {
   return {
-    '&, &.Mui-disabled, & .MuiLoadingButton-loadingIndicator': {
-      color: main,
-      borderColor: main,
-    },
-    '&:hover': {
-      color: '#fff',
-      backgroundColor: hover,
-      borderColor: hover,
-    },
-    '&:focus-visible': {
-      color: '#fff',
-      backgroundColor: focus,
-      borderColor: focus,
-    },
-    '&:active': {
-      color: '#fff',
-      backgroundColor: active,
-      borderColor: active,
-    },
+    '&, &.Mui-disabled, & .MuiLoadingButton-loadingIndicator': { color: main, borderColor: main },
+    '&:hover': { color: white, backgroundColor: hover, borderColor: hover },
+    '&:active': { color: white, backgroundColor: active, borderColor: active },
+    '&:focus-visible': { color: white, backgroundColor: focus, borderColor: focus },
   };
 }
 
 function getTextButtonStyles(color: string): CSSObject {
   return {
-    '&:hover': {
-      backgroundColor: `${color}04`,
-    },
-    '&:focus-visible': {
-      backgroundColor: `${color}10`,
-    },
+    '&:hover': { backgroundColor: `${color}04` },
+    '&:focus-visible': { backgroundColor: `${color}10` },
   };
 }

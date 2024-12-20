@@ -1,26 +1,31 @@
-import { Box } from '@mui/material';
-import cn from 'classnames';
+import { Box, Typography } from '@mui/material';
+import { Image } from '@pspod/ui-components';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router-dom';
 
 import { logo } from '~/utils/configuration/logo';
-
-import styles from './auth.module.scss';
+import { useAppDesignConfig } from '~/utils/configuration/use-app-design-config.hook';
+import { createObjectURLFromFile } from '~/utils/files';
 
 export const AuthLayout = () => {
   const { t, i18n } = useTranslation();
+  const { appHelloText, appLoginLogo } = useAppDesignConfig();
+
+  const imgSrc = useMemo(() => createObjectURLFromFile(appLoginLogo), [appLoginLogo]);
+
+  const DEFAULT_APP_HELLO_LOGO = logo[i18n.language];
+  const DEFAULT_APP_HELLO_TEXT = 'APP.HELLO_TEXT';
 
   return (
-    <Box
-      height={'100dvh'}
-      width={'100%'}
-      className={cn('with-footer', styles.auth)}
-      display={'flex'}
-    >
-      <Box className={styles.auth_content} margin={'auto'}>
-        <div className={styles.auth_content__header}>
-          <img src={logo[i18n.language]} alt={t('PROJECT_NAME')} />
-        </div>
+    <Box height={'100dvh'} display={'flex'}>
+      <Box width={500} margin={'auto'}>
+        <Box display={'flex'} marginBottom={2} alignItems={'center'} flexDirection={'column'}>
+          <Box paddingBottom={3} maxWidth={300}>
+            <Image src={imgSrc ?? DEFAULT_APP_HELLO_LOGO} alt={t('PROJECT_NAME')} />
+          </Box>
+          <Typography variant={'h4'}>{t(appHelloText ?? DEFAULT_APP_HELLO_TEXT)}</Typography>
+        </Box>
         <Outlet />
       </Box>
     </Box>

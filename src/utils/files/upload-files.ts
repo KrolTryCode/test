@@ -23,7 +23,7 @@ export function uploadFiles(options: UploadFilesOptions) {
   });
 }
 
-const mimeType: Record<UploadFilesOptions['fileType'], string> = {
+export const mimeType: Record<UploadFilesOptions['fileType'], string> = {
   excel:
     'application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   image: 'image/png, image/jpeg, image/webp',

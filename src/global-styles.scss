@@ -24,35 +24,6 @@ body {
   }
 }
 
-:root {
-  --base-accent: #{$base-accent};
-}
-
-// #region DX patches
-.side-nav-outer-toolbar .dx-drawer {
-  height: calc(100% - 56px);
-}
-
-.responsive-paddings {
-  padding: 20px;
-
-  .screen-large & {
-    padding: 40px;
-  }
-}
-
-.with-footer > .dx-scrollable-wrapper > .dx-scrollable-container > .dx-scrollable-content {
-  height: 100%;
-
-  & > .dx-scrollview-content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-}
-
-// #endregion
-
 // #region Mui patches
 
 .MuiDayCalendar-monthContainer {

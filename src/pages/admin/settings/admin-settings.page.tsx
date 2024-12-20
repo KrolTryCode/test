@@ -1,17 +1,29 @@
 import { Preloader } from '@pspod/ui-components';
 
-import { useGetModulesListQuery } from '~/api/queries/settings/get-modules-list.query';
-import { ConfigurationFormComponent } from '~/components/configuration-form/configuration-form.component';
+import { ModuleType, useGetModulesListQuery } from '~/api/queries/settings/get-modules-list.query';
+import { selectPropertiesByModuleName } from '~/api/selectors/select-properties-by-module-name';
+import { DefaultConfigurationForm } from '~/components/configuration-form/default-configuration-form.component';
+import { DesignConfigurationForm } from '~/components/configuration-form/design-configuration-form.component';
 
 const SettingsPage = () => {
-  const { data: modulesList, isLoading } = useGetModulesListQuery();
+  const { data: designModuleProperties, isLoading: isDesignModulesLoading } =
+    useGetModulesListQuery({
+      select: data => selectPropertiesByModuleName(data, ModuleType.DESIGN),
+    });
+
+  const { data: usersModuleProperties, isLoading: isUsersModulesLoading } = useGetModulesListQuery({
+    select: data => selectPropertiesByModuleName(data, ModuleType.USERS),
+  });
 
   return (
     <>
-      {modulesList?._embedded?.moduleConfigurationList?.map(entry => (
-        <ConfigurationFormComponent {...entry} key={entry.moduleName} />
+      {designModuleProperties?.map(entry => (
+        <DesignConfigurationForm {...entry} key={entry.moduleName} />
       ))}
-      {isLoading && <Preloader />}
+      {usersModuleProperties?.map(entry => (
+        <DefaultConfigurationForm {...entry} key={entry.moduleName} />
+      ))}
+      <Preloader visible={isDesignModulesLoading || isUsersModulesLoading} />
     </>
   );
 };
