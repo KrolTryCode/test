@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { designQueries } from '~/api/queries/design/queries';
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { ContentType } from '~/api/utils/api-requests';
@@ -25,6 +26,8 @@ export const useSaveConfigurationMutation = (
       }),
     ...options,
     onSuccess(...args) {
+      void queryClient.invalidateQueries({ queryKey: designQueries.logo._def });
+      void queryClient.invalidateQueries({ queryKey: designQueries.designConfiguration._def });
       void queryClient.invalidateQueries({
         queryKey: settingsQueries.moduleConfiguration(name, path).queryKey,
       });

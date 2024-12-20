@@ -50,7 +50,6 @@
     "@tanstack/react-query-devtools": "5.59.19",
     "@uiw/react-codemirror": "4.23.6",
     "axios": "1.7.7",
-    "classnames": "2.3.2",
     "date-fns": "4.1.0",
     "devexpress-gantt": "4.1.49",
     "devextreme": "23.1.3",

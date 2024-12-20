@@ -13,11 +13,9 @@ import { MuiFormControl, MuiFormLabel, MuiFormControlLabel } from './components/
 import { MuiTextField, MuiFilledInput, MuiOutlinedInput, MuiInputLabel } from './components/input';
 import { MuiMenu, MuiMenuItem } from './components/menu';
 import { MuiTabs, MuiTab, MuiTabPanel } from './components/tabs';
-import { palette } from './palette';
 import { typography } from './typography';
 
 export const themeOptions: ThemeOptions = {
-  palette,
   typography,
   breakpoints: {
     values: {
@@ -95,6 +93,7 @@ export const themeOptions: ThemeOptions = {
     },
     MuiDrawer: { styleOverrides: { paper: { width: 340 } } },
     MuiCircularProgress: { defaultProps: { disableShrink: true } },
+    MuiRadio: { styleOverrides: { root: ({ theme }) => ({ color: theme.palette.grey.A400 }) } },
     MuiTabs,
     MuiTab,
     MuiTabPanel,

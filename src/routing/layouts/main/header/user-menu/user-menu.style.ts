@@ -8,7 +8,7 @@ export const StyledMenuItem = styled(MenuItem)<MenuItemProps>(({ theme }) => ({
   // в консоли настойчиво предлагает сменить first-child на first-of-type, что не подходит
   // '&:first-child': {
   '&:is(a)': {
-    borderTop: '1px solid',
+    borderTop: `1px solid ${theme.palette.primary.main}`,
     borderTopLeftRadius: 'inherit',
     borderTopRightRadius: 'inherit',
   },

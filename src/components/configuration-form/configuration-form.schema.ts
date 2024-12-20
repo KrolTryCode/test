@@ -1,6 +1,6 @@
 import * as y from 'yup';
 
-import { PropertyInfo } from '~/components/configuration-form/configuration-form.type';
+import { PropertyInfo } from '~/api/utils/api-requests';
 
 export const getSchema = (properties: PropertyInfo[]) =>
   y.object().shape(

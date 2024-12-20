@@ -5,11 +5,17 @@ import { CollectionModelEntityModelModuleConfiguration } from '~/api/utils/api-r
 
 import { settingsQueries } from './queries';
 
-export const useGetModulesListQuery = (
-  options?: UseCustomQueryOptions<CollectionModelEntityModelModuleConfiguration>,
-): UseQueryResult<CollectionModelEntityModelModuleConfiguration> => {
+export const useGetModulesListQuery = <T = CollectionModelEntityModelModuleConfiguration>(
+  options?: UseCustomQueryOptions<CollectionModelEntityModelModuleConfiguration, unknown, T>,
+): UseQueryResult<T, unknown> => {
   return useQuery({
     ...settingsQueries.moduleList,
     ...options,
   });
 };
+
+export enum ModuleType {
+  USERS = 'users',
+  ACCOUNTS = 'accounts',
+  DESIGN = 'design',
+}

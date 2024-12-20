@@ -21,38 +21,38 @@ const getStorageService = () => {
   return rememberMe ? projectLocalStorageService : projectSessionStorageService;
 };
 
+const paramsSerializer = (params: Record<string, any>) => {
+  const keys = Object.keys(params);
+  let res: { [key: string]: unknown } = {};
+
+  for (const key of keys) {
+    if (typeof params[key] === 'object' && !Array.isArray(params[key])) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      res = { ...res, ...params[key] };
+    } else {
+      res[key] = params[key];
+    }
+  }
+
+  return queryString.stringify(res, { arrayFormat: 'none' });
+};
+
 const BASE_API_URL = '/api';
 
 const API_CONFIG: ApiConfig = {
   baseURL: BASE_API_URL,
+  paramsSerializer,
 };
 
 const API_CONFIG_SECURE: ApiConfig = {
   baseURL: BASE_API_URL,
+  paramsSerializer,
   securityWorker: () => {
     const token = getStorageService().get(ProjectStorageKey.AccessToken);
 
     if (token) {
       return { headers: { Authorization: `Bearer ${token ?? ''}` } };
     }
-  },
-  paramsSerializer: params => {
-    const keys = Object.keys(params);
-
-    let res: {
-      [key: string]: unknown;
-    } = {};
-
-    for (const key of keys) {
-      if (typeof params[key] === 'object' && !Array.isArray(params[key])) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        res = { ...res, ...params[key] };
-      } else {
-        res[key] = params[key];
-      }
-    }
-
-    return queryString.stringify(res, { arrayFormat: 'none' });
   },
 };
 
