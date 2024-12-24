@@ -2,9 +2,6 @@ import { Components, Theme } from '@mui/material/styles';
 
 export const MuiTabs: Components<Omit<Theme, 'components'>>['MuiTabs'] = {
   styleOverrides: {
-    root: {
-      minHeight: 'auto',
-    },
     flexContainer: {
       height: '100%',
       alignItems: 'center',

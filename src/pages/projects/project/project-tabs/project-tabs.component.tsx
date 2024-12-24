@@ -81,7 +81,7 @@ export const ProjectTabs: FC = () => {
           label={renderLabel('NAVIGATION.EVENTS')}
         />
       </TabList>
-      <Box height={'100%'}>
+      <Box flex={1} padding={1}>
         <Outlet context={outletContext} />
       </Box>
     </TabContext>
