@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom';
-import { LicenseInfo } from '@mui/x-license';
 
 import { mockedMatches, mockedNavigate, mockedParams } from 'tests/__mocks__/react-router-dom.mock';
 import { setupTestLocalization } from 'tests/setup/setup-test-localization';
@@ -45,9 +44,6 @@ Object.defineProperty(document, 'fullscreenEnabled', {
 
 await setupTestLocalization();
 setupTestApi();
-LicenseInfo.setLicenseKey(
-  '0bf1739d4674427cc4a3ff58a49957a8Tz1NVUktOTk5LEU9MTkyNDEwODQ1NzkwNCxTPXByZW1pdW0sTE09cGVycGV0dWFsLEtWPTI=',
-);
 
 afterEach(() => {
   vi.restoreAllMocks();
