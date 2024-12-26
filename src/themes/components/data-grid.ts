@@ -5,9 +5,6 @@ export const MuiTablePagination: Components<Omit<Theme, 'components'>>['MuiTable
     actions: {
       '.Mui-selected': {
         background: '#d4d4d4',
-        color: '#333333',
-        borderRadius: '5px',
-        pointerEvents: 'none',
       },
     },
   },
