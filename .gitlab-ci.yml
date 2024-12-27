@@ -1,5 +1,5 @@
 variables:
-  NODE_IMAGE: node:20.13.1
+  NODE_IMAGE: node:22.12.0
   CONTAINER_IMAGE: gcr.io/kaniko-project/executor:debug
   DEPLOYMENT_IMAGE: quay.io/lifechurch/k8s-deploy-helper:latest
 

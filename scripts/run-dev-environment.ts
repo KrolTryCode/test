@@ -16,4 +16,4 @@ const npmAlias = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 const isLocal = CORE_URL.includes('localhost') || CORE_URL.includes('host.docker.internal');
 const runCommand = isLocal ? 'dev:local' : 'dev:remote';
 
-spawnSync(npmAlias, ['run', runCommand], { stdio: 'inherit' });
+spawnSync(npmAlias, ['run', runCommand], { stdio: 'inherit', shell: true });
