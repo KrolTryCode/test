@@ -1,6 +1,7 @@
 import { Stack, Typography } from '@mui/material';
 import {
   GridEventListener,
+  GridPreProcessEditCellProps,
   GridRowEditStopReasons,
   GridRowOrderChangeParams,
   useGridApiRef,
@@ -11,6 +12,7 @@ import {
   GridPagingParams,
   AddEntity,
   Button,
+  StringEditingCell,
 } from '@pspod/ui-components';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -76,6 +78,19 @@ const TableStructure: FC = () => {
     [handleEditColumn, t],
   );
 
+  const validateColumnName = useCallback(
+    (params: GridPreProcessEditCellProps<string, ColumnMetadataExtended>) => {
+      const existingNames = items?.map(({ name }) => name).filter(name => name !== params.row.name);
+
+      const error = existingNames?.includes(params.props.value!)
+        ? t('STRUCTURE.ERROR.NOT_UNIQUE_NAME')
+        : undefined;
+
+      return { ...params.props, error };
+    },
+    [items, t],
+  );
+
   const structureTableColumns: EnhancedColDef<ColumnMetadataExtended>[] = useMemo(
     () => [
       {
@@ -83,6 +98,10 @@ const TableStructure: FC = () => {
         headerName: t('COMMON.TITLE'),
         flex: 1,
         editable: true,
+        preProcessEditCellProps: validateColumnName,
+        renderEditCell(params) {
+          return <StringEditingCell {...params} />;
+        },
       },
       {
         field: 'type',
@@ -118,7 +137,7 @@ const TableStructure: FC = () => {
         getActions: getActions(handleDropColumn),
       },
     ],
-    [getActions, handleDropColumn, t, translateColumnType],
+    [getActions, handleDropColumn, t, translateColumnType, validateColumnName],
   );
 
   const onRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
