@@ -52,6 +52,7 @@ export const createDeclinatedTranslations = (
     DIRECTORY: getDeclinationsMap('ENTITY.DIRECTORY', Gender.FEMININE),
     STRUCTURE: getDeclinationsMap('ENTITY.STRUCTURE', Gender.FEMININE),
     PARTICIPANT: getDeclinationsMap('ENTITY.PARTICIPANT', Gender.MASCULINE),
+    FORM: getDeclinationsMap('ENTITY.FORM', Gender.FEMININE),
   };
 };
 

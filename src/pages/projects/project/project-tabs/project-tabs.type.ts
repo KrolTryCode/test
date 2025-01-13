@@ -1,5 +1,6 @@
 import {
   eventsPath,
+  formsPath,
   participantsPath,
   reportsPath,
   settingsPath,
@@ -16,6 +17,7 @@ export const PROJECT_TABS = {
   PARTICIPANTS: participantsPath,
   EVENTS: eventsPath,
   SOLVERS: solversPath,
+  FORMS: formsPath,
 };
 
 export type ProjectTabValue = (typeof PROJECT_TABS)[keyof typeof PROJECT_TABS];

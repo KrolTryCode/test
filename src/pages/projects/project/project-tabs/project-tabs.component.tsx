@@ -47,6 +47,13 @@ export const ProjectTabs: FC = () => {
         />
         <Tab
           component={NavLink}
+          to={PROJECT_TABS.FORMS}
+          value={PROJECT_TABS.FORMS}
+          disabled={tabValue === PROJECT_TABS.FORMS}
+          label={renderLabel('NAVIGATION.FORMS')}
+        />
+        <Tab
+          component={NavLink}
           to={PROJECT_TABS.TASKS}
           value={PROJECT_TABS.TASKS}
           disabled={tabValue === PROJECT_TABS.TASKS}
@@ -89,7 +96,7 @@ export const ProjectTabs: FC = () => {
 };
 
 function getTab(currentPath: string): ProjectTabValue {
-  let tab = currentPath.split('/').reverse()[0];
+  let tab = currentPath.split('/')[4];
   if (!Object.values(PROJECT_TABS).includes(tab)) {
     tab = PROJECT_TABS.TABLES;
   }
