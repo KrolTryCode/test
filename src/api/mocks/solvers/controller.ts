@@ -1,14 +1,14 @@
-import MSWInterceptor from 'mirage-msw';
-import { createServer, Model } from 'miragejs';
+import { Model } from 'miragejs';
 
+import { PartialServerConfig } from '~/api/mocks/init-mock-servers';
 import { Solver } from '~/api/mocks/solvers/types';
 import { dateTimeToISOString } from '~/utils/date/formatters';
 
 export const SOLVER_MOCK_SERVER_URLS = {
-  GET_LIST: '/test/solvers/list',
-  CREATE: '/test/solvers/create',
-  DELETE: '/test/solvers/delete',
-  UPDATE: '/test/solvers/update',
+  GET_LIST: '/solvers/list',
+  CREATE: '/solvers/create',
+  DELETE: '/solvers/delete',
+  UPDATE: '/solvers/update',
 };
 
 const mockModels = {
@@ -22,12 +22,11 @@ const mockModels = {
 
 const mockFactories = {};
 
-export const solverServer = createServer<typeof mockModels, typeof mockFactories>({
-  //@ts-expect-error types
-  interceptor: new MSWInterceptor(),
+export const solverServer: PartialServerConfig<typeof mockModels, typeof mockFactories> = {
   models: mockModels,
+
   factories: mockFactories,
-  logging: true,
+
   seeds(server) {
     server.create('solver', {
       name: 'Solver 1',
@@ -73,6 +72,4 @@ export const solverServer = createServer<typeof mockModels, typeof mockFactories
       return { message: `Solver with id ${request.params.id} deleted` };
     });
   },
-});
-
-await solverServer.start();
+};

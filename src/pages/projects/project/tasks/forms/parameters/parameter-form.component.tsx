@@ -4,17 +4,17 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Solver, SolverFormInput } from '~/api/mocks/solvers/types';
-import { FormInputFile, FormInputText } from '~/components/react-hook-form';
-import { schema } from '~/pages/projects/project/solvers/add-solver.schema';
+import { FormParameter, FormParameterInput } from '~/api/mocks/forms/parameters/types';
+import { FormInputText } from '~/components/react-hook-form';
+import { schema } from '~/pages/projects/project/tasks/forms/parameters/parameters-form.schema';
 
-interface SolverFormProps {
-  data?: Solver;
+interface ParameterFormProps {
+  data?: FormParameter;
   onReject?: () => void;
-  onResolve: (values: SolverFormInput) => void;
+  onResolve: (values: FormParameterInput) => void;
 }
 
-export const SolverForm: FC<SolverFormProps> = ({ data, onResolve, onReject }) => {
+export const ParameterForm: FC<ParameterFormProps> = ({ data, onResolve, onReject }) => {
   const { t } = useTranslation();
 
   const {
@@ -34,11 +34,11 @@ export const SolverForm: FC<SolverFormProps> = ({ data, onResolve, onReject }) =
       <FormItem label={t('COMMON.TITLE')} isRequired>
         <FormInputText controllerProps={{ ...register('name'), control }} />
       </FormItem>
-      <FormItem label={t('COMMON.DESCRIPTION')}>
-        <FormInputText isMultiline controllerProps={{ ...register('description'), control }} />
+      <FormItem label={t('COMMON.TYPE')} isRequired>
+        <FormInputText controllerProps={{ ...register('type'), control }} />
       </FormItem>
-      <FormItem label={t('COMMON.FILE')} isRequired>
-        <FormInputFile controllerProps={{ ...register('fileId'), control }} />
+      <FormItem label={t('COMMON.DEFAULT_VALUE')}>
+        <FormInputText controllerProps={{ ...register('defaultValue'), control }} />
       </FormItem>
       <FormButtons>
         <Button onClick={onReject}>{t('ACTION.CANCEL')}</Button>

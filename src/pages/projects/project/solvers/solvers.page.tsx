@@ -47,7 +47,7 @@ const SolversList: FC = () => {
       {
         field: 'actions',
         type: 'actions',
-        width: 50,
+        width: 100,
         getActions({ row }) {
           return [
             <GridActionsCellItem

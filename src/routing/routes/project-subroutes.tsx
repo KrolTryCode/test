@@ -1,9 +1,11 @@
 import { Navigate } from 'react-router-dom';
 
+import { formSubroutes } from '~/routing/routes/forms-subroutes';
 import { tablesSubroutes } from '~/routing/routes/tables-subroutes';
 import { RouteDescription } from '~/routing/routes.types';
 import {
   eventsPath,
+  formsPath,
   participantsPath,
   projectPath,
   reportsPath,
@@ -67,6 +69,10 @@ export const projectsSubroutes: RouteDescription[] = [
         path: solversPath,
         title: 'NAVIGATION.SOLVERS',
         lazyElement: () => import('~/pages/projects/project/solvers/solvers.page'),
+      },
+      {
+        path: formsPath,
+        children: formSubroutes,
       },
     ],
   },
