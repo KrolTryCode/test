@@ -110,6 +110,10 @@ export const MuiDataGrid: Components<Omit<Theme, 'components'>>['MuiDataGrid'] =
         height: '100%',
         '& fieldset': { display: 'none' },
       },
+
+      '&--editing:has(.Mui-error)': {
+        outlineColor: `${theme.palette.error.main} !important`,
+      },
     }),
     editInputCell: { '& input': { padding: '0 4px' } },
     detailPanel: ({ theme }) => ({
