@@ -97,6 +97,9 @@ export const MuiOutlinedInput: Components<Omit<Theme, 'components'>>['MuiOutline
           backgroundColor: `${theme.palette.primary.main}30`,
         },
       },
+      '&.Mui-disabled': {
+        backgroundColor: 'rgba(0,0,0,0.06)',
+      },
     }),
     input: {
       padding: '7px 9px 8px',
