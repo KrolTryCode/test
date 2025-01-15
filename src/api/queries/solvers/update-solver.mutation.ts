@@ -1,27 +1,22 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { SOLVER_MOCK_SERVER_URLS } from '~/api/mocks/solvers/controller';
-import { Solver, SolverFormInput } from '~/api/mocks/solvers/types';
 import { solverQueries } from '~/api/queries/solvers/queries';
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
-import { ContentType } from '~/api/utils/api-requests';
+import { Solver, SolverRequest } from '~/api/utils/api-requests';
+
+interface MutationFnVariables extends SolverRequest {
+  solverId: string;
+}
 
 export const useUpdateSolverMutation = (
   projectId: string,
-  options?: UseCustomMutationOptions<Solver, Error, SolverFormInput>,
+  options?: UseCustomMutationOptions<Solver, Error, MutationFnVariables>,
 ) => {
   const queryClient = useQueryClient();
   return useMutation({
-    //TODO: add API call
-    mutationFn: data =>
-      ApiClientSecured.request({
-        path: SOLVER_MOCK_SERVER_URLS.UPDATE,
-        method: 'POST',
-        body: data,
-        secure: true,
-        type: ContentType.Json,
-      }),
+    mutationFn: ({ solverId, ...data }) =>
+      ApiClientSecured.projectSolversV1Controller.updateProjectSolver(solverId, projectId, data),
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({ queryKey: solverQueries.list._def });

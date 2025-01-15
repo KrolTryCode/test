@@ -1,19 +1,21 @@
 import { Upload, Edit as EditIcon, Download, DeleteOutline } from '@mui/icons-material';
-import { Typography } from '@mui/material';
-import { GridActionsCellItem } from '@mui/x-data-grid-premium';
+import { Chip, ChipProps, Typography } from '@mui/material';
+import { GridActionsCellItem, GridRenderCellParams } from '@mui/x-data-grid-premium';
 import { AddEntity, Button, DataGrid, EnhancedColDef } from '@pspod/ui-components';
-import { FC, useMemo } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { Solver } from '~/api/mocks/solvers/types';
 import { useGetSolversQuery } from '~/api/queries/solvers/get-solvers.query';
+import { Solver } from '~/api/utils/api-requests';
 import { useSolverActions } from '~/pages/projects/project/solvers/use-solver-actions.hook';
 import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
+import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 
 const SolversList: FC = () => {
   const { projectId = '' } = useParams();
   const { t } = useTranslation();
+  const { translateStatus } = useCustomTranslations();
   const {
     handleCreateSolver,
     handleDeleteSolver,
@@ -22,7 +24,27 @@ const SolversList: FC = () => {
     handleExportSolver,
   } = useSolverActions(projectId);
 
-  const { data = [] } = useGetSolversQuery(projectId);
+  const { data = [], isLoading } = useGetSolversQuery(projectId);
+
+  const renderStatusCell = useCallback(
+    (params: GridRenderCellParams<Solver>) => {
+      let color: ChipProps['color'];
+      let label = '';
+
+      if (params.row.active) {
+        color = 'success';
+        label = translateStatus('ACTIVE');
+      } else {
+        color = 'error';
+        label = translateStatus('ARCHIVED');
+      }
+
+      return <Chip label={label} color={color} variant={'outlined'} />;
+    },
+    [translateStatus],
+  );
+
+  // TODO BE-145 authorName https://tracker.yandex.ru/BE-145
 
   const columns = useMemo<EnhancedColDef<Solver>[]>(
     () => [
@@ -64,13 +86,18 @@ const SolversList: FC = () => {
               title={t('ACTION.DELETE', { type: t('ENTITY.SOLVER').toLowerCase() })}
               icon={<DeleteOutline />}
               color={'error'}
-              onClick={() => handleDeleteSolver(row.id)}
+              onClick={() => handleDeleteSolver(row.id!)}
             />,
           ];
         },
       },
+      {
+        field: 'active',
+        headerName: t('COMMON.STATUS'),
+        renderCell: renderStatusCell,
+      },
     ],
-    [handleDeleteSolver, handleUpdateSolver, t],
+    [handleDeleteSolver, handleUpdateSolver, renderStatusCell, t],
   );
 
   const ToolbarContent = (
@@ -85,7 +112,9 @@ const SolversList: FC = () => {
         variant={'text'}
         icon={<Upload />}
       >
-        <Typography sx={{ fontSize: 14, marginBottom: 0 }}>{t('ACTION.IMPORT')}</Typography>
+        <Typography fontSize={14} marginBottom={0}>
+          {t('ACTION.IMPORT')}
+        </Typography>
       </Button>
       <Button
         disabled
@@ -96,7 +125,9 @@ const SolversList: FC = () => {
         variant={'text'}
         icon={<Download />}
       >
-        <Typography sx={{ fontSize: 14, marginBottom: 0 }}>{t('ACTION.EXPORT')}</Typography>
+        <Typography fontSize={14} marginBottom={0}>
+          {t('ACTION.EXPORT')}
+        </Typography>
       </Button>
     </>
   );
@@ -106,7 +137,7 @@ const SolversList: FC = () => {
       items={data}
       totalCount={data.length ?? 0}
       columns={columns}
-      loading={false}
+      loading={isLoading}
       pinnedColumns={{ right: ['actions'] }}
       customToolbarContent={ToolbarContent}
     />
