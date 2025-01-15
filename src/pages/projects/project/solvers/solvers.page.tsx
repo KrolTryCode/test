@@ -62,8 +62,8 @@ const SolversList: FC = () => {
         field: 'authorId',
         headerName: t('COMMON.AUTHOR'),
         flex: 1,
-        valueGetter: (_, row) => row.author,
-        groupingValueGetter: (_, row) => row.author,
+        // valueGetter: (_, row) => row.author,
+        // groupingValueGetter: (_, row) => row.author,
       },
       {
         field: 'created',
