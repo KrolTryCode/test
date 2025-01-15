@@ -2,14 +2,14 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 
 import { solverQueries } from '~/api/queries/solvers/queries';
 import { UseCustomQueryOptions } from '~/api/typings/react-query-helpers';
-import { Solver } from '~/api/utils/api-requests';
+import { SolverFile } from '~/api/utils/api-requests';
 
-export const useGetSolversQuery = <T = Solver[]>(
-  projectId: string,
-  options?: UseCustomQueryOptions<Solver[], unknown, T>,
+export const useGetSolverFileQuery = <T = SolverFile>(
+  solverId: string,
+  options?: UseCustomQueryOptions<SolverFile, unknown, T>,
 ): UseQueryResult<T, unknown> => {
   return useQuery({
-    ...solverQueries.list(projectId),
+    ...solverQueries.file(solverId),
     ...options,
   });
 };

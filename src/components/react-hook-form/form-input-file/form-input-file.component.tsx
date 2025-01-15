@@ -19,6 +19,7 @@ interface FormInputFileProps<
   accept?: string;
   showPreview?: boolean;
   onChangeFile?: (file: File | undefined, field: string) => void;
+  isLoading?: boolean;
 }
 
 export function FormInputFile<TFieldValues extends FieldValues = FieldValues>({
@@ -27,6 +28,7 @@ export function FormInputFile<TFieldValues extends FieldValues = FieldValues>({
   accept,
   showPreview = false,
   onChangeFile,
+  isLoading,
 }: FormInputFileProps<TFieldValues, FieldPath<TFieldValues>>) {
   const { t } = useTranslation();
   const { field, fieldState } = useController(controllerProps);
@@ -49,6 +51,8 @@ export function FormInputFile<TFieldValues extends FieldValues = FieldValues>({
     inputRef.current?.click();
   };
 
+  const isContentLoading = isImageLoading || isLoading;
+
   return (
     <ValidationError {...fieldState}>
       {showPreview && <ImagePreview preview={image} />}
@@ -61,9 +65,9 @@ export function FormInputFile<TFieldValues extends FieldValues = FieldValues>({
         ref={inputRef}
       />
       <Button
-        icon={isImageLoading ? <CircularProgress size={16} /> : <AttachFile />}
+        icon={isContentLoading ? <CircularProgress size={16} /> : <AttachFile />}
         color={fieldState.invalid ? 'error' : 'secondary'}
-        disabled={isImageLoading}
+        disabled={isContentLoading}
         onClick={handleButtonClick}
       >
         {filename ?? t('ACTION.SELECT', { type: t('COMMON.FILE').toLowerCase() })}

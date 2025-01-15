@@ -2,27 +2,27 @@ import { confirmDeletionModal, modal, notifySuccess } from '@pspod/ui-components
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Solver } from '~/api/mocks/solvers/types';
 import { useCreateSolverMutation } from '~/api/queries/solvers/create-solver.mutation';
 import { useDeleteSolverMutation } from '~/api/queries/solvers/delete-solver.mutation';
 import { useUpdateSolverMutation } from '~/api/queries/solvers/update-solver.mutation';
-import { SolverForm } from '~/pages/projects/project/solvers/solver-form.component';
+import { Solver } from '~/api/utils/api-requests';
+import {
+  SolverForm,
+  SolverUpdateRequest,
+} from '~/pages/projects/project/solvers/solver-form.component';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const useSolverActions = (projectId: string) => {
   const { t } = useTranslation();
 
   //#region Queries & mutations
+
   const { mutate: createSolver } = useCreateSolverMutation(projectId, {
-    onSuccess: () => {
-      notifySuccess(t('MESSAGE.CREATION_SUCCESS'));
-    },
+    onSuccess: () => notifySuccess(t('MESSAGE.CREATION_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
   });
   const { mutate: updateSolver } = useUpdateSolverMutation(projectId, {
-    onSuccess: () => {
-      notifySuccess(t('MESSAGE.UPDATE_SUCCESS'));
-    },
+    onSuccess: () => notifySuccess(t('MESSAGE.UPDATE_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
   });
   const { mutate: deleteSolver } = useDeleteSolverMutation(projectId, {
@@ -38,18 +38,18 @@ export const useSolverActions = (projectId: string) => {
     modal({
       onOk: createSolver,
       title: t('ACTION.ADD', { type: t('ENTITY.SOLVER').toLowerCase() }),
-      renderContent: args => <SolverForm {...args} />,
+      renderContent: args => <SolverForm projectId={projectId} {...args} />,
     });
-  }, [createSolver, t]);
+  }, [projectId, createSolver, t]);
   const handleUpdateSolver = useCallback(
     (row: Solver) => {
       modal({
-        onOk: updateSolver,
+        onOk: (data: SolverUpdateRequest) => updateSolver({ solverId: row.id!, ...data }),
         title: t('ACTION.EDIT', { type: t('ENTITY.SOLVER').toLowerCase() }),
-        renderContent: args => <SolverForm {...args} data={row} />,
+        renderContent: args => <SolverForm isEditing projectId={projectId} {...args} data={row} />,
       });
     },
-    [t, updateSolver],
+    [projectId, t, updateSolver],
   );
   const handleDeleteSolver = useCallback(
     (id: string) => {
