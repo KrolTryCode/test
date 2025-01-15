@@ -19,11 +19,17 @@ interface NodeFormProps {
   onReject?: () => void;
   onResolve: (values: CreateContentNodeRequest) => void;
   isEditing?: boolean;
+  projectId?: string;
 }
 
-export const NodeForm: FC<NodeFormProps> = ({ onResolve, onReject, data, isEditing = false }) => {
+export const NodeForm: FC<NodeFormProps> = ({
+  onResolve,
+  onReject,
+  data,
+  isEditing = false,
+  projectId = '',
+}) => {
   const { t } = useTranslation();
-  const projectId = data?.projectId ?? '';
   const { data: treeData = [], isLoading } = useGetProjectNodesTree(projectId, {
     enabled: !!projectId,
     select: data =>
@@ -50,7 +56,7 @@ export const NodeForm: FC<NodeFormProps> = ({ onResolve, onReject, data, isEditi
     [treeData, findNode],
   );
 
-  const schema = getSchema(getSiblingNames(data?.parentNodeId), t);
+  const schema = getSchema(getSiblingNames(data?.parentContentNodeId), t);
   const {
     register,
     handleSubmit,
@@ -76,7 +82,7 @@ export const NodeForm: FC<NodeFormProps> = ({ onResolve, onReject, data, isEditi
             placeholder={t('ACTION.SELECT')}
             noDataText={t('MESSAGE.NO_DATA')}
             isLoading={isLoading}
-            controllerProps={{ ...register('parentNodeId'), control }}
+            controllerProps={{ ...register('parentContentNodeId'), control }}
           />
         </FormItem>
       )}

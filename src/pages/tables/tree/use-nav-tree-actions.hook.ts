@@ -60,7 +60,7 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
         return;
       }
       if (isContentSubtreeTypeEnum(node.type)) {
-        const parentNodeId = getParentsIdsList(node.id).at(1);
+        const parentContentNodeId = getParentsIdsList(node.id).at(1);
         const entity =
           declinatedTranslations[node.type === ContentNodeType.Directory ? 'DIRECTORY' : 'TABLE']
             .ACCUSATIVE;
@@ -71,11 +71,11 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
           data: {
             name: node.label,
             type: node.type,
-            parentNodeId,
-            projectId: projectId,
+            parentContentNodeId,
           },
+          projectId: projectId,
           onSave: data =>
-            updateNode({ nodeId: id, name: data.name, parentNodeId: data.parentNodeId }),
+            updateNode({ nodeId: id, name: data.name, parentNodeId: data.parentContentNodeId }),
         });
       }
     },
@@ -88,10 +88,10 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
         title: t('ACTION.ADD', { type: declinatedTranslations.DIRECTORY.ACCUSATIVE.toLowerCase() }),
         data: {
           type: ContentNodeType.Directory,
-          parentNodeId: id,
-          projectId: projectId,
+          parentContentNodeId: id,
         },
         onSave: createNode,
+        projectId: projectId,
       });
     },
     [createNode, declinatedTranslations.DIRECTORY.ACCUSATIVE, projectId, t],
@@ -105,10 +105,10 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
         title,
         data: {
           type: ContentNodeType.Table,
-          parentNodeId: id,
-          projectId: projectId,
+          parentContentNodeId: id,
         },
         onSave: createNode,
+        projectId: projectId,
       });
     },
     [declinatedTranslations.TABLE.ACCUSATIVE, t, projectId, createNode],
