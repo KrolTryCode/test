@@ -52,11 +52,12 @@ export const ServiceTokens: FC = () => {
         headerName: t('COMMON.DESCRIPTION'),
         flex: 2,
       },
-      // TODO BE-131 https://tracker.yandex.ru/BE-131
       {
-        field: 'author',
+        field: 'authorId',
         headerName: t('COMMON.AUTHOR'),
         flex: 2,
+        valueGetter: (_, row) => row.authorName,
+        groupingValueGetter: (_, row) => row.authorName,
       },
       {
         field: 'state',
