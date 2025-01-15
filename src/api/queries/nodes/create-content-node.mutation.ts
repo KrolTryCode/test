@@ -13,7 +13,8 @@ export const useCreateContentNodeMutation = (
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: data => ApiClientSecured.contentNodeV1Controller.createContentNode(data),
+    mutationFn: data =>
+      ApiClientSecured.contentNodeV1Controller.createContentNode({ projectId, ...data }),
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({ queryKey: nodeQueries.list(projectId).queryKey });

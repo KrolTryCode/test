@@ -9,8 +9,7 @@ export const getSchema = (
 ): y.ObjectSchema<CreateContentNodeRequest> =>
   y.object({
     name: y.string().required().default('').notOneOf(siblingNames, t('ERROR.SIBLING_SAME_NAME')),
-    projectId: y.string().uuid().required().default(''),
-    parentNodeId: y.string().uuid().allowEmptyString(),
+    parentContentNodeId: y.string().uuid().allowEmptyString(),
     type: y
       .mixed<ContentNodeType>()
       .oneOf(Object.values(ContentNodeType))
