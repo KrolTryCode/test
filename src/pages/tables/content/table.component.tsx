@@ -97,7 +97,12 @@ export const Table: FC<TableProps> = ({ nodeInfo }) => {
       totalCount={content?.length ?? 0}
       columns={columns}
       pinnedColumns={{ right: ['actions'] }}
-      customToolbarContent={<AddEntity onClick={addTableData} />}
+      customToolbarContent={
+        <AddEntity
+          customText={t('ACTION.ADD', { type: t('COMMON.DATA').toLowerCase() })}
+          onClick={addTableData}
+        />
+      }
     />
   );
 };

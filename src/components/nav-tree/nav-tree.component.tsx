@@ -38,10 +38,9 @@ export const NavTree: FC<NavTreeProps> = props => {
         onCollapseAll: handleCollapseAllClick,
         onExpandAll: handleExpandAllClick,
         menuItems,
-        selectedItemId,
       } as NavTreeItemProps,
     };
-  }, [handleCollapseAllClick, handleExpandAllClick, menuItems, selectedItemId]);
+  }, [handleCollapseAllClick, handleExpandAllClick, menuItems]);
 
   if (isLoading) {
     return <NavTreeSkeleton />;

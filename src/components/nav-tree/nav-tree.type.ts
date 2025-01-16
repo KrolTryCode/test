@@ -20,7 +20,6 @@ export interface NavTreeItemProps
   menuItems?: DropdownMenuItem[];
   hideDropdown?: boolean;
   disableLinks?: boolean;
-  selectedItemId?: string;
   onHandleSelectEvent?: (itemId: string) => void;
 }
 
