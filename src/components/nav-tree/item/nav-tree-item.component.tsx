@@ -1,5 +1,4 @@
-import { Folder, BackupTable } from '@mui/icons-material';
-import { Stack, SvgIconProps } from '@mui/material';
+import { Stack } from '@mui/material';
 import {
   TreeItem2Content,
   TreeItem2GroupTransition,
@@ -12,11 +11,10 @@ import { unstable_useTreeItem2 as useTreeItem2 } from '@mui/x-tree-view/useTreeI
 import { forwardRef, Ref, useMemo } from 'react';
 
 import { ItemDropdownMenu } from '~/components/nav-tree/item/item-dropdown-menu.component';
-import { isFolderType } from '~/components/nav-tree/item/nav-tree-item.utils';
-import { SelectItemButton } from '~/components/nav-tree/item/select-item-button.component';
+import { renderItemIcon } from '~/components/nav-tree/item/nav-tree-item.utils';
 
 import { StyledLink, StyledTreeItemLabel } from '../nav-tree.style';
-import { NavTreeItemData, NavTreeItemProps, NavTreeItemType } from '../nav-tree.type';
+import { NavTreeItemData, NavTreeItemProps } from '../nav-tree.type';
 
 export const NavTreeItem = forwardRef(function NavTreeItem(
   props: NavTreeItemProps,
@@ -29,7 +27,6 @@ export const NavTreeItem = forwardRef(function NavTreeItem(
     disabled,
     children,
     menuItems,
-    selectedItemId,
     onCollapseAll,
     onExpandAll,
     onHandleSelectEvent,
@@ -52,15 +49,6 @@ export const NavTreeItem = forwardRef(function NavTreeItem(
     return publicAPI.getItem(itemId) as NavTreeItemData;
   }, [itemId, publicAPI]);
 
-  const renderItemIcon = (itemType: NavTreeItemType | undefined) => {
-    const iconProps: SvgIconProps = { color: 'primary', sx: { marginRight: 0.5 } };
-    if (isFolderType(itemType)) {
-      return <Folder {...iconProps} />;
-    } else {
-      return <BackupTable {...iconProps} />;
-    }
-  };
-
   return (
     <TreeItem2Provider itemId={itemId}>
       <TreeItem2Root {...getRootProps(other)}>
@@ -71,12 +59,12 @@ export const NavTreeItem = forwardRef(function NavTreeItem(
             </TreeItem2IconContainer>
           )}
           <Stack gap={1} direction={'row'} flexGrow={'1'} sx={{ wordBreak: 'break-word' }}>
-            <StyledTreeItemLabel {...getLabelProps()}>
+            <StyledTreeItemLabel
+              {...getLabelProps()}
+              onDoubleClick={() => onHandleSelectEvent?.(item.id)}
+            >
               {renderItemIcon(item.type)}
               {item.href && !disableLinks ? <StyledLink to={item.href}>{label}</StyledLink> : label}
-              {item.id === selectedItemId && onHandleSelectEvent !== undefined && (
-                <SelectItemButton item={item} onHandleSelect={onHandleSelectEvent} />
-              )}
             </StyledTreeItemLabel>
             {!hideDropdown && (
               <ItemDropdownMenu

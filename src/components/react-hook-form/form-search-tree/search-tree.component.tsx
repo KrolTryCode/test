@@ -12,6 +12,7 @@ import {
 } from 'react';
 import { useDebounce } from 'use-debounce';
 
+import { isFolderType } from '~/components/nav-tree/item/nav-tree-item.utils';
 import { NavTreeItemData, NavTreeItemProps } from '~/components/nav-tree/nav-tree.type';
 import { PopperWithPaper } from '~/components/popper-with-paper/popper-with-paper.component';
 import { TreeViewIndanis } from '~/components/tree-view/tree-view-indanis.component';
@@ -154,14 +155,13 @@ export const SearchTree: FC<SearchTreeProps> = props => {
         >
           {treeList.length ? (
             <TreeViewIndanis
-              items={treeList}
+              items={treeList.filter(item => isFolderType(item.type))}
               selectedItems={selectedItemId}
               expandedItems={expandedNodes}
               onSelectedItemsChange={treeNodeSelectHandler}
               slotProps={{
                 item: {
                   onHandleSelectEvent: handleSelect,
-                  selectedItemId: selectedItemId,
                   hideDropdown: true,
                   disableLinks: true,
                 } as NavTreeItemProps,

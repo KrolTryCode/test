@@ -183,7 +183,9 @@ const TableStructure: FC = () => {
         onRowOrderChange={handleRowOrderChange}
         rowReordering
         hasWidthSaving={false}
-        customToolbarContent={<AddEntity onClick={handleAddColumn} />}
+        customToolbarContent={
+          <AddEntity customText={t('STRUCTURE.ADD_COLUMN')} onClick={handleAddColumn} />
+        }
       />
 
       <Stack direction={'row'} gap={1} alignSelf={'flex-end'}>
