@@ -54,9 +54,14 @@ const ParticipantsList: FC = () => {
         width: 70,
         align: 'center',
         headerName: t('USER.AVATAR'),
+        groupable: false,
+        sortable: false,
+        disableColumnMenu: true,
         renderCell({ row: user }: GridRenderCellParams<FullProjectNodeMemberInfo>) {
-          const [firstName, lastName] = user.userName.split(' ');
-          return <UserAvatar userId={user.userId} firstName={firstName} lastName={lastName} />;
+          if (user.userName) {
+            const [firstName, lastName] = user.userName.split(' ');
+            return <UserAvatar userId={user.userId} firstName={firstName} lastName={lastName} />;
+          }
         },
       },
       {
@@ -78,6 +83,7 @@ const ParticipantsList: FC = () => {
         valueOptions: roles,
         getOptionValue: (opt: (typeof roles)[number]) => opt.id,
         getOptionLabel: (opt: (typeof roles)[number]) => opt.title,
+        groupingValueGetter: (roleId: string) => roles.find(r => r.id === roleId)?.title,
       },
       {
         field: 'expirationTime',
@@ -94,6 +100,8 @@ const ParticipantsList: FC = () => {
         field: 'authorId',
         flex: 1,
         valueGetter: (authorId: string) => participants.find(p => p.userId === authorId)?.userName,
+        groupingValueGetter: (authorId: string) =>
+          participants.find(p => p.userId === authorId)?.userName,
       },
       {
         field: 'actions',
