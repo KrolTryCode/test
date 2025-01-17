@@ -18,11 +18,11 @@ describe('Declination provider test', () => {
   });
 
   it('should translate words to russian with correct declinations', () => {
-    // Participant
+    // Participant https://gramota.ru/meta/uchastnik
     expect(declinatedTranslations.PARTICIPANT.NOMINATIVE).toBe('Участник');
     expect(declinatedTranslations.PARTICIPANT.GENITIVE).toBe('Участника');
     expect(declinatedTranslations.PARTICIPANT.DATIVE).toBe('Участнику');
-    expect(declinatedTranslations.PARTICIPANT.ACCUSATIVE).toBe('Участник');
+    expect(declinatedTranslations.PARTICIPANT.ACCUSATIVE).toBe('Участника');
     expect(declinatedTranslations.PARTICIPANT.INSTRUMENTAL).toBe('Участником');
     expect(declinatedTranslations.PARTICIPANT.PREPOSITIONAL).toBe('Участнике');
     expect(declinatedTranslations.PARTICIPANT.LOCATIVE).toBe('Участнике');

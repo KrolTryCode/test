@@ -1,7 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FormItem } from '@pspod/ui-components';
+import { Accordion, FormItem } from '@pspod/ui-components';
 import { ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { EntityModelModuleConfiguration, PropertyInfo } from '~/api/utils/api-requests';
 import { RenderConfigurationFormContent } from '~/components/configuration-form/render-configuration-form-content.component';
@@ -12,6 +13,7 @@ import { getSchema } from './configuration-form.schema';
 
 export const DefaultConfigurationForm = (moduleDescription: EntityModelModuleConfiguration) => {
   const { values } = useConfigurationForm(moduleDescription);
+  const { t } = useTranslation();
 
   const { reset, control, register, handleSubmit, formState } = useForm({
     values,
@@ -49,12 +51,17 @@ export const DefaultConfigurationForm = (moduleDescription: EntityModelModuleCon
   };
 
   return (
-    <RenderConfigurationFormContent
-      reset={reset}
-      formState={formState}
-      handleSubmit={handleSubmit}
-      renderComponent={renderComponent}
-      moduleDescription={moduleDescription}
+    <Accordion
+      text={t(`ENTITY.${moduleDescription.moduleName?.toUpperCase()}`)}
+      content={
+        <RenderConfigurationFormContent
+          reset={reset}
+          formState={formState}
+          handleSubmit={handleSubmit}
+          renderComponent={renderComponent}
+          moduleDescription={moduleDescription}
+        />
+      }
     />
   );
 };
