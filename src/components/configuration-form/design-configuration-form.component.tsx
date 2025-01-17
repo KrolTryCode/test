@@ -1,7 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FormItem } from '@pspod/ui-components';
+import { FormItem, Accordion } from '@pspod/ui-components';
 import { ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { EntityModelModuleConfiguration, PropertyInfo } from '~/api/utils/api-requests';
 import { RenderConfigurationFormContent } from '~/components/configuration-form/render-configuration-form-content.component';
@@ -14,6 +15,7 @@ import { mimeType } from '~/utils/files/upload-files';
 import { getSchema } from './configuration-form.schema';
 
 export const DesignConfigurationForm = (moduleDescription: EntityModelModuleConfiguration) => {
+  const { t } = useTranslation();
   const { values } = useConfigurationForm(moduleDescription);
 
   const { reset, control, register, resetField, setValue, handleSubmit, formState } = useForm({
@@ -66,12 +68,17 @@ export const DesignConfigurationForm = (moduleDescription: EntityModelModuleConf
   };
 
   return (
-    <RenderConfigurationFormContent
-      reset={reset}
-      formState={formState}
-      handleSubmit={handleSubmit}
-      renderComponent={renderComponent}
-      moduleDescription={moduleDescription}
+    <Accordion
+      text={t(`ENTITY.${moduleDescription.moduleName?.toUpperCase()}`)}
+      content={
+        <RenderConfigurationFormContent
+          reset={reset}
+          formState={formState}
+          handleSubmit={handleSubmit}
+          renderComponent={renderComponent}
+          moduleDescription={moduleDescription}
+        />
+      }
     />
   );
 };

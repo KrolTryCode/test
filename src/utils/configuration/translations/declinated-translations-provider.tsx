@@ -2,6 +2,7 @@ import React, { ReactNode, createContext, FC, useContext, useMemo } from 'react'
 import { useTranslation } from 'react-i18next';
 import { Case, Engine, Gender } from 'russian-nouns-js';
 import type { Gender as GenderType } from 'russian-nouns-js/src/Gender';
+import type { LemmaOptions } from 'russian-nouns-js/src/Lemma';
 
 type DeclinationMap = Record<keyof typeof Case, string>;
 
@@ -22,10 +23,17 @@ export const createDeclinatedTranslations = (
   t: (key: string) => string,
   language: string,
 ) => {
-  const createRuDeclinations = (key: string, gender: GenderType) => {
+  const createRuDeclinations = (
+    key: string,
+    gender: GenderType,
+    lemmaOptions: Omit<LemmaOptions, 'text' | 'gender'>,
+  ) => {
     return Object.keys(Case).reduce((acc, caseKey) => {
       const morphCase = Case[caseKey as keyof typeof Case];
-      acc[caseKey as keyof typeof Case] = engine.decline({ text: t(key), gender }, morphCase)[0];
+      acc[caseKey as keyof typeof Case] = engine.decline(
+        { text: t(key), gender, ...lemmaOptions },
+        morphCase,
+      )[0];
       return acc;
     }, {} as DeclinationMap);
   };
@@ -37,9 +45,13 @@ export const createDeclinatedTranslations = (
     }, {} as DeclinationMap);
   };
 
-  const getDeclinationsMap = (entity: string, gender: GenderType) => {
+  const getDeclinationsMap = (
+    entity: string,
+    gender: GenderType,
+    lemmaOptions: Omit<LemmaOptions, 'text' | 'gender'> = {},
+  ) => {
     if (language === 'ru') {
-      return createRuDeclinations(entity, gender);
+      return createRuDeclinations(entity, gender, lemmaOptions);
     } else {
       return createDefaultDeclinationMap(entity);
     }
@@ -51,8 +63,9 @@ export const createDeclinatedTranslations = (
     PROJECT: getDeclinationsMap('ENTITY.PROJECT', Gender.MASCULINE),
     DIRECTORY: getDeclinationsMap('ENTITY.DIRECTORY', Gender.FEMININE),
     STRUCTURE: getDeclinationsMap('ENTITY.STRUCTURE', Gender.FEMININE),
-    PARTICIPANT: getDeclinationsMap('ENTITY.PARTICIPANT', Gender.MASCULINE),
+    PARTICIPANT: getDeclinationsMap('ENTITY.PARTICIPANT', Gender.MASCULINE, { animate: true }),
     FORM: getDeclinationsMap('ENTITY.FORM', Gender.FEMININE),
+    LINK: getDeclinationsMap('ENTITY.LINK', Gender.FEMININE),
   };
 };
 

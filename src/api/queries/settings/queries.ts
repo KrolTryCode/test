@@ -21,4 +21,8 @@ export const settingsQueries = createQueryKeys('settings', {
     queryKey: ['password'],
     queryFn: () => ApiClientSecured.applicationController.accountConfiguration(),
   },
+  linksConfiguration: () => ({
+    queryKey: ['links'],
+    queryFn: () => ApiClientSecured.linksConfigurationV1Controller.getLinksConfiguration(),
+  }),
 });

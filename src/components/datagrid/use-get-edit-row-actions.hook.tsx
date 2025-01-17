@@ -14,16 +14,18 @@ import { useTranslation } from 'react-i18next';
 
 interface UseGetEditRowActionsProps<T extends GridValidRowModel = Record<string, any>> {
   idKey?: keyof T;
-  entityGenitive?: string;
+  entityAccusative?: string;
   apiRef: MutableRefObject<GridApiPremium>;
   protectedKey?: keyof T;
+  onCancelUpdate?: (id: string) => void;
 }
 
 export const useGetEditRowActions = <T extends GridValidRowModel = Record<string, any>>({
   idKey = 'id',
-  entityGenitive,
+  entityAccusative,
   apiRef,
   protectedKey = '',
+  onCancelUpdate,
 }: UseGetEditRowActionsProps<T>) => {
   const { t } = useTranslation();
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
@@ -39,12 +41,14 @@ export const useGetEditRowActions = <T extends GridValidRowModel = Record<string
   );
 
   const cancelClickHandler = useCallback(
-    (id: string) => () =>
+    (id: string) => () => {
       setRowModesModel({
         ...rowModesModel,
         [id]: { mode: GridRowModes.View, ignoreModifications: true },
-      }),
-    [rowModesModel],
+      });
+      onCancelUpdate?.(id);
+    },
+    [onCancelUpdate, rowModesModel],
   );
 
   const getActions = useCallback(
@@ -86,7 +90,7 @@ export const useGetEditRowActions = <T extends GridValidRowModel = Record<string
           />,
           <DeleteCellButton
             key={'delete'}
-            entity={entityGenitive}
+            entity={entityAccusative}
             disabled={row[protectedKey]}
             deleteHandler={() => deleteHandler(id)}
           />,
@@ -98,7 +102,7 @@ export const useGetEditRowActions = <T extends GridValidRowModel = Record<string
       rowModesModel,
       saveClickHandler,
       idKey,
-      entityGenitive,
+      entityAccusative,
       protectedKey,
       t,
     ],

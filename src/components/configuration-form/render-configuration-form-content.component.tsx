@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material';
 import { Button, Form, FormButtons } from '@pspod/ui-components';
 import { FC, ReactNode } from 'react';
 import { FieldValues, FormState, UseFormHandleSubmit, UseFormReset } from 'react-hook-form';
@@ -33,33 +32,28 @@ export const RenderConfigurationFormContent: FC<RenderConfigurationFormContentPr
   }
 
   return (
-    <>
-      <Typography variant={'h4'} color={'primary'}>
-        {t(`ENTITY.${moduleDescription.moduleName?.toUpperCase()}`)}
-      </Typography>
-      <Form
-        onSubmit={handleSubmit(onSubmit)}
-        key={moduleDescription.moduleName}
-        labelPosition={'left'}
-        isLoading={!values}
-        labelWidth={3}
-      >
-        {moduleDescription.properties?.map(property => renderComponent(property))}
-        <FormButtons>
-          <Button onClick={onDrop} variant={'outlined'} color={'primary'}>
-            {t('ACTION.DROP')}
-          </Button>
-          <Button
-            type={'submit'}
-            disabled={!formState.isValid && formState.isSubmitted}
-            variant={'contained'}
-            color={'primary'}
-            isLoading={isPending}
-          >
-            {t('ACTION.SAVE')}
-          </Button>
-        </FormButtons>
-      </Form>
-    </>
+    <Form
+      onSubmit={handleSubmit(onSubmit)}
+      key={moduleDescription.moduleName}
+      labelPosition={'left'}
+      isLoading={!values}
+      labelWidth={3}
+    >
+      {moduleDescription.properties?.map(property => renderComponent(property))}
+      <FormButtons>
+        <Button onClick={onDrop} variant={'outlined'} color={'primary'}>
+          {t('ACTION.DROP')}
+        </Button>
+        <Button
+          type={'submit'}
+          disabled={!formState.isValid && formState.isSubmitted}
+          variant={'contained'}
+          color={'primary'}
+          isLoading={isPending}
+        >
+          {t('ACTION.SAVE')}
+        </Button>
+      </FormButtons>
+    </Form>
   );
 };

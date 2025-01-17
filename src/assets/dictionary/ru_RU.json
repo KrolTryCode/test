@@ -87,6 +87,7 @@
     "FIND": "Найти {{what}}",
     "INFO": "Общая информация",
     "CONTENT": "Содержание",
+    "TEXT": "Текст",
     "ENTER_TEXT": "Введите текст",
     "ENTER_FILENAME": "Введите имя файла",
     "PREVIEW": "Предпросмотр",
@@ -246,7 +247,9 @@
     "TOKENS": "Токены",
     "FORM": "Форма",
     "PARAMETER": "Параметр",
-    "PARAMETERS": "Параметры"
+    "PARAMETERS": "Параметры",
+    "EXTERNAL_SERVICES": "Внешние сервисы",
+    "LINK": "Ссылка"
   },
   "EXPORT": {
     "EXPORT_TO": "Экспортировать в формате",

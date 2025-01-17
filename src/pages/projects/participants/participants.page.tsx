@@ -44,7 +44,7 @@ const ParticipantsList: FC = () => {
     useGetEditRowActions<FullProjectNodeMemberInfo>({
       apiRef,
       idKey: 'userId',
-      entityGenitive: declinatedTranslations.PARTICIPANT.GENITIVE.toLowerCase(),
+      entityAccusative: declinatedTranslations.PARTICIPANT.ACCUSATIVE.toLowerCase(),
     });
 
   const columns = useMemo<EnhancedColDef<FullProjectNodeMemberInfo>[]>(
@@ -146,7 +146,7 @@ function preProcessDateTimeEditCellProps(params: GridPreProcessEditCellProps<any
     params.hasChanged && params.props.value instanceof Date
       ? validateMinDate(params.props.value)
       : false;
-  return { ...params, error };
+  return { ...params.props, error };
 }
 
 function renderDateTimeEditCell(
