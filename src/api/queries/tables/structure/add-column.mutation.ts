@@ -2,18 +2,18 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
-import { ColumnDefinition } from '~/api/utils/api-requests';
+import { CreateColumnRequest, TableColumn } from '~/api/utils/api-requests';
 
 import { tableQueries } from '../queries';
 
-export const useAddNodeColumnMutation = (
+export const useAddColumnMutation = (
   nodeId: string,
-  options?: UseCustomMutationOptions<void, unknown, ColumnDefinition>,
+  options?: UseCustomMutationOptions<TableColumn, unknown, CreateColumnRequest>,
 ) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: ColumnDefinition) =>
-      ApiClientSecured.contentNodeV1Controller.addColumn(nodeId, data),
+    mutationFn: (data: CreateColumnRequest) =>
+      ApiClientSecured.columnV1Controller.createColumn(nodeId, data),
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({ queryKey: tableQueries.metadata(nodeId).queryKey });

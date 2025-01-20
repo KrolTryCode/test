@@ -3,15 +3,14 @@ import { PersistentDrawer, Preloader, useGetDrawerThemeWidth } from '@pspod/ui-c
 import { FC, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { NotFoundNodes } from '~/pages/_fallbacks/errors/not-found/not-found.component';
+// import { NotFoundNodes } from '~/pages/_fallbacks/errors/not-found/not-found.component';
 import { CreateMenu } from '~/pages/tables/create-menu.component';
 import { NodesTree } from '~/pages/tables/tree/nodes-tree.component';
-import { useNavTreeActions } from '~/pages/tables/tree/use-nav-tree-actions.hook';
 import { useTablesMenuData } from '~/pages/tables/use-tables-menu-data.hook';
 
 const TablesLayout: FC = () => {
-  const { treeData, isFetched, isLoading } = useTablesMenuData();
-  const { handleAddCatalog } = useNavTreeActions([]);
+  const { isFetched, isLoading } = useTablesMenuData();
+  // const { handleAddCatalog } = useNavTreeActions([]);
   const { drawerWidth } = useGetDrawerThemeWidth();
 
   const [isDrawerOpened, setIsDrawerOpened] = useState(true);
@@ -45,7 +44,8 @@ const TablesLayout: FC = () => {
         marginLeft={isDrawerOpened ? `${drawerWidth}px` : 4}
         sx={{ transition: 'margin-left 0.3s ease' }}
       >
-        {!treeData.length ? <NotFoundNodes action={handleAddCatalog} /> : <Outlet />}
+        <Outlet />
+        {/* TEMP until BE-143 {!treeData.length ? <NotFoundNodes action={handleAddCatalog} /> : <Outlet />} */}
       </Box>
     </Box>
   );

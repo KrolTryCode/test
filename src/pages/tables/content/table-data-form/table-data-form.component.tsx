@@ -4,7 +4,7 @@ import { FC, ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { ColumnMetadata, ColumnType } from '~/api/utils/api-requests';
+import { DataType, TableColumn } from '~/api/utils/api-requests';
 import {
   FormCheckbox,
   FormDateTimePicker,
@@ -15,7 +15,7 @@ import {
 import { getSchema } from './table-data-form.schema';
 
 interface TableDataFormProps<TableData = Record<string, any>> {
-  metadata: ColumnMetadata[];
+  metadata: TableColumn[];
   data?: TableData;
   onResolve: (data: TableData) => void;
   onReject: () => void;
@@ -36,52 +36,54 @@ export const TableDataForm: FC<TableDataFormProps> = ({ onResolve, onReject, met
     values: data,
   });
 
-  const renderComponent = ({ type, name }: ColumnMetadata): ReactNode => {
+  const renderComponent = ({ type, id, name }: TableColumn): ReactNode => {
     let component = <></>;
     switch (type) {
-      case ColumnType.Boolean: {
-        component = <FormCheckbox controllerProps={{ ...register(name), control }} />;
+      case DataType.Boolean: {
+        component = <FormCheckbox controllerProps={{ ...register(id), control }} />;
         break;
       }
-      case ColumnType.Double:
-      case ColumnType.Integer: {
+      case DataType.Float:
+      case DataType.Int: {
         component = (
           <FormInputNumeric
-            step={type === ColumnType.Integer ? 1 : 0.01}
-            placeholder={type === ColumnType.Integer ? '0' : '0.00'}
-            controllerProps={{ ...register(name), control }}
+            step={type === DataType.Int ? 1 : 0.01}
+            placeholder={type === DataType.Int ? '0' : '0.00'}
+            controllerProps={{ ...register(id), control }}
           />
         );
         break;
       }
-      case ColumnType.Date:
-      case ColumnType.Timestamp: {
+      case DataType.Date:
+      case DataType.Timestamp: {
         component = (
           <FormDateTimePicker
-            type={type === ColumnType.Date ? 'date' : 'datetime'}
-            controllerProps={{ ...register(name), control }}
+            type={type === DataType.Date ? 'date' : 'datetime'}
+            controllerProps={{ ...register(id), control }}
           />
         );
         break;
       }
-      case ColumnType.UUID: {
+      case DataType.Uuid: {
         component = (
           <FormInputText
             mask={'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'}
             definitions={{ X: /[0-9a-f]/ }}
-            controllerProps={{ ...register(name), control }}
+            controllerProps={{ ...register(id), control }}
           />
         );
         break;
       }
-      case ColumnType.Geometry:
-      case ColumnType.Varchar:
+      case DataType.LineString:
+      case DataType.Point:
+      case DataType.Polygon:
+      case DataType.String:
       default: {
-        component = <FormInputText controllerProps={{ ...register(name), control }} />;
+        component = <FormInputText controllerProps={{ ...register(id), control }} />;
       }
     }
     return (
-      <FormItem key={name} label={name}>
+      <FormItem key={id} label={name}>
         {component}
       </FormItem>
     );

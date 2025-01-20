@@ -3,16 +3,16 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
 
-import { nodeQueries } from './queries';
+import { nodeQueries } from '../nodes/queries';
 
-export const useDeleteContentNodeMutation = (
+export const useDeleteProjectContentMutation = (
   projectId: string,
-  options?: UseCustomMutationOptions<void, Error, string>,
+  options?: UseCustomMutationOptions<object, Error, string>,
 ) => {
   const queryClient = useQueryClient();
 
-  return useMutation<void, Error, string>({
-    mutationFn: nodeId => ApiClientSecured.contentNodeV1Controller.deleteContentNode(nodeId),
+  return useMutation<object, Error, string>({
+    mutationFn: nodeId => ApiClientSecured.projectContentV1Controller.deleteNode(nodeId),
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({ queryKey: nodeQueries.list(projectId).queryKey });

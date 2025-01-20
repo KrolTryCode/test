@@ -3,47 +3,38 @@ import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InstanceProps } from 'react-modal-promise';
 
-import { useAddTableViewMutation } from '~/api/queries/tables/add-table-view.mutation';
-import { useAddNodeColumnMutation } from '~/api/queries/tables/structure/add-node-column.mutation';
-import { useDeleteNodeColumnMutation } from '~/api/queries/tables/structure/delete-node-column.mutation';
-import { useEditNodeColumnNameMutation } from '~/api/queries/tables/structure/edit-node-column.mutation';
-import { ColumnMetadataExtended } from '~/api/selectors/select-node-columns';
-import { ColumnDefinition } from '~/api/utils/api-requests';
+import { useAddColumnMutation } from '~/api/queries/tables/structure/add-column.mutation';
+import { useDeleteColumnMutation } from '~/api/queries/tables/structure/delete-column.mutation';
+import { useEditColumnNameMutation } from '~/api/queries/tables/structure/edit-column.mutation';
+import { TableColumnExtended } from '~/api/selectors/select-node-columns';
+import { CreateColumnRequest } from '~/api/utils/api-requests';
 import { AddColumnForm } from '~/pages/tables/table-structure/add-column/add-column-form.component';
 import { showErrorMessage } from '~/utils/show-error-message';
 
-export const useTableStructureActions = (
-  nodeId: string,
-  nodeCols: ColumnMetadataExtended[] = [],
-) => {
+export const useTableStructureActions = (nodeId: string, nodeCols: TableColumnExtended[] = []) => {
   const { t } = useTranslation();
 
-  const { mutate: dropColumn } = useDeleteNodeColumnMutation(nodeId, {
+  const { mutate: dropColumn } = useDeleteColumnMutation(nodeId, {
     onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.DELETION_FAILED'),
   });
 
-  const { mutate: addColumn } = useAddNodeColumnMutation(nodeId, {
+  const { mutate: addColumn } = useAddColumnMutation(nodeId, {
     onSuccess: () => notifySuccess(t('MESSAGE.CREATION_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
   });
 
-  const { mutateAsync: handleEditColumn } = useEditNodeColumnNameMutation(nodeId);
-
-  const { mutate: addView, isPending: isAddingView } = useAddTableViewMutation(nodeId, {
-    onSuccess: () => notifySuccess(t('MESSAGE.CREATION_SUCCESS')),
-    onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
-  });
+  const { mutateAsync: handleEditColumn } = useEditColumnNameMutation(nodeId);
 
   const handleAddColumn = useCallback(() => {
     modal({
       onOk: addColumn,
       title: t('STRUCTURE.ADD_COLUMN'),
-      renderContent: (args: InstanceProps<ColumnDefinition, never>) => (
+      renderContent: (args: InstanceProps<CreateColumnRequest, never>) => (
         <AddColumnForm usedNames={nodeCols.map(c => c.name)} {...args} />
       ),
     });
   }, [addColumn, nodeCols, t]);
 
-  return { handleDropColumn: dropColumn, handleEditColumn, handleAddColumn, addView, isAddingView };
+  return { handleDropColumn: dropColumn, handleEditColumn, handleAddColumn };
 };

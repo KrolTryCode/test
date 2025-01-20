@@ -1,7 +1,7 @@
 import { modal } from '@pspod/ui-components';
 import { InstanceProps } from 'react-modal-promise';
 
-import { ColumnMetadata } from '~/api/utils/api-requests';
+import { TableColumn } from '~/api/utils/api-requests';
 
 import { TableDataForm } from './table-data-form.component';
 
@@ -12,7 +12,7 @@ export const tableDataFormModal = ({
   onSave,
 }: {
   title: string;
-  metadata: ColumnMetadata[];
+  metadata: TableColumn[];
   data?: Record<string, any>;
   onSave: (data: Record<string, any>) => void;
 }) =>

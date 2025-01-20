@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { ColumnDefinition } from '~/api/utils/api-requests';
+import { CreateColumnRequest } from '~/api/utils/api-requests';
 import { FormInputText, FormSelect } from '~/components/react-hook-form';
 import { getSchema } from '~/pages/tables/table-structure/add-column/add-column-form.schema';
 import { useSelectColumnTypes } from '~/pages/tables/table-structure/add-column/use-select-column-types.hook';
@@ -12,7 +12,7 @@ import { useSelectColumnTypes } from '~/pages/tables/table-structure/add-column/
 interface AddColumnFormProps {
   usedNames: string[];
   onReject?: () => void;
-  onResolve: (values: ColumnDefinition) => void;
+  onResolve: (values: CreateColumnRequest) => void;
 }
 
 export const AddColumnForm: FC<AddColumnFormProps> = ({ usedNames, onResolve, onReject }) => {
@@ -25,7 +25,7 @@ export const AddColumnForm: FC<AddColumnFormProps> = ({ usedNames, onResolve, on
     handleSubmit,
     control,
     formState: { isValid, isSubmitted, isSubmitting },
-  } = useForm<ColumnDefinition>({
+  } = useForm<CreateColumnRequest>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
     defaultValues: schema.getDefault(),
@@ -38,10 +38,7 @@ export const AddColumnForm: FC<AddColumnFormProps> = ({ usedNames, onResolve, on
         <FormInputText controllerProps={{ ...register('name'), control }} />
       </FormItem>
       <FormItem label={t('STRUCTURE.TYPE')}>
-        <FormSelect
-          items={selectColumnTypes}
-          controllerProps={{ ...register('columnType'), control }}
-        />
+        <FormSelect items={selectColumnTypes} controllerProps={{ ...register('type'), control }} />
       </FormItem>
       <FormButtons>
         <Button onClick={onReject} variant={'outlined'} color={'primary'}>

@@ -18,8 +18,7 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
-import { ColumnMetadataExtended } from '~/api/selectors/select-node-columns';
-import { PairStringColumnType } from '~/api/utils/api-requests';
+import { TableColumnExtended } from '~/api/selectors/select-node-columns';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { useGetEditRowActions } from '~/components/datagrid/use-get-edit-row-actions.hook';
 import { useTableStructureActions } from '~/pages/tables/table-structure/use-table-structure-actions.hook';
@@ -38,12 +37,13 @@ const TableStructure: FC = () => {
 
   const { nodeInfo, nodeColumns, isColumnsFetched, isDataLoading } = useTableStructureData(nodeId);
 
-  const { handleDropColumn, handleAddColumn, handleEditColumn, addView, isAddingView } =
-    useTableStructureActions(nodeId, nodeColumns);
+  const { handleDropColumn, handleAddColumn, handleEditColumn } = useTableStructureActions(
+    nodeId,
+    nodeColumns,
+  );
   const { getActions, onRowModesModelChange, rowModesModel } =
-    useGetEditRowActions<ColumnMetadataExtended>({
+    useGetEditRowActions<TableColumnExtended>({
       apiRef,
-      idKey: 'name',
     });
 
   const [paging, setGridPaging] = useState<GridPagingParams>();
@@ -55,16 +55,16 @@ const TableStructure: FC = () => {
 
   const changeTableColumn = useCallback(
     async (
-      { name }: ColumnMetadataExtended,
-      oldRow: ColumnMetadataExtended,
-    ): Promise<ColumnMetadataExtended> => {
+      { name }: TableColumnExtended,
+      oldRow: TableColumnExtended,
+    ): Promise<TableColumnExtended> => {
       const isNameChanged = name !== oldRow.name;
       if (!isNameChanged) {
         return oldRow;
       }
 
       try {
-        await handleEditColumn({ columnName: oldRow.name, newColumnName: name });
+        await handleEditColumn({ columnId: oldRow.id, newColumnName: name });
         notifySuccess(t('MESSAGE.UPDATE_SUCCESS'));
         return {
           ...oldRow,
@@ -79,7 +79,7 @@ const TableStructure: FC = () => {
   );
 
   const validateColumnName = useCallback(
-    (params: GridPreProcessEditCellProps<string, ColumnMetadataExtended>) => {
+    (params: GridPreProcessEditCellProps<string, TableColumnExtended>) => {
       const existingNames = items?.map(({ name }) => name).filter(name => name !== params.row.name);
 
       const error = existingNames?.includes(params.props.value!)
@@ -91,7 +91,7 @@ const TableStructure: FC = () => {
     [items, t],
   );
 
-  const structureTableColumns: EnhancedColDef<ColumnMetadataExtended>[] = useMemo(
+  const structureTableColumns: EnhancedColDef<TableColumnExtended>[] = useMemo(
     () => [
       {
         field: 'name',
@@ -152,26 +152,18 @@ const TableStructure: FC = () => {
     // TODO: update column list
   };
 
-  const handleAddView = () => {
-    if (items) {
-      const view = items.map<PairStringColumnType>(v => ({ first: v.name, second: v.type }));
-      addView(view);
-    }
-  };
-
   return (
     <Stack height={'100%'} gap={1}>
       <Typography variant={'h3'} color={'primary'}>
         {`${t('STRUCTURE.LIST')} ${nodeInfo?.name}`}
       </Typography>
 
-      <DataGrid<ColumnMetadataExtended>
+      <DataGrid<TableColumnExtended>
         ref={apiRef}
-        loading={isDataLoading || isAddingView}
+        loading={isDataLoading}
         items={items ?? []}
         totalCount={items?.length ?? 0}
         isCellEditable={({ row }) => row.name !== 'id'}
-        getRowId={row => row.name}
         editMode={'row'}
         columns={structureTableColumns}
         processRowUpdate={changeTableColumn}
@@ -196,14 +188,6 @@ const TableStructure: FC = () => {
           to={`/${projectsPath}/${projectPath}/${projectId}/${tablesPath}/${nodeId}`}
         >
           {t('ACTION.CANCEL')}
-        </Button>
-        <Button
-          variant={'contained'}
-          color={'primary'}
-          onClick={handleAddView}
-          isLoading={isAddingView}
-        >
-          {t('ACTION.SAVE')}
         </Button>
       </Stack>
     </Stack>

@@ -1,9 +1,9 @@
-import { useGetContentNodeQuery } from '~/api/queries/nodes/get-content-node.query';
+import { useGetProjectContentQuery } from '~/api/queries/project-content/get-project-content.query';
 import { useGetTableMetadataColumns } from '~/api/queries/tables/structure/get-table-metadata.query';
 import { selectNodeColumns } from '~/api/selectors/select-node-columns';
 
 export const useTableStructureData = (nodeId: string) => {
-  const { data: nodeInfo, isLoading: isNodeLoading } = useGetContentNodeQuery(nodeId);
+  const { data: nodeInfo, isLoading: isNodeLoading } = useGetProjectContentQuery(nodeId);
   const {
     data: nodeColumns,
     isLoading: isColumnsLoading,

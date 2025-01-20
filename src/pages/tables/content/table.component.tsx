@@ -59,7 +59,7 @@ export const Table: FC<TableProps> = ({ nodeInfo }) => {
       metadata.map<EnhancedColDef>(col => {
         const type = getGridColumnType(col.type);
         return {
-          field: col.name,
+          field: col.id,
           headerName: col.name,
           type,
           hideable: true,

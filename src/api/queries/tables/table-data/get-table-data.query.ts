@@ -5,7 +5,7 @@ import { Table } from '~/api/utils/api-requests';
 
 import { tableQueries } from '../queries';
 
-export const useGetTableMetadataColumns = <T = Table>(
+export const useGetTableDataQuery = <T = Table>(
   nodeId: string,
   options?: UseCustomQueryOptions<Table, unknown, T>,
 ): UseQueryResult<T, unknown> => {
