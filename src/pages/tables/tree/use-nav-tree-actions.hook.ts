@@ -3,9 +3,9 @@ import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useCreateContentNodeMutation } from '~/api/queries/nodes/create-content-node.mutation';
-import { useDeleteContentNodeMutation } from '~/api/queries/nodes/delete-content-node.mutation';
-import { useUpdateContentNodeMutation } from '~/api/queries/nodes/update-content-node.mutation';
+import { useCreateProjectContentMutation } from '~/api/queries/project-content/create-project-content.mutation';
+import { useDeleteProjectContentMutation } from '~/api/queries/project-content/delete-project-content.mutation';
+import { useUpdateProjectContentMutation } from '~/api/queries/project-content/update-project-content.mutation';
 import { useGetTableMetadataColumns } from '~/api/queries/tables/structure/get-table-metadata.mutation';
 import { ContentNodeType } from '~/api/utils/api-requests';
 import { nodeModal } from '~/components/modals-content/node-modal.component';
@@ -28,12 +28,12 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
   const declinatedTranslations = useDeclinatedTranslationsContext();
   const navigate = useNavigate();
 
-  const { mutate: deleteNode } = useDeleteContentNodeMutation(projectId, {
+  const { mutate: deleteNode } = useDeleteProjectContentMutation(projectId, {
     onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.DELETION_FAILED'),
   });
 
-  const { mutate: createNode } = useCreateContentNodeMutation(projectId, {
+  const { mutate: createNode } = useCreateProjectContentMutation(projectId, {
     onSuccess: data => {
       notifySuccess(t('MESSAGE.CREATION_SUCCESS'));
       navigate(data.id);
@@ -41,7 +41,7 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
     onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
   });
 
-  const { mutate: updateNode } = useUpdateContentNodeMutation(projectId, {
+  const { mutate: updateNode } = useUpdateProjectContentMutation(projectId, {
     onSuccess: data => {
       notifySuccess(t('MESSAGE.UPDATE_SUCCESS'));
       navigate(data.id);
@@ -73,13 +73,11 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
             type: node.type,
             parentContentNodeId,
           },
-          projectId: projectId,
-          onSave: data =>
-            updateNode({ nodeId: id, name: data.name, parentNodeId: data.parentContentNodeId }),
+          onSave: data => updateNode({ nodeId: id, name: data.name }),
         });
       }
     },
-    [declinatedTranslations, findNode, getParentsIdsList, projectId, t, updateNode],
+    [declinatedTranslations, findNode, getParentsIdsList, t, updateNode],
   );
 
   const handleAddCatalog = useCallback(
@@ -131,8 +129,8 @@ export const useNavTreeActions = (treeData: NavTreeItemData[]) => {
       };
 
       if (node?.type === ContentNodeType.Table) {
-        const tableColumns = await getTableMetadata(node.id);
-        if (tableColumns?.columnsMetadata && tableColumns?.columnsMetadata?.length > 0) {
+        const table = await getTableMetadata(node.id);
+        if (table?.columns && table?.columns?.length > 0) {
           hasChildren = true;
         }
       }

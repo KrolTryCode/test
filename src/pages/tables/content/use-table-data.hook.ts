@@ -2,11 +2,11 @@ import { notifySuccess } from '@pspod/ui-components';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useAddTableDataMutation } from '~/api/queries/tables/add-table-data.mutation';
-import { useDeleteTableDataMutation } from '~/api/queries/tables/delete-table-data.mutation';
-import { useGetTableContentQuery } from '~/api/queries/tables/get-table-content.query';
-import { useGetTableMetadataColumns } from '~/api/queries/tables/structure/get-table-metadata.query';
-import { useUpdateTableDataMutation } from '~/api/queries/tables/update-table-data.mutation';
+import { useAddTableDataMutation } from '~/api/queries/tables/table-data/add-table-data.mutation';
+import { useDeleteTableDataMutation } from '~/api/queries/tables/table-data/delete-table-data.mutation';
+import { useGetTableContentQuery } from '~/api/queries/tables/table-data/get-table-content.query';
+import { useGetTableDataQuery } from '~/api/queries/tables/table-data/get-table-data.query';
+import { useUpdateTableDataMutation } from '~/api/queries/tables/table-data/update-table-data.mutation';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { tableDataFormModal } from './table-data-form/table-data-form.modal';
@@ -22,8 +22,8 @@ export const useTableData = (nodeId: string) => {
     isLoading: isContentLoading,
   } = useGetTableContentQuery(nodeId);
 
-  const { data: metadata = [], isLoading: isMetadataLoading } = useGetTableMetadataColumns(nodeId, {
-    select: data => data.columnsMetadata.filter(v => v.name !== 'id'),
+  const { data: metadata = [], isLoading: isMetadataLoading } = useGetTableDataQuery(nodeId, {
+    select: data => data.columns.filter(v => v.name !== 'id'),
   });
 
   const { mutate: addTableColumn } = useAddTableDataMutation(nodeId, {

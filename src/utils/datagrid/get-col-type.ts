@@ -1,25 +1,27 @@
 import { GridColType } from '@mui/x-data-grid-premium';
 
-import { ColumnType } from '~/api/utils/api-requests';
+import { DataType } from '~/api/utils/api-requests';
 
-export function getGridColumnType(type: ColumnType): GridColType {
+export function getGridColumnType(type: DataType): GridColType {
   switch (type) {
-    case ColumnType.Boolean: {
+    case DataType.Boolean: {
       return 'boolean';
     }
-    case ColumnType.Timestamp: {
+    case DataType.Timestamp: {
       return 'dateTime';
     }
-    case ColumnType.Date: {
+    case DataType.Date: {
       return 'date';
     }
-    case ColumnType.Integer:
-    case ColumnType.Double: {
+    case DataType.Int:
+    case DataType.Float: {
       return 'number';
     }
-    case ColumnType.UUID:
-    case ColumnType.Geometry:
-    case ColumnType.Varchar:
+    case DataType.LineString:
+    case DataType.Point:
+    case DataType.Polygon:
+    case DataType.Uuid:
+    case DataType.String:
     default:
       return 'string';
   }

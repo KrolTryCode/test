@@ -1,14 +1,12 @@
-import { ColumnMetadata, TableMetadata } from '~/api/utils/api-requests';
+import { TableColumn, Table } from '~/api/utils/api-requests';
 
-export interface ColumnMetadataExtended extends ColumnMetadata {
-  id: string;
+export interface TableColumnExtended extends TableColumn {
   __reorder__: string;
 }
 
-export const selectNodeColumns = (data: TableMetadata): ColumnMetadataExtended[] => {
-  return data.columnsMetadata.map((item, index) => ({
+export const selectNodeColumns = (data: Table): TableColumnExtended[] => {
+  return data.columns.map(item => ({
     ...item,
-    id: String(index),
     __reorder__: item.name,
   }));
 };

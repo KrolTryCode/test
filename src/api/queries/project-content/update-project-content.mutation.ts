@@ -4,23 +4,18 @@ import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { ContentNode } from '~/api/utils/api-requests';
 
-import { nodeQueries } from './queries';
+import { nodeQueries } from '../nodes/queries';
 
-export const useUpdateContentNodeMutation = (
+export const useUpdateProjectContentMutation = (
   projectId: string,
-  options?: UseCustomMutationOptions<
-    ContentNode,
-    unknown,
-    { nodeId: string; name: string; parentNodeId?: string }
-  >,
+  options?: UseCustomMutationOptions<ContentNode, unknown, { nodeId: string; name: string }>,
 ) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ nodeId, name, parentNodeId }) =>
-      ApiClientSecured.contentNodeV1Controller.updateContentNode(nodeId, {
+    mutationFn: ({ nodeId, name }) =>
+      ApiClientSecured.projectContentV1Controller.updateNode(nodeId, {
         name,
-        parentNodeId,
       }),
     ...options,
     onSuccess(data, ...args) {

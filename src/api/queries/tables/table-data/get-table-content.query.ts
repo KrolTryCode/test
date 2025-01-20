@@ -2,7 +2,7 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 
 import { UseCustomQueryOptions } from '~/api/typings/react-query-helpers';
 
-import { tableQueries } from './queries';
+import { tableQueries } from '../queries';
 
 export const useGetTableContentQuery = <T = Record<string, object>[]>(
   nodeId: string,

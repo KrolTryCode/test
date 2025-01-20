@@ -5,22 +5,13 @@ import { ApiClientSecured } from '~/api/utils/api-client';
 
 import { tableQueries } from '../queries';
 
-interface EditNodeColumnNameVariables {
-  columnName: string;
-  newColumnName: string;
-}
-
-export const useEditNodeColumnNameMutation = (
+export const useDeleteColumnMutation = (
   nodeId: string,
-  options?: UseCustomMutationOptions<void, unknown, EditNodeColumnNameVariables>,
+  options?: UseCustomMutationOptions<object, Error, string>,
 ) => {
   const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: ({ columnName, newColumnName }) =>
-      ApiClientSecured.contentNodeV1Controller.updateColumnName(nodeId, {
-        columnName,
-        newColumnName,
-      }),
+  return useMutation<object, Error, string>({
+    mutationFn: columnId => ApiClientSecured.columnV1Controller.deleteColumn(nodeId, columnId),
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({ queryKey: tableQueries.metadata(nodeId).queryKey });

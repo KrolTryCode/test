@@ -1,14 +1,12 @@
 import { TFunction } from 'i18next';
 import * as y from 'yup';
 
-import { ColumnDefinition, ColumnType } from '~/api/utils/api-requests';
+import { CreateColumnRequest, DataType } from '~/api/utils/api-requests';
 
-export const getSchema = (names: string[], t: TFunction): y.ObjectSchema<ColumnDefinition> =>
+export const getSchema = (names: string[], t: TFunction): y.ObjectSchema<CreateColumnRequest> =>
   y.object({
     name: y.string().required().default('').notOneOf(names, t('STRUCTURE.ERROR.NOT_UNIQUE_NAME')),
-    columnType: y
-      .mixed<ColumnType>()
-      .oneOf(Object.values(ColumnType))
-      .default(ColumnType.Varchar)
-      .required(),
+    type: y.mixed<DataType>().oneOf(Object.values(DataType)).default(DataType.String).required(),
+    nullable: y.boolean().required().default(false),
+    unique: y.boolean().required().default(false),
   });
