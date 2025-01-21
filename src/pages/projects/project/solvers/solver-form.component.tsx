@@ -73,10 +73,6 @@ export const SolverForm: FC<SolverFormProps> = ({
     [createSolverFile, uploadFile],
   );
 
-  // TODO FE-98 https://tracker.yandex.ru/FE-98
-  // Требуется добавить имя файла (архива) решателя при скачивании в downloadBlobFile
-  // и для отображения на кнопке в FormInputFile при открытии формы
-
   return (
     <Form onSubmit={handleSubmit(onResolve)}>
       <FormItem label={t('COMMON.TITLE')} isRequired>
@@ -90,14 +86,14 @@ export const SolverForm: FC<SolverFormProps> = ({
           accept={'.zip'}
           isLoading={isFetching}
           onChangeFile={onChangeFile}
+          initialFilename={solverFile?.fileName}
           controllerProps={{ ...register('fileId'), control }}
         />
-        {/* TODO FE-98 https://tracker.yandex.ru/FE-98 */}
         <Button
           hidden={!currentFile}
           icon={<CloudDownload />}
           sx={{ marginTop: 1 }}
-          onClick={() => downloadBlobFile(currentFile, `Архив решателя ${data?.name}.zip`)}
+          onClick={() => downloadBlobFile(currentFile, solverFile?.fileName ?? '')}
         >
           {t('ACTION.DOWNLOAD_ATTACHED_FILE')}
         </Button>
