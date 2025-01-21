@@ -11,7 +11,8 @@ export const useCreateSolverMutation = (
 ) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: data => ApiClientSecured.projectSolversV1Controller.create1(projectId, data),
+    mutationFn: data =>
+      ApiClientSecured.projectSolversV1Controller.createProjectSolver(projectId, data),
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({ queryKey: solverQueries.list._def });

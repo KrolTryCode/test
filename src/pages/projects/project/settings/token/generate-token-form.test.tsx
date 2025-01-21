@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
 
-import { useUserStore } from '~/app/user/user.store';
 import {
   ICreateTokenForm,
   schema,
@@ -15,9 +14,6 @@ const correctFormData: ICreateTokenForm = {
 
 describe('Generate token form', () => {
   it('should pass with correct data', async () => {
-    useUserStore.setState({
-      data: { user: { userTimeZone: { systemTitle: 'Atlantic/Reykjavik' } } },
-    });
     expect(await schema.isValid(correctFormData)).toBeTruthy();
     expect(await schema.isValid({ ...correctFormData, description: '' })).toBeTruthy();
   });

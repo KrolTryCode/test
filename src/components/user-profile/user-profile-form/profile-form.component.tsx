@@ -120,6 +120,5 @@ function getFormData(user: User): UpdateUserRequestNullable {
     division: user.division,
     position: user.position,
     phoneNumber: user.phoneNumber,
-    timeZoneId: user.userTimeZone!.id,
   };
 }

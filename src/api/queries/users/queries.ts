@@ -24,10 +24,6 @@ export const userQueries = createQueryKeys('users', {
         pagingParams.pageAndSort,
       ),
   }),
-  timezones: {
-    queryKey: ['timezones'],
-    queryFn: () => ApiClientSecured.usersV1Controller.getTimeZones(),
-  },
   avatarId: (userId: string) => ({
     queryKey: [userId, 'avatar'],
     queryFn: () => ApiClientSecured.userFilesV1Controller.getActiveUserAvatarId(userId),
