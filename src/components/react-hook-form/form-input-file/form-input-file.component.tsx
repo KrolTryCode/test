@@ -20,6 +20,7 @@ interface FormInputFileProps<
   showPreview?: boolean;
   onChangeFile?: (file: File | undefined, field: string) => void;
   isLoading?: boolean;
+  initialFilename?: string | null;
 }
 
 export function FormInputFile<TFieldValues extends FieldValues = FieldValues>({
@@ -29,10 +30,11 @@ export function FormInputFile<TFieldValues extends FieldValues = FieldValues>({
   showPreview = false,
   onChangeFile,
   isLoading,
+  initialFilename = null,
 }: FormInputFileProps<TFieldValues, FieldPath<TFieldValues>>) {
   const { t } = useTranslation();
   const { field, fieldState } = useController(controllerProps);
-  const [filename, setFilename] = useState<string | null>(null);
+  const [filename, setFilename] = useState<string | null>(initialFilename);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const { data: image, isFetching: isImageLoading } = useGetImageQuery(field.value, {
