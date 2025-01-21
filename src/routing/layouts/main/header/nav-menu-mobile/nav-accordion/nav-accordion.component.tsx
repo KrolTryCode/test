@@ -1,45 +1,36 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { AccordionDetails, Box } from '@mui/material';
+import { AccordionDetails } from '@mui/material';
 import { t } from 'i18next';
 import { FC } from 'react';
+import { NavLink } from 'react-router-dom';
 
-import {
-  StyledAccordionSummary,
-  StyledAccordionNavLink,
-  StyledAccordion,
-} from './nav-accordion.style';
+import { StyledAccordionSummary, StyledAccordion } from './nav-accordion.style';
 import { NavAccordionProps } from './nav-accordion.types';
 
 export const NavAccordion: FC<NavAccordionProps> = ({
   path,
-  menuDisplay,
+  title,
   childrenRoutes,
   defaultExpanded,
   onRouteClick,
 }) => {
   return (
-    <StyledAccordion
-      defaultExpanded={defaultExpanded}
-      sx={{
-        boxShadow: 'none',
-        padding: '0',
-      }}
-    >
+    <StyledAccordion disableGutters defaultExpanded={defaultExpanded}>
       <StyledAccordionSummary expandIcon={<ExpandMoreIcon htmlColor={'white'} />}>
-        {t(menuDisplay!.label)}
+        {title}
       </StyledAccordionSummary>
       <AccordionDetails>
-        {childrenRoutes!
+        {childrenRoutes
           .filter(child => !child.isIndex)
           .map(child => (
-            <StyledAccordionNavLink
+            <NavLink
               to={`${path}/${child.path}`}
               style={{ textDecoration: 'none' }}
-              onClick={() => onRouteClick()}
+              onClick={onRouteClick}
               key={`${path}/${child.path}`}
             >
-              <Box p={1}>{child.menuDisplay?.label && t(child.menuDisplay?.label)}</Box>
-            </StyledAccordionNavLink>
+              {child.menuDisplay?.label && t(child.menuDisplay?.label)}
+            </NavLink>
           ))}
       </AccordionDetails>
     </StyledAccordion>

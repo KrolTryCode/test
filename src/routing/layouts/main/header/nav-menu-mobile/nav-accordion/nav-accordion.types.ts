@@ -1,7 +1,8 @@
 import { RouteDescription } from '~/routing/routes.types';
 
-export type NavAccordionProps = Pick<RouteDescription, 'path' | 'menuDisplay'> & {
-  childrenRoutes: RouteDescription['children'];
+export interface NavAccordionProps extends Pick<RouteDescription, 'path'> {
+  title: string;
+  childrenRoutes: Required<RouteDescription>['children'];
   defaultExpanded: boolean;
   onRouteClick: () => void;
-};
+}
