@@ -1,7 +1,6 @@
+import { Box, BoxProps } from '@mui/material';
 import { FC, useEffect, useRef } from 'react';
-import { NavLinkProps, useMatches } from 'react-router-dom';
-
-import { StyledHeaderNavLink } from '../nav-menu-desktop.style';
+import { NavLink, NavLinkProps, useMatches } from 'react-router-dom';
 
 /**
  * @description
@@ -9,7 +8,7 @@ import { StyledHeaderNavLink } from '../nav-menu-desktop.style';
  *
  * It's used to scroll to the active NavLink
  */
-export const HeaderNavLink: FC<NavLinkProps> = ({ children, ...props }) => {
+export const HeaderNavLink: FC<NavLinkProps & BoxProps> = ({ children, ...props }) => {
   const { to } = props;
 
   const matches = useMatches();
@@ -23,8 +22,8 @@ export const HeaderNavLink: FC<NavLinkProps> = ({ children, ...props }) => {
   }, [matches, to]);
 
   return (
-    <StyledHeaderNavLink {...props} ref={ref}>
+    <Box component={NavLink} sx={{ textDecoration: 'none' }} {...props} ref={ref}>
       {children}
-    </StyledHeaderNavLink>
+    </Box>
   );
 };
