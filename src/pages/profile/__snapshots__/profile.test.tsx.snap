@@ -564,87 +564,6 @@ exports[`Profile > renders the profile > profile 1`] = `
               <label
                 class="MuiFormLabel-root MuiFormLabel-colorPrimary css-1hud5yu-MuiFormLabel-root"
               >
-                Часовой пояс
-              </label>
-              <div
-                class="MuiBox-root css-eal7pa"
-              >
-                <div
-                  class="MuiBox-root css-0"
-                  data-mui-internal-clone-element="true"
-                >
-                  <div
-                    class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-1r0gw96-MuiAutocomplete-root"
-                    title=""
-                  >
-                    <div
-                      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-qh4m2g-MuiFormControl-root-MuiTextField-root"
-                    >
-                      <div
-                        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-i9swye-MuiInputBase-root-MuiOutlinedInput-root"
-                      >
-                        <input
-                          aria-autocomplete="list"
-                          aria-expanded="false"
-                          aria-invalid="false"
-                          autocapitalize="none"
-                          autocomplete="off"
-                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-cm2axf-MuiInputBase-input-MuiOutlinedInput-input"
-                          id=":rh:"
-                          role="combobox"
-                          spellcheck="false"
-                          type="text"
-                          value=""
-                        />
-                        <div
-                          class="MuiAutocomplete-endAdornment css-1uhhrmm-MuiAutocomplete-endAdornment"
-                        >
-                          <button
-                            aria-label="Открыть"
-                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-gvwt6p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
-                            tabindex="-1"
-                            title="Открыть"
-                            type="button"
-                          >
-                            <svg
-                              aria-hidden="true"
-                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                              data-testid="ArrowDropDownIcon"
-                              focusable="false"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                d="M7 10l5 5 5-5z"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                        <fieldset
-                          aria-hidden="true"
-                          class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
-                        >
-                          <legend
-                            class="css-w4cd9x"
-                          >
-                            <span
-                              class="notranslate"
-                            >
-                              ​
-                            </span>
-                          </legend>
-                        </fieldset>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="MuiFormControl-root css-cls341-MuiFormControl-root"
-            >
-              <label
-                class="MuiFormLabel-root MuiFormLabel-colorPrimary css-1hud5yu-MuiFormLabel-root"
-              >
                 Дата регистрации
               </label>
               <div
@@ -660,7 +579,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                       aria-invalid="false"
                       autocomplete="off"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedEnd Mui-readOnly MuiInputBase-readOnly css-7rlme6-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":rj:"
+                      id=":rg:"
                       inputmode="text"
                       placeholder="ДД.ММ.ГГГГ чч:мм"
                       readonly=""
@@ -729,7 +648,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                       aria-invalid="false"
                       autocomplete="off"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedEnd Mui-readOnly MuiInputBase-readOnly css-7rlme6-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":rl:"
+                      id=":ri:"
                       inputmode="text"
                       placeholder="ДД.ММ.ГГГГ чч:мм"
                       readonly=""
@@ -799,7 +718,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                       aria-readonly="true"
                       autocomplete="off"
                       class="MuiInputBase-input MuiOutlinedInput-input css-1l16dx2-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":rn:"
+                      id=":rk:"
                       readonly=""
                       type="text"
                       value=""
@@ -845,7 +764,7 @@ exports[`Profile > renders the profile > profile 1`] = `
                       aria-readonly="true"
                       autocomplete="off"
                       class="MuiInputBase-input MuiOutlinedInput-input css-1l16dx2-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":ro:"
+                      id=":rl:"
                       readonly=""
                       type="text"
                       value="Нет данных"
@@ -875,7 +794,7 @@ exports[`Profile > renders the profile > profile 1`] = `
         >
           <button
             class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation css-zrn6ml-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
-            id=":rp:"
+            id=":rm:"
             tabindex="0"
             type="button"
           >
@@ -887,7 +806,7 @@ exports[`Profile > renders the profile > profile 1`] = `
           </button>
           <button
             class="MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-disableElevation css-dw3lxo-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root"
-            id=":rq:"
+            id=":rn:"
             tabindex="0"
             type="submit"
           >
