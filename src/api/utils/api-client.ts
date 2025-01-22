@@ -147,3 +147,32 @@ ApiClientSecured.instance.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+// partial https://tracker.yandex.ru/FE-91
+// TODO: договориться, чтобы Z приходила с бэка, если надо
+ApiClientSecured.instance.interceptors.response.use(response => {
+  const isObject = (smth: any): smth is Record<string, any> =>
+    smth !== null && typeof smth === 'object';
+
+  function fixDates(obj: Record<string, any>) {
+    for (const key in obj) {
+      if (isObject(obj[key])) {
+        fixDates(obj[key]);
+      }
+
+      const isDateString =
+        typeof obj[key] === 'string' &&
+        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d+)?$/.test(obj[key]);
+
+      if (isDateString) {
+        obj[key] += 'Z';
+      }
+    }
+  }
+
+  if (isObject(response.data)) {
+    fixDates(response.data);
+  }
+
+  return response;
+});

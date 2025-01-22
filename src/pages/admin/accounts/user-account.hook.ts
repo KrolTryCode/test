@@ -6,9 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useChangePasswordAdminMutation } from '~/api/queries/accounts/change-password-admin.mutation';
 import { useGetUserQuery } from '~/api/queries/users/get-user.query';
 import { useUpdateUserMutation } from '~/api/queries/users/update-user.mutation';
-import { selectUserTimezone } from '~/api/selectors/select-user-timezone';
 import { UpdateUserRequest } from '~/api/utils/api-requests';
-import { getCurrentUserTimezone } from '~/app/user/user.store';
 import { changePasswordModal } from '~/components/change-password-form/change-password.modal';
 import { UpdateUserRequestNullable } from '~/components/user-profile/user-profile-form/profile-form.schema';
 import { getFullName } from '~/components/user-profile/user-profile.utils';
@@ -19,11 +17,6 @@ export const useUserAccount = () => {
   const { userId } = useParams<{ userId: string }>();
   const { data: user, isLoading: isUserLoading } = useGetUserQuery(userId ?? '', {
     enabled: !!userId,
-    select: data => {
-      const tz = getCurrentUserTimezone();
-      const user = selectUserTimezone(tz, data, ['lastSuccessfulLoginTime', 'createdFrom']);
-      return user;
-    },
   });
 
   const { mutate: changePasswordByAdmin } = useChangePasswordAdminMutation(userId!, {

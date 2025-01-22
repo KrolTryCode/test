@@ -8,7 +8,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useGetProjectTasksQuery } from '~/api/queries/projects/tasks/get-project-tasks.query';
 import { FullTaskInfo, TaskState } from '~/api/utils/api-requests';
 import { editPath } from '~/utils/configuration/routes-paths';
-import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
 import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 
 const TasksList: FC = () => {
@@ -67,7 +66,6 @@ const TasksList: FC = () => {
         type: 'dateTime',
         headerName: t('COMMON.DATE_CREATED'),
         width: 200,
-        valueGetter: getColDateWithTz,
       },
       {
         field: 'actions',

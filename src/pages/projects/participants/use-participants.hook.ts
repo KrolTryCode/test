@@ -9,9 +9,8 @@ import { useGetProjectMembersQuery } from '~/api/queries/project-members/get-pro
 import { useUpdateProjectMemberMutation } from '~/api/queries/project-members/update-project-member.mutation';
 import { useGetAllRolesQuery } from '~/api/queries/roles/get-all-roles.query';
 import { FullProjectNodeMemberInfo } from '~/api/utils/api-requests';
-import { getCurrentUserTimezone } from '~/app/user/user.store';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
-import { applyTzOffsetToSystemDate } from '~/utils/date/apply-tz-offset';
+import { dateTimeToISOString } from '~/utils/date/formatters';
 import { validateMinDate } from '~/utils/date/validate-min-date';
 import { showErrorMessage } from '~/utils/show-error-message';
 
@@ -38,10 +37,9 @@ export const useParticipants = (nodeId: string) => {
 
   const onAddParticipantClick = useCallback(() => {
     const onSave = async (data: IAddParticipantForm) => {
-      const userTz = getCurrentUserTimezone();
       const expTime =
         data.expirationTime && isValid(data.expirationTime)
-          ? applyTzOffsetToSystemDate(new Date(data.expirationTime), userTz)
+          ? dateTimeToISOString(data.expirationTime)
           : '';
 
       const promises = data.usersId.map(userId =>
@@ -79,11 +77,7 @@ export const useParticipants = (nodeId: string) => {
         return oldRow;
       }
 
-      const userTz = getCurrentUserTimezone();
       const isValidExpTime = expirationTime && isValid(expirationTime);
-      const expTime = isValidExpTime
-        ? applyTzOffsetToSystemDate(new Date(expirationTime), userTz)
-        : expirationTime;
 
       if (isValidExpTime) {
         const error = validateMinDate(new Date(expirationTime));
@@ -97,7 +91,7 @@ export const useParticipants = (nodeId: string) => {
         const result = await updateParticipant({
           userId,
           roleId,
-          expirationTime: expTime,
+          expirationTime,
         });
         notifySuccess(t('MESSAGE.UPDATE_SUCCESS'));
         return { ...oldRow, result };

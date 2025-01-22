@@ -7,13 +7,11 @@ import { InstanceProps } from 'react-modal-promise';
 
 import { useGetAllRolesQuery } from '~/api/queries/roles/get-all-roles.query';
 import { Role } from '~/api/utils/api-requests';
-import { getCurrentUserTimezone } from '~/app/user/user.store';
 import { FormDateTimePicker, FormInputText, FormSelect } from '~/components/react-hook-form';
 import {
   ICreateTokenForm,
   schema,
 } from '~/pages/projects/project/settings/token/generate-token.schema';
-import { applyTzOffset } from '~/utils/date/apply-tz-offset';
 
 interface GenerateTokenFormProps {
   onReject?: () => void;
@@ -50,8 +48,7 @@ const GenerateTokenForm: FC<GenerateTokenFormProps> = ({ onReject, onResolve }) 
         <FormDateTimePicker
           type={'datetime'}
           controllerProps={{ ...register('expirationDate'), control }}
-          // @ts-expect-error date type
-          minDate={applyTzOffset(new Date().toJSON(), getCurrentUserTimezone())}
+          minDate={new Date()}
         />
       </FormItem>
       <FormItem isRequired label={t('ENTITY.ROLE')}>

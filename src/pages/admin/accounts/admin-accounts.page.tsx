@@ -15,7 +15,6 @@ import { Link } from 'react-router-dom';
 import { AccountState, User, UserState } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { UserAvatar } from '~/components/user-avatar/user-avatar.component';
-import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
 import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 
 import { useAdminAccounts } from './admin-accounts.hook';
@@ -81,7 +80,6 @@ const AdminUsersPage: FC = () => {
         type: 'dateTime',
         headerName: t('COMMON.DATE_CREATED'),
         flex: 1,
-        valueGetter: getColDateWithTz,
       },
       {
         field: 'email',

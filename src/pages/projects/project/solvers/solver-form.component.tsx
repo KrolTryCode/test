@@ -93,7 +93,9 @@ export const SolverForm: FC<SolverFormProps> = ({
           hidden={!currentFile}
           icon={<CloudDownload />}
           sx={{ marginTop: 1 }}
-          onClick={() => downloadBlobFile(currentFile, solverFile?.fileName ?? '')}
+          onClick={() =>
+            downloadBlobFile(currentFile, solverFile?.fileName ?? `${t('ENTITY.SOLVER')}.zip`)
+          }
         >
           {t('ACTION.DOWNLOAD_ATTACHED_FILE')}
         </Button>

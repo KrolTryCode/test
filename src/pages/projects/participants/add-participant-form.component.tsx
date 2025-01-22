@@ -8,9 +8,7 @@ import { InstanceProps } from 'react-modal-promise';
 import { useGetAllRolesQuery } from '~/api/queries/roles/get-all-roles.query';
 import { useGetActiveUsersQuery } from '~/api/queries/users/get-active-users.query';
 import { User } from '~/api/utils/api-requests';
-import { getCurrentUserTimezone } from '~/app/user/user.store';
 import { FormDateTimePicker, FormSelect } from '~/components/react-hook-form';
-import { applyTzOffset } from '~/utils/date/apply-tz-offset';
 
 import { schema, IAddParticipantForm } from './add-participant.schema';
 
@@ -69,8 +67,7 @@ export const AddParticipant: FC<AddParticipantProps> = ({
         <FormDateTimePicker
           type={'datetime'}
           controllerProps={{ ...register('expirationTime'), control }}
-          // @ts-expect-error date type
-          minDate={applyTzOffset(new Date().toJSON(), getCurrentUserTimezone())}
+          minDate={new Date()}
         />
       </FormItem>
       <FormButtons>

@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom';
 
 import { ServiceToken, TokenState } from '~/api/utils/api-requests';
 import { useTokenActions } from '~/pages/projects/project/settings/token/use-token-actions.hook';
-import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
 import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 
 export const ServiceTokens: FC = () => {
@@ -70,7 +69,6 @@ export const ServiceTokens: FC = () => {
         type: 'dateTime',
         headerName: t('COMMON.DATE_EXPIRED'),
         flex: 1,
-        valueGetter: getColDateWithTz,
       },
       {
         field: 'actions',
