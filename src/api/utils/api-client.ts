@@ -10,6 +10,7 @@ import {
 } from '~/utils/localstorage/project-storage/project-storage-instance';
 import { ProjectStorageKey } from '~/utils/localstorage/project-storage/project-storage.types';
 import { showErrorMessage } from '~/utils/show-error-message';
+import { dateStringWithoutTzRe } from '~/utils/validation/utils/regexp';
 
 export interface ErrorResponse {
   code: number;
@@ -160,11 +161,10 @@ ApiClientSecured.instance.interceptors.response.use(response => {
         fixDates(obj[key]);
       }
 
-      const isDateString =
-        typeof obj[key] === 'string' &&
-        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d+)?$/.test(obj[key]);
+      const isDateStringWithoutTz =
+        typeof obj[key] === 'string' && dateStringWithoutTzRe.test(obj[key]);
 
-      if (isDateString) {
+      if (isDateStringWithoutTz) {
         obj[key] += 'Z';
       }
     }
