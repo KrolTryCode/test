@@ -13,12 +13,9 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { FullProjectNodeMemberInfo } from '~/api/utils/api-requests';
-import { getCurrentUserTimezone } from '~/app/user/user.store';
 import { useGetEditRowActions } from '~/components/datagrid/use-get-edit-row-actions.hook';
 import { UserAvatar } from '~/components/user-avatar/user-avatar.component';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
-import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
-import { applyTzOffset } from '~/utils/date/apply-tz-offset';
 import { validateMinDate } from '~/utils/date/validate-min-date';
 
 import { GroupHeader } from '../group-header/group-header.component';
@@ -91,7 +88,6 @@ const ParticipantsList: FC = () => {
         headerName: t('COMMON.DATE_EXPIRED'),
         flex: 1,
         editable: true,
-        valueGetter: getColDateWithTz,
         preProcessEditCellProps: preProcessDateTimeEditCellProps,
         renderEditCell: renderDateTimeEditCell,
       },
@@ -160,12 +156,5 @@ function preProcessDateTimeEditCellProps(params: GridPreProcessEditCellProps<any
 function renderDateTimeEditCell(
   params: GridRenderEditCellParams<FullProjectNodeMemberInfo, any, any, GridTreeNodeWithRender>,
 ) {
-  return (
-    <DateTimeEditingCell
-      {...params}
-      // @ts-expect-error type
-      minDateTime={applyTzOffset(new Date().toJSON(), getCurrentUserTimezone())}
-      isClearable
-    />
-  );
+  return <DateTimeEditingCell {...params} minDateTime={new Date()} isClearable />;
 }

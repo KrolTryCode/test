@@ -12,8 +12,6 @@ export const useUserStore = create<UserState>()(() => ({
   isLoggedIn: false,
 }));
 
-export const getCurrentUserTimezone = () => 'Z';
-
 export const setUserData = (data: UserWithPermissions) =>
   useUserStore.setState({ data, isLoggedIn: !!data });
 

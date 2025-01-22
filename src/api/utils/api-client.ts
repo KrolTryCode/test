@@ -10,6 +10,7 @@ import {
 } from '~/utils/localstorage/project-storage/project-storage-instance';
 import { ProjectStorageKey } from '~/utils/localstorage/project-storage/project-storage.types';
 import { showErrorMessage } from '~/utils/show-error-message';
+import { dateStringWithoutTzRe } from '~/utils/validation/utils/regexp';
 
 export interface ErrorResponse {
   code: number;
@@ -147,3 +148,31 @@ ApiClientSecured.instance.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+// partial https://tracker.yandex.ru/FE-91
+// TODO: договориться, чтобы Z приходила с бэка, если надо
+ApiClientSecured.instance.interceptors.response.use(response => {
+  const isObject = (smth: any): smth is Record<string, any> =>
+    smth !== null && typeof smth === 'object';
+
+  function fixDates(obj: Record<string, any>) {
+    for (const key in obj) {
+      if (isObject(obj[key])) {
+        fixDates(obj[key]);
+      }
+
+      const isDateStringWithoutTz =
+        typeof obj[key] === 'string' && dateStringWithoutTzRe.test(obj[key]);
+
+      if (isDateStringWithoutTz) {
+        obj[key] += 'Z';
+      }
+    }
+  }
+
+  if (isObject(response.data)) {
+    fixDates(response.data);
+  }
+
+  return response;
+});

@@ -2,10 +2,6 @@ import { DateTimePicker, DateTimePickerProps } from '@pspod/ui-components';
 import { useCallback } from 'react';
 import { FieldPath, FieldValues, UseControllerProps, useController } from 'react-hook-form';
 
-import { getCurrentUserTimezone } from '~/app/user/user.store';
-import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
-import { applyTzOffsetToSystemDate } from '~/utils/date/apply-tz-offset';
-
 import { ValidationError } from '../_validation-error/validation-error.component';
 
 type FormDateTimePickerProps<
@@ -26,9 +22,7 @@ export function FormDateTimePicker<TFieldValues extends FieldValues = FieldValue
 
   const onChange = useCallback(
     (value: Date | null) => {
-      const userTz = getCurrentUserTimezone();
-      const updVal = value ? applyTzOffsetToSystemDate(value, userTz) : value;
-      field.onChange(updVal);
+      field.onChange(value);
       field.onBlur();
     },
     [field],
@@ -39,7 +33,7 @@ export function FormDateTimePicker<TFieldValues extends FieldValues = FieldValue
       <DateTimePicker
         {...field}
         {...pickerProps}
-        value={field.value ? (getColDateWithTz(field.value) as Date) : null}
+        value={field.value ?? null}
         inputRef={ref}
         onChange={onChange}
         invalid={fieldState.invalid}

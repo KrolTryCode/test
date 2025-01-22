@@ -6,7 +6,6 @@ import { useSearchAuditsQuery } from '~/api/queries/audits/search-audits.query';
 import { selectPageableData } from '~/api/selectors/pageable';
 import { FullAuditInfo } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
-import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
 
 const LogsPage: FC = () => {
   const { t } = useTranslation();
@@ -35,7 +34,6 @@ const LogsPage: FC = () => {
         headerName: t('JOURNAL.DATE'),
         type: 'dateTime',
         width: 160,
-        valueGetter: getColDateWithTz,
       },
       {
         field: 'action',

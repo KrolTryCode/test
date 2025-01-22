@@ -15,7 +15,6 @@ import { TaskFormData } from '~/api/mocks/forms/types';
 import { useDeleteFormMutation } from '~/api/tasks/forms/delete-form.mutation';
 import { useGetFormsQuery } from '~/api/tasks/forms/get-forms.query';
 import { addPath, editPath } from '~/utils/configuration/routes-paths';
-import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 const TaskFormsList: FC = () => {
@@ -46,7 +45,6 @@ const TaskFormsList: FC = () => {
         type: 'dateTime',
         headerName: t('COMMON.DATE_CREATED'),
         flex: 1,
-        valueGetter: getColDateWithTz,
       },
       {
         field: 'actions',

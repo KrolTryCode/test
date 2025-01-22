@@ -9,7 +9,6 @@ import { useParams } from 'react-router-dom';
 import { useGetSolversQuery } from '~/api/queries/solvers/get-solvers.query';
 import { Solver } from '~/api/utils/api-requests';
 import { useSolverActions } from '~/pages/projects/project/solvers/use-solver-actions.hook';
-import { getColDateWithTz } from '~/utils/datagrid/get-col-date-with-tz';
 import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 
 const SolversList: FC = () => {
@@ -70,7 +69,6 @@ const SolversList: FC = () => {
         type: 'dateTime',
         headerName: t('COMMON.DATE_CREATED'),
         flex: 1,
-        valueGetter: getColDateWithTz,
       },
       {
         field: 'actions',
