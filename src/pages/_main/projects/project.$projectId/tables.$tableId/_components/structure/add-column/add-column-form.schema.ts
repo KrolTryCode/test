@@ -7,6 +7,6 @@ export const getSchema = (names: string[], t: TFunction): y.ObjectSchema<CreateC
   y.object({
     name: y.string().required().default('').notOneOf(names, t('STRUCTURE.ERROR.NOT_UNIQUE_NAME')),
     type: y.mixed<DataType>().oneOf(Object.values(DataType)).default(DataType.String).required(),
-    nullable: y.boolean().required().default(false),
+    nullable: y.boolean().required().default(true),
     unique: y.boolean().required().default(false),
   });

@@ -8,11 +8,13 @@ import { TableDataForm } from './table-data-form.component';
 export const tableDataFormModal = ({
   title,
   metadata,
+  tableContent,
   data,
   onSave,
 }: {
   title: string;
   metadata: TableColumn[];
+  tableContent: Record<string, any>[];
   data?: Record<string, any>;
   onSave: (data: Record<string, any>) => void;
 }) =>
@@ -20,6 +22,11 @@ export const tableDataFormModal = ({
     title,
     onOk: onSave,
     renderContent: (modalInstance: InstanceProps<Record<string, any>, never>) => (
-      <TableDataForm {...modalInstance} metadata={metadata} data={data} />
+      <TableDataForm
+        {...modalInstance}
+        metadata={metadata}
+        data={data}
+        tableContent={tableContent}
+      />
     ),
   });

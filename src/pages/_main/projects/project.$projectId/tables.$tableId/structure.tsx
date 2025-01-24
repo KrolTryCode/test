@@ -103,7 +103,7 @@ function TableStructure() {
       {
         field: 'name',
         headerName: t('COMMON.TITLE'),
-        flex: 1,
+        flex: 3,
         editable: true,
         preProcessEditCellProps: validateColumnName,
         renderEditCell(params) {
@@ -113,8 +113,7 @@ function TableStructure() {
       {
         field: 'type',
         headerName: t('STRUCTURE.TYPE'),
-        flex: 1,
-        type: 'singleSelect',
+        flex: 3,
         valueFormatter: translateColumnType,
       },
       // TODO API, определить формат данных
@@ -126,21 +125,21 @@ function TableStructure() {
       //   flex: 1,
       // },
       {
-        field: 'isPrimaryKey',
+        field: 'unique',
         headerName: t('STRUCTURE.UNIQUE_FIELD'),
-        width: 150,
+        flex: 1,
         type: 'boolean',
       },
       {
-        field: 'requiredField',
-        headerName: t('STRUCTURE.REQUIRED_FIELD'),
-        width: 150,
+        field: 'nullable',
+        headerName: t('STRUCTURE.OPTIONAL_FIELD'),
+        flex: 1,
         type: 'boolean',
       },
       {
         field: 'actions',
         type: 'actions',
-        width: 84,
+        width: 180,
         getActions: getActions(handleDropColumn),
       },
     ],
@@ -188,8 +187,8 @@ function TableStructure() {
       />
 
       <Stack direction={'row'} gap={1} alignSelf={'flex-end'}>
-        <ButtonLink variant={'outlined'} color={'primary'} to={'..'}>
-          {t('ACTION.CANCEL')}
+        <ButtonLink color={'primary'} to={'..'}>
+          {t('ACTION.BACK')}
         </ButtonLink>
       </Stack>
     </Stack>
