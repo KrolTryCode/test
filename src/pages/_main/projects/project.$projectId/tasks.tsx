@@ -3,7 +3,6 @@ import { useGridApiRef } from '@mui/x-data-grid-premium';
 import { AddEntity, DataGrid, EnhancedColDef } from '@pspod/ui-components';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { useGetProjectTasksQuery } from '~/api/queries/projects/tasks/get-project-tasks.query';
 import { FullTaskInfo, TaskState } from '~/api/utils/api-requests';
@@ -21,9 +20,8 @@ export const Route = createFileRoute('/_main/projects/project/$projectId/tasks')
 function TasksList() {
   const { projectId } = Route.useParams();
   const navigate = useNavigate();
-  const { t } = useTranslation();
   const apiRef = useGridApiRef();
-  const { translateStatus } = useCustomTranslations();
+  const { t, translateStatus } = useCustomTranslations();
 
   const { data: taskList = [], isLoading: isTaskListLoading } = useGetProjectTasksQuery(projectId, {
     enabled: !!projectId,

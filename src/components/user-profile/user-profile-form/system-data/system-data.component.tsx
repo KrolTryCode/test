@@ -1,7 +1,6 @@
 import { FormItem, Fieldset, InputText, DateTimePicker } from '@pspod/ui-components';
 import { FC } from 'react';
 import { Control, UseFormRegister } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 
 import { User, UserState } from '~/api/utils/api-requests';
 import { UpdateUserRequestNullable } from '~/components/user-profile/user-profile-form/profile-form.schema';
@@ -15,8 +14,7 @@ interface SystemDataProps {
 }
 
 export const SystemData: FC<SystemDataProps> = ({ profileData, isAdminPage }) => {
-  const { t } = useTranslation();
-  const { translateStatus } = useCustomTranslations();
+  const { t, translateStatus } = useCustomTranslations();
 
   const createdDate = profileData?.createdFrom ? new Date(profileData.createdFrom) : null;
   const lastLoginDate = profileData?.lastSuccessfulLoginTime

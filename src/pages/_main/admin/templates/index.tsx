@@ -3,7 +3,6 @@ import { Box } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid-premium';
 import { createFileRoute } from '@tanstack/react-router';
 import { useRef, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { useGetTemplatesQuery } from '~/api/queries/templates/get-templates.query';
 import { Template } from '~/api/utils/api-requests';
@@ -17,8 +16,7 @@ export const Route = createFileRoute('/_main/admin/templates/')({
 });
 
 export function TemplatesPage() {
-  const { t } = useTranslation();
-  const { translateStatus } = useCustomTranslations();
+  const { t, translateStatus } = useCustomTranslations();
   const { data: templates, isLoading } = useGetTemplatesQuery();
 
   const gridWrapperRef = useRef<HTMLDivElement>();

@@ -9,5 +9,5 @@ export const useCustomTranslations = () => {
   const translateColumnType = (type: string = 'undefined'): string =>
     t(`COLUMN_TYPE.${type.toUpperCase()}`);
 
-  return { translateStatus, translateColumnType };
+  return { t, translateStatus, translateColumnType };
 };
