@@ -3,7 +3,6 @@ import { GridRenderCellParams } from '@mui/x-data-grid-premium';
 import { AddEntity, DataGrid, DeleteCellButton, EnhancedColDef } from '@pspod/ui-components';
 import { useParams } from '@tanstack/react-router';
 import { FC, useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { ServiceToken, TokenState } from '~/api/utils/api-requests';
 import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
@@ -11,8 +10,7 @@ import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 import { useTokenActions } from './use-token-actions.hook';
 
 export const ServiceTokens: FC = () => {
-  const { t } = useTranslation();
-  const { translateStatus } = useCustomTranslations();
+  const { t, translateStatus } = useCustomTranslations();
   const { groupId = '', projectId = '' } = useParams({ strict: false });
   const { tokens, isTokenListLoading, archiveToken, handleGenerateToken } = useTokenActions(
     projectId || groupId,

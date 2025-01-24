@@ -10,7 +10,6 @@ import {
 import { DeleteCellButton } from '@pspod/ui-components';
 import { createFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { AccountState, User, UserState } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
@@ -27,8 +26,7 @@ export const Route = createFileRoute('/_main/admin/users/')({
 });
 
 function UserListPage() {
-  const { t } = useTranslation();
-  const { translateStatus } = useCustomTranslations();
+  const { t, translateStatus } = useCustomTranslations();
   const apiRef = useGridApiRef();
 
   const { items, loading, totalCount, onPagingChanged, paging } = useAccountsPaging();

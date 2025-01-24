@@ -4,7 +4,6 @@ import { GridActionsCellItem, GridRenderCellParams } from '@mui/x-data-grid-prem
 import { AddEntity, Button, DataGrid, EnhancedColDef } from '@pspod/ui-components';
 import { createFileRoute } from '@tanstack/react-router';
 import { useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { useGetSolversQuery } from '~/api/queries/solvers/get-solvers.query';
 import { Solver } from '~/api/utils/api-requests';
@@ -22,8 +21,7 @@ export const Route = createFileRoute('/_main/projects/project/$projectId/solvers
 
 function SolversList() {
   const { projectId } = Route.useParams();
-  const { t } = useTranslation();
-  const { translateStatus } = useCustomTranslations();
+  const { t, translateStatus } = useCustomTranslations();
   const {
     handleCreateSolver,
     handleDeleteSolver,

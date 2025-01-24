@@ -15,7 +15,6 @@ import {
 } from '@pspod/ui-components';
 import { createFileRoute } from '@tanstack/react-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { TableColumnExtended } from '~/api/selectors/select-node-columns';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
@@ -39,9 +38,8 @@ export const Route = createFileRoute(
 
 function TableStructure() {
   const apiRef = useGridApiRef();
-  const { t } = useTranslation();
 
-  const { translateColumnType } = useCustomTranslations();
+  const { t, translateColumnType } = useCustomTranslations();
   const { tableId } = Route.useParams();
 
   const { nodeInfo, nodeColumns, isColumnsFetched, isDataLoading } = useTableStructureData(tableId);
