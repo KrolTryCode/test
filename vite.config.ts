@@ -1,5 +1,6 @@
 import { fileURLToPath, URL } from 'url';
 
+import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import svgrPlugin from 'vite-plugin-svgr';
@@ -7,7 +8,20 @@ import viteTsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 export default defineConfig(() => ({
-  plugins: [react({ include: '**/*.tsx' }), viteTsconfigPaths(), svgrPlugin()],
+  plugins: [
+    TanStackRouterVite({
+      routesDirectory: './src/pages',
+      generatedRouteTree: './src/routing/routeTree.gen.ts',
+      quoteStyle: 'single',
+      semicolons: true,
+      autoCodeSplitting: true,
+      routeFileIgnorePattern:
+        'component.tsx|modal.tsx|style.tsx?|hook.tsx?|schema.tsx?|test.tsx?|types?.ts|page.tsx',
+    }),
+    react({ include: '**/*.tsx' }),
+    viteTsconfigPaths(),
+    svgrPlugin(),
+  ],
 
   resolve: {
     alias: [

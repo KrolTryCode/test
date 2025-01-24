@@ -1,5 +1,5 @@
 import { styled, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link } from '@tanstack/react-router';
 
 export const _ProjectTreeItemContainer = styled('div')(({ theme }) => ({
   marginBlock: theme.spacing(1),

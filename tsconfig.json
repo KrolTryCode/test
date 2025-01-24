@@ -21,5 +21,6 @@
       "tests/*": ["./tests/*"]
     }
   },
+
   "include": ["src", "scripts", "tests", "vite.config.ts", "eslint.config.mjs", "vitest.config.ts"]
 }

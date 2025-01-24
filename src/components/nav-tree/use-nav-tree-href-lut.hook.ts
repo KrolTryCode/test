@@ -1,5 +1,5 @@
+import { resolvePath, useLocation } from '@tanstack/react-router';
 import { useMemo } from 'react';
-import { resolvePath, useLocation } from 'react-router-dom';
 
 import { NavTreeItemData } from '~/components/nav-tree/nav-tree.type';
 
@@ -24,7 +24,13 @@ function getHrefIdLUT(data: NavTreeItemData[], baseUrl: string) {
 
   data.forEach(({ id, href, children }) => {
     if (href !== undefined) {
-      const resolvedPathname = resolvePath(href, baseUrl).pathname;
+      // todo: check
+      const resolvedPathname = resolvePath({
+        to: href,
+        basepath: baseUrl,
+        caseSensitive: false,
+        base: '',
+      });
 
       res[resolvedPathname] = id;
     }

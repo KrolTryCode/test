@@ -11,8 +11,8 @@ import { getSchema } from '~/components/node-form/node-form.schema';
 import { selectNodeTypes } from '~/components/node-form/node-form.utils';
 import { FormInputText, FormSelect } from '~/components/react-hook-form';
 import { FormSearchTree } from '~/components/react-hook-form/form-search-tree/form-search-tree.component';
-import { useTreeNodesUtils } from '~/pages/tables/tree/use-tree-nodes-utils.hook';
 import { projectsPath, projectPath, tablesPath } from '~/utils/configuration/routes-paths';
+import { useTreeNodesUtils } from '~/utils/hooks/use-tree-nodes';
 
 interface NodeFormProps {
   data?: Partial<CreateContentNodeRequest>;

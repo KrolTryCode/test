@@ -1,14 +1,12 @@
 import { Card, Stack, Typography } from '@mui/material';
 import { Button } from '@pspod/ui-components';
+import { UseNavigateResult } from '@tanstack/react-router';
 import { SnackbarContent, CustomContentProps, enqueueSnackbar, closeSnackbar } from 'notistack';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavigateFunction } from 'react-router-dom';
-
-import { profilePath } from '~/utils/configuration/routes-paths';
 
 interface PasswordExpiredProps extends CustomContentProps {
-  navigate: NavigateFunction;
+  navigate: UseNavigateResult<''>;
 }
 
 const PasswordExpired = forwardRef<HTMLDivElement, PasswordExpiredProps>(function PasswordExpired(
@@ -18,7 +16,7 @@ const PasswordExpired = forwardRef<HTMLDivElement, PasswordExpiredProps>(functio
   const { t } = useTranslation();
 
   const handleGo = () => {
-    navigate(`/${profilePath}`);
+    void navigate({ to: '/profile' });
     closeSnackbar(id);
   };
 

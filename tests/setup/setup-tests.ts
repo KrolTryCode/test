@@ -1,16 +1,35 @@
 import '@testing-library/jest-dom';
 
-import { mockedMatches, mockedNavigate, mockedParams } from 'tests/__mocks__/react-router-dom.mock';
+import {
+  mockedLocation,
+  mockedMatches,
+  mockedNavigate,
+  mockedParams,
+} from 'tests/__mocks__/@tanstack/react-router.mock';
 import { setupTestLocalization } from 'tests/setup/setup-test-localization';
 
 import { setupTestApi } from './setup-test-api';
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
-  useNavigate: () => mockedNavigate,
-  useParams: mockedParams,
-  useMatches: mockedMatches,
-}));
+vi.mock('@tanstack/react-router', async () => {
+  const actual = await vi.importActual('@tanstack/react-router');
+
+  return {
+    ...actual,
+    useLocation: mockedLocation,
+    useParams: mockedParams,
+    useMatches: mockedMatches,
+    useNavigate: () => mockedNavigate,
+
+    // при таком сценарии не видит настоящего дерева, чтобы построить меню
+    // useRouter: () =>
+    //   actual.createRouter({
+    //     routeTree: actual.createRootRoute(),
+    //   }),
+
+    // при таком сценарии ощущение, что пытается запустить все приложение (падает на project-node-form.schema)
+    // useRouter: () => (actual.createRouter as typeof createRouter)({ routeTree }),
+  };
+});
 
 vi.mock('@mui/material', async () => ({
   ...(await vi.importActual('@mui/material')),

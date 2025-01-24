@@ -1,10 +1,10 @@
 import { ChevronRight, KeyboardArrowDown } from '@mui/icons-material';
 import { Stack } from '@mui/material';
 import { Button, Preloader } from '@pspod/ui-components';
-import { FC, useMemo, useState } from 'react';
+import { FC, useState } from 'react';
 
 import { useGetProjectNodesByParentQuery } from '~/api/queries/projects/get-project-nodes-by-parent.query';
-import { ProjectNode, ProjectNodeType } from '~/api/utils/api-requests';
+import { ProjectNode } from '~/api/utils/api-requests';
 
 import { NodeLogo } from '../node-logo/node-logo.component';
 
@@ -26,14 +26,6 @@ export const ProjectTreeItem: FC<ProjectTreeItemProps> = ({ projectTreeNode }) =
   const { data: childNodes = [], isLoading } = useGetProjectNodesByParentQuery(projectTreeNode.id, {
     enabled: projectTreeNode.hasChildren && isOpened,
   });
-
-  const link = useMemo(
-    () =>
-      projectTreeNode.type === ProjectNodeType.Group
-        ? `/projects/${projectTreeNode.id}`
-        : `/projects/project/${projectTreeNode.id}`,
-    [projectTreeNode],
-  );
 
   return (
     <_ProjectTreeItemContainer>
@@ -59,7 +51,11 @@ export const ProjectTreeItem: FC<ProjectTreeItemProps> = ({ projectTreeNode }) =
         </_IconContainer>
 
         <Stack>
-          <_ProjectTreeNodeLink to={link}>{projectTreeNode.name}</_ProjectTreeNodeLink>
+          <_ProjectTreeNodeLink
+            to={`/projects/${projectTreeNode.type.toLowerCase()}/${projectTreeNode.id}`}
+          >
+            {projectTreeNode.name}
+          </_ProjectTreeNodeLink>
           <_Description
             variant={'body1'}
             hidden={!projectTreeNode.description}

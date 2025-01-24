@@ -1,12 +1,11 @@
 import { Box, Typography } from '@mui/material';
 import { Button, Image } from '@pspod/ui-components';
+import { useNavigate } from '@tanstack/react-router';
 import { FC, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 
 import { ButtonNavigate, FallbackPageProps } from '~/pages/_fallbacks/fallback.types';
 import { logo } from '~/utils/configuration/logo';
-import { homePath } from '~/utils/configuration/routes-paths';
 
 const FallbackInfoPage: FC<FallbackPageProps> = ({
   pageType,
@@ -22,10 +21,10 @@ const FallbackInfoPage: FC<FallbackPageProps> = ({
   const handleClick = useCallback(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     buttonNavigate === ButtonNavigate.Back
-      ? navigate(-1)
+      ? void navigate({ to: '..' })
       : buttonNavigate === ButtonNavigate.CreateNode
         ? createNodeAction?.()
-        : navigate(homePath);
+        : void navigate({ to: '/projects' });
   }, [buttonNavigate, navigate, createNodeAction]);
 
   return (

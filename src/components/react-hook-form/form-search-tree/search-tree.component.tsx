@@ -16,7 +16,7 @@ import { isFolderType } from '~/components/nav-tree/item/nav-tree-item.utils';
 import { NavTreeItemData, NavTreeItemProps } from '~/components/nav-tree/nav-tree.type';
 import { PopperWithPaper } from '~/components/popper-with-paper/popper-with-paper.component';
 import { TreeViewIndanis } from '~/components/tree-view/tree-view-indanis.component';
-import { useTreeNodesUtils } from '~/pages/tables/tree/use-tree-nodes-utils.hook';
+import { useTreeNodesUtils } from '~/utils/hooks/use-tree-nodes';
 
 export interface SearchTreeProps {
   items: NavTreeItemData[];

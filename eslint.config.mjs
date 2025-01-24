@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { fixupConfigRules, fixupPluginRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
+import tanstackRouter from '@tanstack/eslint-plugin-router';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import _import from 'eslint-plugin-import';
@@ -18,6 +19,7 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
   recommendedConfig: js.configs.recommended,
   allConfig: js.configs.all,
+  tanstackRouter: tanstackRouter.configs['flat/recommended'],
 });
 
 // eslint-disable-next-line import/no-default-export
@@ -43,6 +45,7 @@ export default [
       import: fixupPluginRules(_import),
       // sonarjs: fixupPluginRules(sonarjs),
     },
+    ignores: ['routeTree.gen.ts'],
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -234,13 +237,6 @@ export default [
     files: ['**/*.stories.{ts,tsx}', '**/vite.config.ts', '**/*.page.tsx', '**/vitest.config.ts'],
     rules: {
       'import/no-default-export': 'off',
-    },
-  },
-  {
-    files: ['./src/routing/routes/*.tsx'],
-
-    rules: {
-      'import/max-dependencies': 'off',
     },
   },
 ];

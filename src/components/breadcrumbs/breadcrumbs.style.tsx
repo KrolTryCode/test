@@ -1,4 +1,5 @@
 import { Breadcrumbs, Link, LinkProps, styled } from '@mui/material';
+import { createLink } from '@tanstack/react-router';
 import { ReactNode } from 'react';
 
 export const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
@@ -22,7 +23,7 @@ export const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
   },
 }));
 
-export const StyledMuiLink = styled(
+const StyledMuiLink = styled(
   (props: Omit<LinkProps, 'children'> & { children?: [ReactNode, string] }) => (
     <Link underline={'hover'} title={props.children?.[1]} {...props} />
   ),
@@ -39,3 +40,5 @@ export const StyledMuiLink = styled(
     marginRight: '4px',
   },
 });
+
+export const MuiLink = createLink(StyledMuiLink);

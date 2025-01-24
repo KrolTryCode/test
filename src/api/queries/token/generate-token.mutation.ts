@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { ServiceTokenRequest } from '~/api/utils/api-requests';
-import { ICreateTokenForm } from '~/pages/projects/project/settings/token/generate-token.schema';
+import { ICreateTokenForm } from '~/pages/_main/projects/project.$projectId/settings/token/generate-token.schema';
 
 import { tokenQueries } from './queries';
 
