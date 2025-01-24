@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
+import { useLocation, useNavigate } from '@tanstack/react-router';
 import { useCallback } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useGetCurrentUserQuery } from '~/api/queries/users/get-current-user.query';
 import { LoginResponseWithRefreshToken, UserWithPermissions } from '~/api/utils/api-requests';
@@ -48,7 +48,7 @@ export const useAuthenticate = () => {
       const sameUser = projectLocalStorageService.get(ProjectStorageKey.UserId) === user.id;
       projectLocalStorageService.set(ProjectStorageKey.UserId, user.id);
       const navigateTo = sameUser && locationState?.from ? locationState.from.pathname : homePath;
-      navigate(navigateTo);
+      await navigate({ to: navigateTo });
     }
   }, [getUser, locationState, navigate]);
 

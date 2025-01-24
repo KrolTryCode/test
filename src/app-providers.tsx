@@ -1,18 +1,16 @@
-import { NotificationsProvider } from '@pspod/ui-components';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { RouterProvider } from '@tanstack/react-router';
+import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import i18n from 'i18next';
 import { FC } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { Container as ModalContainer } from 'react-modal-promise';
-import { RouterProvider } from 'react-router-dom';
 
-import { router } from '~/routing/router';
 import { MuiThemeProvider } from '~/themes/mui-theme-provider';
 import { DeclinatedTranslationsProvider } from '~/utils/configuration/translations/declinated-translations-provider';
 import { useI18nInit } from '~/utils/configuration/translations/use-init-i18n.hook';
 
-import PasswordExpiredContent from './components/password-expired/password-expired.component';
+import { router } from './routing/tanstack-router';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,11 +28,10 @@ export const AppWithProviders: FC = () => {
     <I18nextProvider i18n={i18n}>
       <DeclinatedTranslationsProvider>
         <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} buttonPosition={'top-left'} />
+          <ReactQueryDevtools initialIsOpen={false} buttonPosition={'bottom-right'} />
+          <TanStackRouterDevtools initialIsOpen={false} router={router} position={'bottom-right'} />
           <MuiThemeProvider>
-            <NotificationsProvider CustomComponents={{ passwordExpired: PasswordExpiredContent }} />
             <RouterProvider router={router} />
-            <ModalContainer />
           </MuiThemeProvider>
         </QueryClientProvider>
       </DeclinatedTranslationsProvider>

@@ -1,10 +1,9 @@
+import { useLocation, useNavigate } from '@tanstack/react-router';
 import { FC, PropsWithChildren, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useUserStore } from '~/app/user/user.store';
 import { ForbiddenPage } from '~/pages/_fallbacks/errors/forbidden/forbidden.component';
 import { useRouteAccess } from '~/routing/access-checker/use-route-access';
-import { authPath, homePath, loginPath } from '~/utils/configuration/routes-paths';
 
 export const AccessChecker: FC<PropsWithChildren> = ({ children }) => {
   const isLoggedIn = useUserStore(store => store.isLoggedIn);
@@ -13,11 +12,11 @@ export const AccessChecker: FC<PropsWithChildren> = ({ children }) => {
   const hasAccess = useRouteAccess();
 
   useEffect(() => {
-    if (location.pathname === `/${authPath}/${loginPath}` && isLoggedIn) {
-      navigate(homePath);
+    if (isLoggedIn && (location.pathname === '/' || location.pathname.startsWith('/auth'))) {
+      void navigate({ to: '/projects' });
     } else {
-      if (!location.pathname.startsWith(`/${authPath}`) && !isLoggedIn) {
-        navigate(`/${authPath}/${loginPath}`);
+      if (!isLoggedIn && !location.pathname.startsWith('/auth')) {
+        void navigate({ to: '/auth/login' });
       }
     }
   }, [location, isLoggedIn, navigate]);

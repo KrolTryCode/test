@@ -1,3 +1,4 @@
+import { useMatches } from '@tanstack/react-router';
 import { t, TFunction } from 'i18next';
 import {
   createContext,
@@ -8,9 +9,6 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { useMatches } from 'react-router-dom';
-
-import { RouteTitleMeta } from '~/routing/routes.types';
 
 interface TitleContextProps {
   title: string;
@@ -28,10 +26,11 @@ export const useTitleContext = () => useContext(PageTitleContext);
 export const TitleProvider: FC<PropsWithChildren> = ({ children }) => {
   const matches = useMatches();
   const [entityTitle, setEntityTitle] = useState('');
-  const matchData = useMemo(() => matches.at(-1)?.data as RouteTitleMeta, [matches]);
   const defaultTitle = useMemo(() => {
-    return matchData?.title ?? matchData?.menuDisplay?.label;
-  }, [matchData]);
+    const route = matches.at(-1);
+    const title = /* matchData?.title */ '';
+    return title ?? route?.staticData?.title;
+  }, [matches]);
 
   const title = useMemo(() => {
     if (entityTitle) {

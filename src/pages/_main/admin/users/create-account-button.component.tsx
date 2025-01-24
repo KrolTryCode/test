@@ -1,0 +1,18 @@
+import CreateIcon from '@mui/icons-material/PersonAddAltOutlined';
+import { Button } from '@pspod/ui-components';
+import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { createAccountModal } from '~/components/create-account/create-account-form.component';
+
+export const CreateAccountButton: FC = () => {
+  const { t } = useTranslation();
+  const openModal = () =>
+    createAccountModal({ title: t('ACTION.CREATE', { type: t('ENTITY.ACCOUNT').toLowerCase() }) });
+
+  return (
+    <Button icon={<CreateIcon />} color={'primary'} variant={'text'} onClick={openModal}>
+      {t('ACTION.CREATE', { type: t('ENTITY.ACCOUNT').toLowerCase() })}
+    </Button>
+  );
+};

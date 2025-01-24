@@ -2,11 +2,11 @@ import { FC } from 'react';
 
 import { useGetProjectNodeQuery } from '~/api/queries/projects/get-project-node.query';
 import { useGetParentsQuery } from '~/api/queries/projects/get-projects-parents.query';
-import { projectsPath } from '~/utils/configuration/routes-paths';
+import { ProjectNodeType } from '~/api/utils/api-requests';
 
 import { NodeLogo } from '../node-logo/node-logo.component';
 
-import { StyledMuiLink, StyledBreadcrumbs } from './breadcrumbs.style';
+import { MuiLink, StyledBreadcrumbs } from './breadcrumbs.style';
 
 interface ProjectNodeBreadcrumbsProps {
   projectNodeId: string;
@@ -21,16 +21,24 @@ export const ProjectNodeBreadcrumbs: FC<ProjectNodeBreadcrumbsProps> = ({ projec
   return (
     <StyledBreadcrumbs separator={'›'} maxItems={5}>
       {parents?.map(({ name, id, type }) => (
-        <StyledMuiLink key={id} href={`/${projectsPath}/${id}`}>
+        <MuiLink
+          key={id}
+          to={
+            type === ProjectNodeType.Project
+              ? '/projects/project/$projectId'
+              : '/projects/group/$groupId'
+          }
+          params={{ projectId: id, groupId: id }}
+        >
           <NodeLogo nodeId={id} nodeType={type} size={6.5} />
           {name}
-        </StyledMuiLink>
+        </MuiLink>
       ))}
       {projectData && (
-        <StyledMuiLink fontWeight={'bold'}>
+        <MuiLink fontWeight={'bold'}>
           <NodeLogo nodeId={projectData.id} nodeType={projectData.type} size={6.5} />
           {projectData.name}
-        </StyledMuiLink>
+        </MuiLink>
       )}
     </StyledBreadcrumbs>
   );

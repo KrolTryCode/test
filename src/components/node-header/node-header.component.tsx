@@ -1,10 +1,9 @@
 import { ArrowBack } from '@mui/icons-material';
 import { Stack } from '@mui/material';
-import { Button } from '@pspod/ui-components';
 import { FC, ReactNode } from 'react';
-import { Link } from 'react-router-dom';
 
 import { ProjectNode } from '~/api/utils/api-requests';
+import { ButtonLink } from '~/components/implicit-links';
 
 import { ProjectNodeBreadcrumbs } from '../breadcrumbs/breadcrumbs.component';
 import { EditableNodeLogo } from '../node-logo/editable-node-logo.component';
@@ -40,13 +39,7 @@ export const NodeHeader: FC<NodeHeaderProps> = ({
       borderBottom={({ palette }) => `1px solid ${palette.divider}`}
     >
       <StyledHeader flex={['auto', 1]}>
-        <Button
-          hidden={!backPath}
-          component={Link}
-          variant={'text'}
-          to={backPath}
-          icon={<ArrowBack />}
-        />
+        <ButtonLink hidden={!backPath} variant={'text'} to={backPath} icon={<ArrowBack />} />
         <EditableNodeLogo nodeId={nodeId} nodeName={nodeName} nodeType={nodeType} />
         <StyledHeading>{children}</StyledHeading>
         <StyledActionsWrapper hidden={!actions} direction={'row'} alignItems={'center'}>

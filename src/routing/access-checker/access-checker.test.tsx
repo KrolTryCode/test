@@ -2,17 +2,9 @@ import { screen } from '@testing-library/react';
 import { t } from 'i18next';
 import { describe } from 'vitest';
 
-import { mockedNavigate } from 'tests/__mocks__/react-router-dom.mock';
+import { mockedNavigate } from 'tests/__mocks__/@tanstack/react-router.mock';
 import { renderComponent } from 'tests/utils/render-component';
 import { clearUserData, setUserData } from '~/app/user/user.store';
-import {
-  adminPath,
-  authPath,
-  homePath,
-  loginPath,
-  usersPath,
-  tablesPath,
-} from '~/utils/configuration/routes-paths';
 
 import { AccessChecker } from './access-checker.component';
 
@@ -24,7 +16,7 @@ describe('Access checker', () => {
 
     renderComponent(<AccessChecker>{PROTECTED_CONTENT}</AccessChecker>, {
       withRouter: true,
-      route: `/${tablesPath}`,
+      route: '/tables',
     });
 
     expect(await screen.findByText(PROTECTED_CONTENT)).toBeInTheDocument();
@@ -35,7 +27,7 @@ describe('Access checker', () => {
 
     renderComponent(<AccessChecker>{PROTECTED_CONTENT}</AccessChecker>, {
       withRouter: true,
-      route: `/${adminPath}/${usersPath}`,
+      route: '/admin/users',
     });
 
     expect(await screen.findByText(t('ERROR.FORBIDDEN.TEXT1'))).toBeInTheDocument();
@@ -46,7 +38,7 @@ describe('Access checker', () => {
 
     renderComponent(<AccessChecker>{PROTECTED_CONTENT}</AccessChecker>, {
       withRouter: true,
-      route: `/${adminPath}/${usersPath}`,
+      route: '/admin/users',
     });
 
     expect(await screen.findByText(PROTECTED_CONTENT)).toBeInTheDocument();
@@ -57,10 +49,10 @@ describe('Access checker', () => {
 
     renderComponent(<AccessChecker>{PROTECTED_CONTENT}</AccessChecker>, {
       withRouter: true,
-      route: `/${adminPath}/${usersPath}`,
+      route: '/admin/users',
     });
 
-    expect(mockedNavigate).toHaveBeenCalledWith(`/${authPath}/${loginPath}`);
+    expect(mockedNavigate).toHaveBeenCalledWith({ to: '/auth/login' });
   });
 
   it('should redirect to home page when logged in and on login page', () => {
@@ -68,9 +60,9 @@ describe('Access checker', () => {
 
     renderComponent(<AccessChecker>{PROTECTED_CONTENT}</AccessChecker>, {
       withRouter: true,
-      route: `/${authPath}/${loginPath}`,
+      route: '/auth/login',
     });
 
-    expect(mockedNavigate).toHaveBeenCalledWith(homePath);
+    expect(mockedNavigate).toHaveBeenCalledWith({ to: '/projects' });
   });
 });

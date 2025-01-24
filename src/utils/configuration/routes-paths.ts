@@ -1,31 +1,8 @@
+// TODO: ROUTER
 export const homePath = '/';
 export const authPath = 'auth';
 export const loginPath = 'login';
-export const resetPasswordPath = 'reset-password';
-export const accountReactivationPath = 'reactivation';
-export const registrationPath = 'registration';
-export const accountRecoveryPath = 'recovery';
-export const registerPath = 'register';
-export const profilePath = 'profile';
-export const tasksPath = 'tasks';
-export const adminPath = 'admin';
-export const usersPath = 'users';
-export const templatesPath = 'templates';
-export const logsPath = 'logs';
-export const settingsPath = 'settings';
-export const securityPath = 'security';
-export const permissionsPath = 'permissions';
-export const rolesPath = 'roles';
 
-export const addPath = 'add';
-export const editPath = 'edit';
-export const structurePath = 'structure';
-export const importPath = 'import';
 export const tablesPath = 'tables';
 export const projectsPath = 'projects';
 export const projectPath = 'project';
-export const reportsPath = 'reports';
-export const participantsPath = 'participants';
-export const eventsPath = 'events';
-export const solversPath = 'solvers';
-export const formsPath = 'forms';

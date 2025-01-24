@@ -22,6 +22,24 @@ body {
   .content-block {
     margin: 20px 40px;
   }
+
+  div.tsqd-open-btn-container {
+    right: 0;
+    bottom: 50px;
+    transform: scale(0.6);
+    transform-origin: right;
+  }
+
+  .TanStackRouterDevtools > button {
+    right: 0;
+    bottom: 70px;
+    transform: rotate(90deg);
+    transform-origin: right top;
+
+    div:last-child {
+      font-size: 13px;
+    }
+  }
 }
 
 // #region Mui patches

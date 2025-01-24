@@ -1,4 +1,4 @@
-import { ContentSubtree, ProjectNode } from '~/api/utils/api-requests';
+import { ContentNodeType, ContentSubtree, ProjectNode } from '~/api/utils/api-requests';
 import { NavTreeItemData } from '~/components/nav-tree/nav-tree.type';
 
 type NodeType = ContentSubtree | ProjectNode;
@@ -10,7 +10,7 @@ export const nodesWithHrefSelector = (data: NodeType[], projectId: string, path:
     id: node.id,
     type: node.type,
     label: node.name,
-    href: `/${path}/${node.id}`,
+    href: node.type === ContentNodeType.Directory ? undefined : `/${path}/${node.id}`, // TODO: так ли нужны урлы на папки
     description: 'description' in node ? node.description : '',
     children:
       'children' in node && node.children.length !== 0

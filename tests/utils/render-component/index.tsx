@@ -3,7 +3,6 @@ import { render } from '@testing-library/react';
 import i18n from 'i18next';
 import { I18nextProvider } from 'react-i18next';
 import ModalContainer from 'react-modal-promise';
-import { BrowserRouter } from 'react-router-dom';
 
 import { MuiThemeProvider } from '~/themes/mui-theme-provider';
 import { DeclinatedTranslationsProvider } from '~/utils/configuration/translations/declinated-translations-provider';
@@ -52,11 +51,7 @@ export const renderComponent = (
       </DeclinatedTranslationsProvider>
     </I18nextProvider>,
     {
-      wrapper: ({ children }) => (
-        <div data-testid={'appContainer'}>
-          {withRouter ? <BrowserRouter>{children}</BrowserRouter> : children}
-        </div>
-      ),
+      wrapper: ({ children }) => <div data-testid={'appContainer'}>{children}</div>,
     },
   );
 };

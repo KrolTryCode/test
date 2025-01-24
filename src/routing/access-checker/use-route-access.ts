@@ -1,4 +1,4 @@
-import { useMatches } from 'react-router-dom';
+import { useMatches } from '@tanstack/react-router';
 
 import { useUserStore } from '~/app/user/user.store';
 
@@ -7,7 +7,7 @@ export function useRouteAccess(): boolean {
   const permissions = useUserStore(store => store.data?.permissions ?? []);
 
   const currentAccessBy = matches.reduceRight<string[] | undefined>(
-    (current, match) => (match.data as { accessBy?: string[] })?.accessBy ?? current,
+    (current, match) => match.staticData?.accessBy ?? current,
     undefined,
   );
 
