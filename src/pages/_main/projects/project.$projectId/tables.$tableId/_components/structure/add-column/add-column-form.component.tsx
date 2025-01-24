@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { CreateColumnRequest } from '~/api/utils/api-requests';
-import { FormInputText, FormSelect } from '~/components/react-hook-form';
+import { FormCheckbox, FormInputText, FormSelect } from '~/components/react-hook-form';
 
 import { getSchema } from './add-column-form.schema';
 import { useSelectColumnTypes } from './use-select-column-types.hook';
@@ -41,6 +41,14 @@ export const AddColumnForm: FC<AddColumnFormProps> = ({ usedNames, onResolve, on
       <FormItem label={t('STRUCTURE.TYPE')}>
         <FormSelect items={selectColumnTypes} controllerProps={{ ...register('type'), control }} />
       </FormItem>
+      <FormCheckbox
+        label={t('STRUCTURE.UNIQUE_FIELD')}
+        controllerProps={{ ...register('unique'), control }}
+      />
+      <FormCheckbox
+        label={t('STRUCTURE.OPTIONAL_FIELD')}
+        controllerProps={{ ...register('nullable'), control }}
+      />
       <FormButtons>
         <Button onClick={onReject} variant={'outlined'} color={'primary'}>
           {t('ACTION.CANCEL')}

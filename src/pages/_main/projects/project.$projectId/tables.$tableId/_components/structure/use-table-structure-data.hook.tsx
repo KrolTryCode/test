@@ -1,5 +1,5 @@
 import { useGetProjectContentQuery } from '~/api/queries/project-content/get-project-content.query';
-import { useGetTableMetadataColumns } from '~/api/queries/tables/structure/get-table-metadata.query';
+import { useGetTable } from '~/api/queries/tables/structure/get-table.query';
 import { selectNodeColumns } from '~/api/selectors/select-node-columns';
 
 export const useTableStructureData = (nodeId: string) => {
@@ -8,7 +8,7 @@ export const useTableStructureData = (nodeId: string) => {
     data: nodeColumns,
     isLoading: isColumnsLoading,
     isFetched: isColumnsFetched,
-  } = useGetTableMetadataColumns(nodeId, {
+  } = useGetTable(nodeId, {
     select: selectNodeColumns,
   });
 

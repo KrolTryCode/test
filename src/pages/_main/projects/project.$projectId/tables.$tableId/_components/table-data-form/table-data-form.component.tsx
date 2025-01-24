@@ -16,12 +16,19 @@ import { getSchema } from './table-data-form.schema';
 
 interface TableDataFormProps<TableData = Record<string, any>> {
   metadata: TableColumn[];
+  tableContent: TableData[];
   data?: TableData;
   onResolve: (data: TableData) => void;
   onReject: () => void;
 }
 
-export const TableDataForm: FC<TableDataFormProps> = ({ onResolve, onReject, metadata, data }) => {
+export const TableDataForm: FC<TableDataFormProps> = ({
+  onResolve,
+  onReject,
+  metadata,
+  data,
+  tableContent,
+}) => {
   const { t } = useTranslation();
 
   const {
@@ -32,11 +39,11 @@ export const TableDataForm: FC<TableDataFormProps> = ({ onResolve, onReject, met
   } = useForm({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
-    resolver: yupResolver(getSchema(metadata)),
+    resolver: yupResolver(getSchema(metadata, tableContent)),
     values: data,
   });
 
-  const renderComponent = ({ type, id, name }: TableColumn): ReactNode => {
+  const renderComponent = ({ type, id, name, nullable }: TableColumn): ReactNode => {
     let component = <></>;
     switch (type) {
       case DataType.Boolean: {
@@ -83,7 +90,7 @@ export const TableDataForm: FC<TableDataFormProps> = ({ onResolve, onReject, met
       }
     }
     return (
-      <FormItem key={id} label={name}>
+      <FormItem key={id} label={name} isRequired={!nullable}>
         {component}
       </FormItem>
     );
