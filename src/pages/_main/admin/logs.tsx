@@ -52,7 +52,7 @@ function LogsPage() {
       },
       {
         field: 'authorName',
-        headerName: t('LOGS.SOURCE'),
+        headerName: t('COMMON.SOURCE'),
         width: 200,
       },
       {

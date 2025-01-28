@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import {
   GridEventListener,
   GridPreProcessEditCellProps,
@@ -13,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 
 import { FullProjectNodeMemberInfo } from '~/api/utils/api-requests';
 import { useGetEditRowActions } from '~/components/datagrid/use-get-edit-row-actions.hook';
+import { TextLink } from '~/components/implicit-links';
 import { UserAvatar } from '~/components/user-avatar/user-avatar.component';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 import { validateMinDate } from '~/utils/date/validate-min-date';
@@ -39,6 +41,7 @@ export const ParticipantsTable = ({ id }: { id: string }) => {
       apiRef,
       idKey: 'userId',
       entityAccusative: declinatedTranslations.PARTICIPANT.ACCUSATIVE.toLowerCase(),
+      editableKey: 'direct',
     });
 
   const columns = useMemo<EnhancedColDef<FullProjectNodeMemberInfo>[]>(
@@ -67,6 +70,20 @@ export const ParticipantsTable = ({ id }: { id: string }) => {
         field: 'userEmail',
         headerName: t('USER.EMAIL'),
         flex: 1,
+      },
+      {
+        field: 'nodeName',
+        headerName: t('COMMON.SOURCE'),
+        flex: 1,
+        renderCell({ row: user }: GridRenderCellParams<FullProjectNodeMemberInfo>) {
+          return user.direct ? (
+            <Typography>{t('ENTITY.DIRECT_PARTICIPANT')}</Typography>
+          ) : (
+            <TextLink to={'/projects/group/$groupId'} params={{ groupId: user.nodeId }}>
+              {user.nodeName}
+            </TextLink>
+          );
+        },
       },
       {
         field: 'roleId',
