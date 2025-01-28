@@ -17,6 +17,7 @@ interface UseGetEditRowActionsProps<T extends GridValidRowModel = Record<string,
   entityAccusative?: string;
   apiRef: MutableRefObject<GridApiPremium>;
   protectedKey?: keyof T;
+  editableKey?: keyof T;
   onCancelUpdate?: (id: string) => void;
 }
 
@@ -25,6 +26,7 @@ export const useGetEditRowActions = <T extends GridValidRowModel = Record<string
   entityAccusative,
   apiRef,
   protectedKey = '',
+  editableKey = '',
   onCancelUpdate,
 }: UseGetEditRowActionsProps<T>) => {
   const { t } = useTranslation();
@@ -84,6 +86,7 @@ export const useGetEditRowActions = <T extends GridValidRowModel = Record<string
             key={'edit'}
             showInMenu={false}
             icon={<EditIcon />}
+            disabled={row[editableKey] !== undefined && !row[editableKey]}
             title={t('STRUCTURE.EDIT_ROW')}
             label={t('STRUCTURE.EDIT_ROW')}
             onClick={editClickHandler(id)}
@@ -91,7 +94,7 @@ export const useGetEditRowActions = <T extends GridValidRowModel = Record<string
           <DeleteCellButton
             key={'delete'}
             entity={entityAccusative}
-            disabled={row[protectedKey]}
+            disabled={row[protectedKey] || (row[editableKey] !== undefined && !row[editableKey])}
             deleteHandler={() => deleteHandler(id)}
           />,
         ];
@@ -103,6 +106,7 @@ export const useGetEditRowActions = <T extends GridValidRowModel = Record<string
       saveClickHandler,
       idKey,
       entityAccusative,
+      editableKey,
       protectedKey,
       t,
     ],
