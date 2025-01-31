@@ -1,5 +1,6 @@
 import { ArrowBack } from '@mui/icons-material';
-import { Stack } from '@mui/material';
+import { Stack, Skeleton } from '@mui/material';
+import { LinkProps } from '@tanstack/react-router';
 import { FC, ReactNode } from 'react';
 
 import { ProjectNode } from '~/api/utils/api-requests';
@@ -17,8 +18,9 @@ import {
 
 interface NodeHeaderProps extends ProjectNode {
   children: string;
-  backPath?: string;
+  backPath: Pick<LinkProps, 'to' | 'params'>;
   actions?: ReactNode;
+  isLoading?: boolean;
 }
 
 export const NodeHeader: FC<NodeHeaderProps> = ({
@@ -29,7 +31,17 @@ export const NodeHeader: FC<NodeHeaderProps> = ({
   id: nodeId,
   name: nodeName,
   type: nodeType,
+  isLoading,
 }) => {
+  if (isLoading) {
+    return (
+      <>
+        <Skeleton width={'90%'} height={32} />
+        <Skeleton width={'80%'} height={32} />
+      </>
+    );
+  }
+
   return (
     <Stack
       paddingBlock={1}
@@ -39,7 +51,7 @@ export const NodeHeader: FC<NodeHeaderProps> = ({
       borderBottom={({ palette }) => `1px solid ${palette.divider}`}
     >
       <StyledHeader flex={['auto', 1]}>
-        <ButtonLink hidden={!backPath} variant={'text'} to={backPath} icon={<ArrowBack />} />
+        <ButtonLink hidden={!backPath} variant={'text'} {...backPath} icon={<ArrowBack />} />
         <EditableNodeLogo nodeId={nodeId} nodeName={nodeName} nodeType={nodeType} />
         <StyledHeading>{children}</StyledHeading>
         <StyledActionsWrapper hidden={!actions} direction={'row'} alignItems={'center'}>

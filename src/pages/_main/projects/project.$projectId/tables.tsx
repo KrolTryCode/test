@@ -3,8 +3,9 @@ import { PersistentDrawer, useGetDrawerThemeWidth } from '@pspod/ui-components';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { useState } from 'react';
 
-import { CreateNodeMenu } from '~/pages/_main/projects/project.$projectId/tables.$tableId/tree/create-node-menu.component';
+import { CreateNodeContentMenu } from '~/components/create-menu/create-node-content-menu.component';
 import { NodesTreeList } from '~/pages/_main/projects/project.$projectId/tables.$tableId/tree/nodes-tree-list.component';
+import { useNodeTreeActions } from '~/pages/_main/projects/project.$projectId/tables.$tableId/tree/use-node-tree-actions.hook';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId/tables')({
   staticData: {
@@ -15,6 +16,7 @@ export const Route = createFileRoute('/_main/projects/project/$projectId/tables'
 });
 
 function TablesLayout() {
+  const { handleAddCatalog, handleAddTable } = useNodeTreeActions();
   const { drawerWidth } = useGetDrawerThemeWidth();
   const [isDrawerOpened, setIsDrawerOpened] = useState(true);
 
@@ -27,8 +29,8 @@ function TablesLayout() {
       })}
     >
       <PersistentDrawer isInitialOpen={true} onDrawerOpenState={setIsDrawerOpened}>
-        <Box position={'absolute'} marginTop={'-3px'}>
-          <CreateNodeMenu />
+        <Box position={'absolute'} top={'-3px'}>
+          <CreateNodeContentMenu addCatalog={handleAddCatalog} addTable={handleAddTable} />
         </Box>
         <Box marginTop={1} marginRight={2} sx={{ overflowY: 'auto', scrollbarWidth: 'thin' }}>
           <NodesTreeList />

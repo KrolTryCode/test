@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { ParticipantsTable } from '../_components/participants/paritcipants-table.component';
+import { GroupHeader } from '~/components/node-header/group-header.component';
 
-import { GroupHeader } from './_components/group-header/group-header.component';
+import { ParticipantsTable } from '../_components/participants/paritcipants-table.component';
 
 export const Route = createFileRoute('/_main/projects/group/$groupId/participants')({
   component: GroupParticipants,

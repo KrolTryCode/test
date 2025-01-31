@@ -1,32 +1,42 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { confirmDeletionModal, notifySuccess } from '@pspod/ui-components';
-import { useNavigate, useParams } from '@tanstack/react-router';
+import { linkOptions, useNavigate } from '@tanstack/react-router';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useCreateProjectNodeMutation } from '~/api/queries/projects/create-project-node.mutation';
 import { useDeleteProjectNodeMutation } from '~/api/queries/projects/delete-project-node.mutation';
+import { useGetProjectNodeQuery } from '~/api/queries/projects/get-project-node.query';
 import { useUpdateProjectNodeMutation } from '~/api/queries/projects/update-project-node.mutation';
 import { ProjectNode, ProjectNodeType } from '~/api/utils/api-requests';
+import { projectNodeModal } from '~/pages/_main/projects/_components/project-node-form/project-node-form.component';
+import { useTablesMenuData } from '~/pages/_main/projects/_components/use-tables-menu-data.hook';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
+import { usePageTitle } from '~/utils/hooks/use-page-title';
 import { showErrorMessage } from '~/utils/show-error-message';
 
-import { projectNodeModal } from './project-node-form/project-node-form.component';
-import { useTablesMenuData } from './use-tables-menu-data.hook';
-
-export const useProjectsTreeActions = () => {
+export const useNodeActions = (id: string) => {
   const { t } = useTranslation();
-  const { projectId, groupId } = useParams({ strict: false });
+  const navigate = useNavigate();
+
+  const { data: nodeData, isLoading: isNodeDataLoading } = useGetProjectNodeQuery(id, {
+    enabled: !!id,
+  });
+
+  const { data: parentData, isLoading: isParentDataLoading } = useGetProjectNodeQuery(
+    nodeData?.parentId ?? '',
+    { enabled: !!nodeData?.parentId },
+  );
+
+  usePageTitle(nodeData?.name);
+
+  const backPath = getBackPathOptions(parentData);
 
   const declinatedTranslations = useDeclinatedTranslationsContext();
-  const navigate = useNavigate();
 
   //#region Queries & mutations
   const { treeData } = useTablesMenuData();
 
   const { mutate: deleteProjectNode } = useDeleteProjectNodeMutation({
     onSuccess: () => {
-      void navigate({ to: '/projects' });
       notifySuccess(t('MESSAGE.DELETION_SUCCESS'));
     },
     onError: e => showErrorMessage(e, 'ERROR.DELETION_FAILED'),
@@ -37,37 +47,9 @@ export const useProjectsTreeActions = () => {
     onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
   });
 
-  const { mutate: createProjectNode } = useCreateProjectNodeMutation({
-    onSuccess: () => notifySuccess(t('MESSAGE.CREATION_SUCCESS')),
-    onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
-  });
-
   //#endregion
 
   //#region callbacks
-
-  const addProject = useCallback(() => {
-    projectNodeModal({
-      onSave: createProjectNode,
-      title: t('ACTION.CREATE', { type: t('ENTITY.PROJECT').toLowerCase() }),
-      data: { type: ProjectNodeType.Project, parentId: groupId ?? projectId },
-    });
-  }, [createProjectNode, t]);
-
-  const addGroup = useCallback(() => {
-    const title = t('ACTION.CREATE', {
-      type: declinatedTranslations.GROUP.ACCUSATIVE.toLowerCase(),
-    });
-    projectNodeModal({
-      title,
-      onSave: createProjectNode,
-      data: { type: ProjectNodeType.Group, parentId: groupId ?? projectId },
-    });
-  }, [t, declinatedTranslations.GROUP.ACCUSATIVE, createProjectNode]);
-
-  const importProject = useCallback(() => {
-    console.log('TODO import project');
-  }, []);
 
   const exportProject = useCallback((id: string) => {
     console.log(id, 'TODO export project');
@@ -115,6 +97,7 @@ export const useProjectsTreeActions = () => {
         } else {
           onDelete();
         }
+        void navigate(backPath);
       };
 
       confirmDeletionModal({
@@ -122,18 +105,32 @@ export const useProjectsTreeActions = () => {
         title: t('MESSAGE.CONFIRM_DELETE_ENTITY', { what: entity.toLowerCase() }),
       });
     },
-    [declinatedTranslations, deleteProjectNode, t, treeData.length],
+    [backPath, declinatedTranslations, deleteProjectNode, navigate, t, treeData.length],
   );
 
   //#endregion
 
   return {
-    addGroup,
-    addProject,
-    importProject,
+    nodeData: { ...nodeData!, backPath },
+    isNodeDataLoading: isParentDataLoading || isNodeDataLoading,
     exportProject,
     moveGroupOrProject,
     updateProjectOrGroup,
     deleteProjectOrGroup,
   };
 };
+
+function getBackPathOptions(parentData?: ProjectNode) {
+  if (!parentData) {
+    return linkOptions({ to: '/projects/group' });
+  } else if (parentData.type === ProjectNodeType.Group) {
+    return linkOptions({ to: '/projects/group/$groupId', params: { groupId: parentData.id } });
+  } else if (parentData.type === ProjectNodeType.Project) {
+    return linkOptions({
+      to: '/projects/project/$projectId',
+      params: { projectId: parentData.id },
+    });
+  }
+
+  return linkOptions({ to: '/projects/group' });
+}
