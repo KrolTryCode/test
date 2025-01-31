@@ -1,15 +1,17 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { CloudDownload } from '@mui/icons-material';
 import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
-import { FC, useCallback, useEffect, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { Solver, SolverRequest } from '~/api/utils/api-requests';
-import { FormInputFile, FormInputText } from '~/components/react-hook-form';
+import { LabelWithRules } from '~/components/label-with-rules/label-with-rules.component';
+import { FormInputText } from '~/components/react-hook-form';
+import { UploadFile } from '~/components/upload-file/upload-file.component';
 import { createSolverFormSchema } from '~/pages/_main/projects/project.$projectId/solvers/solver-form.schema';
 import { useSolverForm } from '~/pages/_main/projects/project.$projectId/solvers/use-solver-form.hook';
 import { downloadBlobFile } from '~/utils/files';
+import { getAvailableExtensionsMsg } from '~/utils/files/validate-files';
 
 export interface SolverUpdateRequest extends SolverRequest {
   fileId?: string;
@@ -48,7 +50,7 @@ export const SolverForm: FC<SolverFormProps> = ({
     resolver: yupResolver(schema),
   });
 
-  const { solverFile, currentFile, uploadFile, createSolverFile, isFetching } = useSolverForm(
+  const { solverFile, currentFile, onChangeFile, isUploadingFile } = useSolverForm(
     projectId,
     data,
     isEditing,
@@ -61,44 +63,30 @@ export const SolverForm: FC<SolverFormProps> = ({
     }
   }, [setValue, solverFile?.fileId]);
 
-  const onChangeFile = useCallback(
-    async (file: File | undefined) => {
-      if (file) {
-        const { fileId } = await createSolverFile(file);
-        if (fileId) {
-          await uploadFile({ file, fileId });
-        }
-      }
-    },
-    [createSolverFile, uploadFile],
-  );
-
   return (
-    <Form onSubmit={handleSubmit(onResolve)}>
+    <Form showColonAfterLabel onSubmit={handleSubmit(onResolve)}>
       <FormItem label={t('COMMON.TITLE')} isRequired>
         <FormInputText controllerProps={{ ...register('name'), control }} />
       </FormItem>
       <FormItem label={t('COMMON.DESCRIPTION')}>
         <FormInputText isMultiline controllerProps={{ ...register('description'), control }} />
       </FormItem>
-      <FormItem label={t('COMMON.FILE')} isRequired isHidden={!isEditing}>
-        <FormInputFile
-          accept={'.zip'}
-          isLoading={isFetching}
-          onChangeFile={onChangeFile}
-          initialFilename={solverFile?.fileName}
-          controllerProps={{ ...register('fileId'), control }}
-        />
-        <Button
-          hidden={!currentFile}
-          icon={<CloudDownload />}
-          sx={{ marginTop: 1 }}
-          onClick={() =>
+      <FormItem
+        label={
+          <LabelWithRules label={t('COMMON.FILE')} content={getAvailableExtensionsMsg('zip')} />
+        }
+        isRequired
+        isHidden={!isEditing}
+      >
+        <UploadFile
+          fileType={'zip'}
+          onSelect={onChangeFile}
+          isUploading={isUploadingFile}
+          files={solverFile ? [{ id: solverFile.fileId!, name: solverFile.fileName! }] : []}
+          onDownloadFile={() =>
             downloadBlobFile(currentFile, solverFile?.fileName ?? `${t('ENTITY.SOLVER')}.zip`)
           }
-        >
-          {t('ACTION.DOWNLOAD_ATTACHED_FILE')}
-        </Button>
+        />
       </FormItem>
       <FormButtons>
         <Button onClick={onReject}>{t('ACTION.CANCEL')}</Button>

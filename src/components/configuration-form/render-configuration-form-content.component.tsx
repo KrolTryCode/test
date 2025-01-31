@@ -1,43 +1,40 @@
 import { Button, Form, FormButtons } from '@pspod/ui-components';
 import { FC, ReactNode } from 'react';
-import { FieldValues, FormState, UseFormHandleSubmit, UseFormReset } from 'react-hook-form';
+import { FieldValues, FormState } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { EntityModelModuleConfiguration, PropertyInfo } from '~/api/utils/api-requests';
-import { useConfigurationForm } from '~/components/configuration-form/use-configuration-form.hook';
 
 interface RenderConfigurationFormContentProps {
-  reset: UseFormReset<FieldValues>;
   formState: FormState<FieldValues>;
-  handleSubmit: UseFormHandleSubmit<FieldValues>;
   renderComponent: (property: PropertyInfo) => ReactNode;
   moduleDescription: EntityModelModuleConfiguration;
+  onDrop: () => void;
+  onSubmit: () => void;
+  isLoading?: boolean;
+  isPending?: boolean;
 }
 
 export const RenderConfigurationFormContent: FC<RenderConfigurationFormContentProps> = ({
-  reset,
   formState,
-  handleSubmit,
+  isLoading,
+  isPending,
+  onDrop,
+  onSubmit,
   renderComponent,
   moduleDescription,
 }) => {
   const { t } = useTranslation();
 
-  const { values, onSubmit, isPending } = useConfigurationForm(moduleDescription);
-
-  const onDrop = () => reset(values);
-
-  if (!values) {
-    return null;
-  }
-
   return (
     <Form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={onSubmit}
       key={moduleDescription.moduleName}
       labelPosition={'left'}
-      isLoading={!values}
+      isLoading={isLoading}
       labelWidth={3}
+      showColonAfterLabel
+      maxWidth={'lg'}
     >
       {moduleDescription.properties?.map(property => renderComponent(property))}
       <FormButtons>

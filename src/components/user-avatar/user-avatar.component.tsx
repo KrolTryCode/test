@@ -1,11 +1,10 @@
-import { CircularProgress } from '@mui/material';
 import { Avatar, AvatarProps } from '@pspod/ui-components';
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useGetImageQuery } from '~/api/queries/files/get-image.query';
 import { useGetUserAvatarIdQuery } from '~/api/queries/users/get-active-user-avatar-id.query';
 
+import { useGetImage } from '../upload-file/use-get-image.hook';
 import { getFullName } from '../user-profile/user-profile.utils';
 
 interface UserAvatarProps extends AvatarProps {
@@ -29,37 +28,25 @@ export const UserAvatar: FC<UserAvatarProps> = ({
   const { data: avatarId = '', isLoading: isAvatarIdLoading } = useGetUserAvatarIdQuery(userId, {
     enabled: !!userId,
   });
-  const { data: avatar, isLoading: isAvatarLoading } = useGetImageQuery(avatarId, {
-    enabled: !!avatarId,
-  });
+  const { image: avatar, isImageLoading: isAvatarLoading } = useGetImage(avatarId);
 
   const fullName = getFullName(firstName, lastName, surName);
   let userInitialsFallback = '';
-  if (!avatar) {
+  if (!avatarId) {
     userInitialsFallback += firstName?.charAt(0) ?? '';
     userInitialsFallback += lastName?.charAt(0) ?? '';
   }
 
-  const img = useMemo(() => {
-    const img = new Image();
-    img.src = URL.createObjectURL(new Blob([avatar as string]));
-    return img;
-  }, [avatar]);
-
   return (
     <Avatar
       size={size}
-      withIcon={false}
       color={color}
-      src={avatar ? img?.src : undefined}
+      src={avatar?.src}
       alt={fullName ?? t('USER.PHOTO')}
       title={fullName ?? t('USER.PHOTO')}
+      isLoading={isAvatarIdLoading || isAvatarLoading || isLoading}
     >
-      {isAvatarIdLoading || isAvatarLoading || isLoading ? (
-        <CircularProgress size={'inherit'} color={'secondary'} />
-      ) : (
-        userInitialsFallback.toUpperCase()
-      )}
+      {userInitialsFallback.toUpperCase()}
     </Avatar>
   );
 };

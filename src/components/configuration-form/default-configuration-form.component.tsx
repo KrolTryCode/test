@@ -12,7 +12,7 @@ import { FormCheckbox, FormInputNumeric, FormInputText } from '~/components/reac
 import { getSchema } from './configuration-form.schema';
 
 export const DefaultConfigurationForm = (moduleDescription: EntityModelModuleConfiguration) => {
-  const { values } = useConfigurationForm(moduleDescription);
+  const { values, isLoading, isPending, onSubmit } = useConfigurationForm(moduleDescription);
   const { t } = useTranslation();
 
   const { reset, control, register, handleSubmit, formState } = useForm({
@@ -55,9 +55,11 @@ export const DefaultConfigurationForm = (moduleDescription: EntityModelModuleCon
       text={t(`ENTITY.${moduleDescription.moduleName?.toUpperCase()}`)}
       content={
         <RenderConfigurationFormContent
-          reset={reset}
+          onDrop={() => reset(values)}
+          isLoading={isLoading}
+          isPending={isPending}
           formState={formState}
-          handleSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           renderComponent={renderComponent}
           moduleDescription={moduleDescription}
         />

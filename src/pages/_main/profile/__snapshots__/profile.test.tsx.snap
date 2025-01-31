@@ -18,15 +18,22 @@ exports[`Profile > renders the profile > profile 1`] = `
       class="MuiStack-root css-13ebx6i-MuiStack-root"
     >
       <div
-        class="MuiStack-root profile-avatar css-o8tcyt-MuiStack-root"
+        class="MuiStack-root profile-avatar css-1fs4ojd-MuiStack-root"
+        variant="circular"
       >
         <div
-          class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-6rxyyo-MuiAvatar-root"
+          class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-1dpsd08-MuiAvatar-root"
           color="primary"
+          size="150"
           title=""
-        />
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-1rr90df-MuiTypography-root"
+          />
+        </div>
         <div
-          class="MuiStack-root css-usm8zd-MuiStack-root"
+          class="MuiStack-root css-36i21p-MuiStack-root"
+          variant="circular"
         >
           <button
             class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-8jlasq-MuiButtonBase-root-MuiIconButton-root"
