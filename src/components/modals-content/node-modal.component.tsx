@@ -10,12 +10,26 @@ interface NodeModalProps {
   isEditing?: boolean;
   onSave: (data: CreateContentNodeRequest) => void;
   projectId?: string;
+  currentNodeId: string | undefined;
 }
-export const nodeModal = ({ title, data, isEditing, onSave, projectId }: NodeModalProps) =>
+export const nodeModal = ({
+  title,
+  data,
+  isEditing,
+  onSave,
+  projectId,
+  currentNodeId,
+}: NodeModalProps) =>
   modal({
     title,
     onOk: onSave,
     renderContent: (args: InstanceProps<CreateContentNodeRequest, never>) => (
-      <NodeForm data={data} projectId={projectId} isEditing={isEditing} {...args} />
+      <NodeForm
+        data={data}
+        projectId={projectId}
+        currentNodeId={currentNodeId}
+        isEditing={isEditing}
+        {...args}
+      />
     ),
   });

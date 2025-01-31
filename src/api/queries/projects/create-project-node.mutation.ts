@@ -10,6 +10,7 @@ export const useCreateProjectNodeMutation = (
   options?: UseCustomMutationOptions<ProjectNode, unknown, CreateProjectNodeRequest>,
 ) => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: data => ApiClientSecured.projectNodeV1Controller.createProjectNode(data),
     ...options,

@@ -4,10 +4,10 @@ import { Button, DropdownMenu } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useNavTreeActions } from './use-nav-tree-actions.hook';
+import { useNodeTreeActions } from './use-node-tree-actions.hook';
 
-export const CreateMenu: FC = () => {
-  const { handleAddCatalog, handleAddTable } = useNavTreeActions([]);
+export const CreateNodeMenu: FC = () => {
+  const { handleAddCatalog, handleAddTable } = useNodeTreeActions();
   const { t } = useTranslation();
 
   return (

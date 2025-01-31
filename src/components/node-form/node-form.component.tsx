@@ -1,18 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form, FormButtons, FormItem, Button } from '@pspod/ui-components';
-import { FC, useCallback } from 'react';
+import { Form, FormButtons, FormItem, Button, Preloader } from '@pspod/ui-components';
+import { FC, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { useGetProjectNodesTree } from '~/api/queries/nodes/get-project-nodes-tree.query';
-import { nodesWithHrefSelector } from '~/api/selectors/nodes-with-href';
+import { useGetContentNodesByParent } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
 import { CreateContentNodeRequest } from '~/api/utils/api-requests';
 import { getSchema } from '~/components/node-form/node-form.schema';
 import { selectNodeTypes } from '~/components/node-form/node-form.utils';
 import { FormInputText, FormSelect } from '~/components/react-hook-form';
-import { FormSearchTree } from '~/components/react-hook-form/form-search-tree/form-search-tree.component';
-import { projectsPath, projectPath, tablesPath } from '~/utils/configuration/routes-paths';
-import { useTreeNodesUtils } from '~/utils/hooks/use-tree-nodes';
+import { FormSearchNodeTree } from '~/components/react-hook-form/form-search-tree/form-search-node-tree.component';
 
 interface NodeFormProps {
   data?: Partial<CreateContentNodeRequest>;
@@ -20,54 +17,43 @@ interface NodeFormProps {
   onResolve: (values: CreateContentNodeRequest) => void;
   isEditing?: boolean;
   projectId?: string;
+  currentNodeId: string | undefined;
 }
 
 export const NodeForm: FC<NodeFormProps> = ({
   onResolve,
   onReject,
   data,
+  currentNodeId,
   isEditing = false,
   projectId = '',
 }) => {
   const { t } = useTranslation();
-  const { data: treeData = [], isLoading } = useGetProjectNodesTree(projectId, {
-    enabled: !!projectId,
-    select: data =>
-      nodesWithHrefSelector(
-        data,
-        projectId,
-        `${projectsPath}/${projectPath}/${projectId}/${tablesPath}`,
-      ),
-  });
+  const [selectedItem, setSelectedItem] = useState(currentNodeId);
 
-  const { findNode } = useTreeNodesUtils(treeData);
-
-  const getSiblingNames = useCallback(
-    (parentNodeId?: string): string[] => {
-      if (!parentNodeId) {
-        return treeData.map(node => node.label);
-      }
-      const parentNode = findNode(parentNodeId);
-      if (parentNode?.children && parentNode.children.length > 0) {
-        return parentNode.children.map(node => node.label);
-      }
-      return [];
-    },
-    [treeData, findNode],
+  const { data: siblingNames = [], isLoading } = useGetContentNodesByParent(
+    projectId,
+    selectedItem,
+    { select: data => data.map(node => node.name) },
   );
 
-  const schema = getSchema(getSiblingNames(data?.parentContentNodeId), t);
+  const schema = useMemo(() => getSchema(siblingNames, t), [siblingNames, t]);
+
   const {
     register,
     handleSubmit,
     control,
     formState: { isValid, isSubmitted, isSubmitting },
   } = useForm<CreateContentNodeRequest>({
-    mode: 'onBlur',
-    reValidateMode: 'onBlur',
+    mode: 'onChange',
+    reValidateMode: 'onChange',
     resolver: yupResolver(schema),
     defaultValues: data ?? schema.getDefault(),
   });
+
+  if (isLoading) {
+    return <Preloader />;
+  }
 
   return (
     <Form onSubmit={handleSubmit(onResolve)}>
@@ -75,13 +61,10 @@ export const NodeForm: FC<NodeFormProps> = ({
         <FormInputText controllerProps={{ ...register('name'), control }} />
       </FormItem>
 
-      {!!treeData.length && (
+      {!isEditing && (
         <FormItem label={t('COMMON.PARENT')}>
-          <FormSearchTree
-            items={treeData}
-            placeholder={t('ACTION.SELECT')}
-            noDataText={t('MESSAGE.NO_DATA')}
-            isLoading={isLoading}
+          <FormSearchNodeTree
+            onSelect={setSelectedItem}
             controllerProps={{ ...register('parentContentNodeId'), control }}
           />
         </FormItem>

@@ -1,13 +1,10 @@
 import { Box } from '@mui/material';
-import { PersistentDrawer, Preloader, useGetDrawerThemeWidth } from '@pspod/ui-components';
+import { PersistentDrawer, useGetDrawerThemeWidth } from '@pspod/ui-components';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { useState } from 'react';
 
-import { useTablesMenuData } from '../_components/use-tables-menu-data.hook';
-
-import { CreateMenu } from './tables.$tableId/_components/create-menu.component';
-import { NodesTree } from './tables.$tableId/_components/nodes-tree.component';
-import { useNavTreeActions } from './tables.$tableId/_components/use-nav-tree-actions.hook';
+import { CreateNodeMenu } from '~/pages/_main/projects/project.$projectId/tables.$tableId/tree/create-node-menu.component';
+import { NodesTreeList } from '~/pages/_main/projects/project.$projectId/tables.$tableId/tree/nodes-tree-list.component';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId/tables')({
   staticData: {
@@ -18,15 +15,9 @@ export const Route = createFileRoute('/_main/projects/project/$projectId/tables'
 });
 
 function TablesLayout() {
-  const { treeData: _, isFetched, isLoading } = useTablesMenuData();
-  const { handleAddCatalog: _h } = useNavTreeActions([]);
   const { drawerWidth } = useGetDrawerThemeWidth();
-
   const [isDrawerOpened, setIsDrawerOpened] = useState(true);
 
-  if (isLoading || !isFetched) {
-    return <Preloader />;
-  }
   return (
     <Box
       sx={({ spacing }) => ({
@@ -36,11 +27,11 @@ function TablesLayout() {
       })}
     >
       <PersistentDrawer isInitialOpen={true} onDrawerOpenState={setIsDrawerOpened}>
-        <Box position={'absolute'}>
-          <CreateMenu />
+        <Box position={'absolute'} marginTop={'-3px'}>
+          <CreateNodeMenu />
         </Box>
-        <Box marginTop={1} sx={{ overflowY: 'auto', scrollbarWidth: 'thin' }}>
-          <NodesTree />
+        <Box marginTop={1} marginRight={2} sx={{ overflowY: 'auto', scrollbarWidth: 'thin' }}>
+          <NodesTreeList />
         </Box>
       </PersistentDrawer>
       <Box
