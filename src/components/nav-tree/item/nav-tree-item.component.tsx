@@ -10,9 +10,6 @@ import { TreeItem2Provider } from '@mui/x-tree-view/TreeItem2Provider';
 import { unstable_useTreeItem2 as useTreeItem2 } from '@mui/x-tree-view/useTreeItem2';
 import { forwardRef, Ref, useMemo } from 'react';
 
-import { ItemDropdownMenu } from '~/components/nav-tree/item/item-dropdown-menu.component';
-import { renderItemIcon } from '~/components/nav-tree/item/nav-tree-item.utils';
-
 import { StyledLink, StyledTreeItemLabel } from '../nav-tree.style';
 import { NavTreeItemData, NavTreeItemProps } from '../nav-tree.type';
 
@@ -26,11 +23,7 @@ export const NavTreeItem = forwardRef(function NavTreeItem(
     label,
     disabled,
     children,
-    menuItems,
-    onCollapseAll,
-    onExpandAll,
     onHandleSelectEvent,
-    hideDropdown = false,
     disableLinks = false,
     ...other
   } = props;
@@ -63,17 +56,8 @@ export const NavTreeItem = forwardRef(function NavTreeItem(
               {...getLabelProps()}
               onDoubleClick={() => onHandleSelectEvent?.(item.id)}
             >
-              {renderItemIcon(item.type)}
               {item.href && !disableLinks ? <StyledLink to={item.href}>{label}</StyledLink> : label}
             </StyledTreeItemLabel>
-            {!hideDropdown && (
-              <ItemDropdownMenu
-                item={item}
-                menuItems={menuItems}
-                onCollapseAll={onCollapseAll}
-                onExpandAll={onExpandAll}
-              />
-            )}
           </Stack>
         </TreeItem2Content>
         {children && (

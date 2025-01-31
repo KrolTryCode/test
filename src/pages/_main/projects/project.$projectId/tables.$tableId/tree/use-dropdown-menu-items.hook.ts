@@ -2,12 +2,12 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ContentNodeType } from '~/api/utils/api-requests';
-import { DropdownMenuItem, NavTreeItemData } from '~/components/nav-tree/nav-tree.type';
+import { DropdownMenuItem } from '~/components/nav-tree/nav-tree.type';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 
-import { useNavTreeActions } from './use-nav-tree-actions.hook';
+import { useNodeTreeActions } from './use-node-tree-actions.hook';
 
-export const useDropdownMenuItems = (treeData: NavTreeItemData[]) => {
+export const useDropdownMenuItems = () => {
   const { t } = useTranslation();
   const {
     handleAddCatalog,
@@ -15,7 +15,7 @@ export const useDropdownMenuItems = (treeData: NavTreeItemData[]) => {
     handleDeleteNode,
     handleEditNode,
     handleEditStructure,
-  } = useNavTreeActions(treeData);
+  } = useNodeTreeActions();
 
   const declinatedTranslations = useDeclinatedTranslationsContext();
 
@@ -44,7 +44,7 @@ export const useDropdownMenuItems = (treeData: NavTreeItemData[]) => {
       },
       {
         label: t('ACTION.DELETE'),
-        onClick: id => void handleDeleteNode(id),
+        onClick: handleDeleteNode,
         color: 'error',
       },
     ],

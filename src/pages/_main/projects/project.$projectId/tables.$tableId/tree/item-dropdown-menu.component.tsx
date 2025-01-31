@@ -5,10 +5,11 @@ import { DropdownMenu } from '@pspod/ui-components';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { DropdownMenuItem, NavTreeItemData } from '~/components/nav-tree/nav-tree.type';
+import { DropdownMenuItem } from '~/components/nav-tree/nav-tree.type';
+import { ExtendedContentNode } from '~/pages/_main/projects/project.$projectId/tables.$tableId/tree/nodes-tree.type';
 
 export const ItemDropdownMenu: FC<{
-  item: NavTreeItemData;
+  item: ExtendedContentNode;
   onCollapseAll?: (itemId: string) => void;
   onExpandAll?: (itemId: string) => void;
   menuItems?: DropdownMenuItem[];
@@ -21,7 +22,7 @@ export const ItemDropdownMenu: FC<{
 
   return (
     <>
-      {(filteredMenuItems ?? item.children) && (
+      {(filteredMenuItems ?? item.hasChildren) && (
         <Box
           className={'dropdown-menu'}
           onClick={event => {
@@ -29,12 +30,12 @@ export const ItemDropdownMenu: FC<{
           }}
         >
           <DropdownMenu
-            buttonColor={'secondary'}
-            buttonContent={<ShowMoreIcon />}
+            color={'primary'}
             showArrow={false}
-            buttonSize={'small'}
+            icon={<ShowMoreIcon />}
+            buttonSize={'medium'}
           >
-            {item.children && [
+            {item.hasChildren && [
               <MenuItem key={'collapse'} onClick={() => onCollapseAll?.(item.id)}>
                 {t('ACTION.HIDE_ALL')}
               </MenuItem>,
@@ -43,7 +44,7 @@ export const ItemDropdownMenu: FC<{
               </MenuItem>,
             ]}
             {filteredMenuItems?.map(({ label, onClick, color }) => (
-              <MenuItem key={label} onClick={() => onClick(item.id)} color={color}>
+              <MenuItem key={label} onClick={() => onClick(item)} color={color}>
                 {label}
               </MenuItem>
             ))}

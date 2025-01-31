@@ -7,4 +7,11 @@ export const projectContentQueries = createQueryKeys('project-content', {
     queryKey: [nodeId],
     queryFn: () => ApiClientSecured.projectContentV1Controller.getNode(nodeId),
   }),
+  contentNodesByParent: (projectId: string, parentNodeId?: string) => ({
+    queryKey: [projectId, parentNodeId],
+    queryFn: () =>
+      ApiClientSecured.projectContentV1Controller.getChildrenContentNodesByParent(projectId, {
+        parentNodeId,
+      }),
+  }),
 });

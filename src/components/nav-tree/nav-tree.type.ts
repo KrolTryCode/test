@@ -3,6 +3,7 @@ import { Color, Extract } from '@pspod/ui-components/build/_type';
 import { HTMLAttributes } from 'react';
 
 import { ContentNodeType, ProjectNodeType } from '~/api/utils/api-requests';
+import { ExtendedContentNode } from '~/pages/_main/projects/project.$projectId/tables.$tableId/tree/nodes-tree.type';
 
 export interface NavTreeProps {
   isLoading?: boolean;
@@ -33,7 +34,7 @@ export interface NavTreeItemData extends TreeViewBaseItem {
 
 export interface DropdownMenuItem {
   label: string;
-  onClick: (itemId: string) => void;
+  onClick: (item: ExtendedContentNode) => void;
   entityType?: NavTreeItemType;
   color?: Extract<Color, 'primary' | 'secondary' | 'error' | 'warning' | 'success'>;
 }

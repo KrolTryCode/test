@@ -1,10 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { projectContentQueries } from '~/api/queries/project-content/queries';
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { ContentNode, CreateContentNodeRequest } from '~/api/utils/api-requests';
-
-import { nodeQueries } from '../nodes/queries';
 
 export const useCreateProjectContentMutation = (
   projectId: string,
@@ -16,8 +15,7 @@ export const useCreateProjectContentMutation = (
     mutationFn: data => ApiClientSecured.projectContentV1Controller.createNode(projectId, data),
     ...options,
     onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: nodeQueries.list(projectId).queryKey });
-      void queryClient.invalidateQueries({ queryKey: nodeQueries.tree(projectId).queryKey });
+      void queryClient.invalidateQueries({ queryKey: projectContentQueries._def });
       options?.onSuccess?.(...args);
     },
   });
