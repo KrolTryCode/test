@@ -11,8 +11,7 @@ import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { TabLink } from '~/components/implicit-links';
-
-import { ProjectHeader } from './_components/project-header/project-header.component';
+import { ProjectHeader } from '~/components/node-header/project-header.component';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId')({
   component: ProjectTabsLayout,

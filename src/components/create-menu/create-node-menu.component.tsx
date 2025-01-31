@@ -4,11 +4,11 @@ import { Button, DropdownMenu } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useProjectsTreeActions } from '~/pages/_main/projects/_components/use-projects-tree-actions.hook';
+import { useCreateNodeActions } from './create-node-menu.hook';
 
-export const CreateMenu: FC = () => {
+export const CreateNodeMenu: FC = () => {
   const { t } = useTranslation();
-  const { addGroup, addProject } = useProjectsTreeActions();
+  const { addGroup, addProject, importProject } = useCreateNodeActions();
 
   return (
     <>
@@ -31,7 +31,7 @@ export const CreateMenu: FC = () => {
         size={'small'}
         color={'primary'}
         title={t('ACTION.IMPORT', { what: t('ENTITY.PROJECT').toLowerCase() })}
-        onClick={() => alert('Всё будет')}
+        onClick={importProject}
         variant={'text'}
         icon={<Upload />}
       />

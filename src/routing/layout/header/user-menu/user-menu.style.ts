@@ -5,15 +5,13 @@ export const StyledMenuItem = styled(MenuItem)<MenuItemProps>(({ theme }) => ({
   padding: '10px 15px !important',
   borderLeft: '1px solid',
   borderRight: '1px solid',
-  // в консоли настойчиво предлагает сменить first-child на first-of-type, что не подходит
-  // '&:first-child': {
-  '&:is(a)': {
+  '&:first-of-type': {
     borderTop: `1px solid ${theme.palette.primary.main}`,
     borderTopLeftRadius: 'inherit',
     borderTopRightRadius: 'inherit',
   },
 
-  '&:is(li)': {
+  '&:last-of-type': {
     borderBottomLeftRadius: 'inherit',
     borderBottomRightRadius: 'inherit',
   },
