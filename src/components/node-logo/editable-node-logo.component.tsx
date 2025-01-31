@@ -1,19 +1,14 @@
-import { PhotoCamera as CameraIcon } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
-import { notifySuccess } from '@pspod/ui-components';
+import { UploadImage } from '@pspod/ui-components';
 import { useQueryClient } from '@tanstack/react-query';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useUploadFileMutation } from '~/api/queries/files/upload-file.mutation';
 import { useCreateProjectFileMutation } from '~/api/queries/projects/create-project-file.mutation';
 import { projectQueries } from '~/api/queries/projects/queries';
 import { ProjectNodeType } from '~/api/utils/api-requests';
-import { uploadFiles } from '~/utils/files';
-import { handleFileUploadingError, validateFileExtension } from '~/utils/files/validate-file';
-
-import { NodeLogo } from './node-logo.component';
-import { StyledAvatarContainer, StyledBackdrop } from './node-logo.style';
+import { NodeLogo } from '~/components/node-logo/node-logo.component';
+import { useUploadFile } from '~/components/upload-file/use-upload-file.hook';
+import { fileTypeExtensions, validateSelectedFiles } from '~/utils/files/validate-files';
 
 interface EditableNodeLogoProps {
   nodeId: string;
@@ -21,52 +16,45 @@ interface EditableNodeLogoProps {
   nodeType?: ProjectNodeType;
 }
 
+const extensions = fileTypeExtensions['image'];
+
 export const EditableNodeLogo: FC<EditableNodeLogoProps> = ({ nodeId, nodeName, nodeType }) => {
-  const { t } = useTranslation();
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
 
   const { mutateAsync: createLogo, isPending: isCreatingFile } =
     useCreateProjectFileMutation(nodeId);
 
-  const { mutateAsync: uploadFile, isPending: isUploadingFile } = useUploadFileMutation();
+  const { handleUpload, isUploading } = useUploadFile();
 
-  const handleUploadFile = async () => {
-    const fileList = await uploadFiles({ isMultiple: false, fileType: 'image' });
-    const file = fileList[0];
+  const getFileId = useCallback(
+    (originalName: string) => async () => {
+      const { fileId } = await createLogo({ type: 'logo', data: {}, originalName });
+      return fileId;
+    },
+    [createLogo],
+  );
 
-    if (!validateFileExtension(file.name, 'image', t)) {
-      return;
-    }
-
-    if (file) {
-      try {
-        const { fileId } = await createLogo({ type: 'logo', data: {}, originalName: file.name });
-        await uploadFile({ file, fileId: fileId });
+  const handleUploadFile = useCallback(
+    async (file: File) => {
+      const isValid = !!validateSelectedFiles([file], 'image').length;
+      if (isValid) {
+        await handleUpload(getFileId(file.name), file);
         await queryClient.invalidateQueries({ queryKey: projectQueries.logo(nodeId).queryKey });
-        notifySuccess(t('FILES.UPLOAD_SUCCESS'));
-      } catch (e) {
-        handleFileUploadingError(e);
       }
-    }
-  };
+    },
+    [getFileId, handleUpload, nodeId, queryClient],
+  );
 
   return (
-    <StyledAvatarContainer className={'project-logo'}>
-      <NodeLogo
-        nodeId={nodeId}
-        nodeName={nodeName}
-        nodeType={nodeType}
-        isLoading={isCreatingFile || isUploadingFile}
-      />
-      <StyledBackdrop>
-        <IconButton
-          color={'inherit'}
-          title={t('ACTION.LOAD', { type: t('ENTITY.LOGO').toLowerCase() })}
-          onClick={handleUploadFile}
-        >
-          <CameraIcon fontSize={'large'} />
-        </IconButton>
-      </StyledBackdrop>
-    </StyledAvatarContainer>
+    <UploadImage
+      className={'project-logo'}
+      alt={`${t('ENTITY.LOGO')} ${nodeName}`}
+      accept={extensions.join(', ')}
+      onSelect={handleUploadFile}
+      isLoading={isCreatingFile || isUploading}
+      variant={'rounded'}
+      CustomAvatar={<NodeLogo nodeId={nodeId} nodeName={nodeName} nodeType={nodeType} />}
+    />
   );
 };

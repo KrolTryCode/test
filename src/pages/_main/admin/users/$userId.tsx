@@ -34,7 +34,7 @@ function UserAccount() {
       </UserProfileHeader>
       <UserProfileContent>
         <UserAvatar
-          size={'large'}
+          size={150}
           userId={user.id ?? ''}
           firstName={user?.firstName}
           lastName={user?.lastName}

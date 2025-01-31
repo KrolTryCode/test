@@ -13,7 +13,7 @@ export const useConfigurationForm = (moduleDescription: EntityModelModuleConfigu
   const fetchLink = moduleDescription._links?.GET?.href;
   const saveLink = moduleDescription._links?.POST?.href;
 
-  const { data: values } = useGetConfigurationQuery(
+  const { data: values, isLoading } = useGetConfigurationQuery(
     moduleDescription.moduleName ?? '',
     fetchLink!,
     { enabled: !!fetchLink },
@@ -31,5 +31,5 @@ export const useConfigurationForm = (moduleDescription: EntityModelModuleConfigu
     });
   };
 
-  return { values, isPending, onSubmit };
+  return { values, isPending, isLoading, onSubmit };
 };

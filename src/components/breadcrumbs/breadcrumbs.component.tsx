@@ -30,13 +30,13 @@ export const ProjectNodeBreadcrumbs: FC<ProjectNodeBreadcrumbsProps> = ({ projec
           }
           params={{ projectId: id, groupId: id }}
         >
-          <NodeLogo nodeId={id} nodeType={type} size={6.5} />
+          <NodeLogo nodeId={id} nodeType={type} size={13} />
           {name}
         </MuiLink>
       ))}
       {projectData && (
         <MuiLink fontWeight={'bold'}>
-          <NodeLogo nodeId={projectData.id} nodeType={projectData.type} size={6.5} />
+          <NodeLogo nodeId={projectData.id} nodeType={projectData.type} size={13} />
           {projectData.name}
         </MuiLink>
       )}

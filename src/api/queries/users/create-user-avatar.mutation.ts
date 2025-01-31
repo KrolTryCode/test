@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { UserFile } from '~/api/utils/api-requests';
-import { handleFileUploadingError } from '~/utils/files/validate-file';
+import { handleFileUploadingError } from '~/api/utils/handle-file-error';
 
 import { UseCustomMutationOptions } from '../../typings/react-query-helpers';
 import { ApiClientSecured } from '../../utils/api-client';

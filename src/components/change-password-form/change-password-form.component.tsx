@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Stack } from '@mui/material';
 import { Form, FormItem, FormButtons, Button, InputText } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
@@ -9,11 +8,13 @@ import { useGetPasswordConfigurationQuery } from '~/api/queries/settings/get-pas
 import { AccountConfiguration } from '~/api/utils/api-requests';
 import { FormInputText } from '~/components/react-hook-form';
 
+import { LabelWithRules } from '../label-with-rules/label-with-rules.component';
+
 import {
   ChangePasswordForm as IChangePasswordForm,
   getSchema,
 } from './change-password-form.schema';
-import { RulesTooltip } from './rules-tooltip/rules-tooltip.component';
+import { RuleList } from './rules-tooltip/rule-list/rule-list.component';
 
 interface ChangePasswordFormProps {
   isPending?: boolean;
@@ -54,14 +55,14 @@ export const ChangePasswordForm: FC<ChangePasswordFormProps> = ({
       </FormItem>
       <FormItem
         label={
-          <Stack display={'inline-flex'} direction={'row'} alignItems={'center'} gap={'4px'}>
-            <span>
-              {isSettingNew
+          <LabelWithRules
+            label={
+              isSettingNew
                 ? t('COMMON.NEW', { type: t('AUTH.PASSWORD.NAME').toLowerCase() })
-                : t('AUTH.PASSWORD.NAME')}
-            </span>
-            <RulesTooltip config={passwordConfig} />
-          </Stack>
+                : t('AUTH.PASSWORD.NAME')
+            }
+            content={passwordConfig ? <RuleList config={passwordConfig} /> : undefined}
+          />
         }
       >
         <FormInputText

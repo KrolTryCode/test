@@ -18,20 +18,13 @@ export const StyledHeader = styled(Box)(({ theme }) => ({
   rowGap: theme.spacing(1),
   overflow: 'hidden',
 
-  '--logo-size': '60px',
   '& > a': {
     gridArea: BACK_ARROW_GRID_AREA,
-    height: 'var(--logo-size)',
   },
 
   '& > .project-logo': {
     gridArea: LOGO_GRID_AREA,
     marginRight: theme.spacing(1),
-
-    '& .MuiAvatar-root': {
-      height: 'var(--logo-size)',
-      width: 'var(--logo-size)',
-    },
   },
 
   [theme.breakpoints.down('sm')]: {

@@ -4,9 +4,9 @@ import { FC, ReactNode } from 'react';
 
 import { ProjectNode } from '~/api/utils/api-requests';
 import { ButtonLink } from '~/components/implicit-links';
+import { EditableNodeLogo } from '~/components/node-logo/editable-node-logo.component';
 
 import { ProjectNodeBreadcrumbs } from '../breadcrumbs/breadcrumbs.component';
-import { EditableNodeLogo } from '../node-logo/editable-node-logo.component';
 
 import {
   StyledActionsWrapper,

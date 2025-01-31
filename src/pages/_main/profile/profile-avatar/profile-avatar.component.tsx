@@ -1,6 +1,4 @@
-import { PhotoCamera as CameraIcon, Delete as DeleteIcon } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
-import { confirmDeletionModal, notifySuccess } from '@pspod/ui-components';
+import { confirmDeletionModal, notifySuccess, UploadImage } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -8,11 +6,8 @@ import { useCreateAvatarMutation } from '~/api/queries/users/create-user-avatar.
 import { useDeleteUserAvatarMutation } from '~/api/queries/users/delete-user-avatar.mutation';
 import { useGetUserAvatarIdQuery } from '~/api/queries/users/get-active-user-avatar-id.query';
 import { UserAvatar } from '~/components/user-avatar/user-avatar.component';
-import { uploadFiles } from '~/utils/files';
-import { validateFileExtension } from '~/utils/files/validate-file';
+import { fileTypeExtensions, validateSelectedFiles } from '~/utils/files/validate-files';
 import { showErrorMessage } from '~/utils/show-error-message';
-
-import { StyledAvatarContainer, StyledBackdrop } from './profile-avatar.style';
 
 interface ProfileAvatarProps {
   userId: string;
@@ -37,15 +32,9 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ userId, firstName, lastN
     onError: e => showErrorMessage(e, 'ERROR.DELETION_FAILED'),
   });
 
-  const handleUploadAvatar = async () => {
-    const fileList = await uploadFiles({ isMultiple: false, fileType: 'image' });
-    const file = fileList[0];
-
-    if (!validateFileExtension(file.name, 'image', t)) {
-      return;
-    }
-
-    if (file) {
+  const handleUploadAvatar = async (file: File) => {
+    const isValid = !!validateSelectedFiles([file], 'image').length;
+    if (isValid) {
       await saveAvatar({ file });
     }
   };
@@ -54,33 +43,23 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ userId, firstName, lastN
     confirmDeletionModal({ title: t('MESSAGE.CONFIRM_CONTINUE_DELETE'), onOk: deleteAvatar });
 
   return (
-    <StyledAvatarContainer className={'profile-avatar'}>
-      <UserAvatar
-        size={'large'}
-        userId={userId}
-        firstName={firstName}
-        lastName={lastName}
-        surName={surName}
-        isLoading={isUploading}
-      />
-      <StyledBackdrop gap={1}>
-        <IconButton
-          color={'inherit'}
-          title={t('ACTION.LOAD', { type: t('USER.PHOTO').toLowerCase() })}
-          onClick={handleUploadAvatar}
-        >
-          <CameraIcon fontSize={'large'} />
-        </IconButton>
-        {!!avatarId && (
-          <IconButton
-            color={'error'}
-            title={t('ACTION.DELETE', { type: t('USER.PHOTO').toLowerCase() })}
-            onClick={handleDeleteAvatar}
-          >
-            <DeleteIcon fontSize={'large'} />
-          </IconButton>
-        )}
-      </StyledBackdrop>
-    </StyledAvatarContainer>
+    <UploadImage
+      className={'profile-avatar'}
+      accept={fileTypeExtensions['image'].join(', ')}
+      onSelect={handleUploadAvatar}
+      onDelete={avatarId ? handleDeleteAvatar : undefined}
+      alt={t('USER.PHOTO')}
+      variant={'circular'}
+      CustomAvatar={
+        <UserAvatar
+          size={150}
+          userId={userId}
+          firstName={firstName}
+          lastName={lastName}
+          surName={surName}
+          isLoading={isUploading}
+        />
+      }
+    />
   );
 };
