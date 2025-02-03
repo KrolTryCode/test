@@ -1,9 +1,9 @@
 import { Upload, Edit as EditIcon, Download, DeleteOutline } from '@mui/icons-material';
-import { Chip, ChipProps, Typography } from '@mui/material';
+import { Chip, Typography } from '@mui/material';
 import { GridActionsCellItem, GridRenderCellParams } from '@mui/x-data-grid-premium';
 import { AddEntity, Button, DataGrid, EnhancedColDef } from '@pspod/ui-components';
 import { createFileRoute } from '@tanstack/react-router';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { useGetSolversQuery } from '~/api/queries/solvers/get-solvers.query';
 import { Solver } from '~/api/utils/api-requests';
@@ -32,24 +32,6 @@ function SolversList() {
 
   const { data = [], isLoading } = useGetSolversQuery(projectId);
 
-  const renderStatusCell = useCallback(
-    (params: GridRenderCellParams<Solver>) => {
-      let color: ChipProps['color'];
-      let label = '';
-
-      if (params.row.active) {
-        color = 'success';
-        label = translateStatus('ACTIVE');
-      } else {
-        color = 'error';
-        label = translateStatus('ARCHIVED');
-      }
-
-      return <Chip label={label} color={color} variant={'outlined'} />;
-    },
-    [translateStatus],
-  );
-
   // TODO BE-145 authorName https://tracker.yandex.ru/BE-145
 
   const columns = useMemo<EnhancedColDef<Solver>[]>(
@@ -76,6 +58,20 @@ function SolversList() {
         type: 'dateTime',
         headerName: t('COMMON.DATE_CREATED'),
         flex: 1,
+      },
+      {
+        field: 'active',
+        headerName: t('COMMON.STATUS'),
+        renderCell: renderStatusCell,
+        type: 'singleSelect',
+        valueOptions() {
+          return [
+            { value: true, label: translateStatus('ACTIVE') },
+            { value: false, label: translateStatus('ARCHIVED') },
+          ];
+        },
+        groupingValueGetter: value =>
+          value ? translateStatus('ACTIVE') : translateStatus('ARCHIVED'),
       },
       {
         field: 'actions',
@@ -110,13 +106,8 @@ function SolversList() {
           ];
         },
       },
-      {
-        field: 'active',
-        headerName: t('COMMON.STATUS'),
-        renderCell: renderStatusCell,
-      },
     ],
-    [handleDeleteSolver, handleUpdateSolver, renderStatusCell, t],
+    [handleDeleteSolver, handleUpdateSolver, t, translateStatus],
   );
 
   const ToolbarContent = (
@@ -159,6 +150,24 @@ function SolversList() {
       loading={isLoading}
       pinnedColumns={{ right: ['actions'] }}
       customToolbarContent={ToolbarContent}
+    />
+  );
+}
+
+function renderStatusCell(params: GridRenderCellParams<Solver, Solver['active']>) {
+  if (params.value === undefined) {
+    return '';
+  }
+
+  if (params.rowNode.type === 'group') {
+    return params.formattedValue;
+  }
+
+  return (
+    <Chip
+      label={params.formattedValue}
+      color={params.value ? 'success' : 'error'}
+      variant={'outlined'}
     />
   );
 }

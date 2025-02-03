@@ -2,7 +2,7 @@ import { Box, Chip, ChipProps } from '@mui/material';
 import { GridRenderCellParams } from '@mui/x-data-grid-premium';
 import { AddEntity, DataGrid, DeleteCellButton, EnhancedColDef } from '@pspod/ui-components';
 import { useParams } from '@tanstack/react-router';
-import { FC, useCallback, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 
 import { ServiceToken, TokenState } from '~/api/utils/api-requests';
 import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
@@ -10,32 +10,10 @@ import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 import { useTokenActions } from './use-token-actions.hook';
 
 export const ServiceTokens: FC = () => {
-  const { t, translateStatus } = useCustomTranslations();
+  const { t, translateStatus, getStatusValueOptions } = useCustomTranslations();
   const { groupId = '', projectId = '' } = useParams({ strict: false });
   const { tokens, isTokenListLoading, archiveToken, handleGenerateToken } = useTokenActions(
     projectId || groupId,
-  );
-
-  const renderStatusCell = useCallback(
-    (params: GridRenderCellParams<ServiceToken>) => {
-      const status = params.row.state;
-
-      let color: ChipProps['color'] = 'primary';
-
-      switch (status) {
-        case TokenState.Active:
-          color = 'success';
-          break;
-        case TokenState.Expired:
-          color = 'warning';
-          break;
-        case TokenState.Archived:
-          color = 'error';
-      }
-
-      return <Chip label={translateStatus(status)} color={color} variant={'outlined'} />;
-    },
-    [translateStatus],
   );
 
   const columns = useMemo<EnhancedColDef<ServiceToken>[]>(
@@ -62,6 +40,9 @@ export const ServiceTokens: FC = () => {
         headerName: t('COMMON.STATUS'),
         flex: 1,
         renderCell: renderStatusCell,
+        type: 'singleSelect',
+        valueOptions: () => getStatusValueOptions(Object.values(TokenState)),
+        groupingValueGetter: value => translateStatus(value),
       },
       {
         field: 'expirationDate',
@@ -85,7 +66,7 @@ export const ServiceTokens: FC = () => {
         },
       },
     ],
-    [t, renderStatusCell, archiveToken],
+    [t, getStatusValueOptions, translateStatus, archiveToken],
   );
 
   return (
@@ -102,3 +83,21 @@ export const ServiceTokens: FC = () => {
     </Box>
   );
 };
+
+function renderStatusCell(params: GridRenderCellParams<ServiceToken, ServiceToken['state']>) {
+  if (params.value === undefined) {
+    return '';
+  }
+
+  if (params.rowNode.type === 'group') {
+    return params.formattedValue;
+  }
+
+  const colors: Record<TokenState, ChipProps['color']> = {
+    Active: 'success',
+    Archived: 'error',
+    Expired: 'warning',
+  };
+
+  return <Chip label={params.formattedValue} color={colors[params.value]} variant={'outlined'} />;
+}

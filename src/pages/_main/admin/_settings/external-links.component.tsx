@@ -177,6 +177,10 @@ function ExternalLinksTable() {
 function renderLinkCell(
   params: GridRenderCellParams<ExternalLinkWithId, ExternalLinkWithId['url']>,
 ) {
+  if (params.rowNode.type === 'group') {
+    return params.formattedValue;
+  }
+
   if (params.value) {
     return (
       <Typography component={'a'} href={params.value} target={'_blank'} rel={'noopener noreferrer'}>

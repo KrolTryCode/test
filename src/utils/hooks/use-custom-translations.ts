@@ -12,5 +12,12 @@ export const useCustomTranslations = () => {
   const translateCheckType = (type: string = 'undefined'): string =>
     t(`CHECK_TYPE.${type.toUpperCase()}`);
 
-  return { t, translateStatus, translateColumnType, translateCheckType };
+  function getStatusValueOptions<T extends string | undefined>(statuses: T[]) {
+    return statuses.map(status => ({
+      value: status,
+      label: translateStatus(status),
+    }));
+  }
+
+  return { t, translateStatus, translateColumnType, translateCheckType, getStatusValueOptions };
 };
