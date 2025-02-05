@@ -1,9 +1,9 @@
 import { ArrowBack } from '@mui/icons-material';
 import { createFileRoute } from '@tanstack/react-router';
 
+import { ProfileForm } from '~/components/forms/profile/profile-form';
 import { ButtonLink } from '~/components/implicit-links';
 import { UserAvatar } from '~/components/user-avatar/user-avatar.component';
-import { ProfileForm } from '~/components/user-profile/user-profile-form/profile-form.component';
 import {
   UserProfileContent,
   UserProfileHeader,

@@ -4,7 +4,7 @@ import { DataGrid as Grid, DataGridProps } from '@pspod/ui-components';
 import { ForwardedRef, forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { enterNameModal } from '~/components/modals-content/enter-name-modal.component';
+import { enterNameModal } from '~/components/forms/enter-filename/enter-name-form';
 
 const PREFIX = 'indanisTable_';
 

@@ -9,7 +9,7 @@ import { useGetSolversQuery } from '~/api/queries/solvers/get-solvers.query';
 import { Solver } from '~/api/utils/api-requests';
 import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 
-import { useSolverActions } from './solvers/use-solver-actions.hook';
+import { useSolverActions } from './use-solver-actions.hook';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId/solvers')({
   component: SolversList,

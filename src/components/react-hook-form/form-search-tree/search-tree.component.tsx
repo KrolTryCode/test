@@ -21,6 +21,7 @@ export interface SearchTreeProps {
   items: NavTreeItemData[];
   noDataText?: string;
   isLoading?: boolean;
+  isDisabled?: boolean;
   disablePortal?: boolean;
   placeholder?: string;
   error: boolean;
@@ -33,6 +34,7 @@ export const SearchTree: FC<SearchTreeProps> = props => {
   const {
     items,
     isLoading,
+    isDisabled,
     disablePortal,
     value,
     noDataText,
@@ -135,6 +137,7 @@ export const SearchTree: FC<SearchTreeProps> = props => {
           onKeyDown={handleKeyDown}
           error={error}
           placeholder={placeholder}
+          disabled={isDisabled}
           endAdornment={
             <Button
               hidden={!searchValue || !showTree}

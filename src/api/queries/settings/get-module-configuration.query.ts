@@ -1,9 +1,8 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 
 import { UseCustomQueryOptions } from '~/api/typings/react-query-helpers';
-import { Configuration } from '~/components/configuration-form/configuration-form.type';
 
-import { settingsQueries } from './queries';
+import { Configuration, settingsQueries } from './queries';
 
 export const useGetConfigurationQuery = (
   name: string,

@@ -11,15 +11,15 @@ import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useChangeRoleMutation } from '~/api/queries/roles/change-role.mutation';
+import { useCreateRoleMutation } from '~/api/queries/roles/create-role.mutation';
 import { useFindRolesQuery } from '~/api/queries/roles/find-roles.query';
 import { useRemoveRoleMutation } from '~/api/queries/roles/remove-role.mutation';
 import { Role } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { useGetEditRowActions } from '~/components/datagrid/use-get-edit-row-actions.hook';
+import { addRoleModal } from '~/components/forms/permission-role/role-form';
 import { useServerPagingParams } from '~/utils/hooks/use-server-options';
 import { showErrorMessage } from '~/utils/show-error-message';
-
-import { addRoleModal } from './add-role/add-role.component';
 
 export const Route = createFileRoute('/_main/admin/permissions/_p/roles')({
   component: RolesTable,
@@ -41,8 +41,16 @@ function RolesTable() {
     onError: e => showErrorMessage(e, 'ERROR.DELETION_FAILED'),
   });
 
+  const createRoleMutation = useCreateRoleMutation({
+    onSuccess: () => {
+      notifySuccess(t('MESSAGE.CREATION_SUCCESS'));
+    },
+    onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
+  });
+
   const addRoleHandler = () => {
     addRoleModal({
+      onSave: createRoleMutation.mutate,
       title: t('ACTION.CREATE', {
         type: t('ENTITY.ROLE').toLowerCase(),
       }),

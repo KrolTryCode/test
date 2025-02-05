@@ -16,7 +16,7 @@ export default defineConfig(() => ({
       semicolons: true,
       autoCodeSplitting: true,
       routeFileIgnorePattern:
-        'component.tsx|modal.tsx|style.tsx?|hook.tsx?|schema.tsx?|test.tsx?|types?.ts|page.tsx',
+        'component.tsx|modal.tsx|style.tsx?|hook.tsx?|test.tsx?|type.ts|schema.ts',
     }),
     react({ include: '**/*.tsx' }),
     viteTsconfigPaths(),

@@ -8,7 +8,7 @@ import { useDeleteProjectContentMutation } from '~/api/queries/project-content/d
 import { useUpdateProjectContentMutation } from '~/api/queries/project-content/update-project-content.mutation';
 import { useGetTableMetadataColumns } from '~/api/queries/tables/structure/get-table-metadata.mutation';
 import { ContentNodeType } from '~/api/utils/api-requests';
-import { nodeModal } from '~/components/modals-content/node-modal.component';
+import { nodeModal } from '~/components/forms/table-node/table-node-form.modal';
 import { isFolderType } from '~/components/nav-tree/nav-tree.utils';
 import { ExtendedContentNode } from '~/pages/_main/projects/project.$projectId/tables.$tableId/tree/nodes-tree.type';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';

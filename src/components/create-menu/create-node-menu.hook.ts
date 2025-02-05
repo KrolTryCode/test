@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useCreateProjectNodeMutation } from '~/api/queries/projects/create-project-node.mutation';
 import { ProjectNodeType } from '~/api/utils/api-requests';
-import { projectNodeModal } from '~/pages/_main/projects/_components/project-node-form/project-node-form.component';
+import { projectNodeModal } from '~/components/forms/project-node/project-node-form';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 import { showErrorMessage } from '~/utils/show-error-message';
 

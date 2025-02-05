@@ -10,7 +10,7 @@ import { MuiThemeProvider } from '~/themes/mui-theme-provider';
 import { DeclinatedTranslationsProvider } from '~/utils/configuration/translations/declinated-translations-provider';
 import { useI18nInit } from '~/utils/configuration/translations/use-init-i18n.hook';
 
-import { router } from './routing/tanstack-router';
+import { router } from './routing/router';
 
 const queryClient = new QueryClient({
   defaultOptions: {

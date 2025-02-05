@@ -7,7 +7,7 @@ import { useDeleteProjectNodeMutation } from '~/api/queries/projects/delete-proj
 import { useGetProjectNodeQuery } from '~/api/queries/projects/get-project-node.query';
 import { useUpdateProjectNodeMutation } from '~/api/queries/projects/update-project-node.mutation';
 import { ProjectNode, ProjectNodeType } from '~/api/utils/api-requests';
-import { projectNodeModal } from '~/pages/_main/projects/_components/project-node-form/project-node-form.component';
+import { projectNodeModal } from '~/components/forms/project-node/project-node-form';
 import { useTablesMenuData } from '~/pages/_main/projects/_components/use-tables-menu-data.hook';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 import { usePageTitle } from '~/utils/hooks/use-page-title';

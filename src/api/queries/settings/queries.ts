@@ -1,7 +1,8 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory';
 
 import { ApiClientSecured } from '~/api/utils/api-client';
-import { Configuration } from '~/components/configuration-form/configuration-form.type';
+
+export type Configuration = Record<string, string | number | boolean>;
 
 export const settingsQueries = createQueryKeys('settings', {
   moduleList: {

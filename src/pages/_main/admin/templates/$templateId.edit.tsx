@@ -1,11 +1,13 @@
-import { Typography } from '@mui/material';
-import { Preloader } from '@pspod/ui-components';
-import { createFileRoute } from '@tanstack/react-router';
+import { Stack, Typography } from '@mui/material';
+import { notifySuccess } from '@pspod/ui-components';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { useGetTemplateQuery } from '~/api/queries/templates/get-template.query';
-
-import { TemplateForm } from './template-form/template-form.component';
+import { useUpdateTemplateMutation } from '~/api/queries/templates/update-template.mutation';
+import { CreateTemplateRequest } from '~/api/utils/api-requests';
+import { TemplateForm } from '~/components/forms/template/template-form';
+import { showErrorMessage } from '~/utils/show-error-message';
 
 export const Route = createFileRoute('/_main/admin/templates/$templateId/edit')({
   component: EditTemplate,
@@ -13,19 +15,35 @@ export const Route = createFileRoute('/_main/admin/templates/$templateId/edit')(
 
 function EditTemplate() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { templateId } = Route.useParams();
-  const { data: data, isLoading } = useGetTemplateQuery(templateId);
 
-  if (isLoading) {
-    return <Preloader />;
-  }
+  const { data, isLoading } = useGetTemplateQuery(templateId);
+  const { mutateAsync: updateTemplate, isPending } = useUpdateTemplateMutation({
+    onSuccess: () => {
+      notifySuccess(t('MESSAGE.UPDATE_SUCCESS'));
+      void navigate({ to: '/admin/templates' });
+    },
+    onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
+  });
+
+  const onSubmit = async (template: CreateTemplateRequest) =>
+    updateTemplate({
+      templateId,
+      content: template.content,
+    });
 
   return (
-    <>
+    <Stack height={'100%'}>
       <Typography variant={'h3'} component={'h2'}>
         {t('ACTION.EDIT', { type: t('ENTITY.TEMPLATE').toLowerCase() })}
       </Typography>
-      <TemplateForm data={data} />
-    </>
+      <TemplateForm
+        isLoading={isLoading}
+        data={data as CreateTemplateRequest}
+        onSave={onSubmit}
+        isPending={isPending}
+      />
+    </Stack>
   );
 }

@@ -1,10 +1,12 @@
 import { Stack } from '@mui/material';
-import { Preloader } from '@pspod/ui-components';
+import { Accordion, Preloader } from '@pspod/ui-components';
 import { createFileRoute } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 import { ModuleType, useGetModulesListQuery } from '~/api/queries/settings/get-modules-list.query';
 import { selectPropertiesByModuleName } from '~/api/selectors/select-properties-by-module-name';
-import { DesignConfigurationForm } from '~/components/configuration-form/design-configuration-form.component';
+import { EntityModelModuleConfiguration } from '~/api/utils/api-requests';
+import { DesignConfigurationForm } from '~/components/forms/configuration-design/design-configuration-form';
 
 import { ExternalLinks } from './_settings/external-links.component';
 
@@ -25,12 +27,23 @@ function SettingsPage() {
   return (
     <Stack>
       {designModuleProperties?.map(entry => (
-        <DesignConfigurationForm {...entry} key={entry.moduleName} />
+        <ConfigFormAccordion {...entry} key={entry.moduleName} />
       ))}
 
       <ExternalLinks />
 
       <Preloader visible={isDesignModulesLoading} />
     </Stack>
+  );
+}
+
+function ConfigFormAccordion(moduleDescription: EntityModelModuleConfiguration) {
+  const { t } = useTranslation();
+
+  return (
+    <Accordion
+      text={t(`ENTITY.${moduleDescription.moduleName?.toUpperCase()}`)}
+      content={<DesignConfigurationForm moduleDescription={moduleDescription} />}
+    />
   );
 }

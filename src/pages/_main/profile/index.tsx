@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { ProfileForm } from '~/components/user-profile/user-profile-form/profile-form.component';
+import { ProfileForm } from '~/components/forms/profile/profile-form';
 import {
   UserProfileContent,
   UserProfileHeader,

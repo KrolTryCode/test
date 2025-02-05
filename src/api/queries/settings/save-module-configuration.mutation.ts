@@ -4,9 +4,8 @@ import { designQueries } from '~/api/queries/design/queries';
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { ContentType } from '~/api/utils/api-requests';
-import { Configuration } from '~/components/configuration-form/configuration-form.type';
 
-import { settingsQueries } from './queries';
+import { settingsQueries, Configuration } from './queries';
 
 export const useSaveConfigurationMutation = (
   name: string,

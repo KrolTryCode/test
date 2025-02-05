@@ -6,8 +6,8 @@ import { useChangePasswordAdminMutation } from '~/api/queries/accounts/change-pa
 import { useGetUserQuery } from '~/api/queries/users/get-user.query';
 import { useUpdateUserMutation } from '~/api/queries/users/update-user.mutation';
 import { UpdateUserRequest } from '~/api/utils/api-requests';
-import { changePasswordModal } from '~/components/change-password-form/change-password.modal';
-import { UpdateUserRequestNullable } from '~/components/user-profile/user-profile-form/profile-form.schema';
+import { changePasswordModal } from '~/components/forms/change-password/change-password-form.modal';
+import { UpdateUserRequestNullable } from '~/components/forms/profile/profile-form.schema';
 import { getFullName } from '~/components/user-profile/user-profile.utils';
 import { showErrorMessage } from '~/utils/show-error-message';
 

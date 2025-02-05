@@ -7,9 +7,8 @@ import { useDeleteTableDataMutation } from '~/api/queries/tables/table-data/dele
 import { useGetTableContentQuery } from '~/api/queries/tables/table-data/get-table-content.query';
 import { useGetTableDataQuery } from '~/api/queries/tables/table-data/get-table-data.query';
 import { useUpdateTableDataMutation } from '~/api/queries/tables/table-data/update-table-data.mutation';
+import { tableDataFormModal } from '~/components/forms/table-data/table-data-form.modal';
 import { showErrorMessage } from '~/utils/show-error-message';
-
-import { tableDataFormModal } from './table-data-form/table-data-form.modal';
 
 export type TableData = Record<string, any> & { id: string };
 

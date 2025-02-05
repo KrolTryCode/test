@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import { Tooltip } from '@pspod/ui-components';
 import { TFunction } from 'i18next';
 import { FC, ReactNode } from 'react';
-import { ControllerFieldState, FieldError } from 'react-hook-form';
+import { FieldError } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 const PopperProps = { disablePortal: true };
@@ -16,7 +16,7 @@ interface Error extends Omit<FieldError, 'message'> {
   message?: string | YupError;
 }
 
-interface ValidationErrorProps extends Omit<ControllerFieldState, 'error'> {
+interface ValidationErrorProps {
   children: ReactNode;
   placement?: 'top' | 'bottom';
   error?: Error | Record<string, Error>;
