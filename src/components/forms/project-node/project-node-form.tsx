@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { InstanceProps } from 'react-modal-promise';
 
 import { CreateProjectNodeRequest, ProjectNodeType } from '~/api/utils/api-requests';
-import { FormInputText, FormSearchTree } from '~/components/react-hook-form';
+import { FormInputText } from '~/components/react-hook-form';
+import { FormGroupSelectTree } from '~/components/react-hook-form/form-group-select-tree/form-group-select-tree.component';
 
 import { schema } from './project-node-form.schema';
 import { useProjectsData } from './use-projects-data.hook';
@@ -20,7 +21,7 @@ interface ProjectNodeFormProps {
 
 const ProjectNodeForm: FC<ProjectNodeFormProps> = ({ onResolve, onReject, data, isEditing }) => {
   const { t } = useTranslation();
-  const { treeData, isLoading } = useProjectsData();
+  const { treeData } = useProjectsData();
 
   const projectList = useMemo(
     () => treeData.filter(v => v.type === ProjectNodeType.Group),
@@ -49,14 +50,7 @@ const ProjectNodeForm: FC<ProjectNodeFormProps> = ({ onResolve, onReject, data, 
       </FormItem>
       {!!projectList.length && !isEditing && (
         <FormItem label={t('COMMON.PARENT')}>
-          <FormSearchTree
-            disablePortal={false}
-            items={projectList}
-            placeholder={t('ACTION.SELECT')}
-            noDataText={t('MESSAGE.NO_DATA')}
-            isLoading={isLoading}
-            controllerProps={{ ...register('parentId'), control }}
-          />
+          <FormGroupSelectTree controllerProps={{ ...register('parentId'), control }} />
         </FormItem>
       )}
 
