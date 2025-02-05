@@ -4,19 +4,23 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { FormParameter, FormParameterInput } from '~/api/mocks/forms/parameters/types';
-import { FormInputText } from '~/components/react-hook-form';
+import { ParameterField } from '~/api/utils/api-requests';
+import { FormCheckbox, FormInputText, FormSelect } from '~/components/react-hook-form';
+import { useSelectColumnTypes } from '~/pages/_main/projects/project.$projectId/tables.$tableId/_components/structure/add-column/use-select-column-types.hook';
 
-import { schema } from './parameters-form.schema';
+import { ParameterFieldForm, getSchema } from './parameter-field-form.schema';
 
 interface ParameterFormProps {
-  data?: FormParameter;
+  data?: ParameterField;
   onReject?: () => void;
-  onResolve: (values: FormParameterInput) => void;
+  onResolve: (values: ParameterField) => void;
 }
 
 export const ParameterForm: FC<ParameterFormProps> = ({ data, onResolve, onReject }) => {
   const { t } = useTranslation();
+  const { selectColumnTypes } = useSelectColumnTypes();
+
+  const schema = getSchema(t);
 
   const {
     register,
@@ -30,16 +34,26 @@ export const ParameterForm: FC<ParameterFormProps> = ({ data, onResolve, onRejec
     resolver: yupResolver(schema),
   });
 
+  const onSubmit = (values: ParameterFieldForm) => {
+    onResolve({ ...data!, ...values });
+  };
+
   return (
-    <Form onSubmit={handleSubmit(onResolve)}>
-      <FormItem label={t('COMMON.TITLE')} isRequired>
+    <Form showColonAfterLabel onSubmit={handleSubmit(onSubmit)}>
+      <FormItem label={t('COMMON.TITLE')} isRequired isDisabled={data?.isDefault}>
         <FormInputText controllerProps={{ ...register('name'), control }} />
       </FormItem>
-      <FormItem label={t('COMMON.TYPE')} isRequired>
-        <FormInputText controllerProps={{ ...register('type'), control }} />
+      <FormItem label={t('COMMON.TYPE')} isRequired isDisabled={data?.isDefault}>
+        <FormSelect items={selectColumnTypes} controllerProps={{ ...register('type'), control }} />
+      </FormItem>
+      <FormItem label={t('COMMON.KEY')} isRequired isDisabled={data?.isDefault}>
+        <FormInputText controllerProps={{ ...register('key'), control }} />
       </FormItem>
       <FormItem label={t('COMMON.DEFAULT_VALUE')}>
         <FormInputText controllerProps={{ ...register('defaultValue'), control }} />
+      </FormItem>
+      <FormItem label={t('ERROR.REQUIRED')} isDisabled={data?.isDefault}>
+        <FormCheckbox controllerProps={{ ...register('isRequired'), control }} />
       </FormItem>
       <FormButtons>
         <Button onClick={onReject}>{t('ACTION.CANCEL')}</Button>

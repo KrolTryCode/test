@@ -10,9 +10,9 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { TaskFormData } from '~/api/mocks/forms/types';
-import { useDeleteFormMutation } from '~/api/tasks/forms/delete-form.mutation';
-import { useGetFormsQuery } from '~/api/tasks/forms/get-forms.query';
+import { useArchiveFormMutation } from '~/api/queries/forms/archive-form.mutation';
+import { useGetFormsQuery } from '~/api/queries/forms/get-forms.query';
+import { ParameterForm } from '~/api/utils/api-requests';
 import { GridActionsCellItemLink } from '~/components/implicit-links';
 import { showErrorMessage } from '~/utils/show-error-message';
 
@@ -26,29 +26,29 @@ function TaskFormList() {
   const navigate = useNavigate();
   const { data: forms = [], isLoading } = useGetFormsQuery(projectId);
 
-  const { mutate: deleteForm } = useDeleteFormMutation(projectId, {
+  const { mutate: deleteForm } = useArchiveFormMutation(projectId, {
     onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.DELETION_FAILED'),
   });
 
-  const columns = useMemo<EnhancedColDef<TaskFormData>[]>(
+  const columns = useMemo<EnhancedColDef<ParameterForm>[]>(
     () => [
       {
         field: 'name',
         headerName: t('COMMON.NAME'),
         flex: 1,
       },
-      {
-        field: 'author',
-        headerName: t('COMMON.AUTHOR'),
-        flex: 1,
-      },
-      {
-        field: 'created',
-        type: 'dateTime',
-        headerName: t('COMMON.DATE_CREATED'),
-        flex: 1,
-      },
+      // {
+      //   field: 'author',
+      //   headerName: t('COMMON.AUTHOR'),
+      //   flex: 1,
+      // },
+      // {
+      //   field: 'created',
+      //   type: 'dateTime',
+      //   headerName: t('COMMON.DATE_CREATED'),
+      //   flex: 1,
+      // },
       {
         field: 'actions',
         type: 'actions',
