@@ -7,3 +7,4 @@ export const noWhitespaceRe = new RegExp(/^[^\s]*$/);
 export const emailRe = new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+$/);
 export const uuidRe = new RegExp(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
 export const dateStringWithoutTzRe = new RegExp(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d+)?$/);
+export const latinAndNumbersRe = new RegExp(/^[A-Za-z0-9]+$/);

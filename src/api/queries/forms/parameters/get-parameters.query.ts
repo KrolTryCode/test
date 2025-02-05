@@ -1,12 +1,12 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 
-import { FormParameter } from '~/api/mocks/forms/parameters/types';
-import { formParametersQueries } from '~/api/tasks/forms/parameters/queries';
+import { formParametersQueries } from '~/api/queries/forms/parameters/queries';
 import { UseCustomQueryOptions } from '~/api/typings/react-query-helpers';
+import { ParameterField } from '~/api/utils/api-requests';
 
-export const useGetFormParametersQuery = <T = FormParameter[]>(
+export const useGetFormParametersQuery = <T = ParameterField[]>(
   formId: string,
-  options?: UseCustomQueryOptions<FormParameter[], unknown, T>,
+  options?: UseCustomQueryOptions<ParameterField[], unknown, T>,
 ): UseQueryResult<T, unknown> => {
   return useQuery({
     ...formParametersQueries.list(formId),

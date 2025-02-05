@@ -3,15 +3,12 @@ import { createServer } from 'miragejs';
 import type { AnyFactories, AnyModels } from 'miragejs/-types';
 import type { ServerConfig } from 'miragejs/server';
 
-import { formServer } from './forms/controller';
-import { paramsServer } from './forms/parameters/controller';
-
 export type PartialServerConfig<
   Models extends AnyModels = AnyModels,
   Factories extends AnyFactories = AnyFactories,
 > = Pick<ServerConfig<Models, Factories>, 'models' | 'factories' | 'seeds' | 'routes'>;
 
-const serverConfigs: ServerConfig<AnyModels, AnyFactories>[] = [formServer, paramsServer];
+const serverConfigs: ServerConfig<AnyModels, AnyFactories>[] = [];
 
 export const mockServer = createServer({
   //@ts-expect-error types

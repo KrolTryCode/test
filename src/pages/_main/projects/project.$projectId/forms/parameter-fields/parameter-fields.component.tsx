@@ -9,24 +9,30 @@ import {
   modal,
   notifySuccess,
 } from '@pspod/ui-components';
+import { DataType } from 'devextreme/common';
 import { FC, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { FormParameter } from '~/api/mocks/forms/parameters/types';
-import { useCreateFormParameterMutation } from '~/api/tasks/forms/parameters/create-form-parameter.mutation';
-import { useDeleteFormParameterMutation } from '~/api/tasks/forms/parameters/delete-form-parameter.mutation';
-import { useUpdateFormParameterMutation } from '~/api/tasks/forms/parameters/update-form-parameter.mutation';
+import { useCreateFormParameterMutation } from '~/api/queries/forms/parameters/create-form-parameter.mutation';
+import { useDeleteFormParameterMutation } from '~/api/queries/forms/parameters/delete-form-parameter.mutation';
+import { useGetFormParametersQuery } from '~/api/queries/forms/parameters/get-parameters.query';
+import { useUpdateFormParameterMutation } from '~/api/queries/forms/parameters/update-form-parameter.mutation';
+import { ParameterField } from '~/api/utils/api-requests';
+import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 import { showErrorMessage } from '~/utils/show-error-message';
 
-import { ParameterForm } from './parameter-form.component';
+import { ParameterForm } from './parameter-field-form.component';
 
 interface ParametersTableProps {
   formId: string;
-  parameters?: FormParameter[];
 }
 
-export const ParametersTable: FC<ParametersTableProps> = ({ formId, parameters = [] }) => {
+export const ParametersTable: FC<ParametersTableProps> = ({ formId }) => {
   const { t } = useTranslation();
+  const { translateColumnType } = useCustomTranslations();
+  const { data: parameters = [] } = useGetFormParametersQuery(formId, {
+    select: data => data.sort((a, b) => a.index - b.index),
+  });
 
   const { mutate: deleteParameter } = useDeleteFormParameterMutation(formId, {
     onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
@@ -50,24 +56,30 @@ export const ParametersTable: FC<ParametersTableProps> = ({ formId, parameters =
   }, [createParameter, t]);
 
   const handleUpdateParameter = useCallback(
-    (row: FormParameter) => {
+    (row: ParameterField) => {
       modal({
         onOk: updateParameter,
-        title: t('ACTION.EDIT', { type: t('ENTITY.SOLVER').toLowerCase() }),
+        title: t('ACTION.EDIT', { type: t('ENTITY.PARAMETER').toLowerCase() }),
         renderContent: args => <ParameterForm {...args} data={row} />,
       });
     },
     [t, updateParameter],
   );
 
-  const columns = useMemo<EnhancedColDef<FormParameter>[]>(
+  const columns = useMemo<EnhancedColDef<ParameterField>[]>(
     () => [
       {
         field: 'name',
         headerName: t('COMMON.NAME'),
         flex: 1,
       },
-      { field: 'type', headerName: t('COMMON.TYPE'), flex: 1 },
+      {
+        field: 'type',
+        headerName: t('COMMON.TYPE'),
+        flex: 1,
+        valueGetter: (value: DataType) => translateColumnType(value),
+      },
+      { field: 'isRequired', headerName: t('ERROR.REQUIRED'), flex: 1, type: 'boolean' },
       { field: 'defaultValue', headerName: t('COMMON.DEFAULT_VALUE'), flex: 1 },
       {
         field: 'actions',
@@ -83,12 +95,16 @@ export const ParametersTable: FC<ParametersTableProps> = ({ formId, parameters =
               color={'primary'}
               onClick={() => handleUpdateParameter(row)}
             />,
-            <DeleteCellButton key={'delete'} deleteHandler={() => deleteParameter(row.id)} />,
+            <DeleteCellButton
+              key={'delete'}
+              disabled={row.isDefault}
+              deleteHandler={() => deleteParameter(row.id)}
+            />,
           ];
         },
       },
     ],
-    [deleteParameter, handleUpdateParameter, t],
+    [deleteParameter, handleUpdateParameter, t, translateColumnType],
   );
   return (
     <Stack minHeight={'40vh'}>
