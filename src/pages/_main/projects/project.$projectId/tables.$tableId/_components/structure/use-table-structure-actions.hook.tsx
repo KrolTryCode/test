@@ -8,9 +8,8 @@ import { useDeleteColumnMutation } from '~/api/queries/tables/structure/delete-c
 import { useEditColumnNameMutation } from '~/api/queries/tables/structure/edit-column.mutation';
 import { TableColumnExtended } from '~/api/selectors/select-node-columns';
 import { CreateColumnRequest } from '~/api/utils/api-requests';
+import { TableColumnForm } from '~/components/forms/table-column/table-column-form';
 import { showErrorMessage } from '~/utils/show-error-message';
-
-import { AddColumnForm } from './add-column/add-column-form.component';
 
 export const useTableStructureActions = (nodeId: string, nodeCols: TableColumnExtended[] = []) => {
   const { t } = useTranslation();
@@ -32,7 +31,7 @@ export const useTableStructureActions = (nodeId: string, nodeCols: TableColumnEx
       onOk: addColumn,
       title: t('STRUCTURE.ADD_COLUMN'),
       renderContent: (args: InstanceProps<CreateColumnRequest, never>) => (
-        <AddColumnForm usedNames={nodeCols.map(c => c.name)} {...args} />
+        <TableColumnForm usedNames={nodeCols.map(c => c.name)} {...args} />
       ),
     });
   }, [addColumn, nodeCols, t]);

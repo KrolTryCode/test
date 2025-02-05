@@ -6,16 +6,15 @@ import { useTranslation } from 'react-i18next';
 import { Container as ModalContainer } from 'react-modal-promise';
 
 import PasswordExpiredContent from '~/components/password-expired/password-expired.component';
+import { RouteErrorBoundary } from '~/routing/_fallbacks/errors/error-boundary.component';
+import { NotFoundPage } from '~/routing/_fallbacks/errors/not-found.component';
 import { AccessChecker } from '~/routing/access-checker/access-checker.component';
 import { TitleProvider } from '~/routing/page-title.context';
 import { useDownloadTranslations } from '~/utils/configuration/translations/use-init-i18n.hook';
+import { useAuthenticate } from '~/utils/hooks/use-authenticate';
 
 import '../themes/generated/theme.base.css';
 import '../global-styles.scss';
-import { useAuthenticate } from '../utils/hooks/use-authenticate';
-
-import { RouteErrorBoundary } from './_fallbacks/errors/error-boundary/error-boundary.component';
-import { NotFoundPage } from './_fallbacks/errors/not-found/not-found.component';
 
 export const Route = createRootRoute({
   component: App,

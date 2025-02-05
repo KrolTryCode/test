@@ -2,8 +2,8 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useCallback } from 'react';
 
 import { useCompleteAccountReactivationMutation } from '~/api/queries/accounts/reactivate-account.mutation';
-import { ChangePasswordForm } from '~/components/change-password-form/change-password-form.component';
-import { ChangePasswordForm as ChangePasswordFormSchema } from '~/components/change-password-form/change-password-form.schema';
+import { ChangePasswordForm } from '~/components/forms/change-password/change-password-form';
+import { ChangePasswordForm as ChangePasswordFormSchema } from '~/components/forms/change-password/change-password-form.schema';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { useAuthSearchParams } from './use-auth-search-params.hook';

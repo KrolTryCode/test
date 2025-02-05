@@ -1,10 +1,12 @@
 import { Stack } from '@mui/material';
-import { Preloader } from '@pspod/ui-components';
+import { Accordion, Preloader } from '@pspod/ui-components';
 import { createFileRoute } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 import { ModuleType, useGetModulesListQuery } from '~/api/queries/settings/get-modules-list.query';
 import { selectPropertiesByModuleName } from '~/api/selectors/select-properties-by-module-name';
-import { DefaultConfigurationForm } from '~/components/configuration-form/default-configuration-form.component';
+import { EntityModelModuleConfiguration } from '~/api/utils/api-requests';
+import { ConfigForm } from '~/components/forms/configuration/configuration-form';
 
 export const Route = createFileRoute('/_main/admin/security')({
   component: SecurityPage,
@@ -25,15 +27,24 @@ function SecurityPage() {
 
   return (
     <Stack>
-      {moduleProperties?.map(entry => (
-        <DefaultConfigurationForm {...entry} key={entry.moduleName} />
-      ))}
+      {moduleProperties?.map(entry => <ConfigFormAccordion {...entry} key={entry.moduleName} />)}
 
       {usersModuleProperties?.map(entry => (
-        <DefaultConfigurationForm {...entry} key={entry.moduleName} />
+        <ConfigFormAccordion {...entry} key={entry.moduleName} />
       ))}
 
       <Preloader visible={isAccountsModulesLoading || isUsersModulesLoading} />
     </Stack>
+  );
+}
+
+function ConfigFormAccordion(moduleDescription: EntityModelModuleConfiguration) {
+  const { t } = useTranslation();
+
+  return (
+    <Accordion
+      text={t(`ENTITY.${moduleDescription.moduleName?.toUpperCase()}`)}
+      content={<ConfigForm moduleDescription={moduleDescription} />}
+    />
   );
 }

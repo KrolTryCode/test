@@ -29,7 +29,7 @@ export function FormSelect<
   };
 
   return (
-    <ValidationError {...fieldState} placement={'top'}>
+    <ValidationError error={fieldState.error} placement={'top'}>
       <Select
         {...selectProps}
         error={fieldState.invalid}

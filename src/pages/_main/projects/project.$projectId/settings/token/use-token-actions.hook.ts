@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { useArchiveTokenMutation } from '~/api/queries/token/archive-token.mutation';
 import { useGenerateTokenMutation } from '~/api/queries/token/generate-token.mutation';
 import { useGetNodeTokensQuery } from '~/api/queries/token/get-project-node-tokens.query';
+import { generateTokenModal } from '~/components/forms/token/token-form';
 import { showErrorMessage } from '~/utils/show-error-message';
 
-import { generateTokenModal } from './generate-token-form.component';
 import { showTokenModal } from './show-token-modal.component';
 
 export const useTokenActions = (nodeId: string) => {
@@ -35,7 +35,8 @@ export const useTokenActions = (nodeId: string) => {
   const handleGenerateToken = useCallback(() => {
     generateTokenModal({
       title: t('ACTION.GENERATE_TOKEN'),
-      onSave: generateToken,
+      onSave: data =>
+        generateToken({ ...data, expirationDate: data.expirationDate!.toISOString() }),
     });
   }, [generateToken, t]);
 

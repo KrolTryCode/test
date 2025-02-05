@@ -16,7 +16,7 @@ import { FC, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useGetEditRowActions } from '~/components/datagrid/use-get-edit-row-actions.hook';
-import { externalLinkFormModal } from '~/pages/_main/admin/_settings/external-links-form.component';
+import { externalLinkFormModal } from '~/components/forms/external-link/external-link-form';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 
 import { useExternalLinks, ExternalLinkWithId } from './external-links.hook';

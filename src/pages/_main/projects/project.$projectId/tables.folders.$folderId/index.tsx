@@ -4,7 +4,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 
 import { useGetContentNodesByParent } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
 import { isFolderType, renderItemIcon } from '~/components/nav-tree/nav-tree.utils';
-import { EmptyDirectory } from '~/pages/_fallbacks/info/empty/empty-element.component';
+import { EmptyDirectory } from '~/routing/_fallbacks/info/empty-element.component';
 
 export const Route = createFileRoute(
   '/_main/projects/project/$projectId/tables/folders/$folderId/',

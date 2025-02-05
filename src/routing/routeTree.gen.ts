@@ -22,18 +22,18 @@ import { Route as MainAdminSettingsImport } from './../pages/_main/admin/setting
 import { Route as MainAdminSecurityImport } from './../pages/_main/admin/security';
 import { Route as MainAdminPermissionsImport } from './../pages/_main/admin/permissions';
 import { Route as MainAdminLogsImport } from './../pages/_main/admin/logs';
+import { Route as AuthAuthResetPasswordImport } from './../pages/_auth.auth/reset-password';
 import { Route as AuthAuthRegistrationImport } from './../pages/_auth.auth/registration';
 import { Route as AuthAuthRegisterImport } from './../pages/_auth.auth/register';
 import { Route as AuthAuthRecoveryImport } from './../pages/_auth.auth/recovery';
 import { Route as AuthAuthReactivationImport } from './../pages/_auth.auth/reactivation';
+import { Route as AuthAuthLoginImport } from './../pages/_auth.auth/login';
 import { Route as MainProjectsGroupIndexImport } from './../pages/_main/projects/group/index';
 import { Route as MainAdminUsersIndexImport } from './../pages/_main/admin/users/index';
 import { Route as MainAdminTemplatesIndexImport } from './../pages/_main/admin/templates/index';
 import { Route as MainProjectsProjectProjectIdImport } from './../pages/_main/projects/project.$projectId';
 import { Route as MainAdminUsersUserIdImport } from './../pages/_main/admin/users/$userId';
 import { Route as MainAdminPermissionsPImport } from './../pages/_main/admin/permissions/_p';
-import { Route as AuthAuthResetPasswordResetPasswordImport } from './../pages/_auth.auth/_reset-password/reset-password';
-import { Route as AuthAuthLoginLoginImport } from './../pages/_auth.auth/_login/login';
 import { Route as MainProjectsGroupGroupIdIndexImport } from './../pages/_main/projects/group/$groupId.index';
 import { Route as MainAdminPermissionsPIndexImport } from './../pages/_main/admin/permissions/_p.index';
 import { Route as MainProjectsProjectProjectIdTasksImport } from './../pages/_main/projects/project.$projectId/tasks';
@@ -121,6 +121,12 @@ const MainAdminLogsRoute = MainAdminLogsImport.update({
   getParentRoute: () => MainAdminRoute,
 } as any);
 
+const AuthAuthResetPasswordRoute = AuthAuthResetPasswordImport.update({
+  id: '/auth/reset-password',
+  path: '/auth/reset-password',
+  getParentRoute: () => AuthRoute,
+} as any);
+
 const AuthAuthRegistrationRoute = AuthAuthRegistrationImport.update({
   id: '/auth/registration',
   path: '/auth/registration',
@@ -142,6 +148,12 @@ const AuthAuthRecoveryRoute = AuthAuthRecoveryImport.update({
 const AuthAuthReactivationRoute = AuthAuthReactivationImport.update({
   id: '/auth/reactivation',
   path: '/auth/reactivation',
+  getParentRoute: () => AuthRoute,
+} as any);
+
+const AuthAuthLoginRoute = AuthAuthLoginImport.update({
+  id: '/auth/login',
+  path: '/auth/login',
   getParentRoute: () => AuthRoute,
 } as any);
 
@@ -179,19 +191,6 @@ const MainAdminUsersUserIdRoute = MainAdminUsersUserIdImport.update({
 const MainAdminPermissionsPRoute = MainAdminPermissionsPImport.update({
   id: '/_p',
   getParentRoute: () => MainAdminPermissionsRoute,
-} as any);
-
-const AuthAuthResetPasswordResetPasswordRoute =
-  AuthAuthResetPasswordResetPasswordImport.update({
-    id: '/auth/_reset-password/reset-password',
-    path: '/auth/reset-password',
-    getParentRoute: () => AuthRoute,
-  } as any);
-
-const AuthAuthLoginLoginRoute = AuthAuthLoginLoginImport.update({
-  id: '/auth/_login/login',
-  path: '/auth/login',
-  getParentRoute: () => AuthRoute,
 } as any);
 
 const MainProjectsGroupGroupIdIndexRoute =
@@ -368,6 +367,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainProjectsImport;
       parentRoute: typeof MainImport;
     };
+    '/_auth/auth/login': {
+      id: '/_auth/auth/login';
+      path: '/auth/login';
+      fullPath: '/auth/login';
+      preLoaderRoute: typeof AuthAuthLoginImport;
+      parentRoute: typeof AuthImport;
+    };
     '/_auth/auth/reactivation': {
       id: '/_auth/auth/reactivation';
       path: '/auth/reactivation';
@@ -394,6 +400,13 @@ declare module '@tanstack/react-router' {
       path: '/auth/registration';
       fullPath: '/auth/registration';
       preLoaderRoute: typeof AuthAuthRegistrationImport;
+      parentRoute: typeof AuthImport;
+    };
+    '/_auth/auth/reset-password': {
+      id: '/_auth/auth/reset-password';
+      path: '/auth/reset-password';
+      fullPath: '/auth/reset-password';
+      preLoaderRoute: typeof AuthAuthResetPasswordImport;
       parentRoute: typeof AuthImport;
     };
     '/_main/admin/logs': {
@@ -444,20 +457,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/profile';
       preLoaderRoute: typeof MainProfileIndexImport;
       parentRoute: typeof MainImport;
-    };
-    '/_auth/auth/_login/login': {
-      id: '/_auth/auth/_login/login';
-      path: '/auth/login';
-      fullPath: '/auth/login';
-      preLoaderRoute: typeof AuthAuthLoginLoginImport;
-      parentRoute: typeof AuthImport;
-    };
-    '/_auth/auth/_reset-password/reset-password': {
-      id: '/_auth/auth/_reset-password/reset-password';
-      path: '/auth/reset-password';
-      fullPath: '/auth/reset-password';
-      preLoaderRoute: typeof AuthAuthResetPasswordResetPasswordImport;
-      parentRoute: typeof AuthImport;
     };
     '/_main/admin/permissions/_p': {
       id: '/_main/admin/permissions/_p';
@@ -647,22 +646,21 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthRouteChildren {
+  AuthAuthLoginRoute: typeof AuthAuthLoginRoute;
   AuthAuthReactivationRoute: typeof AuthAuthReactivationRoute;
   AuthAuthRecoveryRoute: typeof AuthAuthRecoveryRoute;
   AuthAuthRegisterRoute: typeof AuthAuthRegisterRoute;
   AuthAuthRegistrationRoute: typeof AuthAuthRegistrationRoute;
-  AuthAuthLoginLoginRoute: typeof AuthAuthLoginLoginRoute;
-  AuthAuthResetPasswordResetPasswordRoute: typeof AuthAuthResetPasswordResetPasswordRoute;
+  AuthAuthResetPasswordRoute: typeof AuthAuthResetPasswordRoute;
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
+  AuthAuthLoginRoute: AuthAuthLoginRoute,
   AuthAuthReactivationRoute: AuthAuthReactivationRoute,
   AuthAuthRecoveryRoute: AuthAuthRecoveryRoute,
   AuthAuthRegisterRoute: AuthAuthRegisterRoute,
   AuthAuthRegistrationRoute: AuthAuthRegistrationRoute,
-  AuthAuthLoginLoginRoute: AuthAuthLoginLoginRoute,
-  AuthAuthResetPasswordResetPasswordRoute:
-    AuthAuthResetPasswordResetPasswordRoute,
+  AuthAuthResetPasswordRoute: AuthAuthResetPasswordRoute,
 };
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren);
@@ -861,10 +859,12 @@ export interface FileRoutesByFullPath {
   '': typeof MainRouteWithChildren;
   '/admin': typeof MainAdminRouteWithChildren;
   '/projects': typeof MainProjectsRouteWithChildren;
+  '/auth/login': typeof AuthAuthLoginRoute;
   '/auth/reactivation': typeof AuthAuthReactivationRoute;
   '/auth/recovery': typeof AuthAuthRecoveryRoute;
   '/auth/register': typeof AuthAuthRegisterRoute;
   '/auth/registration': typeof AuthAuthRegistrationRoute;
+  '/auth/reset-password': typeof AuthAuthResetPasswordRoute;
   '/admin/logs': typeof MainAdminLogsRoute;
   '/admin/permissions': typeof MainAdminPermissionsPRouteWithChildren;
   '/admin/security': typeof MainAdminSecurityRoute;
@@ -872,8 +872,6 @@ export interface FileRoutesByFullPath {
   '/admin/templates': typeof MainAdminTemplatesRouteWithChildren;
   '/admin/users': typeof MainAdminUsersRouteWithChildren;
   '/profile': typeof MainProfileIndexRoute;
-  '/auth/login': typeof AuthAuthLoginLoginRoute;
-  '/auth/reset-password': typeof AuthAuthResetPasswordResetPasswordRoute;
   '/admin/users/$userId': typeof MainAdminUsersUserIdRoute;
   '/projects/project/$projectId': typeof MainProjectsProjectProjectIdRouteWithChildren;
   '/admin/templates/': typeof MainAdminTemplatesIndexRoute;
@@ -905,17 +903,17 @@ export interface FileRoutesByTo {
   '': typeof MainRouteWithChildren;
   '/admin': typeof MainAdminRouteWithChildren;
   '/projects': typeof MainProjectsRouteWithChildren;
+  '/auth/login': typeof AuthAuthLoginRoute;
   '/auth/reactivation': typeof AuthAuthReactivationRoute;
   '/auth/recovery': typeof AuthAuthRecoveryRoute;
   '/auth/register': typeof AuthAuthRegisterRoute;
   '/auth/registration': typeof AuthAuthRegistrationRoute;
+  '/auth/reset-password': typeof AuthAuthResetPasswordRoute;
   '/admin/logs': typeof MainAdminLogsRoute;
   '/admin/permissions': typeof MainAdminPermissionsPIndexRoute;
   '/admin/security': typeof MainAdminSecurityRoute;
   '/admin/settings': typeof MainAdminSettingsRoute;
   '/profile': typeof MainProfileIndexRoute;
-  '/auth/login': typeof AuthAuthLoginLoginRoute;
-  '/auth/reset-password': typeof AuthAuthResetPasswordResetPasswordRoute;
   '/admin/users/$userId': typeof MainAdminUsersUserIdRoute;
   '/projects/project/$projectId': typeof MainProjectsProjectProjectIdRouteWithChildren;
   '/admin/templates': typeof MainAdminTemplatesIndexRoute;
@@ -947,10 +945,12 @@ export interface FileRoutesById {
   '/_main': typeof MainRouteWithChildren;
   '/_main/admin': typeof MainAdminRouteWithChildren;
   '/_main/projects': typeof MainProjectsRouteWithChildren;
+  '/_auth/auth/login': typeof AuthAuthLoginRoute;
   '/_auth/auth/reactivation': typeof AuthAuthReactivationRoute;
   '/_auth/auth/recovery': typeof AuthAuthRecoveryRoute;
   '/_auth/auth/register': typeof AuthAuthRegisterRoute;
   '/_auth/auth/registration': typeof AuthAuthRegistrationRoute;
+  '/_auth/auth/reset-password': typeof AuthAuthResetPasswordRoute;
   '/_main/admin/logs': typeof MainAdminLogsRoute;
   '/_main/admin/permissions': typeof MainAdminPermissionsRouteWithChildren;
   '/_main/admin/security': typeof MainAdminSecurityRoute;
@@ -958,8 +958,6 @@ export interface FileRoutesById {
   '/_main/admin/templates': typeof MainAdminTemplatesRouteWithChildren;
   '/_main/admin/users': typeof MainAdminUsersRouteWithChildren;
   '/_main/profile/': typeof MainProfileIndexRoute;
-  '/_auth/auth/_login/login': typeof AuthAuthLoginLoginRoute;
-  '/_auth/auth/_reset-password/reset-password': typeof AuthAuthResetPasswordResetPasswordRoute;
   '/_main/admin/permissions/_p': typeof MainAdminPermissionsPRouteWithChildren;
   '/_main/admin/users/$userId': typeof MainAdminUsersUserIdRoute;
   '/_main/projects/project/$projectId': typeof MainProjectsProjectProjectIdRouteWithChildren;
@@ -994,10 +992,12 @@ export interface FileRouteTypes {
     | ''
     | '/admin'
     | '/projects'
+    | '/auth/login'
     | '/auth/reactivation'
     | '/auth/recovery'
     | '/auth/register'
     | '/auth/registration'
+    | '/auth/reset-password'
     | '/admin/logs'
     | '/admin/permissions'
     | '/admin/security'
@@ -1005,8 +1005,6 @@ export interface FileRouteTypes {
     | '/admin/templates'
     | '/admin/users'
     | '/profile'
-    | '/auth/login'
-    | '/auth/reset-password'
     | '/admin/users/$userId'
     | '/projects/project/$projectId'
     | '/admin/templates/'
@@ -1037,17 +1035,17 @@ export interface FileRouteTypes {
     | ''
     | '/admin'
     | '/projects'
+    | '/auth/login'
     | '/auth/reactivation'
     | '/auth/recovery'
     | '/auth/register'
     | '/auth/registration'
+    | '/auth/reset-password'
     | '/admin/logs'
     | '/admin/permissions'
     | '/admin/security'
     | '/admin/settings'
     | '/profile'
-    | '/auth/login'
-    | '/auth/reset-password'
     | '/admin/users/$userId'
     | '/projects/project/$projectId'
     | '/admin/templates'
@@ -1077,10 +1075,12 @@ export interface FileRouteTypes {
     | '/_main'
     | '/_main/admin'
     | '/_main/projects'
+    | '/_auth/auth/login'
     | '/_auth/auth/reactivation'
     | '/_auth/auth/recovery'
     | '/_auth/auth/register'
     | '/_auth/auth/registration'
+    | '/_auth/auth/reset-password'
     | '/_main/admin/logs'
     | '/_main/admin/permissions'
     | '/_main/admin/security'
@@ -1088,8 +1088,6 @@ export interface FileRouteTypes {
     | '/_main/admin/templates'
     | '/_main/admin/users'
     | '/_main/profile/'
-    | '/_auth/auth/_login/login'
-    | '/_auth/auth/_reset-password/reset-password'
     | '/_main/admin/permissions/_p'
     | '/_main/admin/users/$userId'
     | '/_main/projects/project/$projectId'
@@ -1146,12 +1144,12 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
+        "/_auth/auth/login",
         "/_auth/auth/reactivation",
         "/_auth/auth/recovery",
         "/_auth/auth/register",
         "/_auth/auth/registration",
-        "/_auth/auth/_login/login",
-        "/_auth/auth/_reset-password/reset-password"
+        "/_auth/auth/reset-password"
       ]
     },
     "/_main": {
@@ -1184,6 +1182,10 @@ export const routeTree = rootRoute
         "/_main/projects/group/$groupId/"
       ]
     },
+    "/_auth/auth/login": {
+      "filePath": "_auth.auth/login.tsx",
+      "parent": "/_auth"
+    },
     "/_auth/auth/reactivation": {
       "filePath": "_auth.auth/reactivation.tsx",
       "parent": "/_auth"
@@ -1198,6 +1200,10 @@ export const routeTree = rootRoute
     },
     "/_auth/auth/registration": {
       "filePath": "_auth.auth/registration.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/auth/reset-password": {
+      "filePath": "_auth.auth/reset-password.tsx",
       "parent": "/_auth"
     },
     "/_main/admin/logs": {
@@ -1238,14 +1244,6 @@ export const routeTree = rootRoute
     "/_main/profile/": {
       "filePath": "_main/profile/index.tsx",
       "parent": "/_main"
-    },
-    "/_auth/auth/_login/login": {
-      "filePath": "_auth.auth/_login/login.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/auth/_reset-password/reset-password": {
-      "filePath": "_auth.auth/_reset-password/reset-password.tsx",
-      "parent": "/_auth"
     },
     "/_main/admin/permissions/_p": {
       "filePath": "_main/admin/permissions/_p.tsx",
