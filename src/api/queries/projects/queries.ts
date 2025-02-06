@@ -24,6 +24,10 @@ export const projectQueries = createQueryKeys('project', {
     queryKey: [projectId, 'tasks'],
     queryFn: () => ApiClientSecured.projectTasksV1Controller.getProjectTasks(projectId),
   }),
+  task: (taskId: string) => ({
+    queryKey: [taskId],
+    queryFn: () => ApiClientSecured.tasksV1Controller.getTask(taskId),
+  }),
   logo: (projectId: string) => ({
     queryKey: [projectId, 'logo'],
     queryFn: () => ApiClientSecured.projectFilesV1Controller.getProjectLogo(projectId),
