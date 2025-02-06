@@ -1,26 +1,17 @@
 import { Edit as EditIcon } from '@mui/icons-material';
 import { Stack, Typography } from '@mui/material';
 import { GridActionsCellItem } from '@mui/x-data-grid-premium';
-import {
-  AddEntity,
-  DataGrid,
-  DeleteCellButton,
-  EnhancedColDef,
-  modal,
-  notifySuccess,
-} from '@pspod/ui-components';
+import { AddEntity, DataGrid, DeleteCellButton, EnhancedColDef, modal } from '@pspod/ui-components';
 import { DataType } from 'devextreme/common';
 import { FC, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useCreateFormParameterMutation } from '~/api/queries/forms/parameters/create-form-parameter.mutation';
-import { useDeleteFormParameterMutation } from '~/api/queries/forms/parameters/delete-form-parameter.mutation';
 import { useGetFormParametersQuery } from '~/api/queries/forms/parameters/get-parameters.query';
-import { useUpdateFormParameterMutation } from '~/api/queries/forms/parameters/update-form-parameter.mutation';
+import { sortParametersByIndex } from '~/api/selectors/sort-parameters-by-index';
 import { ParameterField } from '~/api/utils/api-requests';
 import { ParameterForm } from '~/components/forms/parameter-field/parameter-field-form';
+import { useParameterFieldsActions } from '~/pages/_main/projects/project.$projectId/forms/use-parameter-fileds-actions.hook';
 import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
-import { showErrorMessage } from '~/utils/show-error-message';
 
 interface ParametersTableProps {
   formId: string;
@@ -30,21 +21,10 @@ export const ParametersTable: FC<ParametersTableProps> = ({ formId }) => {
   const { t } = useTranslation();
   const { translateColumnType } = useCustomTranslations();
   const { data: parameters = [] } = useGetFormParametersQuery(formId, {
-    select: data => data.sort((a, b) => a.index - b.index),
+    select: sortParametersByIndex,
   });
 
-  const { mutate: deleteParameter } = useDeleteFormParameterMutation(formId, {
-    onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
-    onError: e => showErrorMessage(e, t('ERROR.DELETION_FAILED')),
-  });
-  const { mutate: createParameter } = useCreateFormParameterMutation(formId, {
-    onSuccess: () => notifySuccess(t('MESSAGE.CREATION_SUCCESS')),
-    onError: e => showErrorMessage(e, t('ERROR.CREATION_FAILED')),
-  });
-  const { mutate: updateParameter } = useUpdateFormParameterMutation(formId, {
-    onSuccess: () => notifySuccess(t('MESSAGE.UPDATE_SUCCESS')),
-    onError: e => showErrorMessage(e, t('ERROR.UPDATE_FAILED')),
-  });
+  const { deleteParameter, createParameter, updateParameter } = useParameterFieldsActions(formId);
 
   const handleCreateParameter = useCallback(() => {
     modal({
