@@ -1,6 +1,6 @@
 import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
 import { useParams } from '@tanstack/react-router';
-import { BaseSyntheticEvent, FC } from 'react';
+import { BaseSyntheticEvent, FC, useMemo } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -17,6 +17,10 @@ interface TaskParametersFormProps {
   onCancel: () => void;
   onGoToTasksList: () => void;
   createdTaskInfo?: FullTaskInfo;
+  isTaskCreating?: boolean;
+  isTaskStarting?: boolean;
+  isTaskCreated?: boolean;
+  isTaskStarted?: boolean;
 }
 
 export const TaskParametersForm: FC<TaskParametersFormProps> = ({
@@ -26,6 +30,10 @@ export const TaskParametersForm: FC<TaskParametersFormProps> = ({
   onCreateTask,
   onGoToTasksList,
   createdTaskInfo,
+  isTaskCreating,
+  isTaskStarting,
+  isTaskCreated,
+  isTaskStarted,
 }) => {
   const { t } = useTranslation();
   const { projectId = '' } = useParams({ strict: false });
@@ -98,6 +106,20 @@ export const TaskParametersForm: FC<TaskParametersFormProps> = ({
     }
   };
 
+  const canCreateTask = useMemo(
+    () => !createdTaskInfo && !isTaskCreated && !isTaskCreating,
+    [createdTaskInfo, isTaskCreated, isTaskCreating],
+  );
+
+  const canTaskRun = useMemo(
+    () =>
+      !!createdTaskInfo &&
+      createdTaskInfo?.state === TaskState.ReadyToStart &&
+      !isTaskStarting &&
+      !isTaskStarted,
+    [createdTaskInfo, isTaskStarted, isTaskStarting],
+  );
+
   return (
     <Form
       gap={1}
@@ -126,7 +148,7 @@ export const TaskParametersForm: FC<TaskParametersFormProps> = ({
           color={'primary'}
           variant={'contained'}
           isLoading={isLoading}
-          disabled={!!createdTaskInfo}
+          disabled={!canCreateTask}
         >
           {t('ACTION.CREATE', { type: t('ENTITY.TASK').toLowerCase() })}
         </Button>
@@ -136,7 +158,7 @@ export const TaskParametersForm: FC<TaskParametersFormProps> = ({
           color={'primary'}
           variant={'contained'}
           isLoading={isLoading}
-          disabled={!createdTaskInfo || createdTaskInfo?.state !== TaskState.ReadyToStart}
+          disabled={!canTaskRun}
         >
           {t('ACTION.RUN', { what: t('ENTITY.TASK').toLowerCase() })}
         </Button>

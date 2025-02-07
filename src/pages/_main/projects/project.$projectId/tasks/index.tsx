@@ -1,5 +1,4 @@
-import { Downloading, PlayCircleOutlined } from '@mui/icons-material';
-import EditIcon from '@mui/icons-material/Edit';
+import { Downloading, Edit as EditIcon, PlayCircleOutlined } from '@mui/icons-material';
 import { GridActionsCellItem } from '@mui/x-data-grid-premium';
 import { AddEntity, DataGrid, EnhancedColDef, notifySuccess } from '@pspod/ui-components';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
@@ -7,10 +6,11 @@ import { useCallback, useMemo } from 'react';
 
 import { useGetProjectTasksQuery } from '~/api/queries/projects/tasks/get-project-tasks.query';
 import { useUpdateTaskMutation } from '~/api/queries/projects/tasks/update-task.mutation';
+import { ApiClientSecured } from '~/api/utils/api-client';
 import { FullTaskInfo, TaskState } from '~/api/utils/api-requests';
 import { taskModal } from '~/components/forms/task/task-form';
-import { useDownloadTaskFiles } from '~/pages/_main/projects/project.$projectId/tasks/use-download-task-files.hook';
-import { useTaskActions } from '~/pages/_main/projects/project.$projectId/tasks/use-task-actions.hook';
+import { useTaskActions } from '~/use-cases/use-task-actions.hook';
+import { downloadBlobFile } from '~/utils/files';
 import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 import { showErrorMessage } from '~/utils/show-error-message';
 
@@ -24,8 +24,6 @@ function TasksList() {
   const { startTask } = useTaskActions();
   const { data: taskList = [], isLoading: isTaskListLoading } = useGetProjectTasksQuery(projectId);
   const navigate = useNavigate();
-
-  const { handleDownloadFile } = useDownloadTaskFiles();
 
   const { mutateAsync: updateTask } = useUpdateTaskMutation({
     onSuccess: () => notifySuccess(t(`MESSAGE.UPDATE_SUCCESS`)),
@@ -49,6 +47,13 @@ function TasksList() {
       to: '/projects/project/$projectId/tasks/add',
       params: { projectId },
     });
+
+  // TODO изменить получение имени файла (Заголовок content-disposition)
+  const handleDownloadFile = useCallback(async (taskId: string) => {
+    await ApiClientSecured.applicationTasksV1Controller
+      .getTaskResults(taskId, { format: 'blob' })
+      .then(res => downloadBlobFile(res, `${taskId}-output.zip`));
+  }, []);
 
   const columns = useMemo<EnhancedColDef<FullTaskInfo>[]>(
     () => [

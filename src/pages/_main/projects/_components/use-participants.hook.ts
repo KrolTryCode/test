@@ -53,7 +53,7 @@ export const useParticipants = (nodeId: string) => {
         await Promise.all(promises);
         notifySuccess(t('MESSAGE.PARTICIPANT_CREATION_SUCCESS'));
       } catch (e) {
-        showErrorMessage(e, t('ERROR.PARTICIPANT_CREATION_FAILED'));
+        showErrorMessage(e, 'ERROR.PARTICIPANT_CREATION_FAILED');
       }
     };
 

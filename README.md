@@ -60,7 +60,6 @@ npm ci
 Обновить API можно командой `npm run build:api`.
 Для запуска в гитлабе сохранен скрипт `npm run build:api:linux` с параметром  `--url=%ссылка на api-docs%`.
 
-
 #### 4. Использование моков
 
 - сами запросы создаются как реальные, в папке `src/api/queries/<controller>` через файлы `queries.ts` и `<...>.{query|mutation}.ts`
@@ -88,7 +87,7 @@ npm ci
 умолчанию - `rg.spbpu.com/customprojects/indanis/app:latest`. Для скачивания образа необходимо выполнить
 команду `docker login` и ввести логин и пароль от GitLab.
 Пример: `docker login -u ivan.ivanov@spbpu.com -p yourpassword rg.spbpu.com`
- 
+
 ##### 2.1. Локально разрабатываемый бэкенд (debug из исходников)
 
 - указать в `CORE_URL` URL бэкенда, по умолчанию - `http://host.docker.internal:8080`
@@ -109,8 +108,8 @@ npm ci
 
 Для запуска юнит тестов по отдельности из контекстного меню необходимо настроить шаблоны конфигурации,
 выбрав `Edit Configurations...`, затем `Edit configuration templates...` в левом нижнем углу. В появившемся окне
-выбрать `Vitest` и в поле `Vitest package` выбрать путь до папки `jest` в `node_modules` (
-например `KSRC\ui\node_modules\jest`).
+выбрать `Vitest` и в поле `Vitest package` выбрать путь до папки `vitest` в `node_modules` (например,
+`indanis\ui\node_modules\vitest`).
 
 Далее необходимо открыть нужный файл с тестами и слева найти кнопку запуска.
 
