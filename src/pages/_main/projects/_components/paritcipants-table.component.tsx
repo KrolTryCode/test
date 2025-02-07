@@ -9,7 +9,7 @@ import {
   useGridApiRef,
 } from '@mui/x-data-grid-premium';
 import { DateTimeEditingCell, AddEntity, DataGrid, EnhancedColDef } from '@pspod/ui-components';
-import { useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { FullProjectNodeMemberInfo } from '~/api/utils/api-requests';
@@ -21,7 +21,11 @@ import { validateMinDate } from '~/utils/date/validate-min-date';
 
 import { useParticipants } from './use-participants.hook';
 
-export const ParticipantsTable = ({ id }: { id: string }) => {
+interface ParticipantsTableProps {
+  nodeId: string;
+}
+
+export const ParticipantsTable: FC<ParticipantsTableProps> = ({ nodeId }) => {
   const { t } = useTranslation();
   // const {} = Route.useSearch();
   const declinatedTranslations = useDeclinatedTranslationsContext();
@@ -34,7 +38,7 @@ export const ParticipantsTable = ({ id }: { id: string }) => {
     deleteParticipant,
     onUpdateParticipant,
     onAddParticipantClick,
-  } = useParticipants(id);
+  } = useParticipants(nodeId);
 
   const { getActions, onRowModesModelChange, rowModesModel } =
     useGetEditRowActions<FullProjectNodeMemberInfo>({
@@ -56,7 +60,7 @@ export const ParticipantsTable = ({ id }: { id: string }) => {
         disableColumnMenu: true,
         renderCell({ row: user }: GridRenderCellParams<FullProjectNodeMemberInfo>) {
           if (user.userName) {
-            const [firstName, lastName] = user.userName.split(' ');
+            const [lastName, firstName] = user.userName.split(' ');
             return <UserAvatar userId={user.userId} firstName={firstName} lastName={lastName} />;
           }
         },

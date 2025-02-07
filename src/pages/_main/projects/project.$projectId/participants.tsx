@@ -12,5 +12,5 @@ export const Route = createFileRoute('/_main/projects/project/$projectId/partici
 
 function ProjectParticipants() {
   const { projectId } = Route.useParams();
-  return <ParticipantsTable id={projectId} />;
+  return <ParticipantsTable nodeId={projectId} />;
 }

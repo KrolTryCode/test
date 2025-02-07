@@ -14,7 +14,7 @@ function GroupParticipants() {
   return (
     <>
       <GroupHeader groupId={groupId} />
-      <ParticipantsTable id={groupId} />
+      <ParticipantsTable nodeId={groupId} />
     </>
   );
 }

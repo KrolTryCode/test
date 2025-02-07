@@ -9,7 +9,7 @@ import { _GroupSelectContainer } from './group-select-tree.styled';
 
 export interface GroupSelectTreeProps {
   value?: string;
-  onChange?: (value?: string) => void;
+  onChange?: (value: string) => void;
 }
 
 export const GroupSelectTree: FC<GroupSelectTreeProps> = ({ value, onChange = () => void 0 }) => {
@@ -26,7 +26,7 @@ export const GroupSelectTree: FC<GroupSelectTreeProps> = ({ value, onChange = ()
       <GroupSelectTreeItem
         hasChildren={false}
         label={t('COMMON.NO_PARENT')}
-        id={undefined}
+        id={''}
         onSelect={onChange}
         selectedId={value}
       />
