@@ -61,10 +61,10 @@ export const TaskForm: FC<TaskFormProps> = ({
       isLoading={isFormsLoading}
       onSubmit={handleSubmit(onResolve)}
     >
-      <FormItem label={t('COMMON.TITLE')} isRequired isDisabled={isDisabled}>
+      <FormItem label={t('COMMON.TITLE')} isRequired>
         <FormInputText controllerProps={{ ...register('name'), control }} />
       </FormItem>
-      <FormItem label={t('COMMON.DESCRIPTION')} isDisabled={isDisabled}>
+      <FormItem label={t('COMMON.DESCRIPTION')}>
         <FormInputText controllerProps={{ ...register('description'), control }} />
       </FormItem>
       <FormItem

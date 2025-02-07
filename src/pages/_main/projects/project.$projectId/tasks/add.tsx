@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useGetProjectTaskQuery } from '~/api/queries/projects/tasks/get-project-task.query';
 import { IAddTaskForm, TaskForm } from '~/components/forms/task/task-form';
 import { TaskParametersForm } from '~/components/forms/task/task-parameters-form';
-import { useTaskActions } from '~/pages/_main/projects/project.$projectId/tasks/use-task-actions.hook';
+import { useTaskActions } from '~/use-cases/use-task-actions.hook';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId/tasks/add')({
   component: AddTaskPage,
@@ -16,7 +16,9 @@ export const Route = createFileRoute('/_main/projects/project/$projectId/tasks/a
 function AddTaskPage() {
   const { t } = useTranslation();
   const { projectId = '' } = useParams({ strict: false });
-  const { createTask, startTask } = useTaskActions();
+  const { createTask, startTask, isTaskStarting, isTaskCreating, isTaskCreated, isTaskStarted } =
+    useTaskActions();
+
   const [isLockedForm, setIsLockedForm] = useState(false);
   const [baseData, setBaseData] = useState<IAddTaskForm>({ name: '', description: '', formId: '' });
   const [createdTaskId, setIsCreatedTaskId] = useState('');
@@ -96,6 +98,10 @@ function AddTaskPage() {
             onCreateTask={handleCreateTask}
             onGoToTasksList={navigateToTasksList}
             onCancel={() => setIsLockedForm(false)}
+            isTaskCreating={isTaskCreating}
+            isTaskStarting={isTaskStarting}
+            isTaskCreated={isTaskCreated}
+            isTaskStarted={isTaskStarted}
           />
         </Stack>
       )}

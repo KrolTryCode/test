@@ -10,14 +10,29 @@ export const useTaskActions = () => {
   const { t } = useTranslation();
   const { projectId = '' } = useParams({ strict: false });
 
-  const { mutateAsync: createTask } = useCreateProjectTaskMutation(projectId, {
+  const {
+    mutateAsync: createTask,
+    isPending: isTaskCreating,
+    isSuccess: isTaskCreated,
+  } = useCreateProjectTaskMutation(projectId, {
     onSuccess: () => notifySuccess(t('MESSAGE.CREATION_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
   });
-  const { mutateAsync: startTask } = useStartProjectTaskMutation({
+  const {
+    mutateAsync: startTask,
+    isPending: isTaskStarting,
+    isSuccess: isTaskStarted,
+  } = useStartProjectTaskMutation({
     onSuccess: () => notifySuccess(t('MESSAGE.RUN_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.RUN_TASK_FAILED'),
   });
 
-  return { createTask, startTask };
+  return {
+    createTask,
+    startTask,
+    isTaskCreating,
+    isTaskCreated,
+    isTaskStarting,
+    isTaskStarted,
+  };
 };
