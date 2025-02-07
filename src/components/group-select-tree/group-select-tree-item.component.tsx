@@ -12,10 +12,10 @@ import {
 } from './group-select-tree.styled';
 
 export interface GroupSelectTreeItemProps {
-  id?: string;
+  id: string;
   label: string;
   hasChildren: boolean;
-  onSelect: (value?: string) => void;
+  onSelect: (value: string) => void;
   selectedId?: string;
 }
 
@@ -44,12 +44,12 @@ export const GroupSelectTreeItem: FC<GroupSelectTreeItemProps> = ({
     <>
       <_GroupSelectElementContainer>
         <_GroupSelectElementTogglerContainer>
-          {hasChildren ? (
+          {hasChildren && (
             <ChevronRightIcon
               onClick={() => setIsOpened(isOpened => !isOpened)}
               style={{ transform: `rotate(${isOpened ? 90 : 0}deg)` }}
             />
-          ) : null}
+          )}
         </_GroupSelectElementTogglerContainer>
         <_GroupSelectElementLabel
           onClick={() => onSelect(id)}

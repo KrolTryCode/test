@@ -8,7 +8,7 @@ interface FormGroupSelectTreeProps<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > {
   controllerProps: UseControllerProps<TFieldValues, TName>;
-  onSelect?: (nodeId?: string) => void;
+  onSelect?: (nodeId: string) => void;
 }
 
 export function FormGroupSelectTree<TFieldValues extends FieldValues = FieldValues>({
@@ -17,7 +17,7 @@ export function FormGroupSelectTree<TFieldValues extends FieldValues = FieldValu
 }: FormGroupSelectTreeProps<TFieldValues, FieldPath<TFieldValues>>) {
   const { field, fieldState } = useController(controllerProps);
 
-  const handleSelect = (value?: string) => {
+  const handleSelect = (value: string) => {
     field.onChange(value);
     onSelect?.(value);
     field.onBlur();
