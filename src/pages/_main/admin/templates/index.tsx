@@ -5,7 +5,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useRef, useMemo } from 'react';
 
 import { useGetTemplatesQuery } from '~/api/queries/templates/get-templates.query';
-import { Template } from '~/api/utils/api-requests';
+import { Template, TemplateState } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { GridActionsCellItemLink } from '~/components/implicit-links';
 import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
@@ -16,7 +16,7 @@ export const Route = createFileRoute('/_main/admin/templates/')({
 });
 
 export function TemplatesPage() {
-  const { t, translateStatus } = useCustomTranslations();
+  const { t, translateStatus, getStatusValueOptions } = useCustomTranslations();
   const { data: templates, isLoading } = useGetTemplatesQuery();
 
   const gridWrapperRef = useRef<HTMLDivElement>();
@@ -33,7 +33,9 @@ export function TemplatesPage() {
         field: 'state',
         headerName: t('COMMON.STATE'),
         flex: 1,
-        valueFormatter: translateStatus,
+        type: 'singleSelect',
+        valueOptions: () => getStatusValueOptions(Object.values(TemplateState)),
+        groupingValueGetter: translateStatus,
       },
       {
         field: 'content',
@@ -42,10 +44,12 @@ export function TemplatesPage() {
         renderCell: params => (
           <Box
             dangerouslySetInnerHTML={{
-              __html: params.row.content ?? t('MESSAGE.NO_DATA'),
+              __html:
+                params.row.content ?? (params.rowNode.type !== 'group' ? t('MESSAGE.NO_DATA') : ''),
             }}
           />
         ),
+        groupable: false,
       },
       {
         field: 'actions',
@@ -66,7 +70,7 @@ export function TemplatesPage() {
         },
       },
     ],
-    [t, translateStatus],
+    [getStatusValueOptions, t, translateStatus],
   );
 
   return (
