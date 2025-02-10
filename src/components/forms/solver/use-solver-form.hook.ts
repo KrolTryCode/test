@@ -5,7 +5,7 @@ import { useGetFileQuery } from '~/api/queries/files/download-file.query';
 import { useCreateSolverFile } from '~/api/queries/solvers/create-solver-file.mutation';
 import { useGetSolverFileQuery } from '~/api/queries/solvers/get-solver-file.query';
 import { Solver } from '~/api/utils/api-requests';
-import { useUploadFile } from '~/components/upload-file/use-upload-file.hook';
+import { useUploadFile } from '~/use-cases/upload-file.hook';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { SolverUpdateRequest } from './solver-form.schema';

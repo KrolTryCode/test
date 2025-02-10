@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useLoginMutation } from '~/api/queries/accounts/login.mutation';
 import { LoginForm } from '~/components/forms/login/login-form';
 import { ILoginForm } from '~/components/forms/login/login-form.schema';
-import { useAuthenticate } from '~/utils/hooks/use-authenticate';
+import { useAuthenticate } from '~/use-cases/authenticate.hook';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const Route = createFileRoute('/_auth/auth/login')({

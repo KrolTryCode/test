@@ -7,7 +7,7 @@ import { useCreateProjectFileMutation } from '~/api/queries/projects/create-proj
 import { projectQueries } from '~/api/queries/projects/queries';
 import { ProjectNodeType } from '~/api/utils/api-requests';
 import { NodeLogo } from '~/components/node-logo/node-logo.component';
-import { useUploadFile } from '~/components/upload-file/use-upload-file.hook';
+import { useUploadFile } from '~/use-cases/upload-file.hook';
 import { fileTypeExtensions, validateSelectedFiles } from '~/utils/files/validate-files';
 
 interface EditableNodeLogoProps {

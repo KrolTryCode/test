@@ -1,5 +1,5 @@
 import { Box, CircularProgress, Divider, Stack, Typography } from '@mui/material';
-import { createFileRoute, useParams } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useGetProjectTaskQuery } from '~/api/queries/projects/tasks/get-project-task.query';
 import { IAddTaskForm, TaskForm } from '~/components/forms/task/task-form';
 import { TaskParametersForm } from '~/components/forms/task/task-parameters-form';
-import { useTaskActions } from '~/use-cases/use-task-actions.hook';
+import { useTaskActions } from '~/use-cases/task-actions.hook';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId/tasks/add')({
   component: AddTaskPage,
@@ -15,9 +15,9 @@ export const Route = createFileRoute('/_main/projects/project/$projectId/tasks/a
 
 function AddTaskPage() {
   const { t } = useTranslation();
-  const { projectId = '' } = useParams({ strict: false });
+  const { projectId } = Route.useParams();
   const { createTask, startTask, isTaskStarting, isTaskCreating, isTaskCreated, isTaskStarted } =
-    useTaskActions();
+    useTaskActions(projectId);
 
   const [isLockedForm, setIsLockedForm] = useState(false);
   const [baseData, setBaseData] = useState<IAddTaskForm>({ name: '', description: '', formId: '' });

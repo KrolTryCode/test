@@ -5,9 +5,9 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { Solver } from '~/api/utils/api-requests';
+import { UploadFile } from '~/components/inputs/upload-file/upload-file.component';
 import { LabelWithRules } from '~/components/label-with-rules/label-with-rules.component';
 import { FormInputText } from '~/components/react-hook-form';
-import { UploadFile } from '~/components/upload-file/upload-file.component';
 import { downloadBlobFile } from '~/utils/files';
 import { getAvailableExtensionsMsg } from '~/utils/files/validate-files';
 

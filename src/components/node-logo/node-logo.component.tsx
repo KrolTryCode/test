@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useGetProjectLogoQuery } from '~/api/queries/projects/get-project-logo.query';
 import { ProjectNodeType } from '~/api/utils/api-requests';
-import { useGetImage } from '~/components/upload-file/use-get-image.hook';
+import { useGetImage } from '~/use-cases/get-image.hook';
 
 interface NodeLogoProps extends AvatarProps {
   nodeId: string;

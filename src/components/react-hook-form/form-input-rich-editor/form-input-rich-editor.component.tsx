@@ -1,6 +1,6 @@
 import { FieldPath, FieldValues, useController, UseControllerProps } from 'react-hook-form';
 
-import { HTMLRichEditor } from '~/components/html-rich-editor/html-rich-editor.component';
+import { HTMLRichEditor } from '~/components/inputs/html-rich-editor/html-rich-editor.component';
 import { ValidationError } from '~/components/react-hook-form/_validation-error/validation-error.component';
 
 interface FormInputRichTextProps<

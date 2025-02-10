@@ -4,7 +4,7 @@ import {
   UploadFile,
   UploadFileProps,
   UploadValue,
-} from '~/components/upload-file/upload-file.component';
+} from '~/components/inputs/upload-file/upload-file.component';
 
 import { ValidationError } from '../_validation-error/validation-error.component';
 

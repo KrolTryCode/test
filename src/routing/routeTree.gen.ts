@@ -14,8 +14,8 @@ import { Route as rootRoute } from './../pages/__root';
 import { Route as MainImport } from './../pages/_main';
 import { Route as AuthImport } from './../pages/_auth';
 import { Route as MainProjectsImport } from './../pages/_main/projects';
+import { Route as MainProfileImport } from './../pages/_main/profile';
 import { Route as MainAdminImport } from './../pages/_main/admin';
-import { Route as MainProfileIndexImport } from './../pages/_main/profile/index';
 import { Route as MainAdminUsersImport } from './../pages/_main/admin/users';
 import { Route as MainAdminTemplatesImport } from './../pages/_main/admin/templates';
 import { Route as MainAdminSettingsImport } from './../pages/_main/admin/settings';
@@ -29,13 +29,13 @@ import { Route as AuthAuthRecoveryImport } from './../pages/_auth.auth/recovery'
 import { Route as AuthAuthReactivationImport } from './../pages/_auth.auth/reactivation';
 import { Route as AuthAuthLoginImport } from './../pages/_auth.auth/login';
 import { Route as MainProjectsGroupIndexImport } from './../pages/_main/projects/group/index';
-import { Route as MainAdminUsersIndexImport } from './../pages/_main/admin/users/index';
-import { Route as MainAdminTemplatesIndexImport } from './../pages/_main/admin/templates/index';
+import { Route as MainAdminUsersIndexImport } from './../pages/_main/admin/users.index';
+import { Route as MainAdminTemplatesIndexImport } from './../pages/_main/admin/templates.index';
+import { Route as MainAdminPermissionsIndexImport } from './../pages/_main/admin/permissions.index';
 import { Route as MainProjectsProjectProjectIdImport } from './../pages/_main/projects/project.$projectId';
-import { Route as MainAdminUsersUserIdImport } from './../pages/_main/admin/users/$userId';
-import { Route as MainAdminPermissionsPImport } from './../pages/_main/admin/permissions/_p';
+import { Route as MainAdminUsersUserIdImport } from './../pages/_main/admin/users.$userId';
+import { Route as MainAdminPermissionsRolesImport } from './../pages/_main/admin/permissions.roles';
 import { Route as MainProjectsGroupGroupIdIndexImport } from './../pages/_main/projects/group/$groupId.index';
-import { Route as MainAdminPermissionsPIndexImport } from './../pages/_main/admin/permissions/_p.index';
 import { Route as MainProjectsProjectProjectIdTasksImport } from './../pages/_main/projects/project.$projectId/tasks';
 import { Route as MainProjectsProjectProjectIdTablesImport } from './../pages/_main/projects/project.$projectId/tables';
 import { Route as MainProjectsProjectProjectIdSolversImport } from './../pages/_main/projects/project.$projectId/solvers';
@@ -45,8 +45,7 @@ import { Route as MainProjectsProjectProjectIdParticipantsImport } from './../pa
 import { Route as MainProjectsProjectProjectIdFormsImport } from './../pages/_main/projects/project.$projectId/forms';
 import { Route as MainProjectsProjectProjectIdEventsImport } from './../pages/_main/projects/project.$projectId/events';
 import { Route as MainProjectsGroupGroupIdParticipantsImport } from './../pages/_main/projects/group/$groupId.participants';
-import { Route as MainAdminTemplatesTemplateIdEditImport } from './../pages/_main/admin/templates/$templateId.edit';
-import { Route as MainAdminPermissionsPRolesImport } from './../pages/_main/admin/permissions/_p.roles';
+import { Route as MainAdminTemplatesTemplateIdEditImport } from './../pages/_main/admin/templates.$templateId.edit';
 import { Route as MainProjectsProjectProjectIdTasksIndexImport } from './../pages/_main/projects/project.$projectId/tasks/index';
 import { Route as MainProjectsProjectProjectIdFormsIndexImport } from './../pages/_main/projects/project.$projectId/forms/index';
 import { Route as MainProjectsProjectProjectIdTasksAddImport } from './../pages/_main/projects/project.$projectId/tasks/add';
@@ -75,15 +74,15 @@ const MainProjectsRoute = MainProjectsImport.update({
   getParentRoute: () => MainRoute,
 } as any);
 
-const MainAdminRoute = MainAdminImport.update({
-  id: '/admin',
-  path: '/admin',
+const MainProfileRoute = MainProfileImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => MainRoute,
 } as any);
 
-const MainProfileIndexRoute = MainProfileIndexImport.update({
-  id: '/profile/',
-  path: '/profile/',
+const MainAdminRoute = MainAdminImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => MainRoute,
 } as any);
 
@@ -177,6 +176,12 @@ const MainAdminTemplatesIndexRoute = MainAdminTemplatesIndexImport.update({
   getParentRoute: () => MainAdminTemplatesRoute,
 } as any);
 
+const MainAdminPermissionsIndexRoute = MainAdminPermissionsIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MainAdminPermissionsRoute,
+} as any);
+
 const MainProjectsProjectProjectIdRoute =
   MainProjectsProjectProjectIdImport.update({
     id: '/project/$projectId',
@@ -190,8 +195,9 @@ const MainAdminUsersUserIdRoute = MainAdminUsersUserIdImport.update({
   getParentRoute: () => MainAdminUsersRoute,
 } as any);
 
-const MainAdminPermissionsPRoute = MainAdminPermissionsPImport.update({
-  id: '/_p',
+const MainAdminPermissionsRolesRoute = MainAdminPermissionsRolesImport.update({
+  id: '/roles',
+  path: '/roles',
   getParentRoute: () => MainAdminPermissionsRoute,
 } as any);
 
@@ -201,14 +207,6 @@ const MainProjectsGroupGroupIdIndexRoute =
     path: '/group/$groupId/',
     getParentRoute: () => MainProjectsRoute,
   } as any);
-
-const MainAdminPermissionsPIndexRoute = MainAdminPermissionsPIndexImport.update(
-  {
-    id: '/',
-    path: '/',
-    getParentRoute: () => MainAdminPermissionsPRoute,
-  } as any,
-);
 
 const MainProjectsProjectProjectIdTasksRoute =
   MainProjectsProjectProjectIdTasksImport.update({
@@ -279,14 +277,6 @@ const MainAdminTemplatesTemplateIdEditRoute =
     path: '/$templateId/edit',
     getParentRoute: () => MainAdminTemplatesRoute,
   } as any);
-
-const MainAdminPermissionsPRolesRoute = MainAdminPermissionsPRolesImport.update(
-  {
-    id: '/roles',
-    path: '/roles',
-    getParentRoute: () => MainAdminPermissionsPRoute,
-  } as any,
-);
 
 const MainProjectsProjectProjectIdTasksIndexRoute =
   MainProjectsProjectProjectIdTasksIndexImport.update({
@@ -374,6 +364,13 @@ declare module '@tanstack/react-router' {
       path: '/admin';
       fullPath: '/admin';
       preLoaderRoute: typeof MainAdminImport;
+      parentRoute: typeof MainImport;
+    };
+    '/_main/profile': {
+      id: '/_main/profile';
+      path: '/profile';
+      fullPath: '/profile';
+      preLoaderRoute: typeof MainProfileImport;
       parentRoute: typeof MainImport;
     };
     '/_main/projects': {
@@ -467,18 +464,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainAdminUsersImport;
       parentRoute: typeof MainAdminImport;
     };
-    '/_main/profile/': {
-      id: '/_main/profile/';
-      path: '/profile';
-      fullPath: '/profile';
-      preLoaderRoute: typeof MainProfileIndexImport;
-      parentRoute: typeof MainImport;
-    };
-    '/_main/admin/permissions/_p': {
-      id: '/_main/admin/permissions/_p';
-      path: '';
-      fullPath: '/admin/permissions';
-      preLoaderRoute: typeof MainAdminPermissionsPImport;
+    '/_main/admin/permissions/roles': {
+      id: '/_main/admin/permissions/roles';
+      path: '/roles';
+      fullPath: '/admin/permissions/roles';
+      preLoaderRoute: typeof MainAdminPermissionsRolesImport;
       parentRoute: typeof MainAdminPermissionsImport;
     };
     '/_main/admin/users/$userId': {
@@ -494,6 +484,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/projects/project/$projectId';
       preLoaderRoute: typeof MainProjectsProjectProjectIdImport;
       parentRoute: typeof MainProjectsImport;
+    };
+    '/_main/admin/permissions/': {
+      id: '/_main/admin/permissions/';
+      path: '/';
+      fullPath: '/admin/permissions/';
+      preLoaderRoute: typeof MainAdminPermissionsIndexImport;
+      parentRoute: typeof MainAdminPermissionsImport;
     };
     '/_main/admin/templates/': {
       id: '/_main/admin/templates/';
@@ -515,13 +512,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/projects/group';
       preLoaderRoute: typeof MainProjectsGroupIndexImport;
       parentRoute: typeof MainProjectsImport;
-    };
-    '/_main/admin/permissions/_p/roles': {
-      id: '/_main/admin/permissions/_p/roles';
-      path: '/roles';
-      fullPath: '/admin/permissions/roles';
-      preLoaderRoute: typeof MainAdminPermissionsPRolesImport;
-      parentRoute: typeof MainAdminPermissionsPImport;
     };
     '/_main/admin/templates/$templateId/edit': {
       id: '/_main/admin/templates/$templateId/edit';
@@ -592,13 +582,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/projects/project/$projectId/tasks';
       preLoaderRoute: typeof MainProjectsProjectProjectIdTasksImport;
       parentRoute: typeof MainProjectsProjectProjectIdImport;
-    };
-    '/_main/admin/permissions/_p/': {
-      id: '/_main/admin/permissions/_p/';
-      path: '/';
-      fullPath: '/admin/permissions/';
-      preLoaderRoute: typeof MainAdminPermissionsPIndexImport;
-      parentRoute: typeof MainAdminPermissionsPImport;
     };
     '/_main/projects/group/$groupId/': {
       id: '/_main/projects/group/$groupId/';
@@ -695,27 +678,14 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren);
 
-interface MainAdminPermissionsPRouteChildren {
-  MainAdminPermissionsPRolesRoute: typeof MainAdminPermissionsPRolesRoute;
-  MainAdminPermissionsPIndexRoute: typeof MainAdminPermissionsPIndexRoute;
-}
-
-const MainAdminPermissionsPRouteChildren: MainAdminPermissionsPRouteChildren = {
-  MainAdminPermissionsPRolesRoute: MainAdminPermissionsPRolesRoute,
-  MainAdminPermissionsPIndexRoute: MainAdminPermissionsPIndexRoute,
-};
-
-const MainAdminPermissionsPRouteWithChildren =
-  MainAdminPermissionsPRoute._addFileChildren(
-    MainAdminPermissionsPRouteChildren,
-  );
-
 interface MainAdminPermissionsRouteChildren {
-  MainAdminPermissionsPRoute: typeof MainAdminPermissionsPRouteWithChildren;
+  MainAdminPermissionsRolesRoute: typeof MainAdminPermissionsRolesRoute;
+  MainAdminPermissionsIndexRoute: typeof MainAdminPermissionsIndexRoute;
 }
 
 const MainAdminPermissionsRouteChildren: MainAdminPermissionsRouteChildren = {
-  MainAdminPermissionsPRoute: MainAdminPermissionsPRouteWithChildren,
+  MainAdminPermissionsRolesRoute: MainAdminPermissionsRolesRoute,
+  MainAdminPermissionsIndexRoute: MainAdminPermissionsIndexRoute,
 };
 
 const MainAdminPermissionsRouteWithChildren =
@@ -891,14 +861,14 @@ const MainProjectsRouteWithChildren = MainProjectsRoute._addFileChildren(
 
 interface MainRouteChildren {
   MainAdminRoute: typeof MainAdminRouteWithChildren;
+  MainProfileRoute: typeof MainProfileRoute;
   MainProjectsRoute: typeof MainProjectsRouteWithChildren;
-  MainProfileIndexRoute: typeof MainProfileIndexRoute;
 }
 
 const MainRouteChildren: MainRouteChildren = {
   MainAdminRoute: MainAdminRouteWithChildren,
+  MainProfileRoute: MainProfileRoute,
   MainProjectsRoute: MainProjectsRouteWithChildren,
-  MainProfileIndexRoute: MainProfileIndexRoute,
 };
 
 const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren);
@@ -906,6 +876,7 @@ const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren);
 export interface FileRoutesByFullPath {
   '': typeof MainRouteWithChildren;
   '/admin': typeof MainAdminRouteWithChildren;
+  '/profile': typeof MainProfileRoute;
   '/projects': typeof MainProjectsRouteWithChildren;
   '/auth/login': typeof AuthAuthLoginRoute;
   '/auth/reactivation': typeof AuthAuthReactivationRoute;
@@ -914,18 +885,18 @@ export interface FileRoutesByFullPath {
   '/auth/registration': typeof AuthAuthRegistrationRoute;
   '/auth/reset-password': typeof AuthAuthResetPasswordRoute;
   '/admin/logs': typeof MainAdminLogsRoute;
-  '/admin/permissions': typeof MainAdminPermissionsPRouteWithChildren;
+  '/admin/permissions': typeof MainAdminPermissionsRouteWithChildren;
   '/admin/security': typeof MainAdminSecurityRoute;
   '/admin/settings': typeof MainAdminSettingsRoute;
   '/admin/templates': typeof MainAdminTemplatesRouteWithChildren;
   '/admin/users': typeof MainAdminUsersRouteWithChildren;
-  '/profile': typeof MainProfileIndexRoute;
+  '/admin/permissions/roles': typeof MainAdminPermissionsRolesRoute;
   '/admin/users/$userId': typeof MainAdminUsersUserIdRoute;
   '/projects/project/$projectId': typeof MainProjectsProjectProjectIdRouteWithChildren;
+  '/admin/permissions/': typeof MainAdminPermissionsIndexRoute;
   '/admin/templates/': typeof MainAdminTemplatesIndexRoute;
   '/admin/users/': typeof MainAdminUsersIndexRoute;
   '/projects/group': typeof MainProjectsGroupIndexRoute;
-  '/admin/permissions/roles': typeof MainAdminPermissionsPRolesRoute;
   '/admin/templates/$templateId/edit': typeof MainAdminTemplatesTemplateIdEditRoute;
   '/projects/group/$groupId/participants': typeof MainProjectsGroupGroupIdParticipantsRoute;
   '/projects/project/$projectId/events': typeof MainProjectsProjectProjectIdEventsRoute;
@@ -936,7 +907,6 @@ export interface FileRoutesByFullPath {
   '/projects/project/$projectId/solvers': typeof MainProjectsProjectProjectIdSolversRoute;
   '/projects/project/$projectId/tables': typeof MainProjectsProjectProjectIdTablesRouteWithChildren;
   '/projects/project/$projectId/tasks': typeof MainProjectsProjectProjectIdTasksRouteWithChildren;
-  '/admin/permissions/': typeof MainAdminPermissionsPIndexRoute;
   '/projects/group/$groupId': typeof MainProjectsGroupGroupIdIndexRoute;
   '/projects/project/$projectId/forms/add': typeof MainProjectsProjectProjectIdFormsAddRoute;
   '/projects/project/$projectId/tasks/add': typeof MainProjectsProjectProjectIdTasksAddRoute;
@@ -952,6 +922,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '': typeof MainRouteWithChildren;
   '/admin': typeof MainAdminRouteWithChildren;
+  '/profile': typeof MainProfileRoute;
   '/projects': typeof MainProjectsRouteWithChildren;
   '/auth/login': typeof AuthAuthLoginRoute;
   '/auth/reactivation': typeof AuthAuthReactivationRoute;
@@ -960,16 +931,15 @@ export interface FileRoutesByTo {
   '/auth/registration': typeof AuthAuthRegistrationRoute;
   '/auth/reset-password': typeof AuthAuthResetPasswordRoute;
   '/admin/logs': typeof MainAdminLogsRoute;
-  '/admin/permissions': typeof MainAdminPermissionsPIndexRoute;
   '/admin/security': typeof MainAdminSecurityRoute;
   '/admin/settings': typeof MainAdminSettingsRoute;
-  '/profile': typeof MainProfileIndexRoute;
+  '/admin/permissions/roles': typeof MainAdminPermissionsRolesRoute;
   '/admin/users/$userId': typeof MainAdminUsersUserIdRoute;
   '/projects/project/$projectId': typeof MainProjectsProjectProjectIdRouteWithChildren;
+  '/admin/permissions': typeof MainAdminPermissionsIndexRoute;
   '/admin/templates': typeof MainAdminTemplatesIndexRoute;
   '/admin/users': typeof MainAdminUsersIndexRoute;
   '/projects/group': typeof MainProjectsGroupIndexRoute;
-  '/admin/permissions/roles': typeof MainAdminPermissionsPRolesRoute;
   '/admin/templates/$templateId/edit': typeof MainAdminTemplatesTemplateIdEditRoute;
   '/projects/group/$groupId/participants': typeof MainProjectsGroupGroupIdParticipantsRoute;
   '/projects/project/$projectId/events': typeof MainProjectsProjectProjectIdEventsRoute;
@@ -995,6 +965,7 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren;
   '/_main': typeof MainRouteWithChildren;
   '/_main/admin': typeof MainAdminRouteWithChildren;
+  '/_main/profile': typeof MainProfileRoute;
   '/_main/projects': typeof MainProjectsRouteWithChildren;
   '/_auth/auth/login': typeof AuthAuthLoginRoute;
   '/_auth/auth/reactivation': typeof AuthAuthReactivationRoute;
@@ -1008,14 +979,13 @@ export interface FileRoutesById {
   '/_main/admin/settings': typeof MainAdminSettingsRoute;
   '/_main/admin/templates': typeof MainAdminTemplatesRouteWithChildren;
   '/_main/admin/users': typeof MainAdminUsersRouteWithChildren;
-  '/_main/profile/': typeof MainProfileIndexRoute;
-  '/_main/admin/permissions/_p': typeof MainAdminPermissionsPRouteWithChildren;
+  '/_main/admin/permissions/roles': typeof MainAdminPermissionsRolesRoute;
   '/_main/admin/users/$userId': typeof MainAdminUsersUserIdRoute;
   '/_main/projects/project/$projectId': typeof MainProjectsProjectProjectIdRouteWithChildren;
+  '/_main/admin/permissions/': typeof MainAdminPermissionsIndexRoute;
   '/_main/admin/templates/': typeof MainAdminTemplatesIndexRoute;
   '/_main/admin/users/': typeof MainAdminUsersIndexRoute;
   '/_main/projects/group/': typeof MainProjectsGroupIndexRoute;
-  '/_main/admin/permissions/_p/roles': typeof MainAdminPermissionsPRolesRoute;
   '/_main/admin/templates/$templateId/edit': typeof MainAdminTemplatesTemplateIdEditRoute;
   '/_main/projects/group/$groupId/participants': typeof MainProjectsGroupGroupIdParticipantsRoute;
   '/_main/projects/project/$projectId/events': typeof MainProjectsProjectProjectIdEventsRoute;
@@ -1026,7 +996,6 @@ export interface FileRoutesById {
   '/_main/projects/project/$projectId/solvers': typeof MainProjectsProjectProjectIdSolversRoute;
   '/_main/projects/project/$projectId/tables': typeof MainProjectsProjectProjectIdTablesRouteWithChildren;
   '/_main/projects/project/$projectId/tasks': typeof MainProjectsProjectProjectIdTasksRouteWithChildren;
-  '/_main/admin/permissions/_p/': typeof MainAdminPermissionsPIndexRoute;
   '/_main/projects/group/$groupId/': typeof MainProjectsGroupGroupIdIndexRoute;
   '/_main/projects/project/$projectId/forms/add': typeof MainProjectsProjectProjectIdFormsAddRoute;
   '/_main/projects/project/$projectId/tasks/add': typeof MainProjectsProjectProjectIdTasksAddRoute;
@@ -1044,6 +1013,7 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/admin'
+    | '/profile'
     | '/projects'
     | '/auth/login'
     | '/auth/reactivation'
@@ -1057,13 +1027,13 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/templates'
     | '/admin/users'
-    | '/profile'
+    | '/admin/permissions/roles'
     | '/admin/users/$userId'
     | '/projects/project/$projectId'
+    | '/admin/permissions/'
     | '/admin/templates/'
     | '/admin/users/'
     | '/projects/group'
-    | '/admin/permissions/roles'
     | '/admin/templates/$templateId/edit'
     | '/projects/group/$groupId/participants'
     | '/projects/project/$projectId/events'
@@ -1074,7 +1044,6 @@ export interface FileRouteTypes {
     | '/projects/project/$projectId/solvers'
     | '/projects/project/$projectId/tables'
     | '/projects/project/$projectId/tasks'
-    | '/admin/permissions/'
     | '/projects/group/$groupId'
     | '/projects/project/$projectId/forms/add'
     | '/projects/project/$projectId/tasks/add'
@@ -1089,6 +1058,7 @@ export interface FileRouteTypes {
   to:
     | ''
     | '/admin'
+    | '/profile'
     | '/projects'
     | '/auth/login'
     | '/auth/reactivation'
@@ -1097,16 +1067,15 @@ export interface FileRouteTypes {
     | '/auth/registration'
     | '/auth/reset-password'
     | '/admin/logs'
-    | '/admin/permissions'
     | '/admin/security'
     | '/admin/settings'
-    | '/profile'
+    | '/admin/permissions/roles'
     | '/admin/users/$userId'
     | '/projects/project/$projectId'
+    | '/admin/permissions'
     | '/admin/templates'
     | '/admin/users'
     | '/projects/group'
-    | '/admin/permissions/roles'
     | '/admin/templates/$templateId/edit'
     | '/projects/group/$groupId/participants'
     | '/projects/project/$projectId/events'
@@ -1130,6 +1099,7 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_main'
     | '/_main/admin'
+    | '/_main/profile'
     | '/_main/projects'
     | '/_auth/auth/login'
     | '/_auth/auth/reactivation'
@@ -1143,14 +1113,13 @@ export interface FileRouteTypes {
     | '/_main/admin/settings'
     | '/_main/admin/templates'
     | '/_main/admin/users'
-    | '/_main/profile/'
-    | '/_main/admin/permissions/_p'
+    | '/_main/admin/permissions/roles'
     | '/_main/admin/users/$userId'
     | '/_main/projects/project/$projectId'
+    | '/_main/admin/permissions/'
     | '/_main/admin/templates/'
     | '/_main/admin/users/'
     | '/_main/projects/group/'
-    | '/_main/admin/permissions/_p/roles'
     | '/_main/admin/templates/$templateId/edit'
     | '/_main/projects/group/$groupId/participants'
     | '/_main/projects/project/$projectId/events'
@@ -1161,7 +1130,6 @@ export interface FileRouteTypes {
     | '/_main/projects/project/$projectId/solvers'
     | '/_main/projects/project/$projectId/tables'
     | '/_main/projects/project/$projectId/tasks'
-    | '/_main/admin/permissions/_p/'
     | '/_main/projects/group/$groupId/'
     | '/_main/projects/project/$projectId/forms/add'
     | '/_main/projects/project/$projectId/tasks/add'
@@ -1214,8 +1182,8 @@ export const routeTree = rootRoute
       "filePath": "_main.tsx",
       "children": [
         "/_main/admin",
-        "/_main/projects",
-        "/_main/profile/"
+        "/_main/profile",
+        "/_main/projects"
       ]
     },
     "/_main/admin": {
@@ -1229,6 +1197,10 @@ export const routeTree = rootRoute
         "/_main/admin/templates",
         "/_main/admin/users"
       ]
+    },
+    "/_main/profile": {
+      "filePath": "_main/profile.tsx",
+      "parent": "/_main"
     },
     "/_main/projects": {
       "filePath": "_main/projects.tsx",
@@ -1272,7 +1244,8 @@ export const routeTree = rootRoute
       "filePath": "_main/admin/permissions.tsx",
       "parent": "/_main/admin",
       "children": [
-        "/_main/admin/permissions/_p"
+        "/_main/admin/permissions/roles",
+        "/_main/admin/permissions/"
       ]
     },
     "/_main/admin/security": {
@@ -1299,20 +1272,12 @@ export const routeTree = rootRoute
         "/_main/admin/users/"
       ]
     },
-    "/_main/profile/": {
-      "filePath": "_main/profile/index.tsx",
-      "parent": "/_main"
-    },
-    "/_main/admin/permissions/_p": {
-      "filePath": "_main/admin/permissions/_p.tsx",
-      "parent": "/_main/admin/permissions",
-      "children": [
-        "/_main/admin/permissions/_p/roles",
-        "/_main/admin/permissions/_p/"
-      ]
+    "/_main/admin/permissions/roles": {
+      "filePath": "_main/admin/permissions.roles.tsx",
+      "parent": "/_main/admin/permissions"
     },
     "/_main/admin/users/$userId": {
-      "filePath": "_main/admin/users/$userId.tsx",
+      "filePath": "_main/admin/users.$userId.tsx",
       "parent": "/_main/admin/users"
     },
     "/_main/projects/project/$projectId": {
@@ -1329,24 +1294,24 @@ export const routeTree = rootRoute
         "/_main/projects/project/$projectId/tasks"
       ]
     },
+    "/_main/admin/permissions/": {
+      "filePath": "_main/admin/permissions.index.tsx",
+      "parent": "/_main/admin/permissions"
+    },
     "/_main/admin/templates/": {
-      "filePath": "_main/admin/templates/index.tsx",
+      "filePath": "_main/admin/templates.index.tsx",
       "parent": "/_main/admin/templates"
     },
     "/_main/admin/users/": {
-      "filePath": "_main/admin/users/index.tsx",
+      "filePath": "_main/admin/users.index.tsx",
       "parent": "/_main/admin/users"
     },
     "/_main/projects/group/": {
       "filePath": "_main/projects/group/index.tsx",
       "parent": "/_main/projects"
     },
-    "/_main/admin/permissions/_p/roles": {
-      "filePath": "_main/admin/permissions/_p.roles.tsx",
-      "parent": "/_main/admin/permissions/_p"
-    },
     "/_main/admin/templates/$templateId/edit": {
-      "filePath": "_main/admin/templates/$templateId.edit.tsx",
+      "filePath": "_main/admin/templates.$templateId.edit.tsx",
       "parent": "/_main/admin/templates"
     },
     "/_main/projects/group/$groupId/participants": {
@@ -1399,10 +1364,6 @@ export const routeTree = rootRoute
         "/_main/projects/project/$projectId/tasks/add",
         "/_main/projects/project/$projectId/tasks/"
       ]
-    },
-    "/_main/admin/permissions/_p/": {
-      "filePath": "_main/admin/permissions/_p.index.tsx",
-      "parent": "/_main/admin/permissions/_p"
     },
     "/_main/projects/group/$groupId/": {
       "filePath": "_main/projects/group/$groupId.index.tsx",

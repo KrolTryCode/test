@@ -1,7 +1,7 @@
 import { FieldPath, FieldValues, UseControllerProps, useController } from 'react-hook-form';
 
 import { ValidationError } from '~/components/react-hook-form/_validation-error/validation-error.component';
-import { NodesTreeList } from '~/pages/_main/projects/project.$projectId/tables.$tableId/tree/nodes-tree-list.component';
+import { NodesTreeList } from '~/components/tree/nodes-tree/nodes-tree-list.component';
 
 interface FormSearchNodeTreeProps<
   TFieldValues extends FieldValues = FieldValues,

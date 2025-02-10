@@ -12,8 +12,8 @@ import {
 } from 'react';
 import { useDebounce } from 'use-debounce';
 
-import { NavTreeItemData, NavTreeItemProps } from '~/components/nav-tree/nav-tree.type';
 import { PopperWithPaper } from '~/components/popper-with-paper/popper-with-paper.component';
+import { NavTreeItemData, NavTreeItemProps } from '~/components/tree/nav-tree/nav-tree.type';
 import { TreeViewIndanis } from '~/components/tree-view/tree-view-indanis.component';
 import { useTreeNodesUtils } from '~/utils/hooks/use-tree-nodes';
 

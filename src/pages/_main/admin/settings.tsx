@@ -5,10 +5,8 @@ import { useTranslation } from 'react-i18next';
 
 import { ModuleType, useGetModulesListQuery } from '~/api/queries/settings/get-modules-list.query';
 import { selectPropertiesByModuleName } from '~/api/selectors/select-properties-by-module-name';
-import { EntityModelModuleConfiguration } from '~/api/utils/api-requests';
 import { DesignConfigurationForm } from '~/components/forms/configuration-design/design-configuration-form';
-
-import { ExternalLinks } from './_settings/external-links.component';
+import { ExternalLinksTable } from '~/components/tables/external-links/external-links.component';
 
 export const Route = createFileRoute('/_main/admin/settings')({
   component: SettingsPage,
@@ -19,6 +17,8 @@ export const Route = createFileRoute('/_main/admin/settings')({
 });
 
 function SettingsPage() {
+  const { t } = useTranslation();
+
   const { data: designModuleProperties, isLoading: isDesignModulesLoading } =
     useGetModulesListQuery({
       select: data => selectPropertiesByModuleName(data, ModuleType.DESIGN),
@@ -27,23 +27,23 @@ function SettingsPage() {
   return (
     <Stack>
       {designModuleProperties?.map(entry => (
-        <ConfigFormAccordion {...entry} key={entry.moduleName} />
+        <Accordion
+          key={entry.moduleName}
+          text={t(`ENTITY.${entry.moduleName?.toUpperCase()}`)}
+          content={<DesignConfigurationForm moduleDescription={entry} />}
+        />
       ))}
 
-      <ExternalLinks />
+      <Accordion
+        text={t('ENTITY.EXTERNAL_SERVICES')}
+        content={
+          <Stack minHeight={'200px'}>
+            <ExternalLinksTable />
+          </Stack>
+        }
+      />
 
       <Preloader visible={isDesignModulesLoading} />
     </Stack>
-  );
-}
-
-function ConfigFormAccordion(moduleDescription: EntityModelModuleConfiguration) {
-  const { t } = useTranslation();
-
-  return (
-    <Accordion
-      text={t(`ENTITY.${moduleDescription.moduleName?.toUpperCase()}`)}
-      content={<DesignConfigurationForm moduleDescription={moduleDescription} />}
-    />
   );
 }

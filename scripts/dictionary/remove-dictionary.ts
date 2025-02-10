@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+
 import { outputFilenameEN, outputFilenameBundle, outputFilenameRU } from './dictionary.utils';
 
 try {

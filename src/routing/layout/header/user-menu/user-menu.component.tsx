@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useUserStore } from '~/app/user/user.store';
 import { UserAvatar } from '~/components/user-avatar/user-avatar.component';
-import { useAuthenticate } from '~/utils/hooks/use-authenticate';
+import { useAuthenticate } from '~/use-cases/authenticate.hook';
 
 import { StyledMenuItem } from './user-menu.style';
 

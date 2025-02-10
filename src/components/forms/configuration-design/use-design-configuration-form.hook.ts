@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useCreateApplicationFile } from '~/api/queries/design/create-application-file.mutation';
 import { useGetColorPalettesQuery } from '~/api/queries/design/get-color-palettes.query';
 import { selectTranslatedColors } from '~/api/selectors/select-colors-with-translation';
-import { useUploadFile } from '~/components/upload-file/use-upload-file.hook';
+import { useUploadFile } from '~/use-cases/upload-file.hook';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const useDesignConfigurationForm = () => {

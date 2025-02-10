@@ -10,8 +10,8 @@ import { RouteErrorBoundary } from '~/routing/_fallbacks/errors/error-boundary.c
 import { NotFoundPage } from '~/routing/_fallbacks/errors/not-found.component';
 import { AccessChecker } from '~/routing/access-checker/access-checker.component';
 import { TitleProvider } from '~/routing/page-title.context';
+import { useAuthenticate } from '~/use-cases/authenticate.hook';
 import { useDownloadTranslations } from '~/utils/configuration/translations/use-init-i18n.hook';
-import { useAuthenticate } from '~/utils/hooks/use-authenticate';
 
 import '../themes/generated/theme.base.css';
 import '../global-styles.scss';
