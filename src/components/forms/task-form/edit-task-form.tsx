@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { ParameterForm, UpdateParameterFormRequest } from '~/api/utils/api-requests';
 import { ButtonLink } from '~/components/implicit-links';
 import { FormInputText } from '~/components/react-hook-form';
-import { ParametersTable } from '~/pages/_main/projects/project.$projectId/forms/parameter-fields.component';
+import { ParametersTable } from '~/components/tables/form-parameter-fields/form-parameter-fields.component';
 
 import { schema } from './task-form.schema';
 

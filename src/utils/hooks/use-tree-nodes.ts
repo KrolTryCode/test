@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { NavTreeItemData } from '~/components/nav-tree/nav-tree.type';
+import { NavTreeItemData } from '~/components/tree/nav-tree/nav-tree.type';
 
 export const useTreeNodesUtils = (treeData: NavTreeItemData[]) => {
   const getParentsIdsList = useCallback(

@@ -3,7 +3,7 @@ import { Preloader } from '@pspod/ui-components';
 import { createFileRoute, Link } from '@tanstack/react-router';
 
 import { useGetContentNodesByParent } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
-import { isFolderType, renderItemIcon } from '~/components/nav-tree/nav-tree.utils';
+import { isFolderType, renderItemIcon } from '~/components/tree/nav-tree/nav-tree.utils';
 import { EmptyDirectory } from '~/routing/_fallbacks/info/empty-element.component';
 
 export const Route = createFileRoute(

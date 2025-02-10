@@ -1,6 +1,6 @@
 import { FieldPath, FieldValues, useController, UseControllerProps } from 'react-hook-form';
 
-import { PhoneInput } from '~/components/phone-input/phone-input.component';
+import { PhoneInput } from '~/components/inputs/phone-input/phone-input.component';
 import { ValidationError } from '~/components/react-hook-form/_validation-error/validation-error.component';
 
 interface FormInputPhoneProps<

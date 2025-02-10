@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { LogTextOutput } from '~/components/log-text-output/log-text-output.styled';
+import { LogTextOutput } from '~/components/log-text-output/log-text-output.component';
 
 export interface RouteErrorBoundaryProps {
   error: Error;

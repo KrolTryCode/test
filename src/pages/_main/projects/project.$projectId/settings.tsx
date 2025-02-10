@@ -2,7 +2,7 @@ import { Accordion } from '@pspod/ui-components';
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { ServiceTokens } from './settings/token/service-tokens.component';
+import { ServiceTokensTable } from '~/components/tables/service-tokens/service-tokens.component';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId/settings')({
   component: Settings,
@@ -15,5 +15,5 @@ export const Route = createFileRoute('/_main/projects/project/$projectId/setting
 function Settings() {
   const { t } = useTranslation();
 
-  return <Accordion text={t('ENTITY.TOKENS')} content={<ServiceTokens />} />;
+  return <Accordion text={t('ENTITY.TOKENS')} content={<ServiceTokensTable />} />;
 }

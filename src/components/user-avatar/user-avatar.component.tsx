@@ -3,8 +3,8 @@ import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useGetUserAvatarIdQuery } from '~/api/queries/users/get-active-user-avatar-id.query';
+import { useGetImage } from '~/use-cases/get-image.hook';
 
-import { useGetImage } from '../upload-file/use-get-image.hook';
 import { getFullName } from '../user-profile/user-profile.utils';
 
 interface UserAvatarProps extends AvatarProps {

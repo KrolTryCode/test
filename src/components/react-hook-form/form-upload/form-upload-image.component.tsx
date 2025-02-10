@@ -1,7 +1,7 @@
 import { UploadImage, UploadImageProps } from '@pspod/ui-components';
 import { FieldPath, FieldValues, useController, UseControllerProps } from 'react-hook-form';
 
-import { useGetImage } from '~/components/upload-file/use-get-image.hook';
+import { useGetImage } from '~/use-cases/get-image.hook';
 import { fileTypeExtensions, validateSelectedFiles } from '~/utils/files/validate-files';
 
 import { ValidationError } from '../_validation-error/validation-error.component';

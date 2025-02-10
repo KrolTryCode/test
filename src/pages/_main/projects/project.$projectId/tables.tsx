@@ -4,8 +4,8 @@ import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { useState } from 'react';
 
 import { CreateNodeContentMenu } from '~/components/create-menu/create-node-content-menu.component';
-import { NodesTreeList } from '~/pages/_main/projects/project.$projectId/tables.$tableId/tree/nodes-tree-list.component';
-import { useNodeTreeActions } from '~/pages/_main/projects/project.$projectId/tables.$tableId/tree/use-node-tree-actions.hook';
+import { NodesTreeList } from '~/components/tree/nodes-tree/nodes-tree-list.component';
+import { useNodeTreeActions } from '~/components/tree/use-node-tree-actions.hook';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId/tables')({
   staticData: {

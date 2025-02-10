@@ -6,7 +6,7 @@ import { ChangePasswordForm } from '~/components/forms/change-password/change-pa
 import { ChangePasswordForm as ChangePasswordFormSchema } from '~/components/forms/change-password/change-password-form.schema';
 import { showErrorMessage } from '~/utils/show-error-message';
 
-import { useAuthSearchParams } from './use-auth-search-params.hook';
+import { useAuthSearchParams } from '../../utils/hooks/use-auth-search-params';
 
 export const Route = createFileRoute('/_auth/auth/recovery')({
   component: RecoveryPage,

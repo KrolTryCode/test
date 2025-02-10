@@ -8,7 +8,7 @@ import { useGetProjectNodeQuery } from '~/api/queries/projects/get-project-node.
 import { useUpdateProjectNodeMutation } from '~/api/queries/projects/update-project-node.mutation';
 import { ProjectNode, ProjectNodeType } from '~/api/utils/api-requests';
 import { projectNodeModal } from '~/components/forms/project-node/project-node-form';
-import { useTablesMenuData } from '~/pages/_main/projects/_components/use-tables-menu-data.hook';
+import { useTablesMenuData } from '~/components/node-header/use-tables-menu-data.hook';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 import { usePageTitle } from '~/utils/hooks/use-page-title';
 import { showErrorMessage } from '~/utils/show-error-message';

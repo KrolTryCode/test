@@ -9,7 +9,7 @@ import { useUpdateTaskMutation } from '~/api/queries/projects/tasks/update-task.
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { FullTaskInfo, TaskState } from '~/api/utils/api-requests';
 import { taskModal } from '~/components/forms/task/task-form';
-import { useTaskActions } from '~/use-cases/use-task-actions.hook';
+import { useTaskActions } from '~/use-cases/task-actions.hook';
 import { downloadBlobFile } from '~/utils/files';
 import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 import { showErrorMessage } from '~/utils/show-error-message';
@@ -21,7 +21,7 @@ export const Route = createFileRoute('/_main/projects/project/$projectId/tasks/'
 function TasksList() {
   const { projectId } = Route.useParams();
   const { t, translateStatus, getStatusValueOptions } = useCustomTranslations();
-  const { startTask } = useTaskActions();
+  const { startTask } = useTaskActions(projectId);
   const { data: taskList = [], isLoading: isTaskListLoading } = useGetProjectTasksQuery(projectId);
   const navigate = useNavigate();
 
