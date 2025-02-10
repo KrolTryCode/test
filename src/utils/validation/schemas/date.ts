@@ -6,7 +6,13 @@ export const dateMinSchema = y.date().test({
   test: (date, ctx) => {
     const isValidDate = date instanceof Date && isValid(date);
 
-    if (isValidDate && isPast(date)) {
+    if (!isValidDate) {
+      return ctx.createError({
+        message: { key: 'yup:mixed.notType' },
+      });
+    }
+
+    if (isPast(date)) {
       const currentDate = new Date();
       return ctx.createError({
         message: { key: 'yup:date.min', values: { min: currentDate.toLocaleString() } },
