@@ -124,9 +124,10 @@ export const ProjectTableStructure: FC<ProjectTableStructureProps> = ({ tableId 
       },
       {
         field: 'nullable',
-        headerName: t('STRUCTURE.OPTIONAL_FIELD'),
+        headerName: t('STRUCTURE.REQUIRED_FIELD'),
         flex: 1,
         type: 'boolean',
+        valueGetter: v => !v,
       },
       {
         field: 'actions',

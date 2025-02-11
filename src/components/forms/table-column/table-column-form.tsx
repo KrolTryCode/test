@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { CreateColumnRequest } from '~/api/utils/api-requests';
 import { FormCheckbox, FormInputText, FormSelect } from '~/components/react-hook-form';
 
-import { getSchema } from './table-column-form.schema';
+import { getSchema, ITableColumnForm } from './table-column-form.schema';
 import { useSelectColumnTypes } from './use-select-column-types.hook';
 
 interface TableColumnFormProps {
@@ -26,15 +26,22 @@ export const TableColumnForm: FC<TableColumnFormProps> = ({ usedNames, onResolve
     handleSubmit,
     control,
     formState: { isValid, isSubmitted, isSubmitting },
-  } = useForm<CreateColumnRequest>({
+  } = useForm<ITableColumnForm>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
     defaultValues: schema.getDefault(),
     resolver: yupResolver(schema),
   });
 
+  const onSubmit = (v: ITableColumnForm) => {
+    const data = { ...v, nullable: !v.required };
+    // @ts-expect-error required
+    delete data.required;
+    onResolve(data);
+  };
+
   return (
-    <Form onSubmit={handleSubmit(onResolve)} isRequired>
+    <Form onSubmit={handleSubmit(onSubmit)} isRequired>
       <FormItem label={t('COMMON.TITLE')}>
         <FormInputText controllerProps={{ ...register('name'), control }} />
       </FormItem>
@@ -46,8 +53,8 @@ export const TableColumnForm: FC<TableColumnFormProps> = ({ usedNames, onResolve
         controllerProps={{ ...register('unique'), control }}
       />
       <FormCheckbox
-        label={t('STRUCTURE.OPTIONAL_FIELD')}
-        controllerProps={{ ...register('nullable'), control }}
+        label={t('STRUCTURE.REQUIRED_FIELD')}
+        controllerProps={{ ...register('required'), control }}
       />
       <FormButtons>
         <Button onClick={onReject} variant={'outlined'} color={'primary'}>

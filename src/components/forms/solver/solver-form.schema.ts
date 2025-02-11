@@ -6,9 +6,12 @@ export interface SolverUpdateRequest extends SolverRequest {
   fileId?: string;
 }
 
-export const createSolverFormSchema = (isEditing: boolean): y.ObjectSchema<SolverUpdateRequest> => {
+export const createSolverFormSchema = (
+  forbiddenNames: string[],
+  isEditing: boolean,
+): y.ObjectSchema<SolverUpdateRequest> => {
   return y.object({
-    name: y.string().required().default(''),
+    name: y.string().notOneOf(forbiddenNames).required().default(''),
     description: y.string().default(''),
     fileId: isEditing ? y.string().required().default('') : y.string().default(''),
   });

@@ -4,6 +4,7 @@ import { FC, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { useGetSolversQuery } from '~/api/queries/solvers/get-solvers.query';
 import { Solver } from '~/api/utils/api-requests';
 import { UploadFile } from '~/components/inputs/upload-file/upload-file.component';
 import { LabelWithRules } from '~/components/label-with-rules/label-with-rules.component';
@@ -11,8 +12,8 @@ import { FormInputText } from '~/components/react-hook-form';
 import { downloadBlobFile } from '~/utils/files';
 import { getAvailableExtensionsMsg } from '~/utils/files/validate-files';
 
+import { useSolverForm } from './solver-form.hook';
 import { createSolverFormSchema, SolverUpdateRequest } from './solver-form.schema';
-import { useSolverForm } from './use-solver-form.hook';
 
 interface SolverFormProps {
   data?: Solver;
@@ -31,7 +32,16 @@ export const SolverForm: FC<SolverFormProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const schema = useMemo(() => createSolverFormSchema(isEditing), [isEditing]);
+  const { data: solverNames = [] } = useGetSolversQuery(projectId, {
+    select: solvers => {
+      return solvers.filter(s => s.id !== data?.id).map(s => s.name!);
+    },
+  });
+
+  const schema = useMemo(
+    () => createSolverFormSchema(solverNames, isEditing),
+    [solverNames, isEditing],
+  );
 
   const {
     register,
