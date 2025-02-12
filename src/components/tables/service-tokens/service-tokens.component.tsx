@@ -5,7 +5,7 @@ import { useParams } from '@tanstack/react-router';
 import { FC, useMemo } from 'react';
 
 import { ServiceToken, TokenState } from '~/api/utils/api-requests';
-import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
+import { useCustomTranslations } from '~/utils/hooks';
 
 import { useServiceTokensTable } from './service-tokens.hook';
 

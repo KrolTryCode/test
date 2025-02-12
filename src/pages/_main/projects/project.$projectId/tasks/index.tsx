@@ -11,7 +11,7 @@ import { FullTaskInfo, TaskState } from '~/api/utils/api-requests';
 import { taskModal } from '~/components/forms/task/task-form';
 import { useTaskActions } from '~/use-cases/task-actions.hook';
 import { downloadBlobFile } from '~/utils/files';
-import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
+import { useCustomTranslations } from '~/utils/hooks';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId/tasks/')({

@@ -4,7 +4,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { FC, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { logo } from '~/utils/configuration/logo';
+import { logo } from '~/utils/configuration/design/logo';
 
 import { ButtonNavigate, FallbackPageProps } from './fallback.type';
 

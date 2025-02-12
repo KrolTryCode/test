@@ -15,7 +15,7 @@ import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { createAccountModal } from '~/components/forms/create-account/create-account-form.modal';
 import { GridActionsCellItemLink } from '~/components/implicit-links';
 import { UserAvatar } from '~/components/user-avatar/user-avatar.component';
-import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
+import { useCustomTranslations } from '~/utils/hooks';
 
 import { useManageUser } from './manage-user.hook';
 import { useUsersTable } from './users-table.hook';

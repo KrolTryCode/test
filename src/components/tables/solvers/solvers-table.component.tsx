@@ -6,7 +6,7 @@ import { FC, useMemo } from 'react';
 
 import { useGetSolversQuery } from '~/api/queries/solvers/get-solvers.query';
 import { Solver } from '~/api/utils/api-requests';
-import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
+import { useCustomTranslations } from '~/utils/hooks';
 
 import { useSolverActions } from './solvers-table.hook';
 

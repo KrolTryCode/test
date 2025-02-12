@@ -18,7 +18,7 @@ import { TableColumnExtended } from '~/api/selectors/select-node-columns';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { useGetEditRowActions } from '~/components/datagrid/use-get-edit-row-actions.hook';
 import { reorderRows } from '~/utils/datagrid/reorder-rows';
-import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
+import { useCustomTranslations } from '~/utils/hooks';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { useProjectTableStructure } from './project-table-structure.hook';

@@ -1,7 +1,8 @@
 import { createRouter } from '@tanstack/react-router';
 
-import { RouteErrorBoundary } from './_fallbacks/errors/error-boundary.component';
-import { NotFoundPage } from './_fallbacks/errors/not-found.component';
+import { RouteErrorBoundary } from '~/routing/_fallbacks/errors/error-boundary.component';
+import { NotFoundPage } from '~/routing/_fallbacks/errors/not-found.component';
+
 import { routeTree } from './routeTree.gen';
 
 declare module '@tanstack/react-router' {

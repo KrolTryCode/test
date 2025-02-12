@@ -4,9 +4,8 @@ import { useCallback } from 'react';
 import { useCompleteAccountRecoveryMutation } from '~/api/queries/accounts/complete-account-recovery.mutation';
 import { ChangePasswordForm } from '~/components/forms/change-password/change-password-form';
 import { ChangePasswordForm as ChangePasswordFormSchema } from '~/components/forms/change-password/change-password-form.schema';
+import { useAuthSearchParams } from '~/utils/hooks';
 import { showErrorMessage } from '~/utils/show-error-message';
-
-import { useAuthSearchParams } from '../../utils/hooks/use-auth-search-params';
 
 export const Route = createFileRoute('/_auth/auth/recovery')({
   component: RecoveryPage,

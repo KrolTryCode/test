@@ -10,7 +10,7 @@ import { useGetFormParametersQuery } from '~/api/queries/forms/parameters/get-pa
 import { sortParametersByIndex } from '~/api/selectors/sort-parameters-by-index';
 import { ParameterField } from '~/api/utils/api-requests';
 import { ParameterForm } from '~/components/forms/parameter-field/parameter-field-form';
-import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
+import { useCustomTranslations } from '~/utils/hooks';
 
 import { useParameterFieldsActions } from './form-parameter-fileds.hook';
 

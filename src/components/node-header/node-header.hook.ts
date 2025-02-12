@@ -10,7 +10,7 @@ import { ProjectNode, ProjectNodeType } from '~/api/utils/api-requests';
 import { projectNodeModal } from '~/components/forms/project-node/project-node-form';
 import { useTablesMenuData } from '~/components/node-header/use-tables-menu-data.hook';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
-import { usePageTitle } from '~/utils/hooks/use-page-title';
+import { usePageTitle } from '~/utils/hooks';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const useNodeActions = (id: string) => {

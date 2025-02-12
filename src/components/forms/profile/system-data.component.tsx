@@ -4,7 +4,7 @@ import { Control, UseFormRegister } from 'react-hook-form';
 
 import { User, UserState } from '~/api/utils/api-requests';
 import { UpdateUserRequestNullable } from '~/components/forms/profile/profile-form.schema';
-import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
+import { useCustomTranslations } from '~/utils/hooks';
 
 interface SystemDataProps {
   control: Control<UpdateUserRequestNullable>;

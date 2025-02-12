@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { FallbackInfoPage } from '../fallback-info-page.component';
 import { ButtonNavigate, FallbackPageType } from '../fallback.type';
 
-const WorkInProgress: FC = () => {
+export const WorkInProgress: FC = () => {
   return (
     <FallbackInfoPage
       pageType={FallbackPageType.WorkInProgress}
@@ -11,5 +11,3 @@ const WorkInProgress: FC = () => {
     />
   );
 };
-
-export default WorkInProgress;

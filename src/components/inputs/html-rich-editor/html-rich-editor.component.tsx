@@ -5,7 +5,7 @@ import ReactCodeMirror from '@uiw/react-codemirror';
 import { FC, FocusEventHandler, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { usePreventedLinks } from '~/utils/hooks/use-prevented-links';
+import { usePreventedLinks } from '~/utils/hooks';
 
 export type HTMLRichEditorProps = {
   value?: string;

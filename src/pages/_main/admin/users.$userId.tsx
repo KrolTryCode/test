@@ -10,7 +10,7 @@ import {
   UserProfileLayout,
 } from '~/components/user-profile/user-profile.style';
 import { useUserAccount } from '~/use-cases/user-account.hook';
-import { usePageTitle } from '~/utils/hooks/use-page-title';
+import { usePageTitle } from '~/utils/hooks';
 
 export const Route = createFileRoute('/_main/admin/users/$userId')({
   // loader: ({ params }) => fetchPost(params.userId),
