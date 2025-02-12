@@ -1,18 +1,16 @@
-import { Downloading, Edit as EditIcon, PlayCircleOutlined } from '@mui/icons-material';
+import { Edit as EditIcon } from '@mui/icons-material';
 import { GridActionsCellItem } from '@mui/x-data-grid-premium';
-import { AddEntity, DataGrid, EnhancedColDef, notifySuccess } from '@pspod/ui-components';
+import { AddEntity, DataGrid, DeleteCellButton, EnhancedColDef } from '@pspod/ui-components';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useCallback, useMemo } from 'react';
 
 import { useGetProjectTasksQuery } from '~/api/queries/projects/tasks/get-project-tasks.query';
-import { useUpdateTaskMutation } from '~/api/queries/projects/tasks/update-task.mutation';
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { FullTaskInfo, TaskState } from '~/api/utils/api-requests';
 import { taskModal } from '~/components/forms/task/task-form';
 import { useTaskActions } from '~/use-cases/task-actions.hook';
 import { downloadBlobFile } from '~/utils/files';
 import { useCustomTranslations } from '~/utils/hooks';
-import { showErrorMessage } from '~/utils/show-error-message';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId/tasks/')({
   component: TasksList,
@@ -21,14 +19,9 @@ export const Route = createFileRoute('/_main/projects/project/$projectId/tasks/'
 function TasksList() {
   const { projectId } = Route.useParams();
   const { t, translateStatus, getStatusValueOptions } = useCustomTranslations();
-  const { startTask } = useTaskActions(projectId);
+  const { startTask, updateTask, archiveTask } = useTaskActions(projectId);
   const { data: taskList = [], isLoading: isTaskListLoading } = useGetProjectTasksQuery(projectId);
   const navigate = useNavigate();
-
-  const { mutateAsync: updateTask } = useUpdateTaskMutation({
-    onSuccess: () => notifySuccess(t(`MESSAGE.UPDATE_SUCCESS`)),
-    onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
-  });
 
   const handleEditTask = useCallback(
     (task: FullTaskInfo) => {
@@ -104,8 +97,6 @@ function TasksList() {
             <GridActionsCellItem
               showInMenu
               key={'download'}
-              color={'primary'}
-              icon={<Downloading />}
               disabled={row.state !== TaskState.Successed}
               label={t('ACTION.DOWNLOAD')}
               title={t('ACTION.DOWNLOAD')}
@@ -114,8 +105,6 @@ function TasksList() {
             <GridActionsCellItem
               showInMenu
               key={'start'}
-              color={'primary'}
-              icon={<PlayCircleOutlined />}
               disabled={row.state !== TaskState.ReadyToStart}
               label={t('ACTION.RUN', { what: t('ENTITY.TASK').toLowerCase() })}
               title={t('ACTION.RUN', { what: t('ENTITY.TASK').toLowerCase() })}
@@ -129,11 +118,25 @@ function TasksList() {
               title={t('ACTION.EDIT', { type: t('ENTITY.TASK').toLowerCase() })}
               onClick={() => handleEditTask(row)}
             />,
+            <DeleteCellButton
+              showInMenu
+              key={'delete'}
+              entity={t('ENTITY.TASK')}
+              deleteHandler={() => void archiveTask(row.id!)}
+            />,
           ];
         },
       },
     ],
-    [t, translateStatus, getStatusValueOptions, handleDownloadFile, startTask, handleEditTask],
+    [
+      t,
+      translateStatus,
+      getStatusValueOptions,
+      handleDownloadFile,
+      startTask,
+      handleEditTask,
+      archiveTask,
+    ],
   );
 
   return (
@@ -143,7 +146,12 @@ function TasksList() {
       loading={isTaskListLoading}
       totalCount={taskList.length ?? 0}
       pinnedColumns={{ right: ['actions'] }}
-      customToolbarContent={<AddEntity onClick={handleAddTask} />}
+      customToolbarContent={
+        <AddEntity
+          onClick={handleAddTask}
+          customText={t('ACTION.CREATE', { type: t('ENTITY.TASK').toLowerCase() })}
+        />
+      }
     />
   );
 }
