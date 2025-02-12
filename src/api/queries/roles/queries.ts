@@ -2,7 +2,7 @@ import { createQueryKeys } from '@lukemorales/query-key-factory';
 
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { Pageable } from '~/api/utils/api-requests';
-import { ServerPagingParams } from '~/utils/hooks/use-server-options';
+import { ServerPagingParams } from '~/utils/hooks';
 
 export const roleQueries = createQueryKeys('roles', {
   getAllRoles: {

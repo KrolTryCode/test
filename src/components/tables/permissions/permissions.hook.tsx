@@ -13,7 +13,7 @@ import { useAddRolePermissionsMutation } from '~/api/queries/roles/add-role-perm
 import { useFindPermissionsQuery } from '~/api/queries/roles/find-permissions.query';
 import { useGetAllRolesQuery } from '~/api/queries/roles/get-all-roles.query';
 import { useRemoveRolePermissionsMutation } from '~/api/queries/roles/remove-role-permissions.mutation';
-import { useServerPagingParams } from '~/utils/hooks/use-server-options';
+import { useServerPagingParams } from '~/utils/hooks';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 import { GridPermission } from './permissions.type';

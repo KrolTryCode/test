@@ -2,8 +2,8 @@ import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { logo } from '~/utils/configuration/logo';
-import { useAppDesignConfig } from '~/utils/configuration/use-app-design-config.hook';
+import { logo } from '~/utils/configuration/design/logo';
+import { useAppDesignConfig } from '~/utils/configuration/design/use-app-design-config.hook';
 import { createObjectURLFromFile } from '~/utils/files/create-object-url-from-file';
 
 import { QuestionMarkWrapper, StyledHeader, StyledHeaderHelp } from './header.style';

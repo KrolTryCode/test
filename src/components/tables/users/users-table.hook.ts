@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { useGetUserListQuery } from '~/api/queries/users/get-user-list.query';
 import { selectPageableData } from '~/api/selectors/pageable';
-import { useServerPagingParams } from '~/utils/hooks/use-server-options';
+import { useServerPagingParams } from '~/utils/hooks';
 
 export const useUsersTable = () => {
   const [gridPaging, setGridPaging] = useState<GridPagingParams>();

@@ -4,8 +4,8 @@ import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { logo } from '~/utils/configuration/logo';
-import { useAppDesignConfig } from '~/utils/configuration/use-app-design-config.hook';
+import { logo } from '~/utils/configuration/design/logo';
+import { useAppDesignConfig } from '~/utils/configuration/design/use-app-design-config.hook';
 import { createObjectURLFromFile } from '~/utils/files';
 
 export const Route = createFileRoute('/_auth')({

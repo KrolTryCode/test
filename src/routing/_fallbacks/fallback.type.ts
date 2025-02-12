@@ -1,4 +1,4 @@
-import { logo } from '~/utils/configuration/logo';
+import { logo } from '~/utils/configuration/design/logo';
 
 export interface FallbackPageProps {
   pageType: FallbackPageType;

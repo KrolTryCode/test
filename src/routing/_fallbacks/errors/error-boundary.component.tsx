@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { LogTextOutput } from '~/components/log-text-output/log-text-output.component';
 
-export interface RouteErrorBoundaryProps {
+interface RouteErrorBoundaryProps {
   error: Error;
 }
 

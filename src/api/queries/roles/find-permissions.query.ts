@@ -2,7 +2,7 @@ import { UseQueryResult, keepPreviousData, useQuery } from '@tanstack/react-quer
 
 import { UseCustomQueryOptions } from '~/api/typings/react-query-helpers';
 import { PageRole } from '~/api/utils/api-requests';
-import { ServerPagingParams } from '~/utils/hooks/use-server-options';
+import { ServerPagingParams } from '~/utils/hooks';
 
 import { roleQueries } from './queries';
 

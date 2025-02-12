@@ -8,8 +8,7 @@ import { useGetTemplatesQuery } from '~/api/queries/templates/get-templates.quer
 import { Template, TemplateState } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { GridActionsCellItemLink } from '~/components/implicit-links';
-import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
-import { usePreventedLinks } from '~/utils/hooks/use-prevented-links';
+import { useCustomTranslations, usePreventedLinks } from '~/utils/hooks';
 
 export const Route = createFileRoute('/_main/admin/templates/')({
   component: TemplatesPage,

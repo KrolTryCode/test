@@ -17,7 +17,7 @@ import { Role } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { useGetEditRowActions } from '~/components/datagrid/use-get-edit-row-actions.hook';
 import { addRoleModal } from '~/components/forms/permission-role/role-form';
-import { useServerPagingParams } from '~/utils/hooks/use-server-options';
+import { useServerPagingParams } from '~/utils/hooks';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const PermissionRoleTable: FC = () => {

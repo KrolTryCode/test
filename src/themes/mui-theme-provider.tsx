@@ -12,7 +12,7 @@ import './fonts.scss';
 import { useTranslation } from 'react-i18next';
 
 import { lightBrownPalette as defaultPalette } from '~/themes/palettes/light-brown.palette';
-import { useAppDesignConfig } from '~/utils/configuration/use-app-design-config.hook';
+import { useAppDesignConfig } from '~/utils/configuration/design/use-app-design-config.hook';
 
 import { getGridLocales } from './locales';
 import { themeOptions } from './theme';

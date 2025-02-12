@@ -6,11 +6,10 @@ import i18n from 'i18next';
 import { FC } from 'react';
 import { I18nextProvider } from 'react-i18next';
 
+import { router } from '~/routing/router';
 import { MuiThemeProvider } from '~/themes/mui-theme-provider';
 import { DeclinatedTranslationsProvider } from '~/utils/configuration/translations/declinated-translations-provider';
 import { useI18nInit } from '~/utils/configuration/translations/use-init-i18n.hook';
-
-import { router } from './routing/router';
 
 const queryClient = new QueryClient({
   defaultOptions: {
