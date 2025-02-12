@@ -88,7 +88,7 @@ export const TaskForm: FC<TaskFormProps> = ({
             color={'primary'}
             isLoading={isLoading}
           >
-            {t('ACTION.NEXT')}
+            {t(`ACTION.${isEditing ? 'SAVE' : 'NEXT'}`)}
           </Button>
         </FormButtons>
       )}
