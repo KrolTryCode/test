@@ -23,7 +23,9 @@ describe('Token form', () => {
   });
 
   it('should fail with wrong (past) date', async () => {
-    expect(await schema.isValid({ ...correctFormData, expirationDate: '' })).toBeFalsy();
+    expect(
+      await schema.isValid({ ...correctFormData, expirationDate: new Date('2020-MM-DD') }),
+    ).toBeFalsy();
     expect(
       await schema.isValid({
         ...correctFormData,
