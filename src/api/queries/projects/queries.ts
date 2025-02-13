@@ -32,4 +32,8 @@ export const projectQueries = createQueryKeys('project', {
     queryKey: [projectId, 'logo'],
     queryFn: () => ApiClientSecured.projectFilesV1Controller.getProjectLogo(projectId),
   }),
+  permissionTypes: (projectId: string) => ({
+    queryKey: [projectId],
+    queryFn: () => ApiClientSecured.projectNodeV1Controller.getAvailablePermissionTypes(projectId),
+  }),
 });
