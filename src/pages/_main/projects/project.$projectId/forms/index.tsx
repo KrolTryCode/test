@@ -4,16 +4,21 @@ import {
   DataGrid,
   DeleteCellButton,
   EnhancedColDef,
+  modal,
   notifySuccess,
 } from '@pspod/ui-components';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { InstanceProps } from 'react-modal-promise';
 
+import { useAddFormMutation } from '~/api/queries/forms/add-form.mutation';
 import { useArchiveFormMutation } from '~/api/queries/forms/archive-form.mutation';
 import { useGetFormsQuery } from '~/api/queries/forms/get-forms.query';
-import { ParameterForm } from '~/api/utils/api-requests';
+import { CreateProjectParameterFormRequest, ParameterForm } from '~/api/utils/api-requests';
+import { AddTaskForm } from '~/components/forms/task-form/add-task-form';
 import { GridActionsCellItemLink } from '~/components/implicit-links';
+import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId/forms/')({
@@ -26,16 +31,32 @@ function TaskFormList() {
   const navigate = useNavigate();
   const { data: forms = [], isLoading } = useGetFormsQuery(projectId);
 
+  const declinatedTranslations = useDeclinatedTranslationsContext();
+  const declinatedForm = declinatedTranslations.FORM.ACCUSATIVE.toLowerCase();
+
   const { mutate: deleteForm } = useArchiveFormMutation(projectId, {
     onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.DELETION_FAILED'),
+  });
+
+  const { mutateAsync: addForm, isPending } = useAddFormMutation(projectId, {
+    onSuccess: res => {
+      notifySuccess(t('MESSAGE.CREATION_SUCCESS'));
+      void navigate({
+        to: '/projects/project/$projectId/forms/$formId/edit',
+        params: { projectId, formId: res.id },
+      });
+    },
+    onError: e => {
+      showErrorMessage(e, t('ERROR.CREATION_FAILED'));
+    },
   });
 
   const columns = useMemo<EnhancedColDef<ParameterForm>[]>(
     () => [
       {
         field: 'name',
-        headerName: t('COMMON.NAME'),
+        headerName: t('COMMON.TITLE'),
         flex: 1,
       },
       // {
@@ -81,9 +102,14 @@ function TaskFormList() {
       customToolbarContent={
         <AddEntity
           onClick={() =>
-            void navigate({
-              to: '/projects/project/$projectId/forms/add',
-              params: { projectId },
+            modal({
+              title: t('ACTION.ADD', {
+                type: declinatedForm,
+              }),
+              onOk: addForm,
+              renderContent: (
+                modalInstance: InstanceProps<CreateProjectParameterFormRequest, never>,
+              ) => <AddTaskForm {...modalInstance} isPending={isPending} />,
             })
           }
         />

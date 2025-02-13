@@ -49,7 +49,6 @@ import { Route as MainAdminTemplatesTemplateIdEditImport } from './../pages/_mai
 import { Route as MainProjectsProjectProjectIdTasksIndexImport } from './../pages/_main/projects/project.$projectId/tasks/index';
 import { Route as MainProjectsProjectProjectIdFormsIndexImport } from './../pages/_main/projects/project.$projectId/forms/index';
 import { Route as MainProjectsProjectProjectIdTasksAddImport } from './../pages/_main/projects/project.$projectId/tasks/add';
-import { Route as MainProjectsProjectProjectIdFormsAddImport } from './../pages/_main/projects/project.$projectId/forms/add';
 import { Route as MainProjectsProjectProjectIdTablesTableIdIndexImport } from './../pages/_main/projects/project.$projectId/tables.$tableId/index';
 import { Route as MainProjectsProjectProjectIdTablesTableIdStructureImport } from './../pages/_main/projects/project.$projectId/tables.$tableId/structure';
 import { Route as MainProjectsProjectProjectIdTablesTableIdChecksImport } from './../pages/_main/projects/project.$projectId/tables.$tableId/checks';
@@ -297,13 +296,6 @@ const MainProjectsProjectProjectIdTasksAddRoute =
     id: '/add',
     path: '/add',
     getParentRoute: () => MainProjectsProjectProjectIdTasksRoute,
-  } as any);
-
-const MainProjectsProjectProjectIdFormsAddRoute =
-  MainProjectsProjectProjectIdFormsAddImport.update({
-    id: '/add',
-    path: '/add',
-    getParentRoute: () => MainProjectsProjectProjectIdFormsRoute,
   } as any);
 
 const MainProjectsProjectProjectIdTablesTableIdIndexRoute =
@@ -590,13 +582,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainProjectsGroupGroupIdIndexImport;
       parentRoute: typeof MainProjectsImport;
     };
-    '/_main/projects/project/$projectId/forms/add': {
-      id: '/_main/projects/project/$projectId/forms/add';
-      path: '/add';
-      fullPath: '/projects/project/$projectId/forms/add';
-      preLoaderRoute: typeof MainProjectsProjectProjectIdFormsAddImport;
-      parentRoute: typeof MainProjectsProjectProjectIdFormsImport;
-    };
     '/_main/projects/project/$projectId/tasks/add': {
       id: '/_main/projects/project/$projectId/tasks/add';
       path: '/add';
@@ -741,15 +726,12 @@ const MainAdminRouteWithChildren = MainAdminRoute._addFileChildren(
 );
 
 interface MainProjectsProjectProjectIdFormsRouteChildren {
-  MainProjectsProjectProjectIdFormsAddRoute: typeof MainProjectsProjectProjectIdFormsAddRoute;
   MainProjectsProjectProjectIdFormsIndexRoute: typeof MainProjectsProjectProjectIdFormsIndexRoute;
   MainProjectsProjectProjectIdFormsFormIdEditRoute: typeof MainProjectsProjectProjectIdFormsFormIdEditRoute;
 }
 
 const MainProjectsProjectProjectIdFormsRouteChildren: MainProjectsProjectProjectIdFormsRouteChildren =
   {
-    MainProjectsProjectProjectIdFormsAddRoute:
-      MainProjectsProjectProjectIdFormsAddRoute,
     MainProjectsProjectProjectIdFormsIndexRoute:
       MainProjectsProjectProjectIdFormsIndexRoute,
     MainProjectsProjectProjectIdFormsFormIdEditRoute:
@@ -908,7 +890,6 @@ export interface FileRoutesByFullPath {
   '/projects/project/$projectId/tables': typeof MainProjectsProjectProjectIdTablesRouteWithChildren;
   '/projects/project/$projectId/tasks': typeof MainProjectsProjectProjectIdTasksRouteWithChildren;
   '/projects/group/$groupId': typeof MainProjectsGroupGroupIdIndexRoute;
-  '/projects/project/$projectId/forms/add': typeof MainProjectsProjectProjectIdFormsAddRoute;
   '/projects/project/$projectId/tasks/add': typeof MainProjectsProjectProjectIdTasksAddRoute;
   '/projects/project/$projectId/forms/': typeof MainProjectsProjectProjectIdFormsIndexRoute;
   '/projects/project/$projectId/tasks/': typeof MainProjectsProjectProjectIdTasksIndexRoute;
@@ -949,7 +930,6 @@ export interface FileRoutesByTo {
   '/projects/project/$projectId/solvers': typeof MainProjectsProjectProjectIdSolversRoute;
   '/projects/project/$projectId/tables': typeof MainProjectsProjectProjectIdTablesRouteWithChildren;
   '/projects/group/$groupId': typeof MainProjectsGroupGroupIdIndexRoute;
-  '/projects/project/$projectId/forms/add': typeof MainProjectsProjectProjectIdFormsAddRoute;
   '/projects/project/$projectId/tasks/add': typeof MainProjectsProjectProjectIdTasksAddRoute;
   '/projects/project/$projectId/forms': typeof MainProjectsProjectProjectIdFormsIndexRoute;
   '/projects/project/$projectId/tasks': typeof MainProjectsProjectProjectIdTasksIndexRoute;
@@ -997,7 +977,6 @@ export interface FileRoutesById {
   '/_main/projects/project/$projectId/tables': typeof MainProjectsProjectProjectIdTablesRouteWithChildren;
   '/_main/projects/project/$projectId/tasks': typeof MainProjectsProjectProjectIdTasksRouteWithChildren;
   '/_main/projects/group/$groupId/': typeof MainProjectsGroupGroupIdIndexRoute;
-  '/_main/projects/project/$projectId/forms/add': typeof MainProjectsProjectProjectIdFormsAddRoute;
   '/_main/projects/project/$projectId/tasks/add': typeof MainProjectsProjectProjectIdTasksAddRoute;
   '/_main/projects/project/$projectId/forms/': typeof MainProjectsProjectProjectIdFormsIndexRoute;
   '/_main/projects/project/$projectId/tasks/': typeof MainProjectsProjectProjectIdTasksIndexRoute;
@@ -1045,7 +1024,6 @@ export interface FileRouteTypes {
     | '/projects/project/$projectId/tables'
     | '/projects/project/$projectId/tasks'
     | '/projects/group/$groupId'
-    | '/projects/project/$projectId/forms/add'
     | '/projects/project/$projectId/tasks/add'
     | '/projects/project/$projectId/forms/'
     | '/projects/project/$projectId/tasks/'
@@ -1085,7 +1063,6 @@ export interface FileRouteTypes {
     | '/projects/project/$projectId/solvers'
     | '/projects/project/$projectId/tables'
     | '/projects/group/$groupId'
-    | '/projects/project/$projectId/forms/add'
     | '/projects/project/$projectId/tasks/add'
     | '/projects/project/$projectId/forms'
     | '/projects/project/$projectId/tasks'
@@ -1131,7 +1108,6 @@ export interface FileRouteTypes {
     | '/_main/projects/project/$projectId/tables'
     | '/_main/projects/project/$projectId/tasks'
     | '/_main/projects/group/$groupId/'
-    | '/_main/projects/project/$projectId/forms/add'
     | '/_main/projects/project/$projectId/tasks/add'
     | '/_main/projects/project/$projectId/forms/'
     | '/_main/projects/project/$projectId/tasks/'
@@ -1326,7 +1302,6 @@ export const routeTree = rootRoute
       "filePath": "_main/projects/project.$projectId/forms.tsx",
       "parent": "/_main/projects/project/$projectId",
       "children": [
-        "/_main/projects/project/$projectId/forms/add",
         "/_main/projects/project/$projectId/forms/",
         "/_main/projects/project/$projectId/forms/$formId/edit"
       ]
@@ -1368,10 +1343,6 @@ export const routeTree = rootRoute
     "/_main/projects/group/$groupId/": {
       "filePath": "_main/projects/group/$groupId.index.tsx",
       "parent": "/_main/projects"
-    },
-    "/_main/projects/project/$projectId/forms/add": {
-      "filePath": "_main/projects/project.$projectId/forms/add.tsx",
-      "parent": "/_main/projects/project/$projectId/forms"
     },
     "/_main/projects/project/$projectId/tasks/add": {
       "filePath": "_main/projects/project.$projectId/tasks/add.tsx",
