@@ -1,18 +1,13 @@
 import { Edit as EditIcon } from '@mui/icons-material';
 import { Stack, Typography } from '@mui/material';
-import { GridActionsCellItem } from '@mui/x-data-grid-premium';
-import { AddEntity, DataGrid, DeleteCellButton, EnhancedColDef, modal } from '@pspod/ui-components';
-import { DataType } from 'devextreme/common';
+import { GridActionsCellItem, GridEventListener } from '@mui/x-data-grid-premium';
+import { AddEntity, DataGrid, DeleteCellButton, EnhancedColDef } from '@pspod/ui-components';
 import { FC, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useGetFormParametersQuery } from '~/api/queries/forms/parameters/get-parameters.query';
-import { sortParametersByIndex } from '~/api/selectors/sort-parameters-by-index';
-import { ParameterField } from '~/api/utils/api-requests';
-import { ParameterForm } from '~/components/forms/parameter-field/parameter-field-form';
-import { useCustomTranslations } from '~/utils/hooks';
-
-import { useParameterFieldsActions } from './form-parameter-fileds.hook';
+import { DataType, ParameterField } from '~/api/utils/api-requests';
+import { useParametersHook } from '~/components/tables/form-parameter-fields/parameters-fields.hook';
+import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 
 interface ParametersTableProps {
   formId: string;
@@ -21,36 +16,26 @@ interface ParametersTableProps {
 export const ParametersTable: FC<ParametersTableProps> = ({ formId }) => {
   const { t } = useTranslation();
   const { translateColumnType } = useCustomTranslations();
-  const { data: parameters = [] } = useGetFormParametersQuery(formId, {
-    select: sortParametersByIndex,
-  });
 
-  const { deleteParameter, createParameter, updateParameter } = useParameterFieldsActions(formId);
+  const {
+    parameters,
+    isLoading,
+    deleteParameter,
+    handleCreateParameter,
+    handleUpdateParameter,
+    changeOrder,
+  } = useParametersHook(formId);
 
-  const handleCreateParameter = useCallback(() => {
-    modal({
-      onOk: createParameter,
-      title: t('ACTION.ADD', { type: t('ENTITY.PARAMETER').toLowerCase() }),
-      renderContent: args => <ParameterForm {...args} />,
-    });
-  }, [createParameter, t]);
-
-  const handleUpdateParameter = useCallback(
-    (row: ParameterField) => {
-      modal({
-        onOk: updateParameter,
-        title: t('ACTION.EDIT', { type: t('ENTITY.PARAMETER').toLowerCase() }),
-        renderContent: args => <ParameterForm {...args} data={row} />,
-      });
-    },
-    [t, updateParameter],
+  const handleOrderChange = useCallback<GridEventListener<'rowOrderChange'>>(
+    props => void changeOrder(props),
+    [changeOrder],
   );
 
   const columns = useMemo<EnhancedColDef<ParameterField>[]>(
     () => [
       {
         field: 'name',
-        headerName: t('COMMON.NAME'),
+        headerName: t('COMMON.TITLE'),
         flex: 1,
       },
       {
@@ -90,9 +75,12 @@ export const ParametersTable: FC<ParametersTableProps> = ({ formId }) => {
     <Stack minHeight={'40vh'}>
       <Typography variant={'h4'}>{t('ENTITY.PARAMETERS')}</Typography>
       <DataGrid
+        rowReordering
+        onRowOrderChange={handleOrderChange}
         items={parameters}
         totalCount={parameters?.length}
         columns={columns}
+        loading={isLoading}
         customToolbarContent={<AddEntity onClick={handleCreateParameter} />}
       />
     </Stack>

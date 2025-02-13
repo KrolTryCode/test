@@ -5,17 +5,17 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { CreateProjectParameterFormRequest } from '~/api/utils/api-requests';
-import { ButtonLink } from '~/components/implicit-links';
 import { FormInputText } from '~/components/react-hook-form';
 
 import { schema } from './task-form.schema';
 
 interface AddTaskFormProps {
-  onSave: (data: CreateProjectParameterFormRequest) => void;
+  onResolve: (data: CreateProjectParameterFormRequest) => void;
+  onReject: () => void;
   isPending?: boolean;
 }
 
-export const AddTaskForm: FC<AddTaskFormProps> = ({ onSave, isPending }) => {
+export const AddTaskForm: FC<AddTaskFormProps> = ({ onResolve, onReject, isPending }) => {
   const { t } = useTranslation();
 
   const {
@@ -31,19 +31,14 @@ export const AddTaskForm: FC<AddTaskFormProps> = ({ onSave, isPending }) => {
   });
 
   return (
-    <Form
-      showColonAfterLabel
-      labelPosition={'left'}
-      labelWidth={4}
-      gap={1}
-      onSubmit={handleSubmit(onSave)}
-      maxWidth={'900px'}
-    >
+    <Form showColonAfterLabel onSubmit={handleSubmit(onResolve)}>
       <FormItem label={t('COMMON.TITLE')} isRequired>
         <FormInputText controllerProps={{ ...register('name'), control }} />
       </FormItem>
-      <FormButtons marginTop={2}>
-        <ButtonLink to={'..'}>{t('ACTION.CANCEL')}</ButtonLink>
+      <FormButtons>
+        <Button onClick={onReject} variant={'outlined'} color={'primary'}>
+          {t(`ACTION.CANCEL`)}
+        </Button>{' '}
         <Button
           type={'submit'}
           disabled={!isValid && isSubmitted}
