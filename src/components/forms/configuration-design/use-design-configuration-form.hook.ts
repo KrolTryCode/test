@@ -1,24 +1,17 @@
 import { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { useCreateApplicationFile } from '~/api/queries/design/create-application-file.mutation';
 import { useGetColorPalettesQuery } from '~/api/queries/design/get-color-palettes.query';
-import { selectTranslatedColors } from '~/api/selectors/select-colors-with-translation';
 import { useUploadFile } from '~/use-cases/upload-file.hook';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const useDesignConfigurationForm = () => {
-  const { t } = useTranslation();
-
+  const { data: appColorsPalettes = [] } = useGetColorPalettesQuery();
   const { mutateAsync: createApplicationFile } = useCreateApplicationFile({
     onError: e => showErrorMessage(e, 'ERROR.UPLOAD_FAILED'),
   });
 
   const { handleUpload, isUploading } = useUploadFile();
-
-  const { data: appColorsPalettes = [] } = useGetColorPalettesQuery({
-    select: pallet => selectTranslatedColors(pallet, t),
-  });
 
   const getFileId = useCallback(
     (type: 'mainLogo' | 'loginLogo', originalName: string) => async () => {

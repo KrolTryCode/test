@@ -2,13 +2,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 
-import { ParameterField } from '~/api/utils/api-requests';
-import { useSelectColumnTypes } from '~/components/forms/table-column/use-select-column-types.hook';
+import { DataType, ParameterField } from '~/api/utils/api-requests';
+import {
+  ParameterFieldForm,
+  getSchema,
+} from '~/components/forms/parameter-field/parameter-field-form.schema';
 import { FormCheckbox, FormInputText, FormSelect } from '~/components/react-hook-form';
-
-import { ParameterFieldForm, getSchema } from './parameter-field-form.schema';
+import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 
 interface ParameterFormProps {
   data?: ParameterField;
@@ -17,8 +18,7 @@ interface ParameterFormProps {
 }
 
 export const ParameterForm: FC<ParameterFormProps> = ({ data, onResolve, onReject }) => {
-  const { t } = useTranslation();
-  const { selectColumnTypes } = useSelectColumnTypes();
+  const { t, translateColumnType } = useCustomTranslations();
 
   const schema = getSchema(t);
 
@@ -44,7 +44,11 @@ export const ParameterForm: FC<ParameterFormProps> = ({ data, onResolve, onRejec
         <FormInputText controllerProps={{ ...register('name'), control }} />
       </FormItem>
       <FormItem label={t('COMMON.TYPE')} isRequired isDisabled={data?.isDefault}>
-        <FormSelect items={selectColumnTypes} controllerProps={{ ...register('type'), control }} />
+        <FormSelect
+          items={Object.values(DataType)}
+          translateItemsFunction={translateColumnType}
+          controllerProps={{ ...register('type'), control }}
+        />
       </FormItem>
       <FormItem label={t('COMMON.KEY')} isRequired isDisabled={data?.isDefault}>
         <FormInputText controllerProps={{ ...register('key'), control }} />
