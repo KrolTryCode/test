@@ -2,13 +2,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, FormButtons, FormItem, Button } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 
-import { CreateColumnRequest } from '~/api/utils/api-requests';
+import { CreateColumnRequest, DataType } from '~/api/utils/api-requests';
+import {
+  getSchema,
+  ITableColumnForm,
+} from '~/components/forms/table-column/table-column-form.schema';
 import { FormCheckbox, FormInputText, FormSelect } from '~/components/react-hook-form';
-
-import { getSchema, ITableColumnForm } from './table-column-form.schema';
-import { useSelectColumnTypes } from './use-select-column-types.hook';
+import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 
 interface TableColumnFormProps {
   usedNames: string[];
@@ -17,8 +18,7 @@ interface TableColumnFormProps {
 }
 
 export const TableColumnForm: FC<TableColumnFormProps> = ({ usedNames, onResolve, onReject }) => {
-  const { t } = useTranslation();
-  const { selectColumnTypes } = useSelectColumnTypes();
+  const { t, translateColumnType } = useCustomTranslations();
 
   const schema = getSchema(usedNames, t);
   const {
@@ -46,7 +46,11 @@ export const TableColumnForm: FC<TableColumnFormProps> = ({ usedNames, onResolve
         <FormInputText controllerProps={{ ...register('name'), control }} />
       </FormItem>
       <FormItem label={t('STRUCTURE.TYPE')}>
-        <FormSelect items={selectColumnTypes} controllerProps={{ ...register('type'), control }} />
+        <FormSelect
+          items={Object.values(DataType)}
+          translateItemsFunction={translateColumnType}
+          controllerProps={{ ...register('type'), control }}
+        />
       </FormItem>
       <FormCheckbox
         label={t('STRUCTURE.UNIQUE_FIELD')}

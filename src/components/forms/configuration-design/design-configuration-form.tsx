@@ -2,7 +2,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FormItem, Form, FormButtons, Button } from '@pspod/ui-components';
 import { ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 
 import { EntityModelModuleConfiguration, PropertyInfo } from '~/api/utils/api-requests';
 import { getSchema } from '~/components/forms/configuration/configuration-form.schema';
@@ -10,6 +9,7 @@ import { useConfigurationForm } from '~/components/forms/configuration/use-confi
 import { LabelWithRules } from '~/components/label-with-rules/label-with-rules.component';
 import { FormInputText, FormSelect } from '~/components/react-hook-form';
 import { getAvailableExtensionsMsg } from '~/utils/files/validate-files';
+import { useCustomTranslations } from '~/utils/hooks';
 
 import { DesignConfigurationFormUploadLogo } from './design-configuration-form-upload-logo.component';
 import { useDesignConfigurationForm } from './use-design-configuration-form.hook';
@@ -19,7 +19,7 @@ interface ConfigFormProps {
 }
 
 export const DesignConfigurationForm = ({ moduleDescription }: ConfigFormProps) => {
-  const { t } = useTranslation();
+  const { t, translateColorPalette } = useCustomTranslations();
   const { values, onSubmit, isPending, isLoading } = useConfigurationForm(moduleDescription);
 
   const { reset, control, register, handleSubmit, formState } = useForm({
@@ -38,9 +38,10 @@ export const DesignConfigurationForm = ({ moduleDescription }: ConfigFormProps) 
       case 'int': {
         component = (
           <FormSelect
-            items={appColorsPalettes}
             disableClearable
             displayExpr={'title'}
+            items={appColorsPalettes}
+            translateItemsFunction={translateColorPalette}
             controllerProps={{ ...register(property.name!), control }}
           />
         );

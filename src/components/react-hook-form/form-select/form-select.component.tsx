@@ -1,7 +1,7 @@
 import { Select, SelectProps } from '@pspod/ui-components';
 import { FieldPath, FieldValues, UseControllerProps, useController } from 'react-hook-form';
 
-import { ValidationError } from '../_validation-error/validation-error.component';
+import { ValidationError } from '~/components/react-hook-form/_validation-error/validation-error.component';
 
 type FormSelectProps<
   T extends Record<string, any>,

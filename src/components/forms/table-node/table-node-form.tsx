@@ -2,15 +2,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, FormButtons, FormItem, Button, Preloader } from '@pspod/ui-components';
 import { FC, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 
 import { useGetContentNodesByParent } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
-import { CreateContentNodeRequest } from '~/api/utils/api-requests';
+import { ContentNodeType, CreateContentNodeRequest } from '~/api/utils/api-requests';
+import { getSchema } from '~/components/forms/table-node/table-node-form.schema';
 import { FormInputText, FormSelect } from '~/components/react-hook-form';
 import { FormSearchNodeTree } from '~/components/react-hook-form/form-search-tree/form-search-node-tree.component';
-
-import { getSchema } from './table-node-form.schema';
-import { selectNodeTypes } from './table-node-form.utils';
+import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 
 export interface TableNodeFormProps {
   data?: Partial<CreateContentNodeRequest>;
@@ -29,7 +27,7 @@ export const TableNodeForm: FC<TableNodeFormProps> = ({
   isEditing = false,
   projectId = '',
 }) => {
-  const { t } = useTranslation();
+  const { t, translateEntity } = useCustomTranslations();
   const [selectedItem, setSelectedItem] = useState(currentNodeId);
 
   const { data: siblingNames = [], isLoading } = useGetContentNodesByParent(
@@ -74,7 +72,8 @@ export const TableNodeForm: FC<TableNodeFormProps> = ({
       <FormItem label={t('COMMON.TYPE')} isRequired>
         <FormSelect
           disableClearable
-          items={selectNodeTypes}
+          items={Object.values(ContentNodeType)}
+          translateItemsFunction={translateEntity}
           isReadonly={isEditing}
           controllerProps={{ ...register('type'), control }}
         />
