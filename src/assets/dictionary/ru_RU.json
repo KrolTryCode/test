@@ -33,6 +33,7 @@
     "DROP": "Сбросить {{what}}",
     "SELECT": "Выбрать {{type}}",
     "IMPORT": "Импортировать {{what}}",
+    "EXPORT": "Экспортировать {{what}}",
     "ARCHIVE": "Архивировать",
     "RESET_INITIAL": "Сбросить к начальному состоянию",
     "POST": "Разместить",
@@ -48,7 +49,6 @@
     "CREATE_NODE": "Создать новый объект",
     "SEND_TO_EMAIL": "Отправить на почту",
     "MOVE": "Переместить",
-    "EXPORT": "Экспортировать",
     "OPEN_TREE": "Открыть дерево",
     "GENERATE_TOKEN": "Сгенерировать токен",
     "COPY": "Скопировать",
@@ -460,7 +460,19 @@
     "NODE": "Узел"
   },
   "PERMISSIONS": {
-    "PERMISSION_CONTEXT": "Контекст права доступа"
+    "PERMISSION_CONTEXT": "Контекст права доступа",
+    "NO_PERMISSIONS": "Недостаточно прав для выбора"
+  },
+  "PROJECT": {
+    "SELECT_PERMISSIONS": "Выберите типы сущностей для экспорта",
+    "PERMISSIONS": {
+      "CONTENTNODE": "Таблицы",
+      "SOLVER": "Вычислители",
+      "PROJECTSOLVER": "Вычислители проекта",
+      "PARAMETERFORM": "Форма параметров",
+      "PROJECTPARAMETERFORM": "Параметры форм проектов",
+      "TASK": "Расчеты"
+    }
   },
   "COLORS": {
     "CYAN": "Голубой",

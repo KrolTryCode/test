@@ -1,10 +1,11 @@
-import { Edit, DeleteOutline } from '@mui/icons-material';
+import { Edit, DeleteOutline, Download } from '@mui/icons-material';
 import { Button } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { NodeHeader } from '~/components/node-header/node-header.component';
 import { useNodeActions } from '~/components/node-header/node-header.hook';
+import { useExportProject } from '~/use-cases/export-project.hook';
 
 interface ProjectHeaderProps {
   projectId: string;
@@ -20,6 +21,8 @@ export const ProjectHeader: FC<ProjectHeaderProps> = ({ projectId }) => {
     deleteProjectOrGroup,
   } = useNodeActions(projectId);
 
+  const { exportProject } = useExportProject(projectData);
+
   const getActions = () => [
     <Button
       key={'edit'}
@@ -29,6 +32,15 @@ export const ProjectHeader: FC<ProjectHeaderProps> = ({ projectId }) => {
       onClick={() => updateProjectOrGroup(projectData)}
       variant={'text'}
       icon={<Edit />}
+    />,
+    <Button
+      key={'export'}
+      size={'small'}
+      color={'primary'}
+      title={t('ACTION.EXPORT', { what: t('ENTITY.PROJECT').toLowerCase() })}
+      onClick={exportProject}
+      variant={'text'}
+      icon={<Download />}
     />,
     <Button
       key={'delete'}
