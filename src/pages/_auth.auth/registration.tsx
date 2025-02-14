@@ -5,13 +5,13 @@ import { useRegisterAccountMutation } from '~/api/queries/accounts/register-acco
 import { ChangePasswordForm } from '~/components/forms/change-password/change-password-form';
 import { ChangePasswordForm as ChangePasswordFormSchema } from '~/components/forms/change-password/change-password-form.schema';
 import { useAuthSearchParams } from '~/utils/hooks';
+import { validateAuthSearch } from '~/utils/hooks/use-auth-search-params';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const Route = createFileRoute('/_auth/auth/registration')({
   component: RegistrationPage,
-  staticData: {
-    title: 'ACTION.REGISTER',
-  },
+  validateSearch: validateAuthSearch,
+  staticData: { title: 'ACTION.REGISTER' },
 });
 
 function RegistrationPage() {

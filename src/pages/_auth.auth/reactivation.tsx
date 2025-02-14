@@ -5,13 +5,13 @@ import { useCompleteAccountReactivationMutation } from '~/api/queries/accounts/r
 import { ChangePasswordForm } from '~/components/forms/change-password/change-password-form';
 import { ChangePasswordForm as ChangePasswordFormSchema } from '~/components/forms/change-password/change-password-form.schema';
 import { useAuthSearchParams } from '~/utils/hooks';
+import { validateAuthSearch } from '~/utils/hooks/use-auth-search-params';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const Route = createFileRoute('/_auth/auth/reactivation')({
   component: ReactivationPage,
-  staticData: {
-    title: 'ACTION.REACTIVATE',
-  },
+  validateSearch: validateAuthSearch,
+  staticData: { title: 'ACTION.REACTIVATE' },
 });
 
 function ReactivationPage() {

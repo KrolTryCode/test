@@ -5,13 +5,13 @@ import { useCompleteAccountRecoveryMutation } from '~/api/queries/accounts/compl
 import { ChangePasswordForm } from '~/components/forms/change-password/change-password-form';
 import { ChangePasswordForm as ChangePasswordFormSchema } from '~/components/forms/change-password/change-password-form.schema';
 import { useAuthSearchParams } from '~/utils/hooks';
+import { validateAuthSearch } from '~/utils/hooks/use-auth-search-params';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const Route = createFileRoute('/_auth/auth/recovery')({
   component: RecoveryPage,
-  staticData: {
-    title: 'ACTION.RECOVER',
-  },
+  validateSearch: validateAuthSearch,
+  staticData: { title: 'ACTION.RECOVER' },
 });
 
 function RecoveryPage() {
