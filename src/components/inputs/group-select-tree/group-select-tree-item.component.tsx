@@ -1,7 +1,8 @@
 import { ChevronRight as ChevronRightIcon, Folder } from '@mui/icons-material';
+import { useQuery } from '@tanstack/react-query';
 import { FC, useState } from 'react';
 
-import { useGetProjectNodesByParentQuery } from '~/api/queries/projects/get-project-nodes-by-parent.query';
+import { getProjectNodesByParentQueryOptions } from '~/api/queries/projects/get-project-nodes-by-parent.query';
 import { ProjectNodeType } from '~/api/utils/api-requests';
 
 import {
@@ -28,15 +29,17 @@ export const GroupSelectTreeItem: FC<GroupSelectTreeItemProps> = ({
 }) => {
   const [isOpened, setIsOpened] = useState(false);
 
-  const { data: children = [] } = useGetProjectNodesByParentQuery(id, {
-    select(data) {
-      if (!id) {
-        return [];
-      }
-      return data.filter(node => node.type === ProjectNodeType.Group);
-    },
-    enabled: isOpened,
-  });
+  const { data: children = [] } = useQuery(
+    getProjectNodesByParentQueryOptions(id, {
+      select(data) {
+        if (!id) {
+          return [];
+        }
+        return data.filter(node => node.type === ProjectNodeType.Group);
+      },
+      enabled: isOpened,
+    }),
+  );
 
   const isActive = selectedId === id;
 

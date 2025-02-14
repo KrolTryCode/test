@@ -1,10 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { FC, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { useGetSolversQuery } from '~/api/queries/solvers/get-solvers.query';
+import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { Solver } from '~/api/utils/api-requests';
 import { UploadFile } from '~/components/inputs/upload-file/upload-file.component';
 import { LabelWithRules } from '~/components/label-with-rules/label-with-rules.component';
@@ -32,11 +33,13 @@ export const SolverForm: FC<SolverFormProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const { data: solverNames = [] } = useGetSolversQuery(projectId, {
-    select: solvers => {
-      return solvers.filter(s => s.id !== data?.id).map(s => s.name!);
-    },
-  });
+  const { data: solverNames = [] } = useQuery(
+    getSolversQueryOptions(projectId, {
+      select: solvers => {
+        return solvers.filter(s => s.id !== data?.id).map(s => s.name!);
+      },
+    }),
+  );
 
   const schema = useMemo(
     () => createSolverFormSchema(solverNames, isEditing),

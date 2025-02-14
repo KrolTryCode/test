@@ -1,10 +1,11 @@
 import { confirmDeletionModal, notifySuccess, UploadImage } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useCreateAvatarMutation } from '~/api/queries/users/create-user-avatar.mutation';
 import { useDeleteUserAvatarMutation } from '~/api/queries/users/delete-user-avatar.mutation';
-import { useGetUserAvatarIdQuery } from '~/api/queries/users/get-active-user-avatar-id.query';
+import { getUserAvatarIdQueryOptions } from '~/api/queries/users/get-active-user-avatar-id.query';
 import { UserAvatar } from '~/components/user-avatar/user-avatar.component';
 import { fileTypeExtensions, validateSelectedFiles } from '~/utils/files/validate-files';
 import { showErrorMessage } from '~/utils/show-error-message';
@@ -19,9 +20,11 @@ interface ProfileAvatarProps {
 export const ProfileAvatar: FC<ProfileAvatarProps> = ({ userId, firstName, lastName, surName }) => {
   const { t } = useTranslation();
 
-  const { data: avatarId = '' } = useGetUserAvatarIdQuery(userId, {
-    enabled: !!userId,
-  });
+  const { data: avatarId = '' } = useQuery(
+    getUserAvatarIdQueryOptions(userId, {
+      enabled: !!userId,
+    }),
+  );
 
   const { mutateAsync: saveAvatar, isPending: isUploading } = useCreateAvatarMutation(userId, {
     onSuccess: () => notifySuccess(t('MESSAGE.UPDATE_SUCCESS')),

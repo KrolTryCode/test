@@ -1,9 +1,10 @@
 import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { useGetPermissionTypesQuery } from '~/api/queries/projects/get-available-permission-types.query';
+import { getPermissionTypesQueryOptions } from '~/api/queries/projects/get-available-permission-types.query';
 import { FormCheckboxGroup } from '~/components/react-hook-form/form-checkbox/form-checkbox-group.component';
 
 const allProjectPermissions = [
@@ -30,11 +31,13 @@ export const ExportProjectForm: FC<ExportProjectFormProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const { data: allowedPermissions = [], isLoading } = useGetPermissionTypesQuery(projectId, {
-    select: data => {
-      return data.filter(v => allProjectPermissions.includes(v));
-    },
-  });
+  const { data: allowedPermissions = [], isLoading } = useQuery(
+    getPermissionTypesQueryOptions(projectId, {
+      select: data => {
+        return data.filter(v => allProjectPermissions.includes(v));
+      },
+    }),
+  );
 
   const {
     handleSubmit,

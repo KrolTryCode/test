@@ -1,4 +1,4 @@
-import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query';
+import { keepPreviousData, queryOptions } from '@tanstack/react-query';
 
 import { PageUser } from '~/api/utils/api-requests';
 import { ServerPagingParams } from '~/utils/hooks';
@@ -7,13 +7,12 @@ import { UseCustomQueryOptions } from '../../typings/react-query-helpers';
 
 import { userQueries } from './queries';
 
-export const useGetUserListQuery = <T = PageUser>(
+export const getUserListQueryOptions = <T = PageUser>(
   pagingParams: ServerPagingParams,
   options?: UseCustomQueryOptions<PageUser, unknown, T>,
-): UseQueryResult<T, unknown> => {
-  return useQuery({
+) =>
+  queryOptions({
     ...userQueries.list(pagingParams),
     placeholderData: keepPreviousData,
     ...options,
   });
-};

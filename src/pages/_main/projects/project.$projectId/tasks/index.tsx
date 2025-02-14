@@ -1,10 +1,11 @@
 import { Edit as EditIcon } from '@mui/icons-material';
 import { GridActionsCellItem } from '@mui/x-data-grid-premium';
 import { AddEntity, DataGrid, DeleteCellButton, EnhancedColDef } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useCallback, useMemo } from 'react';
 
-import { useGetProjectTasksQuery } from '~/api/queries/projects/tasks/get-project-tasks.query';
+import { getProjectTasksQueryOptions } from '~/api/queries/projects/tasks/get-project-tasks.query';
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { FullTaskInfo, TaskState } from '~/api/utils/api-requests';
 import { taskModal } from '~/components/forms/task/task-form';
@@ -20,7 +21,9 @@ function TasksList() {
   const { projectId } = Route.useParams();
   const { t, translateStatus, getStatusValueOptions } = useCustomTranslations();
   const { startTask, updateTask, archiveTask } = useTaskActions(projectId);
-  const { data: taskList = [], isLoading: isTaskListLoading } = useGetProjectTasksQuery(projectId);
+  const { data: taskList = [], isLoading: isTaskListLoading } = useQuery(
+    getProjectTasksQueryOptions(projectId),
+  );
   const navigate = useNavigate();
 
   const handleEditTask = useCallback(

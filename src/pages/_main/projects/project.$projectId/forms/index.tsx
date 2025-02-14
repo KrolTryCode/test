@@ -7,6 +7,7 @@ import {
   modal,
   notifySuccess,
 } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +15,7 @@ import { InstanceProps } from 'react-modal-promise';
 
 import { useAddFormMutation } from '~/api/queries/forms/add-form.mutation';
 import { useArchiveFormMutation } from '~/api/queries/forms/archive-form.mutation';
-import { useGetFormsQuery } from '~/api/queries/forms/get-forms.query';
+import { getFormsQueryOptions } from '~/api/queries/forms/get-forms.query';
 import { CreateProjectParameterFormRequest, ParameterForm } from '~/api/utils/api-requests';
 import { AddTaskForm } from '~/components/forms/task-form/add-task-form';
 import { GridActionsCellItemLink } from '~/components/implicit-links';
@@ -29,7 +30,7 @@ function TaskFormList() {
   const { projectId } = Route.useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { data: forms = [], isLoading } = useGetFormsQuery(projectId);
+  const { data: forms = [], isLoading } = useQuery(getFormsQueryOptions(projectId));
 
   const declinatedTranslations = useDeclinatedTranslationsContext();
   const declinatedForm = declinatedTranslations.FORM.ACCUSATIVE.toLowerCase();

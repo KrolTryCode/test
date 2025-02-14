@@ -1,10 +1,11 @@
 import { Box, CircularProgress, Divider, Stack, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { useGetProjectTaskQuery } from '~/api/queries/projects/tasks/get-project-task.query';
+import { getProjectTaskQueryOptions } from '~/api/queries/projects/tasks/get-project-task.query';
 import { IAddTaskForm, TaskForm } from '~/components/forms/task/task-form';
 import { TaskParametersForm } from '~/components/forms/task/task-parameters-form';
 import { useTaskActions } from '~/use-cases/task-actions.hook';
@@ -25,10 +26,12 @@ function AddTaskPage() {
   const [showStatusLoader, setShowStatusLoader] = useState(false);
   const navigate = Route.useNavigate();
 
-  const { data: taskInfo, isFetching: isFetchingStatus } = useGetProjectTaskQuery(createdTaskId, {
-    enabled: !!createdTaskId,
-    refetchInterval: 2000,
-  });
+  const { data: taskInfo, isFetching: isFetchingStatus } = useQuery(
+    getProjectTaskQueryOptions(createdTaskId, {
+      enabled: !!createdTaskId,
+      refetchInterval: 2000,
+    }),
+  );
 
   const navigateToTasksList = () =>
     void navigate({ to: '/projects/project/$projectId/tasks', params: { projectId } });

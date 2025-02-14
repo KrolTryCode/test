@@ -1,10 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, FormItem, FormButtons, Button, InputText } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { useGetPasswordConfigurationQuery } from '~/api/queries/settings/get-password-configuration.query';
+import { getPasswordConfigurationQueryOptions } from '~/api/queries/settings/get-password-configuration.query';
 import { AccountConfiguration } from '~/api/utils/api-requests';
 import { LabelWithRules } from '~/components/label-with-rules/label-with-rules.component';
 import { PasswordRuleList } from '~/components/password-rule-list/rule-list.component';
@@ -32,9 +33,7 @@ export const ChangePasswordForm: FC<ChangePasswordFormProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const { data: passwordConfig } = useGetPasswordConfigurationQuery({
-    placeholderData: {} as AccountConfiguration,
-  });
+  const { data: passwordConfig } = useQuery(getPasswordConfigurationQueryOptions());
 
   const {
     register,
@@ -44,7 +43,7 @@ export const ChangePasswordForm: FC<ChangePasswordFormProps> = ({
   } = useForm<IChangePasswordForm>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
-    resolver: yupResolver(getSchema(passwordConfig!, t)),
+    resolver: yupResolver(getSchema(passwordConfig ?? ({} as AccountConfiguration), t)),
   });
 
   return (

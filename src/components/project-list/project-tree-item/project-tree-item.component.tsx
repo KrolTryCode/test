@@ -1,9 +1,10 @@
 import { ChevronRight, KeyboardArrowDown } from '@mui/icons-material';
 import { Stack } from '@mui/material';
 import { Button, Preloader } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { FC, useState } from 'react';
 
-import { useGetProjectNodesByParentQuery } from '~/api/queries/projects/get-project-nodes-by-parent.query';
+import { getProjectNodesByParentQueryOptions } from '~/api/queries/projects/get-project-nodes-by-parent.query';
 import { ProjectNode } from '~/api/utils/api-requests';
 import { NodeLogo } from '~/components/node-logo/node-logo.component';
 
@@ -22,9 +23,11 @@ interface ProjectTreeItemProps {
 export const ProjectTreeItem: FC<ProjectTreeItemProps> = ({ projectTreeNode }) => {
   const [isOpened, setIsOpened] = useState(false);
 
-  const { data: childNodes = [], isLoading } = useGetProjectNodesByParentQuery(projectTreeNode.id, {
-    enabled: projectTreeNode.hasChildren && isOpened,
-  });
+  const { data: childNodes = [], isLoading } = useQuery(
+    getProjectNodesByParentQueryOptions(projectTreeNode.id, {
+      enabled: projectTreeNode.hasChildren && isOpened,
+    }),
+  );
 
   return (
     <_ProjectTreeItemContainer>

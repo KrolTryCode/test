@@ -1,10 +1,11 @@
 import { BackupTable, Folder } from '@mui/icons-material';
 import { AvatarProps, Avatar } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { ReactNode } from '@tanstack/react-router';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useGetProjectLogoQuery } from '~/api/queries/projects/get-project-logo.query';
+import { getProjectLogoQueryOptions } from '~/api/queries/projects/get-project-logo.query';
 import { ProjectNodeType } from '~/api/utils/api-requests';
 import { useGetImage } from '~/use-cases/get-image.hook';
 
@@ -22,9 +23,11 @@ export const NodeLogo: FC<NodeLogoProps> = ({
   isLoading,
 }) => {
   const { t } = useTranslation();
-  const { data: logoId = '', isLoading: isLogoIdLoading } = useGetProjectLogoQuery(nodeId, {
-    enabled: !!nodeId,
-  });
+  const { data: logoId = '', isLoading: isLogoIdLoading } = useQuery(
+    getProjectLogoQueryOptions(nodeId, {
+      enabled: !!nodeId,
+    }),
+  );
   const { image: logo, isImageLoading: isLogoLoading } = useGetImage(logoId);
 
   return (

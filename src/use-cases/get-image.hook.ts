@@ -1,9 +1,12 @@
+import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
-import { useGetImageQuery } from '~/api/queries/files/get-image.query';
+import { getImageQueryOptions } from '~/api/queries/files/get-image.query';
 
 export const useGetImage = (id?: string) => {
-  const { data: imageFile, isLoading: isImageLoading } = useGetImageQuery(id!, { enabled: !!id });
+  const { data: imageFile, isLoading: isImageLoading } = useQuery(
+    getImageQueryOptions(id!, { enabled: !!id }),
+  );
 
   const image = useMemo(() => {
     if (imageFile) {

@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import { loadMessages, locale } from 'devextreme/localization';
 import enMessages from 'devextreme/localization/messages/en.json';
 import ruMessages from 'devextreme/localization/messages/ru.json';
@@ -5,7 +6,7 @@ import i18n, { use } from 'i18next';
 import { useEffect } from 'react';
 import { initReactI18next, useTranslation } from 'react-i18next';
 
-import { useDownloadMessagesMapQuery } from '~/api/queries/locale/get-messages-map.query';
+import { downloadMessagesMapQueryOptions } from '~/api/queries/locale/get-messages-map.query';
 import en_US from '~/assets/dictionary/en_US.json';
 import ru_RU from '~/assets/dictionary/ru_RU.json';
 import { configureYup } from '~/utils/validation/configure-yup';
@@ -44,7 +45,7 @@ export const useI18nInit = () => {
 
 export const useDownloadTranslations = () => {
   const { t, i18n } = useTranslation();
-  const { data } = useDownloadMessagesMapQuery(i18n.language);
+  const { data } = useQuery(downloadMessagesMapQueryOptions(i18n.language));
 
   useEffect(() => {
     document.documentElement.setAttribute('lang', i18n.language);

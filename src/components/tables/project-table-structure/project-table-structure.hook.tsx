@@ -1,4 +1,5 @@
 import { notifySuccess, modal } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InstanceProps } from 'react-modal-promise';
@@ -6,7 +7,7 @@ import { InstanceProps } from 'react-modal-promise';
 import { useAddColumnMutation } from '~/api/queries/tables/structure/add-column.mutation';
 import { useDeleteColumnMutation } from '~/api/queries/tables/structure/delete-column.mutation';
 import { useEditColumnNameMutation } from '~/api/queries/tables/structure/edit-column.mutation';
-import { useGetTable } from '~/api/queries/tables/structure/get-table.query';
+import { getTableOptions } from '~/api/queries/tables/structure/get-table.query';
 import { selectNodeColumns } from '~/api/selectors/select-node-columns';
 import { CreateColumnRequest } from '~/api/utils/api-requests';
 import { TableColumnForm } from '~/components/forms/table-column/table-column-form';
@@ -19,9 +20,11 @@ export const useProjectTableStructure = (tableId: string) => {
     data: tableColumns = [],
     isLoading,
     isFetched,
-  } = useGetTable(tableId, {
-    select: selectNodeColumns,
-  });
+  } = useQuery(
+    getTableOptions(tableId, {
+      select: selectNodeColumns,
+    }),
+  );
 
   const { mutate: dropColumn } = useDeleteColumnMutation(tableId, {
     onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),

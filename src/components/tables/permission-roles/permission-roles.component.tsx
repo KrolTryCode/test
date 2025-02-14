@@ -6,12 +6,13 @@ import {
   GridPagingParams,
   AddEntity,
 } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { useCallback, useMemo, useState, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useChangeRoleMutation } from '~/api/queries/roles/change-role.mutation';
 import { useCreateRoleMutation } from '~/api/queries/roles/create-role.mutation';
-import { useFindRolesQuery } from '~/api/queries/roles/find-roles.query';
+import { findRolesQueryOptions } from '~/api/queries/roles/find-roles.query';
 import { useRemoveRoleMutation } from '~/api/queries/roles/remove-role.mutation';
 import { Role } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
@@ -26,7 +27,7 @@ export const PermissionRoleTable: FC = () => {
 
   const [paging, setGridPaging] = useState<GridPagingParams>();
   const serverPagingParams = useServerPagingParams(paging);
-  const { data: roles, isLoading } = useFindRolesQuery(serverPagingParams);
+  const { data: roles, isLoading } = useQuery(findRolesQueryOptions(serverPagingParams));
 
   const { mutateAsync: changeRoleMutation } = useChangeRoleMutation();
 

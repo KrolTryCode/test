@@ -1,14 +1,14 @@
-import { UseQueryResult, keepPreviousData, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, queryOptions } from '@tanstack/react-query';
 
 import { UseCustomQueryOptions } from '~/api/typings/react-query-helpers';
 import { Permission } from '~/api/utils/api-requests';
 
 import { roleQueries } from './queries';
 
-export const useGetAllPermissionsQuery = <T = Permission[]>(
+export const getAllPermissionsQueryOptions = <T = Permission[]>(
   options?: UseCustomQueryOptions<Permission[], unknown, T>,
-): UseQueryResult<T, unknown> =>
-  useQuery({
+) =>
+  queryOptions({
     ...roleQueries.getAllPermissions,
     placeholderData: keepPreviousData,
     ...options,

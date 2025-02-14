@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import { DataType, ParameterField } from '~/api/utils/api-requests';
 import { useParametersHook } from '~/components/tables/form-parameter-fields/parameters-fields.hook';
-import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
+import { useCustomTranslations } from '~/utils/hooks';
 
 interface ParametersTableProps {
   formId: string;

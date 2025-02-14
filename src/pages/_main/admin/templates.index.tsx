@@ -1,10 +1,11 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { Box } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid-premium';
+import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useRef, useMemo } from 'react';
 
-import { useGetTemplatesQuery } from '~/api/queries/templates/get-templates.query';
+import { getTemplatesQueryOptions } from '~/api/queries/templates/get-templates.query';
 import { Template, TemplateState } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { GridActionsCellItemLink } from '~/components/implicit-links';
@@ -16,7 +17,7 @@ export const Route = createFileRoute('/_main/admin/templates/')({
 
 export function TemplatesPage() {
   const { t, translateStatus, getStatusValueOptions } = useCustomTranslations();
-  const { data: templates, isLoading } = useGetTemplatesQuery();
+  const { data: templates, isLoading } = useQuery(getTemplatesQueryOptions());
 
   const gridWrapperRef = useRef<HTMLDivElement>();
   usePreventedLinks(gridWrapperRef);

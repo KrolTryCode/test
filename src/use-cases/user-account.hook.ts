@@ -1,9 +1,10 @@
 import { notifySuccess } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useChangePasswordAdminMutation } from '~/api/queries/accounts/change-password-admin.mutation';
-import { useGetUserQuery } from '~/api/queries/users/get-user.query';
+import { getUserQueryOptions } from '~/api/queries/users/get-user.query';
 import { useUpdateUserMutation } from '~/api/queries/users/update-user.mutation';
 import { UpdateUserRequest } from '~/api/utils/api-requests';
 import { changePasswordModal } from '~/components/forms/change-password/change-password-form.modal';
@@ -13,7 +14,7 @@ import { showErrorMessage } from '~/utils/show-error-message';
 
 export const useUserAccount = (userId: string) => {
   const { t } = useTranslation();
-  const { data: user, isLoading: isUserLoading } = useGetUserQuery(userId);
+  const { data: user, isLoading: isUserLoading } = useQuery(getUserQueryOptions(userId));
 
   const { mutate: changePasswordByAdmin } = useChangePasswordAdminMutation(userId, {
     onSuccess: () => notifySuccess(t('AUTH.PASSWORD.SUCCESS')),

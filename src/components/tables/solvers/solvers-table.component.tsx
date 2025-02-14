@@ -2,9 +2,10 @@ import { Upload, Edit as EditIcon, Download, DeleteOutline } from '@mui/icons-ma
 import { Chip } from '@mui/material';
 import { GridActionsCellItem, GridRenderCellParams } from '@mui/x-data-grid-premium';
 import { AddEntity, Button, DataGrid, EnhancedColDef } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { FC, useMemo } from 'react';
 
-import { useGetSolversQuery } from '~/api/queries/solvers/get-solvers.query';
+import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { Solver } from '~/api/utils/api-requests';
 import { useCustomTranslations } from '~/utils/hooks';
 
@@ -24,7 +25,7 @@ export const SolversTable: FC<SolversTableProps> = ({ projectId }) => {
     handleExportSolver,
   } = useSolverActions(projectId);
 
-  const { data = [], isLoading } = useGetSolversQuery(projectId);
+  const { data = [], isLoading } = useQuery(getSolversQueryOptions(projectId));
 
   // TODO BE-145 authorName https://tracker.yandex.ru/BE-145
 

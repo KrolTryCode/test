@@ -1,7 +1,8 @@
 import { notifySuccess } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
-import { useGetConfigurationQuery } from '~/api/queries/settings/get-module-configuration.query';
+import { getConfigurationQueryOptions } from '~/api/queries/settings/get-module-configuration.query';
 import { Configuration } from '~/api/queries/settings/queries';
 import { useSaveConfigurationMutation } from '~/api/queries/settings/save-module-configuration.mutation';
 import { EntityModelModuleConfiguration } from '~/api/utils/api-requests';
@@ -13,10 +14,10 @@ export const useConfigurationForm = (moduleDescription: EntityModelModuleConfigu
   const fetchLink = moduleDescription._links?.GET?.href;
   const saveLink = moduleDescription._links?.POST?.href;
 
-  const { data: values, isLoading } = useGetConfigurationQuery(
-    moduleDescription.moduleName ?? '',
-    fetchLink!,
-    { enabled: !!fetchLink },
+  const { data: values, isLoading } = useQuery(
+    getConfigurationQueryOptions(moduleDescription.moduleName ?? '', fetchLink!, {
+      enabled: !!fetchLink,
+    }),
   );
 
   const { mutateAsync: save, isPending } = useSaveConfigurationMutation(

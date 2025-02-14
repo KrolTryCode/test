@@ -1,11 +1,12 @@
 import { notifySuccess } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useAddTableDataMutation } from '~/api/queries/tables/table-data/add-table-data.mutation';
 import { useDeleteTableDataMutation } from '~/api/queries/tables/table-data/delete-table-data.mutation';
-import { useGetTableContentQuery } from '~/api/queries/tables/table-data/get-table-content.query';
-import { useGetTableDataQuery } from '~/api/queries/tables/table-data/get-table-data.query';
+import { getTableContentQueryOptions } from '~/api/queries/tables/table-data/get-table-content.query';
+import { getTableDataQueryOptions } from '~/api/queries/tables/table-data/get-table-data.query';
 import { useUpdateTableDataMutation } from '~/api/queries/tables/table-data/update-table-data.mutation';
 import { tableDataFormModal } from '~/components/forms/table-data/table-data-form.modal';
 import { showErrorMessage } from '~/utils/show-error-message';
@@ -19,11 +20,13 @@ export const useProjectTable = (nodeId: string) => {
     data: content = [],
     isError: isContentError,
     isLoading: isContentLoading,
-  } = useGetTableContentQuery(nodeId);
+  } = useQuery(getTableContentQueryOptions(nodeId));
 
-  const { data: metadata = [], isLoading: isMetadataLoading } = useGetTableDataQuery(nodeId, {
-    select: data => data.columns.filter(v => v.name !== 'id'),
-  });
+  const { data: metadata = [], isLoading: isMetadataLoading } = useQuery(
+    getTableDataQueryOptions(nodeId, {
+      select: data => data.columns.filter(v => v.name !== 'id'),
+    }),
+  );
 
   const { mutate: addTableColumn } = useAddTableDataMutation(nodeId, {
     onSuccess: () => notifySuccess(t('MESSAGE.CREATION_SUCCESS')),

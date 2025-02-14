@@ -1,10 +1,11 @@
 import { Box, Typography } from '@mui/material';
 import { Preloader } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { useParams } from '@tanstack/react-router';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useGetContentNodesByParent } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
+import { getContentNodesByParentOptions } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
 import { ContentNodeType } from '~/api/utils/api-requests';
 import { NodesTreeItem } from '~/components/tree/nodes-tree-item/nodes-tree-item.component';
 import { NodesTreeListProps } from '~/components/tree/tree.type';
@@ -19,11 +20,15 @@ export const NodesTreeList: FC<NodesTreeListProps> = ({
 }) => {
   const { t } = useTranslation();
   const { projectId = '' } = useParams({ strict: false });
-  const { data: firstLevelNodes = [], isLoading } = useGetContentNodesByParent(projectId, '', {
-    select: data => {
-      return showOnlyFolders ? data.filter(item => item.type === ContentNodeType.Directory) : data;
-    },
-  });
+  const { data: firstLevelNodes = [], isLoading } = useQuery(
+    getContentNodesByParentOptions(projectId, '', {
+      select: data => {
+        return showOnlyFolders
+          ? data.filter(item => item.type === ContentNodeType.Directory)
+          : data;
+      },
+    }),
+  );
 
   if (isLoading) {
     return <Preloader />;

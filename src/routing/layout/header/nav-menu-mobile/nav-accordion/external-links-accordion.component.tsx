@@ -1,17 +1,20 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { AccordionDetails, Link as MuiLink } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
-import { useGetExternalLinksQuery } from '~/api/queries/settings/get-external-links.query';
+import { getExternalLinksQueryOptions } from '~/api/queries/settings/get-external-links.query';
 
 import { StyledAccordionSummary, StyledAccordion } from './nav-accordion.style';
 
 export const ExternalLinksAccordion = () => {
   const { t } = useTranslation();
 
-  const { data: links = [] } = useGetExternalLinksQuery({
-    select: data => data.links,
-  });
+  const { data: links = [] } = useQuery(
+    getExternalLinksQueryOptions({
+      select: data => data.links,
+    }),
+  );
 
   if (!links.length) {
     return;

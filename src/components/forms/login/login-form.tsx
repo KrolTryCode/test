@@ -1,10 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Stack } from '@mui/material';
 import { Form, FormButtons, FormItem, Button } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { useAppConfigurationQuery } from '~/api/queries/app/app-configuration.query';
+import { appConfigurationQueryOptions } from '~/api/queries/app/app-configuration.query';
 import { ButtonLink } from '~/components/implicit-links';
 import { FormInputText, FormCheckbox } from '~/components/react-hook-form';
 
@@ -17,7 +18,7 @@ interface LoginFormProps {
 
 export function LoginForm({ onSave, isPending }: LoginFormProps) {
   const { t } = useTranslation();
-  const { data: config } = useAppConfigurationQuery();
+  const { data: config } = useQuery(appConfigurationQueryOptions());
 
   const {
     register,

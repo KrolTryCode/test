@@ -6,12 +6,13 @@ import {
   useGridApiRef,
 } from '@mui/x-data-grid-premium';
 import { notifySuccess, EnhancedColDef, GridPagingParams } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { ChangeEvent, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useAddRolePermissionsMutation } from '~/api/queries/roles/add-role-permissions.mutation';
-import { useFindPermissionsQuery } from '~/api/queries/roles/find-permissions.query';
-import { useGetAllRolesQuery } from '~/api/queries/roles/get-all-roles.query';
+import { findPermissionsQueryOptions } from '~/api/queries/roles/find-permissions.query';
+import { getAllRolesQueryOptions } from '~/api/queries/roles/get-all-roles.query';
 import { useRemoveRolePermissionsMutation } from '~/api/queries/roles/remove-role-permissions.mutation';
 import { useServerPagingParams } from '~/utils/hooks';
 import { showErrorMessage } from '~/utils/show-error-message';
@@ -27,10 +28,9 @@ export const usePermissionsTable = () => {
   const { mutate: addPermissions } = useAddRolePermissionsMutation();
   const { mutate: removePermissions } = useRemoveRolePermissionsMutation();
 
-  const { data: roles = [], isLoading: isRoleListLoading } = useGetAllRolesQuery();
-  const { data: permissions, isLoading: isPermissionListLoading } = useFindPermissionsQuery(
-    serverPagingParams,
-    {
+  const { data: roles = [], isLoading: isRoleListLoading } = useQuery(getAllRolesQueryOptions());
+  const { data: permissions, isLoading: isPermissionListLoading } = useQuery(
+    findPermissionsQueryOptions(serverPagingParams, {
       enabled: !!roles,
       select: data => {
         const gridItems: GridPermission[] | undefined = data.content?.map(permission => ({
@@ -47,7 +47,7 @@ export const usePermissionsTable = () => {
 
         return { items: gridItems ?? [], totalCount: data.totalElements ?? 0 };
       },
-    },
+    }),
   );
 
   const rolesColumns = useMemo(

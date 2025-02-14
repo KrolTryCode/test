@@ -1,9 +1,13 @@
 import { Stack } from '@mui/material';
 import { Accordion, Preloader } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { ModuleType, useGetModulesListQuery } from '~/api/queries/settings/get-modules-list.query';
+import {
+  ModuleType,
+  getModulesListQueryOptions,
+} from '~/api/queries/settings/get-modules-list.query';
 import { selectPropertiesByModuleName } from '~/api/selectors/select-properties-by-module-name';
 import { DesignConfigurationForm } from '~/components/forms/configuration-design/design-configuration-form';
 import { ExternalLinksTable } from '~/components/tables/external-links/external-links.component';
@@ -19,10 +23,11 @@ export const Route = createFileRoute('/_main/admin/settings')({
 function SettingsPage() {
   const { t } = useTranslation();
 
-  const { data: designModuleProperties, isLoading: isDesignModulesLoading } =
-    useGetModulesListQuery({
+  const { data: designModuleProperties, isLoading: isDesignModulesLoading } = useQuery(
+    getModulesListQueryOptions({
       select: data => selectPropertiesByModuleName(data, ModuleType.DESIGN),
-    });
+    }),
+  );
 
   return (
     <Stack>

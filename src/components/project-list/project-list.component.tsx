@@ -1,10 +1,11 @@
 import { Typography } from '@mui/material';
 import { Preloader } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { useParams } from '@tanstack/react-router';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useGetProjectNodesByParentQuery } from '~/api/queries/projects/get-project-nodes-by-parent.query';
+import { getProjectNodesByParentQueryOptions } from '~/api/queries/projects/get-project-nodes-by-parent.query';
 
 import { _ProjectsTreeContainer } from './project-list.style';
 import { ProjectTreeItem } from './project-tree-item/project-tree-item.component';
@@ -13,7 +14,9 @@ export const ProjectList: FC = () => {
   const { groupId } = useParams({ strict: false });
 
   const { t } = useTranslation();
-  const { data: currentLevelNodes = [], isLoading } = useGetProjectNodesByParentQuery(groupId);
+  const { data: currentLevelNodes = [], isLoading } = useQuery(
+    getProjectNodesByParentQueryOptions(groupId),
+  );
 
   if (isLoading) {
     return <Preloader />;

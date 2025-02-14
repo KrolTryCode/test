@@ -1,12 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, FormItem, FormButtons, Button, modal } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { useParams } from '@tanstack/react-router';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { InstanceProps } from 'react-modal-promise';
 
-import { useGetFormsQuery } from '~/api/queries/forms/get-forms.query';
+import { getFormsQueryOptions } from '~/api/queries/forms/get-forms.query';
 import { FullTaskInfo } from '~/api/utils/api-requests';
 import { getSchema } from '~/components/forms/task/task-form.schema';
 import { FormInputText, FormSelect } from '~/components/react-hook-form';
@@ -49,7 +50,7 @@ export const TaskForm: FC<TaskFormProps> = ({
     resolver: yupResolver(schema),
   });
 
-  const { data: forms = [], isLoading: isFormsLoading } = useGetFormsQuery(projectId);
+  const { data: forms = [], isLoading: isFormsLoading } = useQuery(getFormsQueryOptions(projectId));
 
   return (
     <Form

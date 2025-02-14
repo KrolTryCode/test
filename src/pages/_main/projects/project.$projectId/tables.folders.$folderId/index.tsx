@@ -1,8 +1,9 @@
 import { Box, Stack, styled } from '@mui/material';
 import { Preloader } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { createFileRoute, Link } from '@tanstack/react-router';
 
-import { useGetContentNodesByParent } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
+import { getContentNodesByParentOptions } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
 import { isFolderType, renderItemIcon } from '~/components/tree/nav-tree/nav-tree.utils';
 import { EmptyDirectory } from '~/routing/_fallbacks/info/empty-element.component';
 
@@ -24,7 +25,7 @@ const NodeLink = styled(Link)(({ theme }) => ({
 
 function FoldersPage() {
   const { projectId, folderId } = Route.useParams();
-  const { data: nodes, isLoading } = useGetContentNodesByParent(projectId, folderId);
+  const { data: nodes, isLoading } = useQuery(getContentNodesByParentOptions(projectId, folderId));
 
   if (nodes?.length === 0) {
     return <EmptyDirectory />;
