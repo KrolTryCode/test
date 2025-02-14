@@ -14,7 +14,7 @@ export const useRemoveRoleMutation = (options?: UseCustomMutationOptions<Role, E
     mutationFn: (id: string) => ApiClientSecured.rolesV1Controller.removeRole(id),
     ...options,
     onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: roleQueries.getAllRoles._def });
+      void queryClient.invalidateQueries({ queryKey: roleQueries.getAllRoles.queryKey });
       options?.onSuccess?.(...args);
     },
   });

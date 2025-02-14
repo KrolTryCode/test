@@ -1,4 +1,4 @@
-import { ModuleType } from '~/api/queries/settings/get-modules-list.query';
+import { ModuleType } from '~/api/queries/settings/get-module-list.query';
 import {
   CollectionModelEntityModelModuleConfiguration,
   EntityModelModuleConfiguration,

@@ -9,6 +9,6 @@ export const getExternalLinksQueryOptions = <T = LinksConfiguration>(
   options?: UseCustomQueryOptions<LinksConfiguration, unknown, T>,
 ) =>
   queryOptions({
-    ...settingsQueries.linksConfiguration(),
+    ...settingsQueries.linksConfiguration,
     ...options,
   });

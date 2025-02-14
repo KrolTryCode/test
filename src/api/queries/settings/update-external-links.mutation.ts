@@ -16,7 +16,7 @@ export const useUpdateLinksConfigurationMutation = (
       ApiClientSecured.linksConfigurationV1Controller.updateLinksConfiguration(config),
     ...options,
     onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: settingsQueries.linksConfiguration._def });
+      void queryClient.invalidateQueries({ queryKey: settingsQueries.linksConfiguration.queryKey });
       options?.onSuccess?.(...args);
     },
   });

@@ -6,7 +6,7 @@ import { ServerPagingParams } from '~/utils/hooks';
 
 export const roleQueries = createQueryKeys('roles', {
   getAllRoles: {
-    queryKey: ['roles'],
+    queryKey: null,
     queryFn: () => ApiClientSecured.rolesV1Controller.getAllRoles(),
     contextQueries: {
       findRoles: (pagingParams: ServerPagingParams) => ({
@@ -22,7 +22,7 @@ export const roleQueries = createQueryKeys('roles', {
     },
   },
   getAllPermissions: {
-    queryKey: ['permissions'],
+    queryKey: null,
     queryFn: () => ApiClientSecured.permissionsV1Controller.getAllPermissions(),
     contextQueries: {
       findPermissions: (pagingParams: ServerPagingParams) => ({

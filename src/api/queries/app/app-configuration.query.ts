@@ -9,7 +9,7 @@ export const appConfigurationQueryOptions = <T = AppConfig>(
   options?: UseCustomQueryOptions<AppConfig, unknown, T>,
 ) =>
   queryOptions({
-    ...appQueries.configuration(),
+    ...appQueries.configuration,
     placeholderData: keepPreviousData,
     ...options,
   });

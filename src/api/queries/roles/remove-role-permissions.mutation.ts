@@ -22,7 +22,7 @@ export const useRemoveRolePermissionsMutation = (
       ApiClientSecured.rolesV1Controller.removeRolePermissions(roleId, { id }),
     ...options,
     onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: roleQueries.getAllRoles._def });
+      void queryClient.invalidateQueries({ queryKey: roleQueries.getAllRoles.queryKey });
       options?.onSuccess?.(...args);
     },
   });

@@ -5,11 +5,11 @@ import { ServerPagingParams } from '~/utils/hooks';
 
 export const userQueries = createQueryKeys('users', {
   current: {
-    queryKey: ['current'],
+    queryKey: null,
     queryFn: () => ApiClientSecured.usersV1Controller.getCurrentUser(),
   },
   active: {
-    queryKey: ['active'],
+    queryKey: null,
     queryFn: () => ApiClientSecured.usersV2Controller.getActiveUsers(),
   },
   single: (userId: string) => ({
@@ -25,7 +25,7 @@ export const userQueries = createQueryKeys('users', {
       ),
   }),
   avatarId: (userId: string) => ({
-    queryKey: [userId, 'avatar'],
+    queryKey: [userId],
     queryFn: () => ApiClientSecured.userFilesV1Controller.getActiveUserAvatarId(userId),
   }),
 });

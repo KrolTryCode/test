@@ -8,20 +8,20 @@ export const projectQueries = createQueryKeys('project', {
     queryFn: () => ApiClientSecured.projectNodeV1Controller.getProjectNodeById(projectId),
   }),
   byParent: (parentNodeId?: string) => ({
-    queryKey: ['by-parent', parentNodeId],
+    queryKey: [parentNodeId],
     queryFn: () => ApiClientSecured.projectNodeV1Controller.getChildrenByParent({ parentNodeId }),
   }),
-  tree: () => ({
-    queryKey: ['tree'],
+  tree: {
+    queryKey: null,
     queryFn: () => ApiClientSecured.projectNodeV1Controller.getNodesTree(),
-  }),
+  },
   parents: (projectId: string) => ({
-    queryKey: [projectId, 'parents'],
+    queryKey: [projectId],
     queryFn: () =>
       ApiClientSecured.projectNodeV1Controller.getParentsByChild({ childNodeId: projectId }),
   }),
   tasks: (projectId: string) => ({
-    queryKey: [projectId, 'tasks'],
+    queryKey: [projectId],
     queryFn: () => ApiClientSecured.projectTasksV1Controller.getProjectTasks(projectId),
   }),
   task: (taskId: string) => ({
@@ -29,7 +29,7 @@ export const projectQueries = createQueryKeys('project', {
     queryFn: () => ApiClientSecured.tasksV1Controller.getTask(taskId),
   }),
   logo: (projectId: string) => ({
-    queryKey: [projectId, 'logo'],
+    queryKey: [projectId],
     queryFn: () => ApiClientSecured.projectFilesV1Controller.getProjectLogo(projectId),
   }),
   permissionTypes: (projectId: string) => ({

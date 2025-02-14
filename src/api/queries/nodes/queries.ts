@@ -4,7 +4,7 @@ import { ApiClientSecured } from '~/api/utils/api-client';
 
 export const nodeQueries = createQueryKeys('nodes', {
   tree: (projectId: string) => ({
-    queryKey: [projectId, 'tree'],
+    queryKey: [projectId],
     queryFn: () => ApiClientSecured.contentNodeV1Controller.getNodesTreeByProject({ projectId }),
   }),
 });

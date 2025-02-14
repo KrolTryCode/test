@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next';
 
 import {
   ModuleType,
-  getModulesListQueryOptions,
-} from '~/api/queries/settings/get-modules-list.query';
+  getModuleListQueryOptions,
+} from '~/api/queries/settings/get-module-list.query';
 import { selectPropertiesByModuleName } from '~/api/selectors/select-properties-by-module-name';
 import { DesignConfigurationForm } from '~/components/forms/configuration-design/design-configuration-form';
 import { ExternalLinksTable } from '~/components/tables/external-links/external-links.component';
@@ -24,7 +24,7 @@ function SettingsPage() {
   const { t } = useTranslation();
 
   const { data: designModuleProperties, isLoading: isDesignModulesLoading } = useQuery(
-    getModulesListQueryOptions({
+    getModuleListQueryOptions({
       select: data => selectPropertiesByModuleName(data, ModuleType.DESIGN),
     }),
   );

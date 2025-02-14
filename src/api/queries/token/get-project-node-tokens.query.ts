@@ -11,7 +11,7 @@ export const getNodeTokensQueryOptions = <T = ServiceToken[]>(
   options?: UseCustomQueryOptions<ServiceToken[], AxiosError<ErrorResponse>, T>,
 ) =>
   queryOptions({
-    ...tokenQueries.tokensList(nodeId),
+    ...tokenQueries.list(nodeId),
     placeholderData: keepPreviousData,
     ...options,
   });

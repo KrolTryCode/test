@@ -9,6 +9,6 @@ export const getProjectNodesTreeQueryOptions = <T = ProjectNode[]>(
   options?: UseCustomQueryOptions<ProjectNode[], unknown, T>,
 ) =>
   queryOptions({
-    ...projectQueries.tree(),
+    ...projectQueries.tree,
     ...options,
   });
