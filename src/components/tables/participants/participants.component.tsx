@@ -27,7 +27,6 @@ interface ParticipantsTableProps {
 
 export const ParticipantsTable: FC<ParticipantsTableProps> = ({ nodeId }) => {
   const { t } = useTranslation();
-  // const {} = Route.useSearch();
   const declinatedTranslations = useDeclinatedTranslationsContext();
   const apiRef = useGridApiRef();
 
