@@ -1,9 +1,10 @@
+import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { UseFormResetField } from 'react-hook-form';
 
-import { useGetFileQuery } from '~/api/queries/files/download-file.query';
+import { getFileQueryOptions } from '~/api/queries/files/download-file.query';
 import { useCreateSolverFile } from '~/api/queries/solvers/create-solver-file.mutation';
-import { useGetSolverFileQuery } from '~/api/queries/solvers/get-solver-file.query';
+import { getSolverFileQueryOptions } from '~/api/queries/solvers/get-solver-file.query';
 import { Solver } from '~/api/utils/api-requests';
 import { useUploadFile } from '~/use-cases/upload-file.hook';
 import { showErrorMessage } from '~/utils/show-error-message';
@@ -22,14 +23,15 @@ export const useSolverForm = (
 
   const { handleUpload, isUploading } = useUploadFile();
 
-  const { data: solverFile, isFetching: isFetchingSolverFile } = useGetSolverFileQuery(
-    solver?.id ?? '',
-    { enabled: isEditing },
+  const { data: solverFile, isFetching: isFetchingSolverFile } = useQuery(
+    getSolverFileQueryOptions(solver?.id ?? '', { enabled: isEditing }),
   );
 
-  const { data: currentFile, isFetching: isFetchingFile } = useGetFileQuery(
-    solverFile?.fileId ?? '',
-    { enabled: !!solverFile?.fileId, params: { format: 'blob' } },
+  const { data: currentFile, isFetching: isFetchingFile } = useQuery(
+    getFileQueryOptions(solverFile?.fileId ?? '', {
+      enabled: !!solverFile?.fileId,
+      params: { format: 'blob' },
+    }),
   );
 
   const getFileId = useCallback(

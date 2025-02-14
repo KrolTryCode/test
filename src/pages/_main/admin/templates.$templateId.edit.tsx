@@ -1,9 +1,10 @@
 import { Stack, Typography } from '@mui/material';
 import { notifySuccess } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { useGetTemplateQuery } from '~/api/queries/templates/get-template.query';
+import { getTemplateQueryOptions } from '~/api/queries/templates/get-template.query';
 import { useUpdateTemplateMutation } from '~/api/queries/templates/update-template.mutation';
 import { CreateTemplateRequest } from '~/api/utils/api-requests';
 import { TemplateForm } from '~/components/forms/template/template-form';
@@ -18,7 +19,7 @@ function EditTemplate() {
   const navigate = useNavigate();
   const { templateId } = Route.useParams();
 
-  const { data, isLoading } = useGetTemplateQuery(templateId);
+  const { data, isLoading } = useQuery(getTemplateQueryOptions(templateId));
   const { mutateAsync: updateTemplate, isPending } = useUpdateTemplateMutation({
     onSuccess: () => {
       notifySuccess(t('MESSAGE.UPDATE_SUCCESS'));

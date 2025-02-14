@@ -1,10 +1,11 @@
 import { ChevronRight, KeyboardArrowDown } from '@mui/icons-material';
 import { Box, Stack } from '@mui/material';
 import { Button, Preloader } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { useParams } from '@tanstack/react-router';
 import { FC, useState } from 'react';
 
-import { useGetContentNodesByParent } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
+import { getContentNodesByParentOptions } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
 import { ContentNodeType } from '~/api/utils/api-requests';
 import { isFolderType, renderItemIcon } from '~/components/tree/nav-tree/nav-tree.utils';
 import { NodesTreeItemProps } from '~/components/tree/tree.type';
@@ -30,17 +31,15 @@ export const NodesTreeItem: FC<NodesTreeItemProps> = ({
 
   const [isOpened, setIsOpened] = useState(false);
 
-  const { data: childNodes = [], isLoading } = useGetContentNodesByParent(
-    projectId,
-    contentNode.id,
-    {
+  const { data: childNodes = [], isLoading } = useQuery(
+    getContentNodesByParentOptions(projectId, contentNode.id, {
       enabled: contentNode.hasChildren && isOpened,
       select: data => {
         return showOnlyFolders
           ? data.filter(item => item.type === ContentNodeType.Directory)
           : data;
       },
-    },
+    }),
   );
 
   return (

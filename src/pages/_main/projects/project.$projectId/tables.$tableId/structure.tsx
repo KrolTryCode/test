@@ -1,9 +1,10 @@
 import { Stack, Typography } from '@mui/material';
 import { Preloader } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { useGetProjectContentQuery } from '~/api/queries/project-content/get-project-content.query';
+import { getProjectContentQueryOptions } from '~/api/queries/project-content/get-project-content.query';
 import { ButtonLink } from '~/components/implicit-links';
 import { ProjectTableStructure } from '~/components/tables/project-table-structure/project-table-structure.component';
 
@@ -20,7 +21,9 @@ function TableStructure() {
   const { t } = useTranslation();
   const { tableId } = Route.useParams();
 
-  const { data: nodeInfo, isLoading: isNodeLoading } = useGetProjectContentQuery(tableId);
+  const { data: nodeInfo, isLoading: isNodeLoading } = useQuery(
+    getProjectContentQueryOptions(tableId),
+  );
 
   if (isNodeLoading) {
     return <Preloader />;

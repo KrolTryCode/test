@@ -1,7 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
 import { FC } from 'react';
 
-import { useGetProjectNodeQuery } from '~/api/queries/projects/get-project-node.query';
-import { useGetParentsQuery } from '~/api/queries/projects/get-projects-parents.query';
+import { projectNodeQueryOptions } from '~/api/queries/projects/get-project-node.query';
+import { getParentsQueryOptions } from '~/api/queries/projects/get-projects-parents.query';
 import { ProjectNodeType } from '~/api/utils/api-requests';
 
 import { NodeLogo } from '../node-logo/node-logo.component';
@@ -13,10 +14,12 @@ interface ProjectNodeBreadcrumbsProps {
 }
 
 export const ProjectNodeBreadcrumbs: FC<ProjectNodeBreadcrumbsProps> = ({ projectNodeId }) => {
-  const { data: parents = [] } = useGetParentsQuery(projectNodeId ?? '');
-  const { data: projectData } = useGetProjectNodeQuery(projectNodeId, {
-    enabled: !!projectNodeId,
-  });
+  const { data: parents = [] } = useQuery(getParentsQueryOptions(projectNodeId ?? ''));
+  const { data: projectData } = useQuery(
+    projectNodeQueryOptions(projectNodeId, {
+      enabled: !!projectNodeId,
+    }),
+  );
 
   return (
     <StyledBreadcrumbs separator={'›'} maxItems={5}>

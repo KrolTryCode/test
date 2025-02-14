@@ -1,12 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, FormItem, FormButtons, Button, modal } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { InstanceProps } from 'react-modal-promise';
 
-import { useGetAllRolesQuery } from '~/api/queries/roles/get-all-roles.query';
-import { useGetActiveUsersQuery } from '~/api/queries/users/get-active-users.query';
+import { getAllRolesQueryOptions } from '~/api/queries/roles/get-all-roles.query';
+import { getActiveUsersQueryOptions } from '~/api/queries/users/get-active-users.query';
 import { User } from '~/api/utils/api-requests';
 import { FormDateTimePicker, FormSelect } from '~/components/react-hook-form';
 
@@ -37,11 +38,13 @@ export const ParticipantForm: FC<ParticipantFormProps> = ({
     resolver: yupResolver(schema),
   });
 
-  const { data: roleList = [], isLoading: isRoleListLoading } = useGetAllRolesQuery();
+  const { data: roleList = [], isLoading: isRoleListLoading } = useQuery(getAllRolesQueryOptions());
 
-  const { data: users = [], isLoading: isUserListLoading } = useGetActiveUsersQuery({
-    select: data => selectUsers(data, alreadyParticipantsId),
-  });
+  const { data: users = [], isLoading: isUserListLoading } = useQuery(
+    getActiveUsersQueryOptions({
+      select: data => selectUsers(data, alreadyParticipantsId),
+    }),
+  );
 
   return (
     <Form

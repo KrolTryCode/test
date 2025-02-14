@@ -1,9 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, FormButtons, FormItem, Button, Preloader } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { FC, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useGetContentNodesByParent } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
+import { getContentNodesByParentOptions } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
 import { ContentNodeType, CreateContentNodeRequest } from '~/api/utils/api-requests';
 import { getSchema } from '~/components/forms/table-node/table-node-form.schema';
 import { FormInputText, FormSelect } from '~/components/react-hook-form';
@@ -30,10 +31,10 @@ export const TableNodeForm: FC<TableNodeFormProps> = ({
   const { t, translateEntity } = useCustomTranslations();
   const [selectedItem, setSelectedItem] = useState(currentNodeId);
 
-  const { data: siblingNames = [], isLoading } = useGetContentNodesByParent(
-    projectId,
-    selectedItem,
-    { select: data => data.map(node => node.name) },
+  const { data: siblingNames = [], isLoading } = useQuery(
+    getContentNodesByParentOptions(projectId, selectedItem, {
+      select: data => data.map(node => node.name),
+    }),
   );
 
   const schema = useMemo(() => getSchema(siblingNames, t), [siblingNames, t]);

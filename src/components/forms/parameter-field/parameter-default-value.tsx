@@ -1,10 +1,11 @@
+import { useQuery } from '@tanstack/react-query';
 import { useParams } from '@tanstack/react-router';
 import { FC } from 'react';
 import { UseFormRegister, Control } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import * as y from 'yup';
 
-import { useGetSolversQuery } from '~/api/queries/solvers/get-solvers.query';
+import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { DataType } from '~/api/utils/api-requests';
 import { ParameterFieldForm } from '~/components/forms/parameter-field/parameter-field.type';
 import {
@@ -32,9 +33,11 @@ export const DefaultValueComponent: FC<DefaultValueComponentProps> = ({
   const { projectId } = useParams({ strict: false });
   const { t } = useTranslation();
 
-  const { data: solvers = [] } = useGetSolversQuery(projectId ?? '', {
-    enabled: key === 'solver',
-  });
+  const { data: solvers = [] } = useQuery(
+    getSolversQueryOptions(projectId ?? '', {
+      enabled: key === 'solver',
+    }),
+  );
 
   //3 hard-coded keys on BE: Решатель, Таблицы, Время моделирования
   if (key === 'solver') {

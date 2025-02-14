@@ -1,7 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useGetProjectNodesByParentQuery } from '~/api/queries/projects/get-project-nodes-by-parent.query';
+import { getProjectNodesByParentQueryOptions } from '~/api/queries/projects/get-project-nodes-by-parent.query';
 import { ProjectNodeType } from '~/api/utils/api-requests';
 
 import { GroupSelectTreeItem } from './group-select-tree-item.component';
@@ -15,11 +16,13 @@ export interface GroupSelectTreeProps {
 export const GroupSelectTree: FC<GroupSelectTreeProps> = ({ value, onChange = () => void 0 }) => {
   const { t } = useTranslation();
 
-  const { data: groups = [] } = useGetProjectNodesByParentQuery(undefined, {
-    select(data) {
-      return data.filter(node => node.type === ProjectNodeType.Group);
-    },
-  });
+  const { data: groups = [] } = useQuery(
+    getProjectNodesByParentQueryOptions(undefined, {
+      select(data) {
+        return data.filter(node => node.type === ProjectNodeType.Group);
+      },
+    }),
+  );
 
   return (
     <_GroupSelectContainer>

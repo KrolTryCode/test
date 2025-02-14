@@ -1,16 +1,15 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { queryOptions } from '@tanstack/react-query';
 
 import { UseCustomQueryOptions } from '~/api/typings/react-query-helpers';
 import { FullTaskInfo } from '~/api/utils/api-requests';
 
 import { projectQueries } from '../queries';
 
-export const useGetProjectTasksQuery = <T = FullTaskInfo[]>(
+export const getProjectTasksQueryOptions = <T = FullTaskInfo[]>(
   projectId: string,
   options?: UseCustomQueryOptions<FullTaskInfo[], unknown, T>,
-): UseQueryResult<T, unknown> => {
-  return useQuery({
+) =>
+  queryOptions({
     ...projectQueries.tasks(projectId),
     ...options,
   });
-};

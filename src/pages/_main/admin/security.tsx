@@ -1,9 +1,13 @@
 import { Stack } from '@mui/material';
 import { Accordion, Preloader } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { ModuleType, useGetModulesListQuery } from '~/api/queries/settings/get-modules-list.query';
+import {
+  ModuleType,
+  getModulesListQueryOptions,
+} from '~/api/queries/settings/get-modules-list.query';
 import { selectPropertiesByModuleName } from '~/api/selectors/select-properties-by-module-name';
 import { EntityModelModuleConfiguration } from '~/api/utils/api-requests';
 import { ConfigForm } from '~/components/forms/configuration/configuration-form';
@@ -17,13 +21,17 @@ export const Route = createFileRoute('/_main/admin/security')({
 });
 
 function SecurityPage() {
-  const { data: moduleProperties, isLoading: isAccountsModulesLoading } = useGetModulesListQuery({
-    select: data => selectPropertiesByModuleName(data, ModuleType.ACCOUNTS),
-  });
+  const { data: moduleProperties, isLoading: isAccountsModulesLoading } = useQuery(
+    getModulesListQueryOptions({
+      select: data => selectPropertiesByModuleName(data, ModuleType.ACCOUNTS),
+    }),
+  );
 
-  const { data: usersModuleProperties, isLoading: isUsersModulesLoading } = useGetModulesListQuery({
-    select: data => selectPropertiesByModuleName(data, ModuleType.USERS),
-  });
+  const { data: usersModuleProperties, isLoading: isUsersModulesLoading } = useQuery(
+    getModulesListQueryOptions({
+      select: data => selectPropertiesByModuleName(data, ModuleType.USERS),
+    }),
+  );
 
   return (
     <Stack>

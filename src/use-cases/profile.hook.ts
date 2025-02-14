@@ -1,9 +1,10 @@
 import { notifySuccess } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useChangePasswordMutation } from '~/api/queries/users/change-password.mutation';
-import { useGetCurrentUserQuery } from '~/api/queries/users/get-current-user.query';
+import { getCurrentUserQueryOptions } from '~/api/queries/users/get-current-user.query';
 import { useUpdateUserMutation } from '~/api/queries/users/update-user.mutation';
 import { UpdateUserRequest } from '~/api/utils/api-requests';
 import { setUserInfo } from '~/app/user/user.store';
@@ -15,7 +16,7 @@ import { showErrorMessage } from '~/utils/show-error-message';
 export const useProfile = () => {
   const { t } = useTranslation();
 
-  const { data: currentUser, isLoading: isUserLoading } = useGetCurrentUserQuery();
+  const { data: currentUser, isLoading: isUserLoading } = useQuery(getCurrentUserQueryOptions());
 
   const { mutate: changePassword } = useChangePasswordMutation({
     onSuccess: () => notifySuccess(t('AUTH.PASSWORD.SUCCESS')),

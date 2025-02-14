@@ -1,17 +1,19 @@
+import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
 import { useCreateApplicationFile } from '~/api/queries/design/create-application-file.mutation';
-import { useGetColorPalettesQuery } from '~/api/queries/design/get-color-palettes.query';
+import { getColorPalettesQueryOptions } from '~/api/queries/design/get-color-palettes.query';
 import { useUploadFile } from '~/use-cases/upload-file.hook';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const useDesignConfigurationForm = () => {
-  const { data: appColorsPalettes = [] } = useGetColorPalettesQuery();
   const { mutateAsync: createApplicationFile } = useCreateApplicationFile({
     onError: e => showErrorMessage(e, 'ERROR.UPLOAD_FAILED'),
   });
 
   const { handleUpload, isUploading } = useUploadFile();
+
+  const { data: appColorsPalettes = [] } = useQuery(getColorPalettesQueryOptions());
 
   const getFileId = useCallback(
     (type: 'mainLogo' | 'loginLogo', originalName: string) => async () => {

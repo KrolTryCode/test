@@ -1,8 +1,9 @@
 import { Divider, Link as MuiLink } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { useGetExternalLinksQuery } from '~/api/queries/settings/get-external-links.query';
+import { getExternalLinksQueryOptions } from '~/api/queries/settings/get-external-links.query';
 import { useUserStore } from '~/app/user/user.store';
 import { FileRoutesById } from '~/routing/routeTree.gen';
 
@@ -15,7 +16,9 @@ type MainRoueChild = MainRouteChildren[keyof MainRouteChildren];
 export const NavMenuDesktop = () => {
   const { t } = useTranslation();
 
-  const { data: externalLinks } = useGetExternalLinksQuery({ select: data => data.links });
+  const { data: externalLinks } = useQuery(
+    getExternalLinksQueryOptions({ select: data => data.links }),
+  );
 
   const userRoles = useUserStore(state => state.data?.permissions ?? []);
   const router = useRouter();

@@ -1,10 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
+import { queryOptions } from '@tanstack/react-query';
 
 import { localeQueries } from '~/api/queries/locale/queries';
 import { UseCustomQueryOptions } from '~/api/typings/react-query-helpers';
 
-export const useDownloadMessagesMapQuery = (lang: string, options?: UseCustomQueryOptions) => {
-  return useQuery({
+export const downloadMessagesMapQueryOptions = (lang: string, options?: UseCustomQueryOptions) =>
+  queryOptions({
     ...localeQueries.messagesMap(lang),
     select: data => {
       const parsedData: Record<string, string> = {};
@@ -16,4 +16,3 @@ export const useDownloadMessagesMapQuery = (lang: string, options?: UseCustomQue
     staleTime: 86400,
     ...options,
   });
-};

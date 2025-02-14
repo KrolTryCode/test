@@ -1,10 +1,11 @@
 import { notifySuccess, modal } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useCreateFormParameterMutation } from '~/api/queries/forms/parameters/create-form-parameter.mutation';
 import { useDeleteFormParameterMutation } from '~/api/queries/forms/parameters/delete-form-parameter.mutation';
-import { useGetFormParametersQuery } from '~/api/queries/forms/parameters/get-parameters.query';
+import { getFormParametersQueryOptions } from '~/api/queries/forms/parameters/get-parameters.query';
 import { useUpdateFormParameterMutation } from '~/api/queries/forms/parameters/update-form-parameter.mutation';
 import { sortParametersByIndex } from '~/api/selectors/sort-parameters-by-index';
 import { ParameterField } from '~/api/utils/api-requests';
@@ -15,13 +16,15 @@ import { EditParameterForm } from '../../forms/parameter-field/edit-parameter-fi
 
 export const useParametersHook = (formId: string) => {
   const { t } = useTranslation();
-  const { data: parameters = [], isLoading } = useGetFormParametersQuery(formId, {
-    enabled: !!formId,
-    select: data =>
-      sortParametersByIndex(data).map(param => {
-        return { ...param, __reorder__: param.name };
-      }),
-  });
+  const { data: parameters = [], isLoading } = useQuery(
+    getFormParametersQueryOptions(formId, {
+      enabled: !!formId,
+      select: data =>
+        sortParametersByIndex(data).map(param => {
+          return { ...param, __reorder__: param.name };
+        }),
+    }),
+  );
 
   const parameterKeys = parameters.map(param => param.key);
 

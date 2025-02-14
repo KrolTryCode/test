@@ -1,11 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, FormItem, FormButtons, Button, modal } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { InstanceProps } from 'react-modal-promise';
 
-import { useGetAllPermissionsQuery } from '~/api/queries/roles/get-all-permissions.query';
+import { getAllPermissionsQueryOptions } from '~/api/queries/roles/get-all-permissions.query';
 import { CreateRole } from '~/api/utils/api-requests';
 import { FormInputText, FormSelect } from '~/components/react-hook-form';
 
@@ -19,7 +20,7 @@ interface RoleFormProps {
 const RoleForm: FC<RoleFormProps> = ({ onResolve, onReject }) => {
   const { t } = useTranslation();
 
-  const { data: permissions = [] } = useGetAllPermissionsQuery();
+  const { data: permissions = [] } = useQuery(getAllPermissionsQueryOptions());
 
   const {
     register,

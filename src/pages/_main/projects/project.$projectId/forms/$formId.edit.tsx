@@ -1,9 +1,10 @@
 import { Stack, Typography } from '@mui/material';
 import { notifySuccess } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { useGetFormQuery } from '~/api/queries/forms/get-form.query';
+import { getFormQueryOptions } from '~/api/queries/forms/get-form.query';
 import { useUpdateFormMutation } from '~/api/queries/forms/update-form.mutation';
 import { EditTaskForm } from '~/components/forms/task-form/edit-task-form';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
@@ -19,7 +20,7 @@ function EditTaskFormPage() {
   const declinatedTranslations = useDeclinatedTranslationsContext();
   const declinatedForm = declinatedTranslations.FORM.ACCUSATIVE.toLowerCase();
 
-  const { data } = useGetFormQuery(formId);
+  const { data } = useQuery(getFormQueryOptions(formId));
   const { mutate: updateForm, isPending } = useUpdateFormMutation(projectId, formId, {
     onSuccess: () => notifySuccess(t('MESSAGE.UPDATE_SUCCESS')),
     onError: e => showErrorMessage(e, t('ERROR.UPDATE_FAILED')),

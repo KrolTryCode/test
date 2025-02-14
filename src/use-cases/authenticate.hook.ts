@@ -1,8 +1,8 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useLocation, useNavigate } from '@tanstack/react-router';
 import { useCallback } from 'react';
 
-import { useGetCurrentUserQuery } from '~/api/queries/users/get-current-user.query';
+import { getCurrentUserQueryOptions } from '~/api/queries/users/get-current-user.query';
 import { LoginResponseWithRefreshToken, UserWithPermissions } from '~/api/utils/api-requests';
 import { clearUserData, setUserData } from '~/app/user/user.store';
 import { notifyPasswordExpired } from '~/components/password-expired/password-expired.component';
@@ -18,9 +18,11 @@ export const useAuthenticate = () => {
   const location = useLocation();
   const queryClient = useQueryClient();
   const locationState = location.state as { from: Location };
-  const { refetch: getCurrentUser, isFetched: isUserFetched } = useGetCurrentUserQuery({
-    enabled: false,
-  });
+  const { refetch: getCurrentUser, isFetched: isUserFetched } = useQuery(
+    getCurrentUserQueryOptions({
+      enabled: false,
+    }),
+  );
 
   const saveAndNotify = useCallback(
     (user: UserWithPermissions) => {

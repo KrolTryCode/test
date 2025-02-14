@@ -1,18 +1,17 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { queryOptions } from '@tanstack/react-query';
 
 import { UseCustomQueryOptions } from '~/api/typings/react-query-helpers';
 import { CollectionModelEntityModelModuleConfiguration } from '~/api/utils/api-requests';
 
 import { settingsQueries } from './queries';
 
-export const useGetModulesListQuery = <T = CollectionModelEntityModelModuleConfiguration>(
+export const getModulesListQueryOptions = <T = CollectionModelEntityModelModuleConfiguration>(
   options?: UseCustomQueryOptions<CollectionModelEntityModelModuleConfiguration, unknown, T>,
-): UseQueryResult<T, unknown> => {
-  return useQuery({
+) =>
+  queryOptions({
     ...settingsQueries.moduleList,
     ...options,
   });
-};
 
 export enum ModuleType {
   USERS = 'users',

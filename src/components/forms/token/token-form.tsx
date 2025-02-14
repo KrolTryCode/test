@@ -1,11 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, FormItem, FormButtons, Button, modal } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { InstanceProps } from 'react-modal-promise';
 
-import { useGetAllRolesQuery } from '~/api/queries/roles/get-all-roles.query';
+import { getAllRolesQueryOptions } from '~/api/queries/roles/get-all-roles.query';
 import { FormDateTimePicker, FormInputText, FormSelect } from '~/components/react-hook-form';
 
 import { ICreateTokenForm, schema } from './token-form.schema';
@@ -17,7 +18,7 @@ interface TokenFormProps {
 
 const TokenForm: FC<TokenFormProps> = ({ onReject, onResolve }) => {
   const { t } = useTranslation();
-  const { data: roles = [] } = useGetAllRolesQuery();
+  const { data: roles = [] } = useQuery(getAllRolesQueryOptions());
 
   const {
     register,

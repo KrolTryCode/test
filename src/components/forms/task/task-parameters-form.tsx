@@ -1,11 +1,12 @@
 import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { useParams } from '@tanstack/react-router';
 import { BaseSyntheticEvent, FC, useMemo } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { useGetFormParametersQuery } from '~/api/queries/forms/parameters/get-parameters.query';
-import { useGetSolversQuery } from '~/api/queries/solvers/get-solvers.query';
+import { getFormParametersQueryOptions } from '~/api/queries/forms/parameters/get-parameters.query';
+import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { sortParametersByIndex } from '~/api/selectors/sort-parameters-by-index';
 import { DataType, FullTaskInfo, ParameterField, TaskState } from '~/api/utils/api-requests';
 import { FormInputNumeric, FormInputText, FormSelect } from '~/components/react-hook-form';
@@ -38,10 +39,14 @@ export const TaskParametersForm: FC<TaskParametersFormProps> = ({
   const { t } = useTranslation();
   const { projectId = '' } = useParams({ strict: false });
 
-  const { data: solvers = [], isLoading: isSolversLoading } = useGetSolversQuery(projectId);
-  const { data: parameters, isLoading: isParametersLoading } = useGetFormParametersQuery(formId, {
-    select: sortParametersByIndex,
-  });
+  const { data: solvers = [], isLoading: isSolversLoading } = useQuery(
+    getSolversQueryOptions(projectId),
+  );
+  const { data: parameters, isLoading: isParametersLoading } = useQuery(
+    getFormParametersQueryOptions(formId, {
+      select: sortParametersByIndex,
+    }),
+  );
 
   const defaultValues = parameters?.reduce(
     (acc, parameter) => {

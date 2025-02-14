@@ -1,13 +1,14 @@
 import { notifyError, notifySuccess } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { isValid } from 'date-fns';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useAddProjectMemberMutation } from '~/api/queries/project-members/add-project-member.mutation';
 import { useArchiveProjectMemberMutation } from '~/api/queries/project-members/archive-project-member.mutation';
-import { useGetProjectMembersQuery } from '~/api/queries/project-members/get-project-members.query';
+import { getProjectMembersQueryOptions } from '~/api/queries/project-members/get-project-members.query';
 import { useUpdateProjectMemberMutation } from '~/api/queries/project-members/update-project-member.mutation';
-import { useGetAllRolesQuery } from '~/api/queries/roles/get-all-roles.query';
+import { getAllRolesQueryOptions } from '~/api/queries/roles/get-all-roles.query';
 import { FullProjectNodeMemberInfo } from '~/api/utils/api-requests';
 import { addParticipantModal } from '~/components/forms/participant/participant-form';
 import { IAddParticipantForm } from '~/components/forms/participant/participant-form.schema';
@@ -20,10 +21,11 @@ export const useParticipants = (nodeId: string) => {
   const { t } = useTranslation();
   const declinatedTranslations = useDeclinatedTranslationsContext();
 
-  const { data: roles = [], isLoading: isRoleListLoading } = useGetAllRolesQuery();
+  const { data: roles = [], isLoading: isRoleListLoading } = useQuery(getAllRolesQueryOptions());
 
-  const { data: participants = [], isLoading: isParticipantListLoading } =
-    useGetProjectMembersQuery(nodeId, { enabled: !!nodeId });
+  const { data: participants = [], isLoading: isParticipantListLoading } = useQuery(
+    getProjectMembersQueryOptions(nodeId, { enabled: !!nodeId }),
+  );
 
   const { mutateAsync: addParticipant } = useAddProjectMemberMutation(nodeId);
 

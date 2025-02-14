@@ -1,10 +1,11 @@
 import { confirmDeletionModal, notifySuccess } from '@pspod/ui-components';
+import { useQuery } from '@tanstack/react-query';
 import { linkOptions, useNavigate } from '@tanstack/react-router';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useDeleteProjectNodeMutation } from '~/api/queries/projects/delete-project-node.mutation';
-import { useGetProjectNodeQuery } from '~/api/queries/projects/get-project-node.query';
+import { projectNodeQueryOptions } from '~/api/queries/projects/get-project-node.query';
 import { useUpdateProjectNodeMutation } from '~/api/queries/projects/update-project-node.mutation';
 import { ProjectNode, ProjectNodeType } from '~/api/utils/api-requests';
 import { projectNodeModal } from '~/components/forms/project-node/project-node-form';
@@ -17,13 +18,14 @@ export const useNodeActions = (id: string) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const { data: nodeData, isLoading: isNodeDataLoading } = useGetProjectNodeQuery(id, {
-    enabled: !!id,
-  });
+  const { data: nodeData, isLoading: isNodeDataLoading } = useQuery(
+    projectNodeQueryOptions(id, {
+      enabled: !!id,
+    }),
+  );
 
-  const { data: parentData, isLoading: isParentDataLoading } = useGetProjectNodeQuery(
-    nodeData?.parentId ?? '',
-    { enabled: !!nodeData?.parentId },
+  const { data: parentData, isLoading: isParentDataLoading } = useQuery(
+    projectNodeQueryOptions(nodeData?.parentId ?? '', { enabled: !!nodeData?.parentId }),
   );
 
   usePageTitle(nodeData?.name);
