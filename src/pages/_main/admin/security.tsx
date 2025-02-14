@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next';
 
 import {
   ModuleType,
-  getModulesListQueryOptions,
-} from '~/api/queries/settings/get-modules-list.query';
+  getModuleListQueryOptions,
+} from '~/api/queries/settings/get-module-list.query';
 import { selectPropertiesByModuleName } from '~/api/selectors/select-properties-by-module-name';
 import { EntityModelModuleConfiguration } from '~/api/utils/api-requests';
 import { ConfigForm } from '~/components/forms/configuration/configuration-form';
@@ -22,13 +22,13 @@ export const Route = createFileRoute('/_main/admin/security')({
 
 function SecurityPage() {
   const { data: moduleProperties, isLoading: isAccountsModulesLoading } = useQuery(
-    getModulesListQueryOptions({
+    getModuleListQueryOptions({
       select: data => selectPropertiesByModuleName(data, ModuleType.ACCOUNTS),
     }),
   );
 
   const { data: usersModuleProperties, isLoading: isUsersModulesLoading } = useQuery(
-    getModulesListQueryOptions({
+    getModuleListQueryOptions({
       select: data => selectPropertiesByModuleName(data, ModuleType.USERS),
     }),
   );

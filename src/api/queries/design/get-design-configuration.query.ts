@@ -8,7 +8,7 @@ export const getDesignConfigurationQueryOptions = <T = DesignConfiguration>(
   options?: UseCustomQueryOptions<DesignConfiguration, unknown, T>,
 ) =>
   queryOptions({
-    ...designQueries.designConfiguration(),
+    ...designQueries.configuration,
     placeholderData: keepPreviousData,
     gcTime: Infinity,
     staleTime: Infinity,

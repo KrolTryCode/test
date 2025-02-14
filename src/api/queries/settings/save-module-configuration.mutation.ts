@@ -26,7 +26,7 @@ export const useSaveConfigurationMutation = (
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({ queryKey: designQueries.logo._def });
-      void queryClient.invalidateQueries({ queryKey: designQueries.designConfiguration._def });
+      void queryClient.invalidateQueries({ queryKey: designQueries.configuration.queryKey });
       void queryClient.invalidateQueries({
         queryKey: settingsQueries.moduleConfiguration(name, path).queryKey,
       });

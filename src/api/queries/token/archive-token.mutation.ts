@@ -17,7 +17,7 @@ export const useArchiveTokenMutation = (
       ApiClientSecured.projectNodeTokenV1Controller.archiveServiceToken(nodeId, tokenId),
     ...options,
     onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: tokenQueries.tokensList(nodeId).queryKey });
+      void queryClient.invalidateQueries({ queryKey: tokenQueries.list(nodeId).queryKey });
       options?.onSuccess?.(...args);
     },
   });

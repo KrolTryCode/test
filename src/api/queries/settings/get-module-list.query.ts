@@ -5,7 +5,7 @@ import { CollectionModelEntityModelModuleConfiguration } from '~/api/utils/api-r
 
 import { settingsQueries } from './queries';
 
-export const getModulesListQueryOptions = <T = CollectionModelEntityModelModuleConfiguration>(
+export const getModuleListQueryOptions = <T = CollectionModelEntityModelModuleConfiguration>(
   options?: UseCustomQueryOptions<CollectionModelEntityModelModuleConfiguration, unknown, T>,
 ) =>
   queryOptions({

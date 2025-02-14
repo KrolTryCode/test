@@ -16,7 +16,7 @@ export const useCreateRoleMutation = (
     mutationFn: role => ApiClientSecured.rolesV1Controller.createRole(role),
     ...options,
     onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: roleQueries.getAllRoles._def });
+      void queryClient.invalidateQueries({ queryKey: roleQueries.getAllRoles.queryKey });
       options?.onSuccess?.(...args);
     },
   });

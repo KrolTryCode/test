@@ -8,7 +8,7 @@ export const getColorPalettesQueryOptions = <T = ColorPallet[]>(
   options?: UseCustomQueryOptions<ColorPallet[], unknown, T>,
 ) =>
   queryOptions({
-    ...designQueries.palettes(),
+    ...designQueries.palettes,
     placeholderData: keepPreviousData,
     gcTime: Infinity,
     staleTime: Infinity,
