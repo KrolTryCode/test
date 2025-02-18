@@ -80,7 +80,7 @@ exports[`Profile > renders the profile > profile 1`] = `
             class="MuiStack-root css-1javh08-MuiStack-root"
           >
             <div
-              class="MuiFormControl-root css-cls341-MuiFormControl-root"
+              class="MuiFormControl-root css-csmh00-MuiFormControl-root"
             >
               <label
                 class="MuiFormLabel-root MuiFormLabel-colorPrimary Mui-required css-1hud5yu-MuiFormLabel-root"
@@ -136,7 +136,7 @@ exports[`Profile > renders the profile > profile 1`] = `
               </div>
             </div>
             <div
-              class="MuiFormControl-root css-cls341-MuiFormControl-root"
+              class="MuiFormControl-root css-csmh00-MuiFormControl-root"
             >
               <label
                 class="MuiFormLabel-root MuiFormLabel-colorPrimary Mui-required css-1hud5yu-MuiFormLabel-root"
@@ -192,7 +192,7 @@ exports[`Profile > renders the profile > profile 1`] = `
               </div>
             </div>
             <div
-              class="MuiFormControl-root css-cls341-MuiFormControl-root"
+              class="MuiFormControl-root css-csmh00-MuiFormControl-root"
             >
               <label
                 class="MuiFormLabel-root MuiFormLabel-colorPrimary css-1hud5yu-MuiFormLabel-root"
@@ -245,7 +245,7 @@ exports[`Profile > renders the profile > profile 1`] = `
             class="MuiStack-root css-1javh08-MuiStack-root"
           >
             <div
-              class="MuiFormControl-root css-cls341-MuiFormControl-root"
+              class="MuiFormControl-root css-csmh00-MuiFormControl-root"
             >
               <label
                 class="MuiFormLabel-root MuiFormLabel-colorPrimary css-1hud5yu-MuiFormLabel-root"
@@ -294,7 +294,7 @@ exports[`Profile > renders the profile > profile 1`] = `
               </div>
             </div>
             <div
-              class="MuiFormControl-root css-cls341-MuiFormControl-root"
+              class="MuiFormControl-root css-csmh00-MuiFormControl-root"
             >
               <label
                 class="MuiFormLabel-root MuiFormLabel-colorPrimary css-1hud5yu-MuiFormLabel-root"
@@ -343,7 +343,7 @@ exports[`Profile > renders the profile > profile 1`] = `
               </div>
             </div>
             <div
-              class="MuiFormControl-root css-cls341-MuiFormControl-root"
+              class="MuiFormControl-root css-csmh00-MuiFormControl-root"
             >
               <label
                 class="MuiFormLabel-root MuiFormLabel-colorPrimary css-1hud5yu-MuiFormLabel-root"
@@ -409,7 +409,7 @@ exports[`Profile > renders the profile > profile 1`] = `
             class="MuiStack-root css-1javh08-MuiStack-root"
           >
             <div
-              class="MuiFormControl-root css-cls341-MuiFormControl-root"
+              class="MuiFormControl-root css-csmh00-MuiFormControl-root"
             >
               <label
                 class="MuiFormLabel-root MuiFormLabel-colorPrimary Mui-required css-1hud5yu-MuiFormLabel-root"
@@ -469,7 +469,7 @@ exports[`Profile > renders the profile > profile 1`] = `
             class="MuiStack-root css-1javh08-MuiStack-root"
           >
             <div
-              class="MuiFormControl-root css-cls341-MuiFormControl-root"
+              class="MuiFormControl-root css-csmh00-MuiFormControl-root"
             >
               <label
                 class="MuiFormLabel-root MuiFormLabel-colorPrimary Mui-required css-1hud5yu-MuiFormLabel-root"
@@ -566,7 +566,7 @@ exports[`Profile > renders the profile > profile 1`] = `
             class="MuiStack-root css-1javh08-MuiStack-root"
           >
             <div
-              class="MuiFormControl-root css-cls341-MuiFormControl-root"
+              class="MuiFormControl-root css-csmh00-MuiFormControl-root"
             >
               <label
                 class="MuiFormLabel-root MuiFormLabel-colorPrimary css-1hud5yu-MuiFormLabel-root"
@@ -635,7 +635,7 @@ exports[`Profile > renders the profile > profile 1`] = `
               </div>
             </div>
             <div
-              class="MuiFormControl-root css-cls341-MuiFormControl-root"
+              class="MuiFormControl-root css-csmh00-MuiFormControl-root"
             >
               <label
                 class="MuiFormLabel-root MuiFormLabel-colorPrimary css-1hud5yu-MuiFormLabel-root"
@@ -704,7 +704,7 @@ exports[`Profile > renders the profile > profile 1`] = `
               </div>
             </div>
             <div
-              class="MuiFormControl-root css-cls341-MuiFormControl-root"
+              class="MuiFormControl-root css-csmh00-MuiFormControl-root"
             >
               <label
                 class="MuiFormLabel-root MuiFormLabel-colorPrimary css-1hud5yu-MuiFormLabel-root"
@@ -749,7 +749,7 @@ exports[`Profile > renders the profile > profile 1`] = `
               </div>
             </div>
             <div
-              class="MuiFormControl-root css-cls341-MuiFormControl-root"
+              class="MuiFormControl-root css-csmh00-MuiFormControl-root"
               hidden=""
             >
               <label

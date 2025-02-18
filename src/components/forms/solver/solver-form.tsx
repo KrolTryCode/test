@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { Solver } from '~/api/utils/api-requests';
 import { UploadFile } from '~/components/inputs/upload-file/upload-file.component';
-import { LabelWithRules } from '~/components/label-with-rules/label-with-rules.component';
 import { FormInputText } from '~/components/react-hook-form';
 import { downloadBlobFile } from '~/utils/files';
 import { getAvailableExtensionsMsg } from '~/utils/files/validate-files';
@@ -82,17 +81,13 @@ export const SolverForm: FC<SolverFormProps> = ({
       <FormItem label={t('COMMON.DESCRIPTION')}>
         <FormInputText isMultiline controllerProps={{ ...register('description'), control }} />
       </FormItem>
-      <FormItem
-        label={
-          <LabelWithRules label={t('COMMON.FILE')} content={getAvailableExtensionsMsg('zip')} />
-        }
-        isRequired
-        isHidden={!isEditing}
-      >
+      <FormItem label={t('COMMON.FILE')} isRequired isHidden={!isEditing}>
         <UploadFile
+          variant={'dragger'}
           fileType={'zip'}
           onSelect={onChangeFile}
           isUploading={isUploadingFile}
+          draggerDescr={getAvailableExtensionsMsg('zip')}
           files={solverFile ? [{ id: solverFile.fileId!, name: solverFile.fileName! }] : []}
           onDownloadFile={() =>
             downloadBlobFile(currentFile, solverFile?.fileName ?? `${t('ENTITY.SOLVER')}.zip`)

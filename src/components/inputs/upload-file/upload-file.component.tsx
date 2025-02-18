@@ -4,7 +4,7 @@ import {
   Archive as ArchiveIcon,
 } from '@mui/icons-material';
 import { Card, Skeleton, Stack } from '@mui/material';
-import { FileCard, FileCardProps, UploadFileButton } from '@pspod/ui-components';
+import { FileCard, FileCardProps, UploadFileButton, UploadDndButton } from '@pspod/ui-components';
 
 import { useGetImage } from '~/use-cases/get-image.hook';
 import { fileTypeExtensions, FileType, validateSelectedFiles } from '~/utils/files/validate-files';
@@ -17,6 +17,8 @@ export interface UploadFileProps<Multiple extends boolean | undefined = false> {
   isDisabled?: boolean;
   isUploading?: boolean;
   fullWidth?: boolean;
+  variant?: 'dragger' | 'button';
+  draggerDescr?: string;
   onSelect: (file: UploadValue<Multiple>) => void;
   onBlur?: () => void;
   files?: FileCardProps[];
@@ -29,14 +31,16 @@ export function UploadFile<Multiple extends boolean | undefined = false>({
   fileType,
   isUploading,
   isMultiple,
+  variant = 'button',
   onSelect,
   onDeleteFile,
   onDownloadFile,
   onBlur,
+  draggerDescr,
   ...buttonProps
 }: UploadFileProps<Multiple>) {
-  const handleSelect = (fileList: FileList) => {
-    const files = validateSelectedFiles(Array.from(fileList), fileType);
+  const handleSelect = (fileList: File[]) => {
+    const files = validateSelectedFiles(fileList, fileType);
     if (!isMultiple) {
       const file = files[0];
       onSelect(file as UploadValue<Multiple>);
@@ -49,22 +53,34 @@ export function UploadFile<Multiple extends boolean | undefined = false>({
   const isLoading = isUploading && (!files?.length || (files.length === 1 && !isMultiple));
 
   return (
-    <Card elevation={0} variant={'outlined'}>
-      <UploadFileButton
-        accept={fileTypeExtensions[fileType].join(', ')}
-        onSelect={handleSelect}
-        fullWidth
-        variant={'text'}
-        sx={theme => ({ paddingBlock: theme.spacing(1) })}
-        isLoading={isLoading}
-        isMultiple={isMultiple}
-        {...buttonProps}
-      />
+    <Card elevation={0} variant={variant === 'button' ? 'outlined' : 'elevation'}>
       <Stack
-        gap={0.5}
-        borderTop={'1px solid'}
+        borderBottom={variant === 'button' ? '1px solid' : 'none'}
         borderColor={({ palette }) => (files?.length ? palette.divider : 'transparent')}
+        marginBottom={variant === 'button' ? 0 : 1}
       >
+        {variant === 'dragger' && (
+          <UploadDndButton
+            accept={fileTypeExtensions[fileType].join(', ')}
+            onSelect={handleSelect}
+            isMultiple={isMultiple}
+            description={draggerDescr}
+          />
+        )}
+        {variant === 'button' && (
+          <UploadFileButton
+            accept={fileTypeExtensions[fileType].join(', ')}
+            onSelect={handleSelect}
+            fullWidth
+            variant={'text'}
+            sx={theme => ({ paddingBlock: theme.spacing(1) })}
+            isLoading={isLoading}
+            isMultiple={isMultiple}
+            {...buttonProps}
+          />
+        )}
+      </Stack>
+      <Stack gap={0.5}>
         {isLoading ? (
           <Skeleton height={78} sx={{ transform: 'none' }} />
         ) : (
@@ -75,6 +91,7 @@ export function UploadFile<Multiple extends boolean | undefined = false>({
               fileType={fileType}
               onDeleteFile={onDeleteFile}
               onDownloadFile={onDownloadFile}
+              variant={variant === 'button' ? 'contained' : 'outlined'}
             />
           ))
         )}
@@ -86,10 +103,12 @@ export function UploadFile<Multiple extends boolean | undefined = false>({
 function RenderFileCard({
   fileType,
   file,
+  variant = 'contained',
   onDeleteFile,
   onDownloadFile,
 }: Pick<UploadFileProps<false>, 'fileType' | 'onDeleteFile' | 'onDownloadFile'> & {
   file: FileCardProps;
+  variant?: FileCardProps['variant'];
 }) {
   const isImage = fileType === 'image';
   const { image, isImageLoading } = useGetImage(isImage ? file.id : undefined);
@@ -103,6 +122,7 @@ function RenderFileCard({
       isLoading={isImageLoading}
       onDelete={onDeleteFile}
       onDownload={onDownloadFile}
+      variant={variant}
     />
   );
 }
