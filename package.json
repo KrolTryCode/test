@@ -11,7 +11,7 @@
     "dev:local": "npm-run-all --parallel docker:local start",
     "dev:remote": "npm-run-all --parallel docker:remote start",
     "test": "vitest run --silent --pool=threads",
-    "test:verbose": "vitest run --reporter=verbose",
+    "test:verbose": "vitest run --reporter=verbose --pool=threads",
     "test:ui": "vitest --ui --coverage.enabled=true --coverage.reporters=html --coverage.directory=coverage/ui",
     "test:update-snapshots": "vitest run -u --pool=threads",
     "test:coverage": "vitest run --coverage --silent",

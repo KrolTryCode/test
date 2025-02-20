@@ -17,24 +17,21 @@ const queryClientConfig = {
 
 interface RenderComponentOptions {
   withModal?: boolean;
-  withRouter?: boolean;
   route?: string;
 }
 
 const defaultRenderComponentOptions: RenderComponentOptions = {
   withModal: false,
-  withRouter: false,
-  route: '/',
 };
 
 export const renderComponent = (
   component: JSX.Element,
-  { withModal, withRouter, route }: RenderComponentOptions = defaultRenderComponentOptions,
+  { withModal, route }: RenderComponentOptions = defaultRenderComponentOptions,
 ) => {
   // https://testing-library.com/docs/example-react-router/#reducing-boilerplate
-  if (withRouter) {
+  if (route) {
     window.history.pushState({}, 'Test page', route);
-    window.location.pathname = route ?? '/';
+    window.location.pathname = route;
   }
 
   const queryClient = new QueryClient(queryClientConfig);
@@ -45,7 +42,7 @@ export const renderComponent = (
         <QueryClientProvider client={queryClient}>
           <MuiThemeProvider>
             {component}
-            {withModal && <ModalContainer />}
+            {!!withModal && <ModalContainer />}
           </MuiThemeProvider>
         </QueryClientProvider>
       </DeclinatedTranslationsProvider>

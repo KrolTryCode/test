@@ -1,13 +1,14 @@
 import { Preloader, NotificationsProvider } from '@pspod/ui-components';
-import { createRootRoute, Outlet, useRouterState } from '@tanstack/react-router';
+import { QueryClient } from '@tanstack/react-query';
+import { createRootRouteWithContext, Outlet, useRouterState } from '@tanstack/react-router';
 import { TFunction } from 'i18next';
 import { useEffect, useLayoutEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Container as ModalContainer } from 'react-modal-promise';
 
 import PasswordExpiredContent from '~/components/password-expired/password-expired.component';
-import { RouteErrorBoundary } from '~/routing/_fallbacks/errors/error-boundary.component';
-import { NotFoundPage } from '~/routing/_fallbacks/errors/not-found.component';
+import { RouteErrorBoundary } from '~/routing/_fallbacks/cases/error-boundary.component';
+import { NotFoundPage } from '~/routing/_fallbacks/cases/not-found.component';
 import { AccessChecker } from '~/routing/access-checker/access-checker.component';
 import { TitleProvider } from '~/routing/page-title.context';
 import { useAuthenticate } from '~/use-cases/authenticate.hook';
@@ -17,7 +18,7 @@ import { useDownloadTranslations } from '~/utils/configuration/translations/use-
 import '../themes/generated/theme.base.css';
 import '../global-styles.scss';
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   component: App,
   staticData: { title: 'PROJECT_NAME' },
 
