@@ -93,9 +93,6 @@ export const MuiDataGrid: Components<Omit<Theme, 'components'>>['MuiDataGrid'] =
       '&.success': {
         backgroundColor: theme.palette.success.light,
       },
-      '&.acceptable': {
-        backgroundColor: theme.palette.acceptable.main,
-      },
       '&.info': {
         backgroundColor: theme.palette.info.light,
       },
