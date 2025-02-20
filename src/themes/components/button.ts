@@ -1,6 +1,6 @@
 import { Components, Theme, CSSInterpolation, CSSObject } from '@mui/material/styles';
 
-import { Color } from '~/themes/theme-overrides';
+export type ButtonType = 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info';
 
 export const MuiButtonGroup: Components<Omit<Theme, 'components'>>['MuiButtonGroup'] = {
   defaultProps: { disableRipple: true },
@@ -33,117 +33,73 @@ export const MuiButton: Components<Omit<Theme, 'components'>>['MuiButton'] = {
       '& svg': { fill: 'currentColor' },
       '&.icon-button .MuiButton-startIcon': { margin: 0 },
     },
-    textPrimary: ({ theme }) => getTextButtonStyles(theme.palette.primary.main),
+    textPrimary: ({ theme }) => getTextButtonStyles(theme),
     textSecondary: ({ theme }) => ({
       color: theme.palette.text.primary,
-      ...getTextButtonStyles(theme.palette.text.primary),
+      ...getTextButtonStyles(theme),
     }),
-    outlinedPrimary: ({ theme }) =>
-      getOutlinedButtonStyles({
-        main: theme.palette.primary.main,
-        white: theme.palette.common.white,
-        ...theme.palette.button.primary,
-      }),
-    containedPrimary: ({ theme }) =>
-      getContainedButtonStyles({
-        main: theme.palette.primary.main,
-        white: theme.palette.common.white,
-        ...theme.palette.button.primary,
-      }),
-    outlinedSecondary: ({ theme }) => ({
-      color: theme.palette.secondary.main,
-      borderColor: theme.palette.button.secondary.outlined.border,
-      '&:hover': {
-        borderColor: theme.palette.button.secondary.outlined.border,
-        backgroundColor: theme.palette.button.secondary.outlined.hover,
-      },
-      '&:focus-visible': {
-        borderColor: theme.palette.button.secondary.outlined.border,
-        backgroundColor: theme.palette.button.secondary.outlined.focus,
-      },
-      '&:active': {
-        borderColor: theme.palette.button.secondary.outlined.border,
-        backgroundColor: theme.palette.button.secondary.outlined.active,
-      },
-    }),
-    containedSecondary: ({ theme }) =>
-      getContainedButtonStyles({
-        main: theme.palette.secondary.main,
-        hover: theme.palette.button.secondary.contained.hover,
-        focus: theme.palette.button.secondary.contained.focus,
-        active: theme.palette.button.secondary.contained.active,
-        white: theme.palette.common.white,
-      }),
-    outlinedWarning: ({ theme }) =>
-      getOutlinedButtonStyles({
-        main: theme.palette.warning.main,
-        white: theme.palette.common.white,
-        ...theme.palette.button.warning,
-      }),
-    containedWarning: ({ theme }) =>
-      getContainedButtonStyles({
-        main: theme.palette.warning.main,
-        white: theme.palette.common.white,
-        ...theme.palette.button.warning,
-      }),
-    outlinedError: ({ theme }) =>
-      getOutlinedButtonStyles({
-        main: theme.palette.error.main,
-        white: theme.palette.common.white,
-        ...theme.palette.button.error,
-      }),
-    containedError: ({ theme }) =>
-      getContainedButtonStyles({
-        main: theme.palette.error.main,
-        white: theme.palette.common.white,
-        ...theme.palette.button.error,
-      }),
-    outlinedSuccess: ({ theme }) =>
-      getOutlinedButtonStyles({
-        main: theme.palette.success.main,
-        white: theme.palette.common.white,
-        ...theme.palette.button.success,
-      }),
-    containedSuccess: ({ theme }) =>
-      getContainedButtonStyles({
-        main: theme.palette.success.main,
-        white: theme.palette.common.white,
-        ...theme.palette.button.success,
-      }),
+    outlinedPrimary: ({ theme }) => getOutlinedButtonStyles(theme, 'primary'),
+    containedPrimary: ({ theme }) => getContainedButtonStyles(theme, 'primary'),
+    outlinedSecondary: ({ theme }) => getOutlinedButtonStyles(theme, 'secondary'),
+    containedSecondary: ({ theme }) => getContainedButtonStyles(theme, 'secondary'),
+    outlinedWarning: ({ theme }) => getOutlinedButtonStyles(theme, 'warning'),
+    containedWarning: ({ theme }) => getContainedButtonStyles(theme, 'warning'),
+    outlinedError: ({ theme }) => getOutlinedButtonStyles(theme, 'error'),
+    containedError: ({ theme }) => getContainedButtonStyles(theme, 'error'),
+    outlinedSuccess: ({ theme }) => getOutlinedButtonStyles(theme, 'success'),
+    containedSuccess: ({ theme }) => getContainedButtonStyles(theme, 'success'),
   },
 };
 
-interface Colors extends Color {
-  main: string;
-  white: string;
-}
-
-function getContainedButtonStyles({ main, hover, focus, active, white }: Colors): CSSInterpolation {
+function getContainedButtonStyles(
+  theme: Omit<Theme, 'components'>,
+  type: ButtonType,
+): CSSInterpolation {
   return {
     '&, &.Mui-disabled': {
-      backgroundColor: main,
-      borderColor: main,
-      '&:not(.MuiLoadingButton-loading)': { color: white },
+      backgroundColor: theme.palette[type].main,
+      borderColor: theme.palette[type].main,
+      '&:not(.MuiLoadingButton-loading)': { color: theme.palette.common.white },
     },
-    '& .MuiLoadingButton-loadingIndicator': { color: white },
-    '&:hover': { color: white, backgroundColor: hover, borderColor: hover },
-    '&:active': { color: white, backgroundColor: active, borderColor: active },
-    '&:focus-visible': { color: white, backgroundColor: focus, borderColor: focus },
+    '& .MuiLoadingButton-loadingIndicator': {
+      color: theme.palette.common.white,
+    },
+    '&:hover, &:focus-visible': {
+      color: theme.palette.common.white,
+      backgroundColor: theme.palette[type].dark,
+      borderColor: theme.palette[type].dark,
+    },
+    '&:active': {
+      color: theme.palette.common.white,
+      backgroundColor: theme.palette[type].light,
+      borderColor: theme.palette[type].light,
+    },
   };
 }
 
-function getOutlinedButtonStyles({ main, hover, focus, active, white }: Colors): CSSInterpolation {
+function getOutlinedButtonStyles(
+  theme: Omit<Theme, 'components'>,
+  type: ButtonType,
+): CSSInterpolation {
   return {
-    '&, &.Mui-disabled, & .MuiLoadingButton-loadingIndicator': { color: main, borderColor: main },
-    '&:hover': { color: white, backgroundColor: hover, borderColor: hover },
-    '&:active': { color: white, backgroundColor: active, borderColor: active },
-    '&:focus-visible': { color: white, backgroundColor: focus, borderColor: focus },
+    '&, &.Mui-disabled, & .MuiLoadingButton-loadingIndicator': {
+      color: theme.palette[type].main,
+      borderColor: theme.palette[type].main,
+    },
+    '&:hover, &:focus-visible': {
+      color: theme.palette.common.white,
+      backgroundColor: `${theme.palette[type].main}`,
+    },
+    '&:active': {
+      color: theme.palette.common.white,
+      backgroundColor: theme.palette[type].dark,
+    },
   };
 }
 
-function getTextButtonStyles(color: string): CSSObject {
+function getTextButtonStyles(theme: Omit<Theme, 'components'>): CSSObject {
   return {
-    '&:hover': { backgroundColor: `${color}04` },
-    '&:focus-visible': { backgroundColor: `${color}10` },
+    '&:hover, &:focus-visible': { backgroundColor: `${theme.palette.primary.main}04` },
+    '&:active': { backgroundColor: `${theme.palette.primary.main}10` },
   };
 }
