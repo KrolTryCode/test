@@ -7,7 +7,7 @@ import { TemplatesPage } from '~/pages/_main/admin/templates.index';
 
 describe.skip('Templates page', () => {
   beforeAll(() => {
-    renderComponent(<TemplatesPage />, { withRouter: true });
+    renderComponent(<TemplatesPage />, { route: '/' });
   });
 
   it('renders the templates', async () => {

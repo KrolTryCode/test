@@ -8,7 +8,7 @@ export const mockedMatches = vi.fn(() => {
     ? [
         {
           staticData: {
-            accessBy: ['admin'],
+            accessBy: ['ADMIN'],
           },
         },
       ]

@@ -8,7 +8,7 @@ import { Profile } from '~/pages/_main/profile';
 describe('Profile', () => {
   beforeAll(() => {
     mockedParams.mockReturnValue({ userId: 'test-admin-id-2c963f66afa6' });
-    renderComponent(<Profile />, { withRouter: true });
+    renderComponent(<Profile />, { route: '/' });
   });
 
   it('renders the profile', () => {

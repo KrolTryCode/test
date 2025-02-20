@@ -1,5 +1,5 @@
 import { ChevronRight, KeyboardArrowDown } from '@mui/icons-material';
-import { Box, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import { Button, Preloader } from '@pspod/ui-components';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from '@tanstack/react-router';
@@ -64,26 +64,25 @@ export const NodesTreeItem: FC<NodesTreeItemProps> = ({
               {isOpened ? <KeyboardArrowDown /> : <ChevronRight />}
             </Button>
           </_ToggleButtonContainer>
-          <Box
-            display={'flex'}
+          <Stack
+            direction={'row'}
+            alignItems={'center'}
             flex={1}
             onClick={() => onSelection?.(contentNode.id)}
             onDoubleClick={() => onSelection?.('')}
           >
             {renderItemIcon(contentNode.type)}
-            <Stack>
-              <_TreeNodeLink
-                disabled={disableLinks}
-                to={
-                  isFolderType(contentNode.type)
-                    ? `/projects/project/${projectId}/tables/folders/${contentNode.id}`
-                    : `/projects/project/${projectId}/tables/${contentNode.id}/structure`
-                }
-              >
-                {contentNode.name}
-              </_TreeNodeLink>
-            </Stack>
-          </Box>
+            <_TreeNodeLink
+              disabled={disableLinks}
+              to={
+                isFolderType(contentNode.type)
+                  ? `/projects/project/${projectId}/tables/folders/${contentNode.id}`
+                  : `/projects/project/${projectId}/tables/${contentNode.id}/structure`
+              }
+            >
+              {contentNode.name}
+            </_TreeNodeLink>
+          </Stack>
         </Stack>
         {/* TODO https://tracker.yandex.ru/FE-117 */}
         {!hideDropdown && (

@@ -11,7 +11,7 @@ import { schema, ILoginForm } from './login-form.schema';
 
 describe.skip('Login form', () => {
   beforeEach(() => {
-    renderComponent(<LoginForm onSave={() => undefined} />, { withRouter: true });
+    renderComponent(<LoginForm onSave={() => undefined} />, { route: '/' });
   });
 
   it.skip('should render login form', async () => {

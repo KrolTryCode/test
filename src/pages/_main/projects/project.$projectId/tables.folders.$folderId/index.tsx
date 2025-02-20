@@ -1,11 +1,11 @@
-import { Box, Stack, styled } from '@mui/material';
+import { Typography, Stack, styled } from '@mui/material';
 import { Preloader } from '@pspod/ui-components';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute, Link } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 import { getContentNodesByParentOptions } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
 import { isFolderType, renderItemIcon } from '~/components/tree/nav-tree/nav-tree.utils';
-import { EmptyDirectory } from '~/routing/_fallbacks/info/empty-element.component';
 
 export const Route = createFileRoute(
   '/_main/projects/project/$projectId/tables/folders/$folderId/',
@@ -24,11 +24,16 @@ const NodeLink = styled(Link)(({ theme }) => ({
 }));
 
 function FoldersPage() {
+  const { t } = useTranslation();
   const { projectId, folderId } = Route.useParams();
   const { data: nodes, isLoading } = useQuery(getContentNodesByParentOptions(projectId, folderId));
 
   if (nodes?.length === 0) {
-    return <EmptyDirectory />;
+    return (
+      <Typography variant={'subtitle2'} color={'secondary'} textAlign={'center'}>
+        {t('ERROR.EMPTY_DIRECTORY.TEXT1')}
+      </Typography>
+    );
   }
 
   if (isLoading) {
@@ -39,7 +44,7 @@ function FoldersPage() {
     <Stack>
       {nodes?.map(current => {
         return (
-          <Box display={'flex'} key={current.id}>
+          <Stack direction={'row'} alignItems={'center'} key={current.id}>
             {renderItemIcon(current.type)}
             <NodeLink
               to={
@@ -50,7 +55,7 @@ function FoldersPage() {
             >
               {current.name}
             </NodeLink>
-          </Box>
+          </Stack>
         );
       })}
     </Stack>

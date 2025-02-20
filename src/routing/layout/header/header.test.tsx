@@ -15,7 +15,7 @@ describe.skip('Header', () => {
       },
     });
 
-    renderComponent(<Header />, { withRouter: true, route: '/projects' });
+    renderComponent(<Header />, { route: '/projects' });
   });
 
   it('renders the header correctly', async () => {

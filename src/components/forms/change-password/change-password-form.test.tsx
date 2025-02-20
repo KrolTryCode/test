@@ -23,7 +23,7 @@ describe('Change password form', () => {
 
   beforeAll(() => {
     renderComponent(<ChangePasswordForm username={'test@mail.com'} onSave={onSave} />, {
-      withRouter: true,
+      route: '/',
     });
 
     schema = getSchema(passwordConfiguration, t);
