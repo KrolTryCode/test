@@ -12,7 +12,11 @@ export const useArchiveFormMutation = (
   const queryClient = useQueryClient();
 
   return useMutation<object, unknown, string>({
-    mutationFn: formId => ApiClientSecured.parameterFormV1Controller.deleteParameterForm(formId),
+    mutationFn: formId =>
+      ApiClientSecured.projectParameterFormV1Controller.deleteProjectParameterForm(
+        projectId,
+        formId,
+      ),
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({

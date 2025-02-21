@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
+import { useParams } from '@tanstack/react-router';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +20,7 @@ interface EditTaskFormProps {
 
 export const EditTaskForm: FC<EditTaskFormProps> = ({ data, onSave, isPending }) => {
   const { t } = useTranslation();
+  const { projectId = '' } = useParams({ strict: false });
 
   const {
     register,
@@ -46,12 +48,9 @@ export const EditTaskForm: FC<EditTaskFormProps> = ({ data, onSave, isPending })
       <FormItem label={t('COMMON.TITLE')} isRequired>
         <FormInputText controllerProps={{ ...register('name'), control }} />
       </FormItem>
-      <ParametersTable formId={data?.id ?? ''} projectId={data?.projectId ?? ''} />
+      <ParametersTable formId={data?.id ?? ''} projectId={projectId} />
       <FormButtons marginTop={2}>
-        <ButtonLink
-          to={'/projects/project/$projectId/forms'}
-          params={{ projectId: data?.projectId ?? '' }}
-        >
+        <ButtonLink to={'/projects/project/$projectId/forms'} params={{ projectId }}>
           {t('ACTION.CANCEL')}
         </ButtonLink>
         <Button
