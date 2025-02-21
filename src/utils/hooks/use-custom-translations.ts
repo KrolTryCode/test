@@ -25,6 +25,13 @@ export const useCustomTranslations = () => {
     }));
   }
 
+  function getColumnTypeValueOptions<T extends string | undefined>(types: T[]) {
+    return types.map(type => ({
+      value: type,
+      label: translateColumnType(type),
+    }));
+  }
+
   return {
     t,
     translateStatus,
@@ -33,5 +40,6 @@ export const useCustomTranslations = () => {
     translateCheckType,
     translateColorPalette,
     getStatusValueOptions,
+    getColumnTypeValueOptions,
   };
 };

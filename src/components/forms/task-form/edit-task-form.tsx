@@ -46,7 +46,7 @@ export const EditTaskForm: FC<EditTaskFormProps> = ({ data, onSave, isPending })
       <FormItem label={t('COMMON.TITLE')} isRequired>
         <FormInputText controllerProps={{ ...register('name'), control }} />
       </FormItem>
-      <ParametersTable formId={data?.id ?? ''} />
+      <ParametersTable formId={data?.id ?? ''} projectId={data?.projectId ?? ''} />
       <FormButtons marginTop={2}>
         <ButtonLink
           to={'/projects/project/$projectId/forms'}
