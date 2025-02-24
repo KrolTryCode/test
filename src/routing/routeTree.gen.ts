@@ -47,8 +47,11 @@ import { Route as MainProjectsProjectProjectIdEventsImport } from './../pages/_m
 import { Route as MainProjectsGroupGroupIdParticipantsImport } from './../pages/_main/projects/group/$groupId.participants';
 import { Route as MainAdminTemplatesTemplateIdEditImport } from './../pages/_main/admin/templates.$templateId.edit';
 import { Route as MainProjectsProjectProjectIdTasksIndexImport } from './../pages/_main/projects/project.$projectId/tasks/index';
+import { Route as MainProjectsProjectProjectIdSolversIndexImport } from './../pages/_main/projects/project.$projectId/solvers/index';
 import { Route as MainProjectsProjectProjectIdFormsIndexImport } from './../pages/_main/projects/project.$projectId/forms/index';
 import { Route as MainProjectsProjectProjectIdTasksAddImport } from './../pages/_main/projects/project.$projectId/tasks/add';
+import { Route as MainProjectsProjectProjectIdTasksTaskIdImport } from './../pages/_main/projects/project.$projectId/tasks/$taskId';
+import { Route as MainProjectsProjectProjectIdSolversSolverIdImport } from './../pages/_main/projects/project.$projectId/solvers/$solverId';
 import { Route as MainProjectsProjectProjectIdTablesTableIdIndexImport } from './../pages/_main/projects/project.$projectId/tables.$tableId/index';
 import { Route as MainProjectsProjectProjectIdTablesTableIdStructureImport } from './../pages/_main/projects/project.$projectId/tables.$tableId/structure';
 import { Route as MainProjectsProjectProjectIdTablesTableIdChecksImport } from './../pages/_main/projects/project.$projectId/tables.$tableId/checks';
@@ -284,6 +287,13 @@ const MainProjectsProjectProjectIdTasksIndexRoute =
     getParentRoute: () => MainProjectsProjectProjectIdTasksRoute,
   } as any);
 
+const MainProjectsProjectProjectIdSolversIndexRoute =
+  MainProjectsProjectProjectIdSolversIndexImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => MainProjectsProjectProjectIdSolversRoute,
+  } as any);
+
 const MainProjectsProjectProjectIdFormsIndexRoute =
   MainProjectsProjectProjectIdFormsIndexImport.update({
     id: '/',
@@ -296,6 +306,20 @@ const MainProjectsProjectProjectIdTasksAddRoute =
     id: '/add',
     path: '/add',
     getParentRoute: () => MainProjectsProjectProjectIdTasksRoute,
+  } as any);
+
+const MainProjectsProjectProjectIdTasksTaskIdRoute =
+  MainProjectsProjectProjectIdTasksTaskIdImport.update({
+    id: '/$taskId',
+    path: '/$taskId',
+    getParentRoute: () => MainProjectsProjectProjectIdTasksRoute,
+  } as any);
+
+const MainProjectsProjectProjectIdSolversSolverIdRoute =
+  MainProjectsProjectProjectIdSolversSolverIdImport.update({
+    id: '/$solverId',
+    path: '/$solverId',
+    getParentRoute: () => MainProjectsProjectProjectIdSolversRoute,
   } as any);
 
 const MainProjectsProjectProjectIdTablesTableIdIndexRoute =
@@ -582,6 +606,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainProjectsGroupGroupIdIndexImport;
       parentRoute: typeof MainProjectsImport;
     };
+    '/_main/projects/project/$projectId/solvers/$solverId': {
+      id: '/_main/projects/project/$projectId/solvers/$solverId';
+      path: '/$solverId';
+      fullPath: '/projects/project/$projectId/solvers/$solverId';
+      preLoaderRoute: typeof MainProjectsProjectProjectIdSolversSolverIdImport;
+      parentRoute: typeof MainProjectsProjectProjectIdSolversImport;
+    };
+    '/_main/projects/project/$projectId/tasks/$taskId': {
+      id: '/_main/projects/project/$projectId/tasks/$taskId';
+      path: '/$taskId';
+      fullPath: '/projects/project/$projectId/tasks/$taskId';
+      preLoaderRoute: typeof MainProjectsProjectProjectIdTasksTaskIdImport;
+      parentRoute: typeof MainProjectsProjectProjectIdTasksImport;
+    };
     '/_main/projects/project/$projectId/tasks/add': {
       id: '/_main/projects/project/$projectId/tasks/add';
       path: '/add';
@@ -595,6 +633,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/projects/project/$projectId/forms/';
       preLoaderRoute: typeof MainProjectsProjectProjectIdFormsIndexImport;
       parentRoute: typeof MainProjectsProjectProjectIdFormsImport;
+    };
+    '/_main/projects/project/$projectId/solvers/': {
+      id: '/_main/projects/project/$projectId/solvers/';
+      path: '/';
+      fullPath: '/projects/project/$projectId/solvers/';
+      preLoaderRoute: typeof MainProjectsProjectProjectIdSolversIndexImport;
+      parentRoute: typeof MainProjectsProjectProjectIdSolversImport;
     };
     '/_main/projects/project/$projectId/tasks/': {
       id: '/_main/projects/project/$projectId/tasks/';
@@ -743,6 +788,24 @@ const MainProjectsProjectProjectIdFormsRouteWithChildren =
     MainProjectsProjectProjectIdFormsRouteChildren,
   );
 
+interface MainProjectsProjectProjectIdSolversRouteChildren {
+  MainProjectsProjectProjectIdSolversSolverIdRoute: typeof MainProjectsProjectProjectIdSolversSolverIdRoute;
+  MainProjectsProjectProjectIdSolversIndexRoute: typeof MainProjectsProjectProjectIdSolversIndexRoute;
+}
+
+const MainProjectsProjectProjectIdSolversRouteChildren: MainProjectsProjectProjectIdSolversRouteChildren =
+  {
+    MainProjectsProjectProjectIdSolversSolverIdRoute:
+      MainProjectsProjectProjectIdSolversSolverIdRoute,
+    MainProjectsProjectProjectIdSolversIndexRoute:
+      MainProjectsProjectProjectIdSolversIndexRoute,
+  };
+
+const MainProjectsProjectProjectIdSolversRouteWithChildren =
+  MainProjectsProjectProjectIdSolversRoute._addFileChildren(
+    MainProjectsProjectProjectIdSolversRouteChildren,
+  );
+
 interface MainProjectsProjectProjectIdTablesRouteChildren {
   MainProjectsProjectProjectIdTablesTableIdChecksRoute: typeof MainProjectsProjectProjectIdTablesTableIdChecksRoute;
   MainProjectsProjectProjectIdTablesTableIdStructureRoute: typeof MainProjectsProjectProjectIdTablesTableIdStructureRoute;
@@ -768,12 +831,15 @@ const MainProjectsProjectProjectIdTablesRouteWithChildren =
   );
 
 interface MainProjectsProjectProjectIdTasksRouteChildren {
+  MainProjectsProjectProjectIdTasksTaskIdRoute: typeof MainProjectsProjectProjectIdTasksTaskIdRoute;
   MainProjectsProjectProjectIdTasksAddRoute: typeof MainProjectsProjectProjectIdTasksAddRoute;
   MainProjectsProjectProjectIdTasksIndexRoute: typeof MainProjectsProjectProjectIdTasksIndexRoute;
 }
 
 const MainProjectsProjectProjectIdTasksRouteChildren: MainProjectsProjectProjectIdTasksRouteChildren =
   {
+    MainProjectsProjectProjectIdTasksTaskIdRoute:
+      MainProjectsProjectProjectIdTasksTaskIdRoute,
     MainProjectsProjectProjectIdTasksAddRoute:
       MainProjectsProjectProjectIdTasksAddRoute,
     MainProjectsProjectProjectIdTasksIndexRoute:
@@ -791,7 +857,7 @@ interface MainProjectsProjectProjectIdRouteChildren {
   MainProjectsProjectProjectIdParticipantsRoute: typeof MainProjectsProjectProjectIdParticipantsRoute;
   MainProjectsProjectProjectIdReportsRoute: typeof MainProjectsProjectProjectIdReportsRoute;
   MainProjectsProjectProjectIdSettingsRoute: typeof MainProjectsProjectProjectIdSettingsRoute;
-  MainProjectsProjectProjectIdSolversRoute: typeof MainProjectsProjectProjectIdSolversRoute;
+  MainProjectsProjectProjectIdSolversRoute: typeof MainProjectsProjectProjectIdSolversRouteWithChildren;
   MainProjectsProjectProjectIdTablesRoute: typeof MainProjectsProjectProjectIdTablesRouteWithChildren;
   MainProjectsProjectProjectIdTasksRoute: typeof MainProjectsProjectProjectIdTasksRouteWithChildren;
 }
@@ -809,7 +875,7 @@ const MainProjectsProjectProjectIdRouteChildren: MainProjectsProjectProjectIdRou
     MainProjectsProjectProjectIdSettingsRoute:
       MainProjectsProjectProjectIdSettingsRoute,
     MainProjectsProjectProjectIdSolversRoute:
-      MainProjectsProjectProjectIdSolversRoute,
+      MainProjectsProjectProjectIdSolversRouteWithChildren,
     MainProjectsProjectProjectIdTablesRoute:
       MainProjectsProjectProjectIdTablesRouteWithChildren,
     MainProjectsProjectProjectIdTasksRoute:
@@ -886,12 +952,15 @@ export interface FileRoutesByFullPath {
   '/projects/project/$projectId/participants': typeof MainProjectsProjectProjectIdParticipantsRoute;
   '/projects/project/$projectId/reports': typeof MainProjectsProjectProjectIdReportsRoute;
   '/projects/project/$projectId/settings': typeof MainProjectsProjectProjectIdSettingsRoute;
-  '/projects/project/$projectId/solvers': typeof MainProjectsProjectProjectIdSolversRoute;
+  '/projects/project/$projectId/solvers': typeof MainProjectsProjectProjectIdSolversRouteWithChildren;
   '/projects/project/$projectId/tables': typeof MainProjectsProjectProjectIdTablesRouteWithChildren;
   '/projects/project/$projectId/tasks': typeof MainProjectsProjectProjectIdTasksRouteWithChildren;
   '/projects/group/$groupId': typeof MainProjectsGroupGroupIdIndexRoute;
+  '/projects/project/$projectId/solvers/$solverId': typeof MainProjectsProjectProjectIdSolversSolverIdRoute;
+  '/projects/project/$projectId/tasks/$taskId': typeof MainProjectsProjectProjectIdTasksTaskIdRoute;
   '/projects/project/$projectId/tasks/add': typeof MainProjectsProjectProjectIdTasksAddRoute;
   '/projects/project/$projectId/forms/': typeof MainProjectsProjectProjectIdFormsIndexRoute;
+  '/projects/project/$projectId/solvers/': typeof MainProjectsProjectProjectIdSolversIndexRoute;
   '/projects/project/$projectId/tasks/': typeof MainProjectsProjectProjectIdTasksIndexRoute;
   '/projects/project/$projectId/forms/$formId/edit': typeof MainProjectsProjectProjectIdFormsFormIdEditRoute;
   '/projects/project/$projectId/tables/$tableId/checks': typeof MainProjectsProjectProjectIdTablesTableIdChecksRoute;
@@ -927,11 +996,13 @@ export interface FileRoutesByTo {
   '/projects/project/$projectId/participants': typeof MainProjectsProjectProjectIdParticipantsRoute;
   '/projects/project/$projectId/reports': typeof MainProjectsProjectProjectIdReportsRoute;
   '/projects/project/$projectId/settings': typeof MainProjectsProjectProjectIdSettingsRoute;
-  '/projects/project/$projectId/solvers': typeof MainProjectsProjectProjectIdSolversRoute;
   '/projects/project/$projectId/tables': typeof MainProjectsProjectProjectIdTablesRouteWithChildren;
   '/projects/group/$groupId': typeof MainProjectsGroupGroupIdIndexRoute;
+  '/projects/project/$projectId/solvers/$solverId': typeof MainProjectsProjectProjectIdSolversSolverIdRoute;
+  '/projects/project/$projectId/tasks/$taskId': typeof MainProjectsProjectProjectIdTasksTaskIdRoute;
   '/projects/project/$projectId/tasks/add': typeof MainProjectsProjectProjectIdTasksAddRoute;
   '/projects/project/$projectId/forms': typeof MainProjectsProjectProjectIdFormsIndexRoute;
+  '/projects/project/$projectId/solvers': typeof MainProjectsProjectProjectIdSolversIndexRoute;
   '/projects/project/$projectId/tasks': typeof MainProjectsProjectProjectIdTasksIndexRoute;
   '/projects/project/$projectId/forms/$formId/edit': typeof MainProjectsProjectProjectIdFormsFormIdEditRoute;
   '/projects/project/$projectId/tables/$tableId/checks': typeof MainProjectsProjectProjectIdTablesTableIdChecksRoute;
@@ -973,12 +1044,15 @@ export interface FileRoutesById {
   '/_main/projects/project/$projectId/participants': typeof MainProjectsProjectProjectIdParticipantsRoute;
   '/_main/projects/project/$projectId/reports': typeof MainProjectsProjectProjectIdReportsRoute;
   '/_main/projects/project/$projectId/settings': typeof MainProjectsProjectProjectIdSettingsRoute;
-  '/_main/projects/project/$projectId/solvers': typeof MainProjectsProjectProjectIdSolversRoute;
+  '/_main/projects/project/$projectId/solvers': typeof MainProjectsProjectProjectIdSolversRouteWithChildren;
   '/_main/projects/project/$projectId/tables': typeof MainProjectsProjectProjectIdTablesRouteWithChildren;
   '/_main/projects/project/$projectId/tasks': typeof MainProjectsProjectProjectIdTasksRouteWithChildren;
   '/_main/projects/group/$groupId/': typeof MainProjectsGroupGroupIdIndexRoute;
+  '/_main/projects/project/$projectId/solvers/$solverId': typeof MainProjectsProjectProjectIdSolversSolverIdRoute;
+  '/_main/projects/project/$projectId/tasks/$taskId': typeof MainProjectsProjectProjectIdTasksTaskIdRoute;
   '/_main/projects/project/$projectId/tasks/add': typeof MainProjectsProjectProjectIdTasksAddRoute;
   '/_main/projects/project/$projectId/forms/': typeof MainProjectsProjectProjectIdFormsIndexRoute;
+  '/_main/projects/project/$projectId/solvers/': typeof MainProjectsProjectProjectIdSolversIndexRoute;
   '/_main/projects/project/$projectId/tasks/': typeof MainProjectsProjectProjectIdTasksIndexRoute;
   '/_main/projects/project/$projectId/forms/$formId/edit': typeof MainProjectsProjectProjectIdFormsFormIdEditRoute;
   '/_main/projects/project/$projectId/tables/$tableId/checks': typeof MainProjectsProjectProjectIdTablesTableIdChecksRoute;
@@ -1024,8 +1098,11 @@ export interface FileRouteTypes {
     | '/projects/project/$projectId/tables'
     | '/projects/project/$projectId/tasks'
     | '/projects/group/$groupId'
+    | '/projects/project/$projectId/solvers/$solverId'
+    | '/projects/project/$projectId/tasks/$taskId'
     | '/projects/project/$projectId/tasks/add'
     | '/projects/project/$projectId/forms/'
+    | '/projects/project/$projectId/solvers/'
     | '/projects/project/$projectId/tasks/'
     | '/projects/project/$projectId/forms/$formId/edit'
     | '/projects/project/$projectId/tables/$tableId/checks'
@@ -1060,11 +1137,13 @@ export interface FileRouteTypes {
     | '/projects/project/$projectId/participants'
     | '/projects/project/$projectId/reports'
     | '/projects/project/$projectId/settings'
-    | '/projects/project/$projectId/solvers'
     | '/projects/project/$projectId/tables'
     | '/projects/group/$groupId'
+    | '/projects/project/$projectId/solvers/$solverId'
+    | '/projects/project/$projectId/tasks/$taskId'
     | '/projects/project/$projectId/tasks/add'
     | '/projects/project/$projectId/forms'
+    | '/projects/project/$projectId/solvers'
     | '/projects/project/$projectId/tasks'
     | '/projects/project/$projectId/forms/$formId/edit'
     | '/projects/project/$projectId/tables/$tableId/checks'
@@ -1108,8 +1187,11 @@ export interface FileRouteTypes {
     | '/_main/projects/project/$projectId/tables'
     | '/_main/projects/project/$projectId/tasks'
     | '/_main/projects/group/$groupId/'
+    | '/_main/projects/project/$projectId/solvers/$solverId'
+    | '/_main/projects/project/$projectId/tasks/$taskId'
     | '/_main/projects/project/$projectId/tasks/add'
     | '/_main/projects/project/$projectId/forms/'
+    | '/_main/projects/project/$projectId/solvers/'
     | '/_main/projects/project/$projectId/tasks/'
     | '/_main/projects/project/$projectId/forms/$formId/edit'
     | '/_main/projects/project/$projectId/tables/$tableId/checks'
@@ -1320,7 +1402,11 @@ export const routeTree = rootRoute
     },
     "/_main/projects/project/$projectId/solvers": {
       "filePath": "_main/projects/project.$projectId/solvers.tsx",
-      "parent": "/_main/projects/project/$projectId"
+      "parent": "/_main/projects/project/$projectId",
+      "children": [
+        "/_main/projects/project/$projectId/solvers/$solverId",
+        "/_main/projects/project/$projectId/solvers/"
+      ]
     },
     "/_main/projects/project/$projectId/tables": {
       "filePath": "_main/projects/project.$projectId/tables.tsx",
@@ -1336,6 +1422,7 @@ export const routeTree = rootRoute
       "filePath": "_main/projects/project.$projectId/tasks.tsx",
       "parent": "/_main/projects/project/$projectId",
       "children": [
+        "/_main/projects/project/$projectId/tasks/$taskId",
         "/_main/projects/project/$projectId/tasks/add",
         "/_main/projects/project/$projectId/tasks/"
       ]
@@ -1344,6 +1431,14 @@ export const routeTree = rootRoute
       "filePath": "_main/projects/group/$groupId.index.tsx",
       "parent": "/_main/projects"
     },
+    "/_main/projects/project/$projectId/solvers/$solverId": {
+      "filePath": "_main/projects/project.$projectId/solvers/$solverId.tsx",
+      "parent": "/_main/projects/project/$projectId/solvers"
+    },
+    "/_main/projects/project/$projectId/tasks/$taskId": {
+      "filePath": "_main/projects/project.$projectId/tasks/$taskId.tsx",
+      "parent": "/_main/projects/project/$projectId/tasks"
+    },
     "/_main/projects/project/$projectId/tasks/add": {
       "filePath": "_main/projects/project.$projectId/tasks/add.tsx",
       "parent": "/_main/projects/project/$projectId/tasks"
@@ -1351,6 +1446,10 @@ export const routeTree = rootRoute
     "/_main/projects/project/$projectId/forms/": {
       "filePath": "_main/projects/project.$projectId/forms/index.tsx",
       "parent": "/_main/projects/project/$projectId/forms"
+    },
+    "/_main/projects/project/$projectId/solvers/": {
+      "filePath": "_main/projects/project.$projectId/solvers/index.tsx",
+      "parent": "/_main/projects/project/$projectId/solvers"
     },
     "/_main/projects/project/$projectId/tasks/": {
       "filePath": "_main/projects/project.$projectId/tasks/index.tsx",

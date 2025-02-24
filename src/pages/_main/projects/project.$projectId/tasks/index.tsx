@@ -1,16 +1,14 @@
-import { Edit as EditIcon } from '@mui/icons-material';
+import { PreviewOutlined } from '@mui/icons-material';
 import { GridActionsCellItem } from '@mui/x-data-grid-premium';
 import { AddEntity, DataGrid, DeleteCellButton, EnhancedColDef } from '@pspod/ui-components';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { getProjectTasksQueryOptions } from '~/api/queries/projects/tasks/get-project-tasks.query';
-import { ApiClientSecured } from '~/api/utils/api-client';
 import { FullTaskInfo, TaskState } from '~/api/utils/api-requests';
-import { taskModal } from '~/components/forms/task/task-form';
+import { GridActionsCellItemLink } from '~/components/implicit-links';
 import { useTaskActions } from '~/use-cases/task-actions.hook';
-import { downloadBlobFile } from '~/utils/files';
 import { useCustomTranslations } from '~/utils/hooks';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId/tasks/')({
@@ -20,36 +18,17 @@ export const Route = createFileRoute('/_main/projects/project/$projectId/tasks/'
 function TasksList() {
   const { projectId } = Route.useParams();
   const { t, translateStatus, getStatusValueOptions } = useCustomTranslations();
-  const { startTask, updateTask, archiveTask } = useTaskActions(projectId);
+  const { startTask, handleEditTask, downloadTaskResults, archiveTask } = useTaskActions(projectId);
   const { data: taskList = [], isLoading: isTaskListLoading } = useQuery(
     getProjectTasksQueryOptions(projectId),
   );
   const navigate = useNavigate();
-
-  const handleEditTask = useCallback(
-    (task: FullTaskInfo) => {
-      taskModal({
-        data: task,
-        isEditing: true,
-        title: t('ACTION.EDIT', { type: t('ENTITY.TASK').toLowerCase() }),
-        onOk: data => void updateTask({ ...data, taskId: task.id! }),
-      });
-    },
-    [t, updateTask],
-  );
 
   const handleAddTask = () =>
     void navigate({
       to: '/projects/project/$projectId/tasks/add',
       params: { projectId },
     });
-
-  // TODO изменить получение имени файла (Заголовок content-disposition)
-  const handleDownloadFile = useCallback(async (taskId: string) => {
-    await ApiClientSecured.applicationTasksV1Controller
-      .getTaskResults(taskId, { format: 'blob' })
-      .then(res => downloadBlobFile(res, `${taskId}-output.zip`));
-  }, []);
 
   const columns = useMemo<EnhancedColDef<FullTaskInfo>[]>(
     () => [
@@ -97,29 +76,37 @@ function TasksList() {
         width: 100,
         getActions({ row }) {
           return [
+            <GridActionsCellItemLink
+              key={'show'}
+              icon={<PreviewOutlined />}
+              label={t('ACTION.VIEW', { type: t('ENTITY.TASK').toLowerCase() })}
+              title={t('ACTION.VIEW', { type: t('ENTITY.TASK').toLowerCase() })}
+              color={'primary'}
+              to={'/projects/project/$projectId/tasks/$taskId'}
+              params={{ taskId: row.id!, projectId }}
+            />,
+            <GridActionsCellItem
+              key={'edit'}
+              color={'primary'}
+              showInMenu
+              label={t('ACTION.EDIT')}
+              onClick={() => handleEditTask(row)}
+            />,
             <GridActionsCellItem
               showInMenu
               key={'download'}
               disabled={row.state !== TaskState.Successed}
               label={t('ACTION.DOWNLOAD')}
               title={t('ACTION.DOWNLOAD')}
-              onClick={() => handleDownloadFile(row.id!)}
+              onClick={() => downloadTaskResults(row.id!)}
             />,
             <GridActionsCellItem
               showInMenu
               key={'start'}
               disabled={row.state !== TaskState.ReadyToStart}
-              label={t('ACTION.RUN', { what: t('ENTITY.TASK').toLowerCase() })}
-              title={t('ACTION.RUN', { what: t('ENTITY.TASK').toLowerCase() })}
+              label={t('ACTION.RUN')}
+              title={t('ACTION.RUN')}
               onClick={() => startTask(row.id!)}
-            />,
-            <GridActionsCellItem
-              key={'edit'}
-              color={'primary'}
-              icon={<EditIcon />}
-              label={t('ACTION.EDIT', { type: t('ENTITY.TASK').toLowerCase() })}
-              title={t('ACTION.EDIT', { type: t('ENTITY.TASK').toLowerCase() })}
-              onClick={() => handleEditTask(row)}
             />,
             <DeleteCellButton
               showInMenu
@@ -135,7 +122,8 @@ function TasksList() {
       t,
       translateStatus,
       getStatusValueOptions,
-      handleDownloadFile,
+      projectId,
+      downloadTaskResults,
       startTask,
       handleEditTask,
       archiveTask,

@@ -66,6 +66,8 @@ export const createDeclinatedTranslations = (
     PARTICIPANT: getDeclinationsMap('ENTITY.PARTICIPANT', Gender.MASCULINE, { animate: true }),
     FORM: getDeclinationsMap('ENTITY.FORM', Gender.FEMININE),
     LINK: getDeclinationsMap('ENTITY.LINK', Gender.FEMININE),
+    TASKS: getDeclinationsMap('ENTITY.TASKS', Gender.MASCULINE, { pluraleTantum: true }),
+    SOLVERS: getDeclinationsMap('NAVIGATION.SOLVERS', Gender.MASCULINE, { pluraleTantum: true }),
   };
 };
 

@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+import { Link } from '@tanstack/react-router';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { string as yString } from 'yup';
@@ -10,10 +11,11 @@ import { SummaryEntry, SummaryTableProps } from './summary-table.type';
 
 const emptySchema = yString().required();
 
-export const SummaryTable: FC<SummaryTableProps> = ({
+const SummaryTable: FC<SummaryTableProps> = ({
   data,
   heading,
   hideEmpty = false,
+  alignTitle = 'right',
   ...props
 }) => {
   const { i18n, t } = useTranslation();
@@ -21,17 +23,30 @@ export const SummaryTable: FC<SummaryTableProps> = ({
   const getLocaleDateString = (dateStr?: string) =>
     getDateFromString(dateStr)?.toLocaleDateString(i18n.language);
 
-  const getValueBasedOnType = (value: SummaryEntry['value'], type: SummaryEntry['type']) => {
-    if (value === null || value === undefined) {
-      return t('STATUS.UNDEFINED');
+  const getLocaleDateTimeString = (dateStr?: string) =>
+    getDateFromString(dateStr)?.toLocaleString(i18n.language);
+
+  const getValueBasedOnType = ({ value, type, ...rest }: SummaryEntry) => {
+    if (value === null || value === undefined || value === '') {
+      return <span style={{ opacity: 0.25 }}>—</span>;
     }
 
     switch (type) {
+      case 'dateTime': {
+        return getLocaleDateTimeString(String(value));
+      }
       case 'date': {
         return getLocaleDateString(String(value));
       }
       case 'boolean': {
         return value ? t('COMMON.YES') : t('COMMON.NO');
+      }
+      case 'link': {
+        if (value) {
+          // @ts-expect-error type
+          return <Link {...rest.to}>{value}</Link>;
+        }
+        return value;
       }
       case 'string':
       case 'number':
@@ -50,17 +65,24 @@ export const SummaryTable: FC<SummaryTableProps> = ({
         </Typography>
       )}
       <tbody>
-        {data.map(({ title, value, type = 'string' }) => (
+        {data.map(entry => (
           <Typography
             component={'tr'}
-            key={title}
-            hidden={hideEmpty && !emptySchema.isValidSync(value)}
+            key={entry.title}
+            hidden={hideEmpty && !emptySchema.isValidSync(entry.value)}
           >
-            <th>{title}</th>
-            <td>{getValueBasedOnType(value, type)}</td>
+            <Typography component={'th'} variant={'subtitle2'} textAlign={alignTitle}>
+              {entry.title}
+            </Typography>
+            <Typography component={'td'} variant={'subtitle2'} fontWeight={'normal !important'}>
+              {getValueBasedOnType(entry)}
+            </Typography>
           </Typography>
         ))}
       </tbody>
     </StyledTable>
   );
 };
+
+export type { SummaryEntry };
+export { SummaryTable };

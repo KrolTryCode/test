@@ -1,13 +1,24 @@
 import { BoxProps } from '@mui/material';
+import { ToOptions } from '@tanstack/react-router';
 
 export interface SummaryTableProps extends BoxProps {
   data: SummaryEntry[];
   heading?: string;
   hideEmpty?: boolean;
+  alignTitle?: 'left' | 'right';
 }
 
-export interface SummaryEntry {
+interface SummaryEntryLink {
+  type: 'link';
+  to: ToOptions;
   title: string;
-  type?: 'string' | 'number' | 'date' | 'boolean';
+  value: string | undefined;
+}
+
+interface CommonSummaryEntry {
+  title: string;
+  type?: 'string' | 'number' | 'date' | 'dateTime' | 'boolean';
   value: string | number | null | boolean | undefined;
 }
+
+export type SummaryEntry = CommonSummaryEntry | SummaryEntryLink;
