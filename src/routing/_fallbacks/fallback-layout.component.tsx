@@ -18,20 +18,29 @@ export enum FallbackPageType {
 const FallbackLayout: FC<{ pageType: FallbackPageType }> = ({ pageType }) => {
   const { t, i18n } = useTranslation();
 
-  const { data: logoSrc } = useQuery(
+  const { data: logoSrc, isFetched } = useQuery(
     getDesignLogoQueryOptions('loginLogo', { select: createObjectURLFromFile }),
   );
 
   return (
-    <Stack gap={1} padding={4} margin={'auto'} textAlign={'center'} justifyContent={'center'}>
-      <Avatar
-        size={300}
-        variant={'square'}
-        color={'secondary'}
-        fit={'contain'}
-        src={logoSrc ?? logo[i18n.language]}
-        alt={t('PROJECT_NAME')}
-      />
+    <Stack
+      gap={1}
+      padding={4}
+      width={'fit-content'}
+      margin={'auto'}
+      alignItems={'center'}
+      justifyContent={'center'}
+    >
+      {isFetched && (
+        <Avatar
+          size={300}
+          variant={'square'}
+          color={'secondary'}
+          fit={'contain'}
+          src={logoSrc ?? logo[i18n.language]}
+          alt={t('PROJECT_NAME')}
+        />
+      )}
       <Typography variant={'subtitle1'} gutterBottom={false}>
         {t(`ERROR.${pageType}.TEXT1`)}
       </Typography>
