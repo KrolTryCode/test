@@ -5,9 +5,9 @@ import { File, RequestParams } from '~/api/utils/api-requests';
 
 import { fileQueries } from './queries';
 
-export const getFileQueryOptions = (
+export const getFileQueryOptions = <T = File>(
   fileId: string,
-  options?: UseCustomQueryOptions<File> & { params?: RequestParams },
+  options?: UseCustomQueryOptions<File, unknown, T> & { params?: RequestParams },
 ) => {
   const { params, ...restOptions } = options ?? {};
   return queryOptions({

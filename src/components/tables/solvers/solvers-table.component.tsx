@@ -1,4 +1,4 @@
-import { Upload, Edit as EditIcon, Download, DeleteOutline } from '@mui/icons-material';
+import { Upload, Edit as EditIcon, Download } from '@mui/icons-material';
 import { Chip } from '@mui/material';
 import { GridActionsCellItem, GridRenderCellParams } from '@mui/x-data-grid-premium';
 import { AddEntity, Button, DataGrid, EnhancedColDef } from '@pspod/ui-components';
@@ -7,6 +7,7 @@ import { FC, useMemo } from 'react';
 
 import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { Solver } from '~/api/utils/api-requests';
+import { GridActionsCellItemLink } from '~/components/implicit-links';
 import { useCustomTranslations } from '~/utils/hooks';
 
 import { useSolverActions } from './solvers-table.hook';
@@ -71,7 +72,7 @@ export const SolversTable: FC<SolversTableProps> = ({ projectId }) => {
       {
         field: 'actions',
         type: 'actions',
-        width: 100,
+        width: 84,
         getActions({ row }) {
           return [
             <GridActionsCellItem
@@ -86,15 +87,18 @@ export const SolversTable: FC<SolversTableProps> = ({ projectId }) => {
               color={'primary'}
               onClick={() => handleUpdateSolver(row)}
             />,
+            <GridActionsCellItemLink
+              key={'show'}
+              showInMenu
+              label={t('ACTION.VIEW')}
+              color={'primary'}
+              to={'/projects/project/$projectId/solvers/$solverId'}
+              params={{ solverId: row.id!, projectId }}
+            />,
             <GridActionsCellItem
               key={'delete'}
-              label={t('ACTION.DELETE', {
-                type: t('ENTITY.SOLVER').toLowerCase(),
-              })}
-              title={t('ACTION.DELETE', {
-                type: t('ENTITY.SOLVER').toLowerCase(),
-              })}
-              icon={<DeleteOutline />}
+              showInMenu
+              label={t('ACTION.DELETE')}
               color={'error'}
               onClick={() => handleDeleteSolver(row.id!)}
             />,
@@ -102,7 +106,7 @@ export const SolversTable: FC<SolversTableProps> = ({ projectId }) => {
         },
       },
     ],
-    [handleDeleteSolver, handleUpdateSolver, t, translateStatus],
+    [handleDeleteSolver, handleUpdateSolver, projectId, t, translateStatus],
   );
 
   const ToolbarContent = (

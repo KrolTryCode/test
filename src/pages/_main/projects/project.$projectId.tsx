@@ -68,7 +68,6 @@ function ProjectTabsLayout() {
               to={`/projects/project/$projectId/${key}/`}
               params={{ projectId }}
               value={key}
-              disabled={tabValue === key}
               label={renderLabel(t(label))}
             />
           ))}

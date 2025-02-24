@@ -11,16 +11,12 @@ export const StyledTable = styled((props: BoxProps) => (
     fontVariantNumeric: 'slashed-zero',
 
     '&:hover': {
-      backgroundColor: `${theme.palette.secondary.light}10`,
+      backgroundColor: theme.palette.divider,
     },
   },
 
   'th, td': {
     paddingBlock: theme.spacing(1 / 2),
     paddingInline: theme.spacing(1),
-  },
-
-  th: {
-    textAlign: 'right',
   },
 }));

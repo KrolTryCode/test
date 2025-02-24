@@ -9,7 +9,7 @@ import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query'
 import { Solver } from '~/api/utils/api-requests';
 import { UploadFile } from '~/components/inputs/upload-file/upload-file.component';
 import { FormInputText } from '~/components/react-hook-form';
-import { downloadBlobFile } from '~/utils/files';
+import { calcFileSize } from '~/utils/files/calc-file-size';
 import { getAvailableExtensionsMsg } from '~/utils/files/validate-files';
 
 import { useSolverForm } from './solver-form.hook';
@@ -60,7 +60,7 @@ export const SolverForm: FC<SolverFormProps> = ({
     resolver: yupResolver(schema),
   });
 
-  const { solverFile, currentFile, onChangeFile, isUploadingFile } = useSolverForm(
+  const { file, onDownloadFile, onChangeFile, isUploadingFile } = useSolverForm(
     projectId,
     data,
     isEditing,
@@ -68,10 +68,10 @@ export const SolverForm: FC<SolverFormProps> = ({
   );
 
   useEffect(() => {
-    if (solverFile?.fileId) {
-      setValue('fileId', solverFile.fileId);
+    if (file?.fileId) {
+      setValue('fileId', file.fileId);
     }
-  }, [setValue, solverFile?.fileId]);
+  }, [setValue, file?.fileId]);
 
   return (
     <Form showColonAfterLabel onSubmit={handleSubmit(onResolve)}>
@@ -88,10 +88,18 @@ export const SolverForm: FC<SolverFormProps> = ({
           onSelect={onChangeFile}
           isUploading={isUploadingFile}
           draggerDescr={getAvailableExtensionsMsg('zip')}
-          files={solverFile ? [{ id: solverFile.fileId!, name: solverFile.fileName! }] : []}
-          onDownloadFile={() =>
-            downloadBlobFile(currentFile, solverFile?.fileName ?? `${t('ENTITY.SOLVER')}.zip`)
+          files={
+            file
+              ? [
+                  {
+                    id: file.fileId!,
+                    name: file.fileName!,
+                    description: `${t('COMMON.SIZE')}: ${calcFileSize(file.file.size)}`,
+                  },
+                ]
+              : []
           }
+          onDownloadFile={onDownloadFile}
         />
       </FormItem>
       <FormButtons>

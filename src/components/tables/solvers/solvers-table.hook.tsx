@@ -22,7 +22,7 @@ export const useSolverActions = (projectId: string) => {
     onSuccess: () => notifySuccess(t('MESSAGE.UPDATE_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
   });
-  const { mutate: deleteSolver } = useDeleteSolverMutation(projectId, {
+  const { mutateAsync: deleteSolver } = useDeleteSolverMutation(projectId, {
     onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.DELETION_FAILED'),
   });
@@ -51,10 +51,10 @@ export const useSolverActions = (projectId: string) => {
   );
 
   const handleDeleteSolver = useCallback(
-    (id: string) => {
+    (id: string, onOk?: () => void) => {
       confirmDeletionModal({
         title: t('ACTION.DELETE', { type: t('ENTITY.SOLVER').toLowerCase() }),
-        onOk: () => deleteSolver(id),
+        onOk: () => void deleteSolver(id).then(onOk),
       });
     },
     [deleteSolver, t],

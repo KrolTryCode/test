@@ -1,13 +1,8 @@
-import {
-  Image as ImageIcon,
-  BackupTable as TableIcon,
-  Archive as ArchiveIcon,
-} from '@mui/icons-material';
 import { Card, Skeleton, Stack } from '@mui/material';
 import { FileCard, FileCardProps, UploadFileButton, UploadDndButton } from '@pspod/ui-components';
 
 import { useGetImage } from '~/use-cases/get-image.hook';
-import { fileTypeExtensions, FileType, validateSelectedFiles } from '~/utils/files/validate-files';
+import { fileTypeExtensions, FileType, validateSelectedFiles, getFileIcon } from '~/utils/files';
 
 export type UploadValue<Multiple> = Multiple extends true ? File[] : File;
 
@@ -117,7 +112,7 @@ function RenderFileCard({
     <FileCard
       key={file.id}
       {...file}
-      CustomIcon={getCustomIcon(fileType)}
+      CustomIcon={getFileIcon(fileType)}
       preview={image?.src}
       isLoading={isImageLoading}
       onDelete={onDeleteFile}
@@ -125,18 +120,4 @@ function RenderFileCard({
       variant={variant}
     />
   );
-}
-
-function getCustomIcon(fileType: FileType) {
-  switch (fileType) {
-    case 'image': {
-      return ImageIcon;
-    }
-    case 'excel': {
-      return TableIcon;
-    }
-    case 'zip': {
-      return ArchiveIcon;
-    }
-  }
 }
