@@ -1,6 +1,5 @@
 import { Stack } from '@mui/material';
-import { Accordion, Preloader } from '@pspod/ui-components';
-import { useQuery } from '@tanstack/react-query';
+import { Accordion } from '@pspod/ui-components';
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
@@ -18,30 +17,27 @@ export const Route = createFileRoute('/_main/admin/security')({
     title: 'NAVIGATION.SECURITY',
     order: 4,
   },
+  loader: async ({ context: { queryClient } }) => {
+    const configuration = await queryClient.fetchQuery(getModuleListQueryOptions());
+    return {
+      accountsModuleProperties: selectPropertiesByModuleName(configuration, ModuleType.ACCOUNTS),
+      usersModuleProperties: selectPropertiesByModuleName(configuration, ModuleType.USERS),
+    };
+  },
 });
 
 function SecurityPage() {
-  const { data: moduleProperties, isLoading: isAccountsModulesLoading } = useQuery(
-    getModuleListQueryOptions({
-      select: data => selectPropertiesByModuleName(data, ModuleType.ACCOUNTS),
-    }),
-  );
-
-  const { data: usersModuleProperties, isLoading: isUsersModulesLoading } = useQuery(
-    getModuleListQueryOptions({
-      select: data => selectPropertiesByModuleName(data, ModuleType.USERS),
-    }),
-  );
+  const { accountsModuleProperties, usersModuleProperties } = Route.useLoaderData();
 
   return (
     <Stack>
-      {moduleProperties?.map(entry => <ConfigFormAccordion {...entry} key={entry.moduleName} />)}
+      {accountsModuleProperties?.map(entry => (
+        <ConfigFormAccordion {...entry} key={entry.moduleName} />
+      ))}
 
       {usersModuleProperties?.map(entry => (
         <ConfigFormAccordion {...entry} key={entry.moduleName} />
       ))}
-
-      <Preloader visible={isAccountsModulesLoading || isUsersModulesLoading} />
     </Stack>
   );
 }

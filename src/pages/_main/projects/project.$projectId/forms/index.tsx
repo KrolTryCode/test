@@ -7,7 +7,6 @@ import {
   modal,
   notifySuccess,
 } from '@pspod/ui-components';
-import { useQuery } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -24,14 +23,18 @@ import { showErrorMessage } from '~/utils/show-error-message';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId/forms/')({
   component: TaskFormList,
+  loader: async ({ context: { queryClient }, params: { projectId } }) => {
+    const forms = await queryClient.fetchQuery(getFormsQueryOptions(projectId));
+    return { forms };
+  },
 });
 
 function TaskFormList() {
   const { projectId } = Route.useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { data: forms = [], isLoading } = useQuery(getFormsQueryOptions(projectId));
 
+  const { forms } = Route.useLoaderData();
   const declinatedTranslations = useDeclinatedTranslationsContext();
   const declinatedForm = declinatedTranslations.FORM.ACCUSATIVE.toLowerCase();
 
@@ -98,7 +101,6 @@ function TaskFormList() {
       items={forms}
       totalCount={forms.length ?? 0}
       columns={columns}
-      loading={isLoading}
       pinnedColumns={{ right: ['actions'] }}
       customToolbarContent={
         <AddEntity

@@ -20,7 +20,14 @@ declare module '@tanstack/react-router' {
   }
 }
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      staleTime: 5 * 60 * 1000, // 5 min
+    },
+  },
+});
 
 // Set up a Router instance
 export const router = createRouter({
@@ -37,5 +44,6 @@ export const router = createRouter({
   defaultPendingComponent: PageLoading,
   context: {
     queryClient,
+    title: '',
   },
 });

@@ -1,7 +1,6 @@
 import { ArrowBack, Edit as EditIcon, DeleteOutline as DeleteIcon } from '@mui/icons-material';
 import { Card, CardContent, Divider, Stack, Typography } from '@mui/material';
-import { Button, FileCard, Preloader } from '@pspod/ui-components';
-import { useQuery } from '@tanstack/react-query';
+import { Button, FileCard } from '@pspod/ui-components';
 import { createFileRoute } from '@tanstack/react-router';
 import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
@@ -14,10 +13,15 @@ import { useSolverActions } from '~/components/tables/solvers/solvers-table.hook
 import { useGetSolverFile } from '~/use-cases/get-solver-file.hook';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 import { calcFileSize, getFileIcon } from '~/utils/files';
-import { usePageTitle } from '~/utils/hooks';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId/solvers/$solverId')({
   component: SolverPage,
+  loader: async ({ context, params: { projectId, solverId } }) => {
+    const solvers = await context.queryClient.fetchQuery(getSolversQueryOptions(projectId));
+    const solver = solvers.find(s => s.id === solverId);
+    context.title = solver?.name;
+    return { solver };
+  },
 });
 
 function SolverPage() {
@@ -27,21 +31,11 @@ function SolverPage() {
   const { projectId, solverId } = Route.useParams();
   const navigate = Route.useNavigate();
 
-  const { data: solver, isLoading } = useQuery(
-    getSolversQueryOptions(projectId, {
-      select: data => data.find(s => s.id === solverId),
-    }),
-  );
+  const { solver } = Route.useLoaderData();
 
   const { file, isFetching, onDownloadFile } = useGetSolverFile(solverId);
 
   const { handleUpdateSolver, handleDeleteSolver } = useSolverActions(projectId);
-
-  usePageTitle(solver?.name);
-
-  if (isLoading) {
-    return <Preloader />;
-  }
 
   if (!solver) {
     return null;

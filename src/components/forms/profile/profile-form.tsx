@@ -14,7 +14,6 @@ import { SystemData } from './system-data.component';
 
 interface CommonProfileFormProps {
   data?: User;
-  isLoading?: boolean;
   handleUpdateUser: (values: UpdateUserRequestNullable) => Promise<void>;
 }
 
@@ -30,12 +29,7 @@ interface CurrentProfileFormProps extends CommonProfileFormProps {
 
 type ProfileFormProps = AccountProfileFormProps | CurrentProfileFormProps;
 
-export const ProfileForm: FC<ProfileFormProps> = ({
-  data,
-  isLoading,
-  handleUpdateUser,
-  ...specificProps
-}) => {
+export const ProfileForm: FC<ProfileFormProps> = ({ data, handleUpdateUser, ...specificProps }) => {
   const { t } = useTranslation();
 
   const {
@@ -68,7 +62,6 @@ export const ProfileForm: FC<ProfileFormProps> = ({
       gap={5}
       maxWidth={'900px'}
       onSubmit={handleSubmit(onSubmit)}
-      isLoading={isLoading}
     >
       <PersonalData
         control={control}

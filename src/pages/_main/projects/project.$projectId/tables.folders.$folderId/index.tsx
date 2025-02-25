@@ -5,12 +5,19 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { getContentNodesByParentOptions } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
+import { getProjectContentQueryOptions } from '~/api/queries/project-content/get-project-content.query';
 import { isFolderType, renderItemIcon } from '~/components/tree/nav-tree/nav-tree.utils';
 
 export const Route = createFileRoute(
   '/_main/projects/project/$projectId/tables/folders/$folderId/',
 )({
   component: FoldersPage,
+  loader: async ({ context, params: { folderId } }) => {
+    const folderData = await context.queryClient.fetchQuery(
+      getProjectContentQueryOptions(folderId),
+    );
+    context.title = folderData.name;
+  },
 });
 
 const NodeLink = styled(Link)(({ theme }) => ({

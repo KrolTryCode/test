@@ -1,6 +1,7 @@
 import { ArrowBack } from '@mui/icons-material';
 import { createFileRoute } from '@tanstack/react-router';
 
+import { getUserQueryOptions } from '~/api/queries/users/get-user.query';
 import { ProfileForm } from '~/components/forms/profile/profile-form';
 import { ButtonLink } from '~/components/implicit-links';
 import { UserAvatar } from '~/components/user-avatar/user-avatar.component';
@@ -9,22 +10,26 @@ import {
   UserProfileHeader,
   UserProfileLayout,
 } from '~/components/user-profile/user-profile.style';
+import { getFullName } from '~/components/user-profile/user-profile.utils';
 import { useUserAccount } from '~/use-cases/user-account.hook';
-import { usePageTitle } from '~/utils/hooks';
 
 export const Route = createFileRoute('/_main/admin/users/$userId')({
-  // loader: ({ params }) => fetchPost(params.userId),
   component: UserAccount,
   staticData: {
     title: 'ENTITY.USER',
+  },
+  loader: async ({ context, params: { userId } }) => {
+    const user = await context.queryClient.fetchQuery(getUserQueryOptions(userId));
+    const fullName = getFullName(user?.firstName, user?.lastName, user?.surName);
+    context.title = fullName;
+    return { user: { ...user, fullName } };
   },
 });
 
 function UserAccount() {
   const { userId } = Route.useParams();
-  const { user, isUserLoading, handleChangePassword, handleUpdateUser } = useUserAccount(userId);
-
-  usePageTitle(user.fullName);
+  const { user } = Route.useLoaderData();
+  const { handleChangePassword, handleUpdateUser } = useUserAccount(userId, user.email);
 
   return (
     <UserProfileLayout>
@@ -41,7 +46,6 @@ function UserAccount() {
         />
         <ProfileForm
           data={user}
-          isLoading={isUserLoading}
           handleUpdateUser={handleUpdateUser}
           isCurrent={false}
           handleChangeAccountPassword={handleChangePassword}
