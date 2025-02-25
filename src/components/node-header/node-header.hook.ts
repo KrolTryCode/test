@@ -11,7 +11,6 @@ import { ProjectNode, ProjectNodeType } from '~/api/utils/api-requests';
 import { projectNodeModal } from '~/components/forms/project-node/project-node-form';
 import { useTablesMenuData } from '~/components/node-header/use-tables-menu-data.hook';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
-import { usePageTitle } from '~/utils/hooks';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const useNodeActions = (id: string) => {
@@ -27,8 +26,6 @@ export const useNodeActions = (id: string) => {
   const { data: parentData, isLoading: isParentDataLoading } = useQuery(
     projectNodeQueryOptions(nodeData?.parentId ?? '', { enabled: !!nodeData?.parentId }),
   );
-
-  usePageTitle(nodeData?.name);
 
   const backPath = getBackPathOptions(parentData);
 

@@ -1,11 +1,9 @@
 import { EnhancedColDef } from '@pspod/ui-components';
-import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { searchAuditsQueryOptions } from '~/api/queries/audits/search-audits.query';
-import { selectPageableData } from '~/api/selectors/pageable';
 import { FullAuditInfo } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 
@@ -15,29 +13,32 @@ export const Route = createFileRoute('/_main/admin/logs')({
     title: 'NAVIGATION.LOGS',
     order: 5,
   },
+  loader: async ({ context: { queryClient } }) => {
+    const data = await queryClient.fetchQuery(
+      searchAuditsQueryOptions(
+        {
+          types: [
+            'Authentication',
+            'Password',
+            'Role',
+            'User',
+            'Account',
+            'ProjectMember',
+            'GroupMember',
+          ],
+          pageable: { size: 99_999, page: 0 },
+        },
+        { criteria: [] },
+      ),
+    );
+    return { items: data.content ?? [], totalCount: data.totalElements ?? 0 };
+  },
 });
 
 function LogsPage() {
   const { t } = useTranslation();
 
-  const { data: logsList, isLoading } = useQuery(
-    searchAuditsQueryOptions(
-      {
-        types: [
-          'Authentication',
-          'Password',
-          'Role',
-          'User',
-          'Account',
-          'ProjectMember',
-          'GroupMember',
-        ],
-        pageable: { size: 99_999, page: 0 },
-      },
-      { criteria: [] },
-      { select: selectPageableData },
-    ),
-  );
+  const logsList = Route.useLoaderData();
 
   const columns = useMemo<EnhancedColDef<FullAuditInfo>[]>(
     () => [
@@ -78,7 +79,6 @@ function LogsPage() {
 
   return (
     <DataGrid<FullAuditInfo>
-      loading={isLoading}
       items={logsList?.items ?? []}
       pagingMode={'client'}
       totalCount={logsList?.totalCount ?? 0}

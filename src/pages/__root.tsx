@@ -1,5 +1,4 @@
 import { Preloader, NotificationsProvider } from '@pspod/ui-components';
-import { QueryClient } from '@tanstack/react-query';
 import { createRootRouteWithContext, Outlet, useRouterState } from '@tanstack/react-router';
 import { TFunction } from 'i18next';
 import { useEffect, useLayoutEffect } from 'react';
@@ -10,7 +9,7 @@ import PasswordExpiredContent from '~/components/password-expired/password-expir
 import { RouteErrorBoundary } from '~/routing/_fallbacks/cases/error-boundary.component';
 import { NotFoundPage } from '~/routing/_fallbacks/cases/not-found.component';
 import { AccessChecker } from '~/routing/access-checker/access-checker.component';
-import { TitleProvider } from '~/routing/page-title.context';
+import { RouterContext } from '~/routing/router-context.type';
 import { useAuthenticate } from '~/use-cases/authenticate.hook';
 import { useUpdateBrowserIcon } from '~/utils/configuration/design/use-update-favicon';
 import { useDownloadTranslations } from '~/utils/configuration/translations/use-init-i18n.hook';
@@ -18,10 +17,9 @@ import { useDownloadTranslations } from '~/utils/configuration/translations/use-
 import '../themes/generated/theme.base.css';
 import '../global-styles.scss';
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: App,
   staticData: { title: 'PROJECT_NAME' },
-
   notFoundComponent: NotFoundPage,
   errorComponent({ error }) {
     return <RouteErrorBoundary error={error} />;
@@ -56,9 +54,7 @@ function App() {
   return (
     <AccessChecker>
       <NotificationsProvider CustomComponents={{ passwordExpired: PasswordExpiredContent }} />
-      <TitleProvider>
-        <Outlet />
-      </TitleProvider>
+      <Outlet />
       <ModalContainer />
     </AccessChecker>
   );

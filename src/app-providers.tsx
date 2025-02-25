@@ -1,4 +1,4 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
@@ -6,19 +6,10 @@ import i18n from 'i18next';
 import { FC } from 'react';
 import { I18nextProvider } from 'react-i18next';
 
-import { router } from '~/routing/router';
+import { queryClient, router } from '~/routing/router';
 import { MuiThemeProvider } from '~/themes/mui-theme-provider';
 import { DeclinatedTranslationsProvider } from '~/utils/configuration/translations/declinated-translations-provider';
 import { useI18nInit } from '~/utils/configuration/translations/use-init-i18n.hook';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      staleTime: 5 * 60 * 1000, // 5 min
-    },
-  },
-});
 
 export const AppWithProviders: FC = () => {
   useI18nInit();

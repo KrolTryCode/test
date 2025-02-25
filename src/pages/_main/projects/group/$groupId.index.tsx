@@ -6,8 +6,10 @@ import { ProjectList } from '~/components/project-list/project-list.component';
 
 export const Route = createFileRoute('/_main/projects/group/$groupId/')({
   component: GroupPage,
-  loader: ({ context: { queryClient }, params: { groupId } }) =>
-    queryClient.ensureQueryData(projectNodeQueryOptions(groupId)),
+  loader: async ({ context, params: { groupId } }) => {
+    const nodeData = await context.queryClient.fetchQuery(projectNodeQueryOptions(groupId));
+    context.title = nodeData.name;
+  },
 });
 
 function GroupPage() {

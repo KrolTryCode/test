@@ -2,22 +2,22 @@ import { Upload, Edit as EditIcon, Download } from '@mui/icons-material';
 import { Chip } from '@mui/material';
 import { GridActionsCellItem, GridRenderCellParams } from '@mui/x-data-grid-premium';
 import { AddEntity, Button, DataGrid, EnhancedColDef } from '@pspod/ui-components';
-import { useQuery } from '@tanstack/react-query';
+import { getRouteApi } from '@tanstack/react-router';
 import { FC, useMemo } from 'react';
 
-import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { Solver } from '~/api/utils/api-requests';
 import { GridActionsCellItemLink } from '~/components/implicit-links';
 import { useCustomTranslations } from '~/utils/hooks';
 
 import { useSolverActions } from './solvers-table.hook';
 
-interface SolversTableProps {
-  projectId: string;
-}
-
-export const SolversTable: FC<SolversTableProps> = ({ projectId }) => {
+export const SolversTable: FC = () => {
   const { t, translateStatus } = useCustomTranslations();
+
+  const route = getRouteApi('/_main/projects/project/$projectId/solvers/');
+  const { solvers } = route.useLoaderData();
+  const { projectId } = route.useParams();
+
   const {
     handleCreateSolver,
     handleDeleteSolver,
@@ -25,8 +25,6 @@ export const SolversTable: FC<SolversTableProps> = ({ projectId }) => {
     handleImportSolver,
     handleExportSolver,
   } = useSolverActions(projectId);
-
-  const { data = [], isLoading } = useQuery(getSolversQueryOptions(projectId));
 
   // TODO BE-145 authorName https://tracker.yandex.ru/BE-145
 
@@ -139,10 +137,9 @@ export const SolversTable: FC<SolversTableProps> = ({ projectId }) => {
 
   return (
     <DataGrid
-      items={data}
-      totalCount={data.length ?? 0}
+      items={solvers}
+      totalCount={solvers.length ?? 0}
       columns={columns}
-      loading={isLoading}
       pinnedColumns={{ right: ['actions'] }}
       customToolbarContent={ToolbarContent}
     />

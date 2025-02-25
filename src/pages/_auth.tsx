@@ -4,17 +4,27 @@ import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { getDesignConfigurationQueryOptions } from '~/api/queries/design/get-design-configuration.query';
+import { getDesignLogoQueryOptions } from '~/api/queries/design/get-design-logo.query';
 import { logo } from '~/utils/configuration/design/logo';
-import { useAppDesignConfig } from '~/utils/configuration/design/use-app-design-config.hook';
 import { createObjectURLFromFile } from '~/utils/files';
 
 export const Route = createFileRoute('/_auth')({
   component: AuthLayout,
+  loader: async ({ context }) => {
+    const appLoginLogo = await context.queryClient.fetchQuery(
+      getDesignLogoQueryOptions('loginLogo'),
+    );
+    const { loginPageText } = await context.queryClient.fetchQuery(
+      getDesignConfigurationQueryOptions(),
+    );
+    return { appLoginLogo, appHelloText: loginPageText };
+  },
 });
 
 function AuthLayout() {
   const { t, i18n } = useTranslation();
-  const { appHelloText, appLoginLogo } = useAppDesignConfig();
+  const { appHelloText, appLoginLogo } = Route.useLoaderData();
 
   const imgSrc = useMemo(() => createObjectURLFromFile(appLoginLogo), [appLoginLogo]);
 

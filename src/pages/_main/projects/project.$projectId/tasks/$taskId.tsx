@@ -19,12 +19,14 @@ import { ButtonLink } from '~/components/implicit-links';
 import { SummaryTable, SummaryEntry } from '~/components/summary-table/summary-table.component';
 import { useTaskActions } from '~/use-cases/task-actions.hook';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
-import { useCustomTranslations, usePageTitle } from '~/utils/hooks';
+import { useCustomTranslations } from '~/utils/hooks';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId/tasks/$taskId')({
   component: TaskPage,
-  loader: ({ context: { queryClient }, params: { taskId } }) =>
-    queryClient.ensureQueryData(getProjectTaskQueryOptions(taskId)),
+  loader: async ({ context, params: { taskId } }) => {
+    const task = await context.queryClient.fetchQuery(getProjectTaskQueryOptions(taskId));
+    context.title = task.name;
+  },
 });
 
 function TaskPage() {
@@ -41,8 +43,6 @@ function TaskPage() {
       enabled: shouldRefetch,
     }),
   );
-
-  usePageTitle(task?.name);
 
   // @ts-expect-error type
   const taskParams = task?.parameters.params as {
