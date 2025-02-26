@@ -1,4 +1,5 @@
 import { confirmDeletionModal, modal, notifySuccess } from '@pspod/ui-components';
+import { useRouter } from '@tanstack/react-router';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -7,23 +8,31 @@ import { useDeleteSolverMutation } from '~/api/queries/solvers/delete-solver.mut
 import { useUpdateSolverMutation } from '~/api/queries/solvers/update-solver.mutation';
 import { Solver } from '~/api/utils/api-requests';
 import { SolverForm } from '~/components/forms/solver/solver-form';
+import { ISolverForm } from '~/components/forms/solver/solver-form.schema';
+import { useUploadSolverFile } from '~/use-cases/upload-solver-file.hook';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const useSolverActions = (projectId: string) => {
   const { t } = useTranslation();
+  const router = useRouter();
+
+  const { onUploadFile } = useUploadSolverFile(projectId);
 
   //#region Queries & mutations
 
-  const { mutate: createSolver } = useCreateSolverMutation(projectId, {
+  const { mutateAsync: createSolver } = useCreateSolverMutation(projectId, {
     onSuccess: () => notifySuccess(t('MESSAGE.CREATION_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
   });
-  const { mutate: updateSolver } = useUpdateSolverMutation(projectId, {
+  const { mutateAsync: updateSolver } = useUpdateSolverMutation(projectId, {
     onSuccess: () => notifySuccess(t('MESSAGE.UPDATE_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
   });
   const { mutateAsync: deleteSolver } = useDeleteSolverMutation(projectId, {
-    onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
+    onSuccess: async () => {
+      notifySuccess(t('MESSAGE.DELETION_SUCCESS'));
+      await router.invalidate();
+    },
     onError: e => showErrorMessage(e, 'ERROR.DELETION_FAILED'),
   });
 
@@ -31,23 +40,47 @@ export const useSolverActions = (projectId: string) => {
 
   //#region callbacks
 
+  const createSolverWithFile = useCallback(
+    async (solver: ISolverForm) => {
+      const createdSolver = await createSolver(solver);
+      const file = solver.file?.file;
+      if (file) {
+        await onUploadFile(createdSolver.id!, file);
+      }
+      await router.invalidate();
+    },
+    [createSolver, onUploadFile, router],
+  );
+
+  const updateSolverWithFile = useCallback(
+    async (solver: ISolverForm) => {
+      const updatedSolver = await updateSolver({ ...solver, id: solver.id! });
+      const file = solver.file?.file;
+      if (file) {
+        await onUploadFile(updatedSolver.id!, file);
+      }
+      await router.invalidate();
+    },
+    [updateSolver, onUploadFile, router],
+  );
+
   const handleCreateSolver = useCallback(() => {
     modal({
-      onOk: createSolver,
+      onOk: createSolverWithFile,
       title: t('ACTION.ADD', { type: t('ENTITY.SOLVER').toLowerCase() }),
       renderContent: args => <SolverForm projectId={projectId} {...args} />,
     });
-  }, [projectId, createSolver, t]);
+  }, [createSolverWithFile, projectId, t]);
 
   const handleUpdateSolver = useCallback(
-    (row: Solver) => {
+    (solver: Solver) => {
       modal({
-        onOk: (data: Solver) => updateSolver({ solverId: row.id!, ...data }),
+        onOk: updateSolverWithFile,
         title: t('ACTION.EDIT', { type: t('ENTITY.SOLVER').toLowerCase() }),
-        renderContent: args => <SolverForm isEditing projectId={projectId} {...args} data={row} />,
+        renderContent: args => <SolverForm projectId={projectId} {...args} data={solver} />,
       });
     },
-    [projectId, t, updateSolver],
+    [updateSolverWithFile, projectId, t],
   );
 
   const handleDeleteSolver = useCallback(

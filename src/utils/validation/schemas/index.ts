@@ -2,7 +2,6 @@ export { attributeValuesSchema } from './attribute';
 export type { AttributeValues } from './attribute';
 export { fileSchema } from './file';
 export { objectOf } from './object-of';
-export { OKPOSchema } from './okpo';
 export { getPasswordSchema } from './password';
 export { phoneSchema } from './phone';
 export { UUIDSchema, optionalUUIDSchema } from './uuid';

@@ -6,4 +6,5 @@ export { FormInputNumeric } from './form-input-numeric/form-input-numeric.compon
 export { FormDateTimePicker } from './form-date-time-picker/form-date-time-picker.component';
 export { FormSearchTree } from './form-search-tree/form-search-tree.component';
 export { FormUploadImage } from './form-upload/form-upload-image.component';
+export { FormUploadFile } from './form-upload/form-upload-file.component';
 export { FormInputRichTextEditor } from './form-input-rich-editor/form-input-rich-editor.component';

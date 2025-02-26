@@ -56,6 +56,7 @@ const messages: Messages = {
   custom: {
     phone: 'Некорректный номер телефона',
     passwordMismatch: 'Пароли не совпадают',
+    fileRequired: 'Необходимо выбрать файл',
   },
 };
 
