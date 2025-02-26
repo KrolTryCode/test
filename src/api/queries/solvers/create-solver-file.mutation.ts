@@ -1,23 +1,21 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
-import { solverQueries } from '~/api/queries/solvers/queries';
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { File, SolverFile } from '~/api/utils/api-requests';
 
+interface UploadSolverFileRequest {
+  solverId: string;
+  file: File;
+}
+
 export const useCreateSolverFile = (
   projectId: string,
-  solverId: string,
-  options?: UseCustomMutationOptions<SolverFile, Error, File>,
+  options?: UseCustomMutationOptions<SolverFile, Error, UploadSolverFileRequest>,
 ) => {
-  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: file =>
+    mutationFn: ({ solverId, file }) =>
       ApiClientSecured.projectSolversV1Controller.createSolverFiles(projectId, solverId, { file }),
     ...options,
-    onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: solverQueries.file(solverId).queryKey });
-      options?.onSuccess?.(...args);
-    },
   });
 };

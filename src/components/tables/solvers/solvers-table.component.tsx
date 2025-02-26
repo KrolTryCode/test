@@ -1,5 +1,5 @@
 import { Upload, Edit as EditIcon, Download } from '@mui/icons-material';
-import { Chip } from '@mui/material';
+import { Box, Chip } from '@mui/material';
 import { GridActionsCellItem, GridRenderCellParams } from '@mui/x-data-grid-premium';
 import { AddEntity, Button, DataGrid, EnhancedColDef } from '@pspod/ui-components';
 import { getRouteApi } from '@tanstack/react-router';
@@ -7,6 +7,7 @@ import { FC, useMemo } from 'react';
 
 import { Solver } from '~/api/utils/api-requests';
 import { GridActionsCellItemLink } from '~/components/implicit-links';
+import { SolverFileCard } from '~/components/solver-file-card/solver-file-card.component';
 import { useCustomTranslations } from '~/utils/hooks';
 
 import { useSolverActions } from './solvers-table.hook';
@@ -26,8 +27,6 @@ export const SolversTable: FC = () => {
     handleExportSolver,
   } = useSolverActions(projectId);
 
-  // TODO BE-145 authorName https://tracker.yandex.ru/BE-145
-
   const columns = useMemo<EnhancedColDef<Solver>[]>(
     () => [
       {
@@ -44,8 +43,8 @@ export const SolversTable: FC = () => {
         field: 'authorId',
         headerName: t('COMMON.AUTHOR'),
         flex: 1,
-        // valueGetter: (_, row) => row.author,
-        // groupingValueGetter: (_, row) => row.author,
+        valueGetter: (_, row) => row.authorName,
+        groupingValueGetter: (_, row) => row.authorName,
       },
       {
         field: 'created',
@@ -66,6 +65,20 @@ export const SolversTable: FC = () => {
         },
         groupingValueGetter: value =>
           value ? translateStatus('ACTIVE') : translateStatus('ARCHIVED'),
+      },
+      {
+        field: 'fileInfo',
+        headerName: t('FILES.INFO'),
+        width: 280,
+        sortable: false,
+        aggregable: false,
+        filterable: false,
+        groupable: false,
+        renderCell: ({ row }: GridRenderCellParams<Solver>) => (
+          <Box sx={{ width: 'calc(100% + 16px)', margin: '-8px' }}>
+            <SolverFileCard solverId={row.id!} size={'small'} />
+          </Box>
+        ),
       },
       {
         field: 'actions',

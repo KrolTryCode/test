@@ -1,36 +1,28 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
 import { useQuery } from '@tanstack/react-query';
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
-import { Solver } from '~/api/utils/api-requests';
-import { UploadFile } from '~/components/inputs/upload-file/upload-file.component';
-import { FormInputText } from '~/components/react-hook-form';
-import { calcFileSize } from '~/utils/files/calc-file-size';
+import { FormInputText, FormUploadFile } from '~/components/react-hook-form';
+import { useGetSolverFile } from '~/use-cases/get-solver-file.hook';
 import { getAvailableExtensionsMsg } from '~/utils/files/validate-files';
 
-import { useSolverForm } from './solver-form.hook';
-import { createSolverFormSchema, SolverUpdateRequest } from './solver-form.schema';
+import { createSolverFormSchema, ISolverForm } from './solver-form.schema';
 
 interface SolverFormProps {
-  data?: Solver;
+  data?: Omit<ISolverForm, 'file'>;
   projectId: string;
   onReject?: () => void;
-  onResolve: (data: SolverUpdateRequest) => void;
-  isEditing?: boolean;
+  onResolve: (data: ISolverForm) => void;
 }
 
-export const SolverForm: FC<SolverFormProps> = ({
-  data,
-  projectId,
-  onReject,
-  onResolve,
-  isEditing = false,
-}) => {
+export const SolverForm: FC<SolverFormProps> = ({ data, projectId, onReject, onResolve }) => {
   const { t } = useTranslation();
+
+  const { fileCardProps } = useGetSolverFile(data?.id);
 
   const { data: solverNames = [] } = useQuery(
     getSolversQueryOptions(projectId, {
@@ -40,38 +32,20 @@ export const SolverForm: FC<SolverFormProps> = ({
     }),
   );
 
-  const schema = useMemo(
-    () => createSolverFormSchema(solverNames, isEditing),
-    [solverNames, isEditing],
-  );
+  const schema = useMemo(() => createSolverFormSchema(solverNames), [solverNames]);
 
   const {
     register,
     handleSubmit,
     control,
-    resetField,
-    setValue,
     formState: { isValid, isSubmitted, isSubmitting },
-  } = useForm<SolverUpdateRequest>({
+  } = useForm<ISolverForm>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
-    values: data,
+    values: data ? { ...data, file: fileCardProps ?? null } : undefined,
     defaultValues: schema.getDefault(),
     resolver: yupResolver(schema),
   });
-
-  const { file, onDownloadFile, onChangeFile, isUploadingFile } = useSolverForm(
-    projectId,
-    data,
-    isEditing,
-    resetField,
-  );
-
-  useEffect(() => {
-    if (file?.fileId) {
-      setValue('fileId', file.fileId);
-    }
-  }, [setValue, file?.fileId]);
 
   return (
     <Form showColonAfterLabel onSubmit={handleSubmit(onResolve)}>
@@ -81,25 +55,12 @@ export const SolverForm: FC<SolverFormProps> = ({
       <FormItem label={t('COMMON.DESCRIPTION')}>
         <FormInputText isMultiline controllerProps={{ ...register('description'), control }} />
       </FormItem>
-      <FormItem label={t('COMMON.FILE')} isRequired isHidden={!isEditing}>
-        <UploadFile
+      <FormItem label={t('COMMON.FILE')} isRequired>
+        <FormUploadFile
           variant={'dragger'}
           fileType={'zip'}
-          onSelect={onChangeFile}
-          isUploading={isUploadingFile}
+          controllerProps={{ ...register('file'), control }}
           draggerDescr={getAvailableExtensionsMsg('zip')}
-          files={
-            file
-              ? [
-                  {
-                    id: file.fileId!,
-                    name: file.fileName!,
-                    description: `${t('COMMON.SIZE')}: ${calcFileSize(file.file.size)}`,
-                  },
-                ]
-              : []
-          }
-          onDownloadFile={onDownloadFile}
         />
       </FormItem>
       <FormButtons>

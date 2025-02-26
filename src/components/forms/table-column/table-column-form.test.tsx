@@ -12,6 +12,7 @@ const correctFormData: TableColumn = {
   type: DataType.String,
   nullable: false,
   unique: false,
+  parentLinks: [],
 };
 
 const schema = getSchema(['Столбец'], t);

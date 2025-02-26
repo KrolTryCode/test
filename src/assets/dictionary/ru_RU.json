@@ -122,6 +122,7 @@
     "YEAR": "Год"
   },
   "FILES": {
+    "INFO": "Информация о файле",
     "UPLOAD_SUCCESS": "Файл загружен",
     "MULTIPLE_UPLOAD_SUCCESS": "Файлы загружены",
     "UPLOAD_FAILED": "Ошибка загрузки файла",

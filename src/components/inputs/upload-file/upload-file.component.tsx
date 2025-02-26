@@ -10,6 +10,7 @@ export interface UploadFileProps<Multiple extends boolean | undefined = false> {
   fileType: FileType;
   isMultiple?: Multiple;
   isDisabled?: boolean;
+  isInvalid?: boolean;
   isUploading?: boolean;
   fullWidth?: boolean;
   variant?: 'dragger' | 'button';
@@ -26,6 +27,7 @@ export function UploadFile<Multiple extends boolean | undefined = false>({
   fileType,
   isUploading,
   isMultiple,
+  isInvalid,
   variant = 'button',
   onSelect,
   onDeleteFile,
@@ -60,6 +62,7 @@ export function UploadFile<Multiple extends boolean | undefined = false>({
             onSelect={handleSelect}
             isMultiple={isMultiple}
             description={draggerDescr}
+            isInvalid={isInvalid}
           />
         )}
         {variant === 'button' && (
@@ -68,6 +71,7 @@ export function UploadFile<Multiple extends boolean | undefined = false>({
             onSelect={handleSelect}
             fullWidth
             variant={'text'}
+            isInvalid={isInvalid}
             sx={theme => ({ paddingBlock: theme.spacing(1) })}
             isLoading={isLoading}
             isMultiple={isMultiple}
@@ -82,10 +86,10 @@ export function UploadFile<Multiple extends boolean | undefined = false>({
           files?.map(file => (
             <RenderFileCard
               key={file.id}
-              file={file}
               fileType={fileType}
-              onDeleteFile={onDeleteFile}
-              onDownloadFile={onDownloadFile}
+              onDelete={onDeleteFile ? () => onDeleteFile(file.id!) : file.onDelete}
+              onDownload={onDownloadFile ? () => onDownloadFile(file.id!) : file.onDownload}
+              {...file}
               variant={variant === 'button' ? 'contained' : 'outlined'}
             />
           ))
@@ -95,29 +99,20 @@ export function UploadFile<Multiple extends boolean | undefined = false>({
   );
 }
 
-function RenderFileCard({
-  fileType,
-  file,
-  variant = 'contained',
-  onDeleteFile,
-  onDownloadFile,
-}: Pick<UploadFileProps<false>, 'fileType' | 'onDeleteFile' | 'onDownloadFile'> & {
-  file: FileCardProps;
-  variant?: FileCardProps['variant'];
-}) {
+interface RenderFileCardProps extends FileCardProps {
+  fileType: UploadFileProps<false>['fileType'];
+}
+
+function RenderFileCard({ fileType, ...file }: RenderFileCardProps) {
   const isImage = fileType === 'image';
   const { image, isImageLoading } = useGetImage(isImage ? file.id : undefined);
 
   return (
     <FileCard
-      key={file.id}
       {...file}
       CustomIcon={getFileIcon(fileType)}
       preview={image?.src}
-      isLoading={isImageLoading}
-      onDelete={onDeleteFile}
-      onDownload={onDownloadFile}
-      variant={variant}
+      isPreviewLoading={isImageLoading}
     />
   );
 }

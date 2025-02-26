@@ -94,6 +94,7 @@ export const themeOptions: ThemeOptions = {
     MuiDrawer: { styleOverrides: { paper: { width: 340 } } },
     MuiCircularProgress: { defaultProps: { disableShrink: true } },
     MuiRadio: { styleOverrides: { root: ({ theme }) => ({ color: theme.palette.grey.A400 }) } },
+    MuiStack: { styleOverrides: { root: { '&[hidden]': { display: 'none' } } } },
     MuiTabs,
     MuiTab,
     MuiTabPanel,

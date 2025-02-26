@@ -6,7 +6,7 @@ import { ApiClientSecured } from '~/api/utils/api-client';
 import { Solver, SolverRequest } from '~/api/utils/api-requests';
 
 interface MutationFnVariables extends SolverRequest {
-  solverId: string;
+  id: string;
 }
 
 export const useUpdateSolverMutation = (
@@ -15,7 +15,7 @@ export const useUpdateSolverMutation = (
 ) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ solverId, ...data }) =>
+    mutationFn: ({ id: solverId, ...data }) =>
       ApiClientSecured.projectSolversV1Controller.updateProjectSolver(solverId, projectId, data),
     ...options,
     onSuccess(...args) {
