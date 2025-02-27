@@ -26,7 +26,7 @@ export const QuestionMarkWrapper = styled('b')(
   ({ theme }) => `
   display: block;
   width: 20px;
-  height: 20px;
+  margin: 8px;
   font-size: 14px;
   color: ${theme.palette.primary.main};
   text-align: center;
@@ -36,6 +36,7 @@ export const QuestionMarkWrapper = styled('b')(
 );
 
 export const StyledHeaderHelp = styled(Link)`
-  margin: auto 20px;
+  padding: 8px;
+  margin-top: -3px;
   text-decoration: none;
 `;

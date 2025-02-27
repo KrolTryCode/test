@@ -44,7 +44,7 @@ function LogsPage() {
     () => [
       {
         field: 'created',
-        headerName: t('JOURNAL.DATE'),
+        headerName: t('COMMON.DATE'),
         type: 'dateTime',
         width: 160,
       },

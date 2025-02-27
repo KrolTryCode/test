@@ -385,11 +385,11 @@
     "SECURITY": "Безопасность",
     "EVENTS": "События",
     "SOLVERS": "Вычислители",
-    "FORMS": "Формы"
+    "FORMS": "Формы",
+    "NOTIFICATIONS": "Уведомления"
   },
   "JOURNAL": {
-    "ACTION": "Действие",
-    "DATE": "Дата"
+    "ACTION": "Действие"
   },
   "LOGS": {
     "EVENT_TYPE": "Тип события",
@@ -480,6 +480,11 @@
   },
   "FORM": {
     "MODELLING_TIME": "Время моделирования"
+  },
+  "NOTIFICATIONS": {
+    "IS_READ": "Прочитано",
+    "NOT_READ": "Не прочитано",
+    "SHOW_UNREAD_ONLY": "Отображать только непрочитанные сообщения"
   },
   "TASK": {
     "SET_PARAMETERS": "Задать параметры"
