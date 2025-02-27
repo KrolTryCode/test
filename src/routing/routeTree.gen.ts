@@ -16,6 +16,7 @@ import { Route as AuthImport } from './../pages/_auth';
 import { Route as MainProjectsImport } from './../pages/_main/projects';
 import { Route as MainProfileImport } from './../pages/_main/profile';
 import { Route as MainAdminImport } from './../pages/_main/admin';
+import { Route as MainNotificationsIndexImport } from './../pages/_main/notifications/index';
 import { Route as MainAdminUsersImport } from './../pages/_main/admin/users';
 import { Route as MainAdminTemplatesImport } from './../pages/_main/admin/templates';
 import { Route as MainAdminSettingsImport } from './../pages/_main/admin/settings';
@@ -85,6 +86,12 @@ const MainProfileRoute = MainProfileImport.update({
 const MainAdminRoute = MainAdminImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => MainRoute,
+} as any);
+
+const MainNotificationsIndexRoute = MainNotificationsIndexImport.update({
+  id: '/notifications/',
+  path: '/notifications/',
   getParentRoute: () => MainRoute,
 } as any);
 
@@ -479,6 +486,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/users';
       preLoaderRoute: typeof MainAdminUsersImport;
       parentRoute: typeof MainAdminImport;
+    };
+    '/_main/notifications/': {
+      id: '/_main/notifications/';
+      path: '/notifications';
+      fullPath: '/notifications';
+      preLoaderRoute: typeof MainNotificationsIndexImport;
+      parentRoute: typeof MainImport;
     };
     '/_main/admin/permissions/roles': {
       id: '/_main/admin/permissions/roles';
@@ -911,12 +925,14 @@ interface MainRouteChildren {
   MainAdminRoute: typeof MainAdminRouteWithChildren;
   MainProfileRoute: typeof MainProfileRoute;
   MainProjectsRoute: typeof MainProjectsRouteWithChildren;
+  MainNotificationsIndexRoute: typeof MainNotificationsIndexRoute;
 }
 
 const MainRouteChildren: MainRouteChildren = {
   MainAdminRoute: MainAdminRouteWithChildren,
   MainProfileRoute: MainProfileRoute,
   MainProjectsRoute: MainProjectsRouteWithChildren,
+  MainNotificationsIndexRoute: MainNotificationsIndexRoute,
 };
 
 const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren);
@@ -938,6 +954,7 @@ export interface FileRoutesByFullPath {
   '/admin/settings': typeof MainAdminSettingsRoute;
   '/admin/templates': typeof MainAdminTemplatesRouteWithChildren;
   '/admin/users': typeof MainAdminUsersRouteWithChildren;
+  '/notifications': typeof MainNotificationsIndexRoute;
   '/admin/permissions/roles': typeof MainAdminPermissionsRolesRoute;
   '/admin/users/$userId': typeof MainAdminUsersUserIdRoute;
   '/projects/project/$projectId': typeof MainProjectsProjectProjectIdRouteWithChildren;
@@ -983,6 +1000,7 @@ export interface FileRoutesByTo {
   '/admin/logs': typeof MainAdminLogsRoute;
   '/admin/security': typeof MainAdminSecurityRoute;
   '/admin/settings': typeof MainAdminSettingsRoute;
+  '/notifications': typeof MainNotificationsIndexRoute;
   '/admin/permissions/roles': typeof MainAdminPermissionsRolesRoute;
   '/admin/users/$userId': typeof MainAdminUsersUserIdRoute;
   '/projects/project/$projectId': typeof MainProjectsProjectProjectIdRouteWithChildren;
@@ -1030,6 +1048,7 @@ export interface FileRoutesById {
   '/_main/admin/settings': typeof MainAdminSettingsRoute;
   '/_main/admin/templates': typeof MainAdminTemplatesRouteWithChildren;
   '/_main/admin/users': typeof MainAdminUsersRouteWithChildren;
+  '/_main/notifications/': typeof MainNotificationsIndexRoute;
   '/_main/admin/permissions/roles': typeof MainAdminPermissionsRolesRoute;
   '/_main/admin/users/$userId': typeof MainAdminUsersUserIdRoute;
   '/_main/projects/project/$projectId': typeof MainProjectsProjectProjectIdRouteWithChildren;
@@ -1080,6 +1099,7 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/templates'
     | '/admin/users'
+    | '/notifications'
     | '/admin/permissions/roles'
     | '/admin/users/$userId'
     | '/projects/project/$projectId'
@@ -1124,6 +1144,7 @@ export interface FileRouteTypes {
     | '/admin/logs'
     | '/admin/security'
     | '/admin/settings'
+    | '/notifications'
     | '/admin/permissions/roles'
     | '/admin/users/$userId'
     | '/projects/project/$projectId'
@@ -1169,6 +1190,7 @@ export interface FileRouteTypes {
     | '/_main/admin/settings'
     | '/_main/admin/templates'
     | '/_main/admin/users'
+    | '/_main/notifications/'
     | '/_main/admin/permissions/roles'
     | '/_main/admin/users/$userId'
     | '/_main/projects/project/$projectId'
@@ -1241,7 +1263,8 @@ export const routeTree = rootRoute
       "children": [
         "/_main/admin",
         "/_main/profile",
-        "/_main/projects"
+        "/_main/projects",
+        "/_main/notifications/"
       ]
     },
     "/_main/admin": {
@@ -1329,6 +1352,10 @@ export const routeTree = rootRoute
         "/_main/admin/users/$userId",
         "/_main/admin/users/"
       ]
+    },
+    "/_main/notifications/": {
+      "filePath": "_main/notifications/index.tsx",
+      "parent": "/_main"
     },
     "/_main/admin/permissions/roles": {
       "filePath": "_main/admin/permissions.roles.tsx",

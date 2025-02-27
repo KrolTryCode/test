@@ -13,9 +13,7 @@ export const roleQueries = createQueryKeys('roles', {
         queryKey: [{ pagingParams }],
         queryFn: () =>
           ApiClientSecured.rolesV1Controller.findRoles(
-            {
-              pageable: pagingParams.pageAndSort as Pageable,
-            },
+            { pageable: pagingParams.pageAndSort as Pageable },
             pagingParams.filters,
           ),
       }),

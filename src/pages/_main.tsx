@@ -3,12 +3,15 @@ import { createFileRoute, Outlet } from '@tanstack/react-router';
 
 import { Header } from '~/routing/layout/header/header.component';
 import { Submenu } from '~/routing/layout/submenu/submenu.component';
+import { useNotifyAboutNewNotification } from '~/use-cases/use-notify-about-new-notification.hook';
 
 export const Route = createFileRoute('/_main')({
   component: MainLayout,
 });
 
 function MainLayout() {
+  useNotifyAboutNewNotification();
+
   return (
     <Stack width={'100vw'} height={'100dvh'}>
       <Header />
