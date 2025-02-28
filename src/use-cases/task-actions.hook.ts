@@ -1,4 +1,4 @@
-import { notifySuccess } from '@pspod/ui-components';
+import { confirmDeletionModal, notifySuccess } from '@pspod/ui-components';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -42,6 +42,16 @@ export const useTaskActions = (projectId: string) => {
     onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
   });
 
+  const handleDeleteTask = useCallback(
+    (id: string, onOk?: () => void) => {
+      confirmDeletionModal({
+        title: t('ACTION.DELETE', { type: t('ENTITY.TASK').toLowerCase() }),
+        onOk: () => void archiveTask(id).then(onOk),
+      });
+    },
+    [archiveTask, t],
+  );
+
   const handleEditTask = useCallback(
     (task: FullTaskInfo, onOk?: () => void) => {
       taskModal({
@@ -65,12 +75,12 @@ export const useTaskActions = (projectId: string) => {
   return {
     createTask,
     updateTask,
-    archiveTask,
     startTask,
     isTaskCreating,
     isTaskCreated,
     isTaskStarting,
     isTaskStarted,
+    handleDeleteTask,
     handleEditTask,
     downloadTaskResults,
   };

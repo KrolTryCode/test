@@ -48,6 +48,7 @@ const SummaryTable: FC<SummaryTableProps> = ({
         }
         return value;
       }
+      case 'custom':
       case 'string':
       case 'number':
       case undefined:

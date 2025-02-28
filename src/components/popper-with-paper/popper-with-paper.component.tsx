@@ -1,7 +1,7 @@
-import { Grow, Paper, Popper, Skeleton } from '@mui/material';
+import { Grow, Paper, Popper, PopperProps, Skeleton } from '@mui/material';
 import { FC, PropsWithChildren } from 'react';
 
-interface PopperWithPaperProps extends PropsWithChildren {
+interface PopperWithPaperProps extends PropsWithChildren, Omit<PopperProps, 'open' | 'children'> {
   anchorEl?: HTMLElement;
   isOpen: boolean;
   isContentLoading?: boolean;
@@ -13,13 +13,13 @@ export const PopperWithPaper: FC<PopperWithPaperProps> = ({
   isOpen,
   isContentLoading,
   anchorEl,
-  disablePortal = true,
+  ...props
 }) => (
   <Popper
+    {...props}
     open={isOpen}
     anchorEl={anchorEl}
     transition
-    disablePortal={disablePortal}
     sx={({ zIndex }) => ({ zIndex: zIndex.tooltip + 1 })}
   >
     {({ TransitionProps }) => (
@@ -30,9 +30,9 @@ export const PopperWithPaper: FC<PopperWithPaperProps> = ({
       >
         <Paper
           sx={({ spacing }) => ({
-            width: anchorEl?.getClientRects()[0].width,
-            paddingBlock: spacing(1),
-            maxHeight: '500px',
+            minWidth: anchorEl?.getClientRects()[0].width,
+            margin: spacing(1),
+            maxHeight: '70vh',
             overflowY: 'auto',
             scrollbarWidth: 'thin',
           })}
