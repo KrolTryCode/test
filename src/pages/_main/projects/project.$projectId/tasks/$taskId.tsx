@@ -5,7 +5,7 @@ import {
   FileDownloadRounded,
   PlayArrowRounded,
 } from '@mui/icons-material';
-import { Card, CardContent, Divider, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { Button } from '@pspod/ui-components';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
@@ -16,9 +16,9 @@ import { getProjectTaskQueryOptions } from '~/api/queries/projects/tasks/get-pro
 import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { TaskState } from '~/api/utils/api-requests';
 import { ButtonLink } from '~/components/implicit-links';
+import { SolverCardPopper } from '~/components/solver-card/solver-card.component';
 import { SummaryTable, SummaryEntry } from '~/components/summary-table/summary-table.component';
 import { useTaskActions } from '~/use-cases/task-actions.hook';
-import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 import { useCustomTranslations } from '~/utils/hooks';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId/tasks/$taskId')({
@@ -31,7 +31,6 @@ export const Route = createFileRoute('/_main/projects/project/$projectId/tasks/$
 
 function TaskPage() {
   const { t, translateStatus } = useCustomTranslations();
-  const { TASKS } = useDeclinatedTranslationsContext();
 
   const { projectId, taskId } = Route.useParams();
   const navigate = Route.useNavigate();
@@ -44,14 +43,9 @@ function TaskPage() {
     }),
   );
 
-  // @ts-expect-error type
-  const taskParams = task?.parameters.params as {
-    solver: string;
-    contents: string;
-    timeout: number;
-  };
+  const taskParams = task?.parameters.params;
 
-  const { downloadTaskResults, handleEditTask, startTask, isTaskStarted, archiveTask } =
+  const { downloadTaskResults, handleEditTask, startTask, isTaskStarted, handleDeleteTask } =
     useTaskActions(projectId);
 
   useEffect(() => {
@@ -75,11 +69,9 @@ function TaskPage() {
   );
 
   const taskInfo: SummaryEntry[] = [
-    { title: t('COMMON.TITLE'), value: task?.name },
     { title: t('COMMON.DESCRIPTION'), value: task?.description },
     { title: t('COMMON.PRIORITY'), value: task?.priority, type: 'number' },
     { title: t('COMMON.PROGRESS'), value: task?.progress, type: 'number' },
-    { title: t('COMMON.STATUS'), value: translateStatus(task?.state) },
     { title: t('COMMON.DATE_CREATED'), value: task?.created, type: 'dateTime' },
     { title: t('COMMON.DATE_END'), value: task?.endDate, type: 'dateTime' },
     { title: t('COMMON.AUTHOR'), value: task?.authorName },
@@ -88,12 +80,14 @@ function TaskPage() {
   const taskParamsInfo: SummaryEntry[] = [
     {
       title: t('ENTITY.SOLVER'),
-      value: solver?.name,
-      type: 'link',
-      to: {
-        to: '/projects/project/$projectId/solvers/$solverId',
-        params: { solverId: solver?.id, projectId },
-      },
+      type: 'custom',
+      value: (
+        <SolverCardPopper
+          projectId={projectId}
+          solverId={solver?.id ?? ''}
+          solverName={solver?.name ?? ''}
+        />
+      ),
     },
     {
       title: t('ENTITY.TABLE'),
@@ -101,7 +95,7 @@ function TaskPage() {
       type: 'link',
       to: {
         to: '/projects/project/$projectId/tables/$tableId',
-        params: { solverId: table?.id, projectId },
+        params: { tableId: table?.id, projectId },
       },
     },
     {
@@ -109,87 +103,98 @@ function TaskPage() {
       value: taskParams?.timeout,
       type: 'number',
     },
+    ...Object.entries(taskParams ?? {}).reduce<SummaryEntry[]>((params, [label, value]) => {
+      if (['solver', 'timeout', 'contents'].includes(label)) {
+        return params;
+      }
+
+      return [...params, { title: label, value }];
+    }, [] as SummaryEntry[]),
   ];
 
   return (
-    <Stack
-      paddingTop={4}
-      height={'100%'}
-      minWidth={'500px'}
-      width={'fit-content'}
-      maxWidth={'900px'}
-      marginInline={'auto'}
-      gap={1}
-    >
-      <Card>
-        <CardContent>
-          <Stack direction={'row'} width={'100%'}>
-            <ButtonLink
-              to={'..'}
-              variant={'text'}
-              icon={<ArrowBack />}
-              sx={{ marginRight: 'auto' }}
-            >
-              {`${t('PREPOSITION.K')} ${TASKS.DATIVE.toLowerCase()}`}
-            </ButtonLink>
-            <Button
-              variant={'text'}
-              size={'small'}
-              icon={<PlayArrowRounded />}
-              disabled={task?.state !== TaskState.ReadyToStart}
-              title={t('ACTION.RUN', { what: t('ENTITY.TASK').toLowerCase() })}
-              onClick={() => startTask(task!.id!)}
-              isLoading={shouldRefetch}
-            />
-            <Button
-              variant={'text'}
-              size={'small'}
-              icon={<FileDownloadRounded />}
-              disabled={task?.state !== TaskState.Successed}
-              title={t('ACTION.DOWNLOAD', { filename: t('ENTITY.TASK').toLowerCase() })}
-              onClick={() => downloadTaskResults(task!.id!)}
-            />
-            <Button
-              variant={'text'}
-              size={'small'}
-              icon={<Edit />}
-              title={t('ACTION.EDIT', { type: t('ENTITY.TASK').toLowerCase() })}
-              onClick={() => {
-                handleEditTask(task!, () => setShouldRefetch(true));
-              }}
-            />
-            <Button
-              variant={'text'}
-              size={'small'}
-              color={'error'}
-              icon={<DeleteOutline />}
-              onClick={async () => {
-                await archiveTask(task!.id!);
-                await navigate({ to: '..' });
-              }}
-            />
-          </Stack>
+    <>
+      <Stack
+        width={'100%'}
+        position={'sticky'}
+        top={0}
+        direction={'row'}
+        alignItems={'center'}
+        justifyContent={'space-between'}
+      >
+        <Stack direction={'row'} alignItems={'center'}>
+          <ButtonLink to={'..'} variant={'text'} icon={<ArrowBack />} />
+          <Typography variant={'h3'} gutterBottom={false} marginRight={theme => theme.spacing(1)}>
+            {task?.name}
+          </Typography>
+          <Button
+            variant={'text'}
+            size={'small'}
+            icon={<Edit />}
+            color={'primary'}
+            title={t('ACTION.EDIT', { type: t('ENTITY.TASK').toLowerCase() })}
+            onClick={() => {
+              handleEditTask(task!, () => setShouldRefetch(true));
+            }}
+          />
+          <Button
+            variant={'text'}
+            size={'small'}
+            color={'error'}
+            icon={<DeleteOutline />}
+            onClick={() => handleDeleteTask(task!.id!, () => void navigate({ to: '..' }))}
+          />
+        </Stack>
+        <Stack direction={'row'} alignItems={'center'}>
+          <Typography textAlign={'right'} gutterBottom={false}>
+            <b>{t('COMMON.STATUS')}: </b>
+            {translateStatus(task!.state)}
+          </Typography>
+          <Button
+            variant={'text'}
+            size={'small'}
+            icon={<PlayArrowRounded />}
+            disabled={task?.state !== TaskState.ReadyToStart}
+            title={t('ACTION.RUN', { what: t('ENTITY.TASK').toLowerCase() })}
+            onClick={() => startTask(task!.id!)}
+            isLoading={shouldRefetch}
+          />
+          <Button
+            variant={'text'}
+            size={'small'}
+            icon={<FileDownloadRounded />}
+            disabled={task?.state !== TaskState.Successed}
+            title={t('ACTION.DOWNLOAD', { filename: t('ENTITY.TASK').toLowerCase() })}
+            onClick={() => downloadTaskResults(task!.id!)}
+          />
+        </Stack>
+      </Stack>
 
-          <Divider sx={theme => ({ marginBlock: theme.spacing(1) })} />
+      <Stack
+        marginTop={4}
+        minWidth={'500px'}
+        width={'fit-content'}
+        maxWidth={'900px'}
+        marginInline={'auto'}
+        gap={1}
+      >
+        <SummaryTable
+          sx={{ width: '100%', 'th, td': { width: '50%' } }}
+          data={taskInfo}
+          alignTitle={'left'}
+        />
 
+        <Stack marginTop={2}>
+          <Typography variant={'subtitle1'} paddingLeft={1}>
+            {t('ENTITY.PARAMETERS')}
+          </Typography>
           <SummaryTable
             sx={{ width: '100%', 'th, td': { width: '50%' } }}
-            data={taskInfo}
+            data={taskParamsInfo}
             alignTitle={'left'}
           />
-
-          <Stack marginTop={2}>
-            <Typography variant={'subtitle1'} paddingLeft={1}>
-              {t('ENTITY.PARAMETERS')}
-            </Typography>
-            <SummaryTable
-              sx={{ width: '100%', 'th, td': { width: '50%' } }}
-              data={taskParamsInfo}
-              alignTitle={'left'}
-            />
-          </Stack>
-        </CardContent>
-      </Card>
-    </Stack>
+        </Stack>
+      </Stack>
+    </>
   );
 }

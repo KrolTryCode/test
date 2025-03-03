@@ -1,4 +1,4 @@
-import { Upload, Edit as EditIcon, Download } from '@mui/icons-material';
+import { Upload, Edit as EditIcon, Download, DeleteOutline } from '@mui/icons-material';
 import { Box, Chip } from '@mui/material';
 import { GridActionsCellItem, GridRenderCellParams } from '@mui/x-data-grid-premium';
 import { AddEntity, Button, DataGrid, EnhancedColDef } from '@pspod/ui-components';
@@ -6,7 +6,6 @@ import { getRouteApi } from '@tanstack/react-router';
 import { FC, useMemo } from 'react';
 
 import { Solver } from '~/api/utils/api-requests';
-import { GridActionsCellItemLink } from '~/components/implicit-links';
 import { SolverFileCard } from '~/components/solver-file-card/solver-file-card.component';
 import { useCustomTranslations } from '~/utils/hooks';
 
@@ -98,18 +97,11 @@ export const SolversTable: FC = () => {
               color={'primary'}
               onClick={() => handleUpdateSolver(row)}
             />,
-            <GridActionsCellItemLink
-              key={'show'}
-              showInMenu
-              label={t('ACTION.VIEW')}
-              color={'primary'}
-              to={'/projects/project/$projectId/solvers/$solverId'}
-              params={{ solverId: row.id!, projectId }}
-            />,
             <GridActionsCellItem
               key={'delete'}
-              showInMenu
               label={t('ACTION.DELETE')}
+              title={t('ACTION.DELETE')}
+              icon={<DeleteOutline />}
               color={'error'}
               onClick={() => handleDeleteSolver(row.id!)}
             />,
@@ -117,7 +109,7 @@ export const SolversTable: FC = () => {
         },
       },
     ],
-    [handleDeleteSolver, handleUpdateSolver, projectId, t, translateStatus],
+    [handleDeleteSolver, handleUpdateSolver, t, translateStatus],
   );
 
   const ToolbarContent = (

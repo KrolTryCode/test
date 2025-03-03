@@ -1,5 +1,6 @@
 import { BoxProps } from '@mui/material';
 import { ToOptions } from '@tanstack/react-router';
+import { ReactNode } from 'react';
 
 export interface SummaryTableProps extends BoxProps {
   data: SummaryEntry[];
@@ -15,10 +16,16 @@ interface SummaryEntryLink {
   value: string | undefined;
 }
 
+interface CustomEntry {
+  type: 'custom';
+  value: ReactNode;
+  title: string;
+}
+
 interface CommonSummaryEntry {
   title: string;
   type?: 'string' | 'number' | 'date' | 'dateTime' | 'boolean';
   value: string | number | null | boolean | undefined;
 }
 
-export type SummaryEntry = CommonSummaryEntry | SummaryEntryLink;
+export type SummaryEntry = CommonSummaryEntry | SummaryEntryLink | CustomEntry;

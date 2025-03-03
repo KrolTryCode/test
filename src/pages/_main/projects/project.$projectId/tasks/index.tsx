@@ -21,7 +21,8 @@ export const Route = createFileRoute('/_main/projects/project/$projectId/tasks/'
 function TasksList() {
   const { projectId } = Route.useParams();
   const { t, translateStatus, getStatusValueOptions } = useCustomTranslations();
-  const { startTask, handleEditTask, downloadTaskResults, archiveTask } = useTaskActions(projectId);
+  const { startTask, handleEditTask, downloadTaskResults, handleDeleteTask } =
+    useTaskActions(projectId);
   const { taskList } = Route.useLoaderData();
   const navigate = useNavigate();
 
@@ -113,7 +114,7 @@ function TasksList() {
               showInMenu
               key={'delete'}
               entity={t('ENTITY.TASK')}
-              deleteHandler={() => void archiveTask(row.id!)}
+              deleteHandler={() => handleDeleteTask(row.id!)}
             />,
           ];
         },
@@ -127,7 +128,7 @@ function TasksList() {
       downloadTaskResults,
       startTask,
       handleEditTask,
-      archiveTask,
+      handleDeleteTask,
     ],
   );
 
