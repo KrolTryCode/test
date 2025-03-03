@@ -5,7 +5,7 @@ import { AddEntity, DataGrid, DeleteCellButton, EnhancedColDef } from '@pspod/ui
 import { useQuery } from '@tanstack/react-query';
 import { FC, useCallback, useMemo } from 'react';
 
-import { getContentNodesByParentOptions } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
+import { getContentNodesByParentQueryOptions } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
 import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { DataType, ParameterField } from '~/api/utils/api-requests';
 import { useParametersHook } from '~/components/tables/form-parameter-fields/parameters-fields.hook';
@@ -20,7 +20,7 @@ export const ParametersTable: FC<ParametersTableProps> = ({ formId, projectId })
   const { t, getColumnTypeValueOptions, translateColumnType } = useCustomTranslations();
 
   const { data: solvers = [] } = useQuery(getSolversQueryOptions(projectId));
-  const { data: contents = [] } = useQuery(getContentNodesByParentOptions(projectId));
+  const { data: contents = [] } = useQuery(getContentNodesByParentQueryOptions(projectId));
 
   const {
     parameters,

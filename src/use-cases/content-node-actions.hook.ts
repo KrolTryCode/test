@@ -7,14 +7,13 @@ import { useCreateProjectContentMutation } from '~/api/queries/project-content/c
 import { useDeleteProjectContentMutation } from '~/api/queries/project-content/delete-project-content.mutation';
 import { useUpdateProjectContentMutation } from '~/api/queries/project-content/update-project-content.mutation';
 import { useGetTableMetadataColumns } from '~/api/queries/tables/structure/get-table-metadata.mutation';
-import { ContentNodeType } from '~/api/utils/api-requests';
+import { ContentNode, ContentNodeType } from '~/api/utils/api-requests';
 import { nodeModal } from '~/components/forms/table-node/table-node-form.modal';
-import { isFolderType } from '~/components/tree/nav-tree/nav-tree.utils';
-import { ExtendedContentNode } from '~/components/tree/tree.type';
+import { isFolderType } from '~/components/trees/tree.utils';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 import { showErrorMessage } from '~/utils/show-error-message';
 
-export const useNodeTreeActions = () => {
+export function useContentNodeActions() {
   const { t } = useTranslation();
   const { projectId = '' } = useParams({ strict: false });
   const declinatedTranslations = useDeclinatedTranslationsContext();
@@ -66,7 +65,7 @@ export const useNodeTreeActions = () => {
   });
 
   const handleEditNode = useCallback(
-    (node: ExtendedContentNode) => {
+    (node: ContentNode) => {
       const entity =
         declinatedTranslations[isFolderType(node.type) ? 'DIRECTORY' : 'TABLE'].ACCUSATIVE;
       const title = t('ACTION.EDIT', { type: entity.toLowerCase() });
@@ -77,7 +76,6 @@ export const useNodeTreeActions = () => {
         data: {
           name: node.name,
           type: node.type,
-          parentContentNodeId: node.parentId,
         },
         onSave: data => updateNode({ nodeId: node.id, name: data.name }),
       });
@@ -86,7 +84,7 @@ export const useNodeTreeActions = () => {
   );
 
   const handleAddCatalog = useCallback(
-    (node?: ExtendedContentNode) => {
+    (node?: ContentNode) => {
       nodeModal({
         title: t('ACTION.ADD', { type: declinatedTranslations.DIRECTORY.ACCUSATIVE.toLowerCase() }),
         onSave: createNode,
@@ -102,7 +100,7 @@ export const useNodeTreeActions = () => {
   );
 
   const handleAddTable = useCallback(
-    (node?: ExtendedContentNode) => {
+    (node?: ContentNode) => {
       nodeModal({
         title: t('ACTION.ADD', { type: declinatedTranslations.TABLE.ACCUSATIVE.toLowerCase() }),
         onSave: createNode,
@@ -118,7 +116,7 @@ export const useNodeTreeActions = () => {
   );
 
   const handleEditStructure = useCallback(
-    (node: ExtendedContentNode) =>
+    (node: ContentNode) =>
       void navigate({
         to: '/projects/project/$projectId/tables/$tableId/structure',
         params: { tableId: node.id, projectId },
@@ -127,7 +125,7 @@ export const useNodeTreeActions = () => {
   );
 
   const handleDeleteNode = useCallback(
-    async (node: ExtendedContentNode) => {
+    async (node: ContentNode) => {
       let hasChildren = node?.hasChildren;
 
       const callAdditionalConfirmationModal = (onOk: () => void) => {
@@ -168,4 +166,4 @@ export const useNodeTreeActions = () => {
     handleEditNode,
     handleEditStructure,
   };
-};
+}

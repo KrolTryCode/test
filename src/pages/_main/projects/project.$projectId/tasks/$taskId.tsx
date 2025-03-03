@@ -11,7 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 
-import { getContentNodesByParentOptions } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
+import { getContentNodesByParentQueryOptions } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
 import { getProjectTaskQueryOptions } from '~/api/queries/projects/tasks/get-project-task.query';
 import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { TaskState } from '~/api/utils/api-requests';
@@ -68,7 +68,7 @@ function TaskPage() {
     }),
   );
   const { data: table } = useQuery(
-    getContentNodesByParentOptions(projectId, undefined, {
+    getContentNodesByParentQueryOptions(projectId, undefined, {
       enabled: !!taskParams,
       select: data => data.find(c => c.id === taskParams?.contents),
     }),

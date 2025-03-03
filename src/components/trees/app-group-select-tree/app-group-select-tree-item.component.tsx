@@ -10,7 +10,7 @@ import {
   _GroupSelectElementTogglerContainer,
   _ChildrenContainer,
   _GroupSelectElementLabel,
-} from './group-select-tree.styled';
+} from './app-group-select-tree.styled';
 
 export interface GroupSelectTreeItemProps {
   id: string;
@@ -18,6 +18,7 @@ export interface GroupSelectTreeItemProps {
   hasChildren: boolean;
   onSelect: (value: string) => void;
   selectedId?: string;
+  pathToSelectedId: string[];
 }
 
 export const GroupSelectTreeItem: FC<GroupSelectTreeItemProps> = ({
@@ -26,8 +27,9 @@ export const GroupSelectTreeItem: FC<GroupSelectTreeItemProps> = ({
   label,
   onSelect,
   selectedId,
+  pathToSelectedId,
 }) => {
-  const [isOpened, setIsOpened] = useState(false);
+  const [isOpened, setIsOpened] = useState(pathToSelectedId.includes(id));
 
   const { data: children = [] } = useQuery(
     getProjectNodesByParentQueryOptions(id, {
@@ -66,6 +68,7 @@ export const GroupSelectTreeItem: FC<GroupSelectTreeItemProps> = ({
         <_ChildrenContainer>
           {children.map(({ id, name, hasChildren }) => (
             <GroupSelectTreeItem
+              pathToSelectedId={pathToSelectedId}
               key={id}
               hasChildren={hasChildren ?? false}
               label={name}

@@ -1,8 +1,8 @@
 import { BackupTable, Folder } from '@mui/icons-material';
+import { Badge } from '@mui/material';
 import { AvatarProps, Avatar } from '@pspod/ui-components';
 import { useQuery } from '@tanstack/react-query';
-import { ReactNode } from '@tanstack/react-router';
-import { FC } from 'react';
+import { ReactNode, FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { getProjectLogoQueryOptions } from '~/api/queries/projects/get-project-logo.query';
@@ -13,6 +13,7 @@ interface NodeLogoProps extends AvatarProps {
   nodeId: string;
   nodeName?: string;
   nodeType?: ProjectNodeType;
+  showTypeBadge?: boolean;
 }
 
 export const NodeLogo: FC<NodeLogoProps> = ({
@@ -21,6 +22,7 @@ export const NodeLogo: FC<NodeLogoProps> = ({
   nodeType,
   size = 'medium',
   isLoading,
+  showTypeBadge = false,
 }) => {
   const { t } = useTranslation();
   const { data: logoId = '', isLoading: isLogoIdLoading } = useQuery(
@@ -30,18 +32,27 @@ export const NodeLogo: FC<NodeLogoProps> = ({
   );
   const { image: logo, isImageLoading: isLogoLoading } = useGetImage(logoId);
 
+  const badgeContent = useMemo(() => {
+    if (!showTypeBadge || !logo) {
+      return null;
+    }
+    return nodeType ? nodeIcon[nodeType] : null;
+  }, [logo, nodeType, showTypeBadge]);
+
   return (
-    <Avatar
-      size={size}
-      src={logo?.src}
-      color={'secondary'}
-      variant={'rounded'}
-      alt={`${t('ENTITY.LOGO')} ${nodeName}`}
-      withBorder
-      isLoading={isLogoIdLoading || isLogoLoading || isLoading}
-    >
-      {nodeType ? nodeIcon[nodeType] : nodeName?.charAt(0).toUpperCase()}
-    </Avatar>
+    <Badge badgeContent={badgeContent} anchorOrigin={{ horizontal: 'left' }}>
+      <Avatar
+        size={size}
+        src={logo?.src}
+        color={'secondary'}
+        variant={'rounded'}
+        alt={`${t('ENTITY.LOGO')} ${nodeName}`}
+        withBorder
+        isLoading={isLogoIdLoading || isLogoLoading || isLoading}
+      >
+        {nodeType ? nodeIcon[nodeType] : nodeName?.charAt(0).toUpperCase()}
+      </Avatar>
+    </Badge>
   );
 };
 

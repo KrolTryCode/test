@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import * as y from 'yup';
 
 import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
-import { DataType } from '~/api/utils/api-requests';
+import { ContentNodeType, DataType } from '~/api/utils/api-requests';
 import { ParameterFieldForm } from '~/components/forms/parameter-field/parameter-field.type';
 import {
   FormCheckbox,
@@ -15,7 +15,7 @@ import {
   FormInputText,
   FormSelect,
 } from '~/components/react-hook-form';
-import { FormSearchNodeTreeTables } from '~/components/react-hook-form/form-search-tree/form-search-node-tree-tables.component';
+import { FormSelectContentNode } from '~/components/react-hook-form/form-search-content-node/form-search-node-tree.component';
 
 interface DefaultValueComponentProps {
   data: ParameterFieldForm;
@@ -24,11 +24,10 @@ interface DefaultValueComponentProps {
 }
 
 export const DefaultValueComponent: FC<DefaultValueComponentProps> = ({
-  data,
+  data: { type, key },
   register,
   control,
 }) => {
-  const { type, key } = data;
   const controllerProps = { ...register('defaultValue'), control };
   const { projectId } = useParams({ strict: false });
   const { t } = useTranslation();
@@ -44,7 +43,19 @@ export const DefaultValueComponent: FC<DefaultValueComponentProps> = ({
     return <FormSelect items={solvers} controllerProps={controllerProps} />;
   }
   if (key === 'contents') {
-    return <FormSearchNodeTreeTables controllerProps={controllerProps} />;
+    return (
+      <FormSelectContentNode
+        controllerProps={controllerProps}
+        isMultiple={true}
+        /*
+          TODO: pass path to selected node (https://tracker.yandex.ru/BE-220)
+          example src/components/trees/app-group-select-tree
+        */
+        pathToSelected={[]}
+        projectId={projectId!}
+        canSelectItem={({ type }) => type === ContentNodeType.Table}
+      />
+    );
   }
   if (key === 'timeout') {
     return <FormInputNumeric controllerProps={controllerProps} />;
@@ -76,7 +87,7 @@ export const getDefaultValueSchema = (type: DataType, key?: string) => {
     return y.string().uuid().default('');
   }
   if (key === 'contents') {
-    return y.string().default('');
+    return y.array(y.string().uuid().required()).default([]);
   }
   if (key === 'timeout') {
     return y.string().default('');

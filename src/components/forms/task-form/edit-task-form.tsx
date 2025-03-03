@@ -50,9 +50,7 @@ export const EditTaskForm: FC<EditTaskFormProps> = ({ data, onSave, isPending })
       </FormItem>
       <ParametersTable formId={data?.id ?? ''} projectId={projectId} />
       <FormButtons marginTop={2}>
-        <ButtonLink to={'/projects/project/$projectId/forms'} params={{ projectId }}>
-          {t('ACTION.CANCEL')}
-        </ButtonLink>
+        <ButtonLink to={'..'}>{t('ACTION.CANCEL')}</ButtonLink>
         <Button
           type={'submit'}
           disabled={!isValid && isSubmitted}

@@ -2,10 +2,9 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ContentNodeType } from '~/api/utils/api-requests';
-import { DropdownMenuItem } from '~/components/tree/nav-tree/nav-tree.type';
+import { DropdownMenuItem } from '~/components/trees/tree.type';
+import { useContentNodeActions } from '~/use-cases/content-node-actions.hook';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
-
-import { useNodeTreeActions } from './use-node-tree-actions.hook';
 
 export const useDropdownMenuItems = () => {
   const { t } = useTranslation();
@@ -15,11 +14,11 @@ export const useDropdownMenuItems = () => {
     handleDeleteNode,
     handleEditNode,
     handleEditStructure,
-  } = useNodeTreeActions();
+  } = useContentNodeActions();
 
   const declinatedTranslations = useDeclinatedTranslationsContext();
 
-  const menuItems: DropdownMenuItem[] = useMemo(
+  const menuItems = useMemo<DropdownMenuItem<ContentNodeType>[]>(
     () => [
       {
         label: t('ACTION.EDIT'),
@@ -36,21 +35,18 @@ export const useDropdownMenuItems = () => {
         entityType: ContentNodeType.Directory,
       },
       {
-        label: t('ACTION.EDIT', {
-          type: declinatedTranslations.STRUCTURE.ACCUSATIVE.toLowerCase(),
-        }),
+        label: t('ENTITY.STRUCTURE'),
         onClick: handleEditStructure,
         entityType: ContentNodeType.Table,
       },
       {
         label: t('ACTION.DELETE'),
-        onClick: handleDeleteNode,
+        onClick: node => void handleDeleteNode(node),
         color: 'error',
       },
     ],
     [
       declinatedTranslations.DIRECTORY.ACCUSATIVE,
-      declinatedTranslations.STRUCTURE.ACCUSATIVE,
       declinatedTranslations.TABLE.ACCUSATIVE,
       handleAddCatalog,
       handleAddTable,

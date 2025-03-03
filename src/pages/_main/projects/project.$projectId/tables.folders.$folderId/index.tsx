@@ -4,9 +4,9 @@ import { useQuery } from '@tanstack/react-query';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { getContentNodesByParentOptions } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
+import { getContentNodesByParentQueryOptions } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
 import { getProjectContentQueryOptions } from '~/api/queries/project-content/get-project-content.query';
-import { isFolderType, renderItemIcon } from '~/components/tree/nav-tree/nav-tree.utils';
+import { isFolderType, renderItemIcon } from '~/components/trees/tree.utils';
 
 export const Route = createFileRoute(
   '/_main/projects/project/$projectId/tables/folders/$folderId/',
@@ -33,7 +33,9 @@ const NodeLink = styled(Link)(({ theme }) => ({
 function FoldersPage() {
   const { t } = useTranslation();
   const { projectId, folderId } = Route.useParams();
-  const { data: nodes, isLoading } = useQuery(getContentNodesByParentOptions(projectId, folderId));
+  const { data: nodes, isLoading } = useQuery(
+    getContentNodesByParentQueryOptions(projectId, folderId),
+  );
 
   if (nodes?.length === 0) {
     return (

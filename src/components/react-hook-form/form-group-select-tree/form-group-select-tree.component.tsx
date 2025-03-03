@@ -1,7 +1,7 @@
 import { FieldPath, FieldValues, UseControllerProps, useController } from 'react-hook-form';
 
-import { GroupSelectTree } from '~/components/inputs/group-select-tree/group-select-tree.component';
 import { ValidationError } from '~/components/react-hook-form/_validation-error/validation-error.component';
+import { GroupSelectTree } from '~/components/trees/app-group-select-tree/app-group-select-tree.component';
 
 interface FormGroupSelectTreeProps<
   TFieldValues extends FieldValues = FieldValues,
