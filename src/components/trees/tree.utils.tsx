@@ -6,11 +6,12 @@ import { ContentNodeType } from '~/api/utils/api-requests';
 export const isFolderType = (itemType: ContentNodeType | undefined) =>
   itemType === ContentNodeType.Directory;
 
+const ICON_PROPS: SvgIconProps = { color: 'primary', sx: { marginRight: 0.5 } };
+
 export const renderItemIcon = (itemType: ContentNodeType | undefined) => {
-  const iconProps: SvgIconProps = { color: 'primary', sx: { marginRight: 0.5 } };
   if (isFolderType(itemType)) {
-    return <Folder {...iconProps} />;
+    return <Folder {...ICON_PROPS} />;
   } else {
-    return <TableChart {...iconProps} />;
+    return <TableChart {...ICON_PROPS} />;
   }
 };

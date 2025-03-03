@@ -4,8 +4,8 @@ import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { useState } from 'react';
 
 import { CreateNodeContentMenu } from '~/components/create-menu/create-node-content-menu.component';
-import { NodesTreeList } from '~/components/tree/nodes-tree/nodes-tree-list.component';
-import { useNodeTreeActions } from '~/components/tree/use-node-tree-actions.hook';
+import { ProjectContentTree } from '~/components/trees/project-content-tree/project-content-tree.component';
+import { useContentNodeActions } from '~/use-cases/content-node-actions.hook';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId/tables')({
   staticData: {
@@ -16,7 +16,7 @@ export const Route = createFileRoute('/_main/projects/project/$projectId/tables'
 });
 
 function TablesLayout() {
-  const { handleAddCatalog, handleAddTable } = useNodeTreeActions();
+  const { handleAddCatalog, handleAddTable } = useContentNodeActions();
   const { drawerWidth } = useGetDrawerThemeWidth();
   const [isDrawerOpened, setIsDrawerOpened] = useState(true);
 
@@ -33,7 +33,7 @@ function TablesLayout() {
           <CreateNodeContentMenu addCatalog={handleAddCatalog} addTable={handleAddTable} />
         </Box>
         <Box marginTop={1} marginRight={2} sx={{ overflowY: 'auto', scrollbarWidth: 'thin' }}>
-          <NodesTreeList />
+          <ProjectContentTree />
         </Box>
       </PersistentDrawer>
       <Box
@@ -44,7 +44,6 @@ function TablesLayout() {
         sx={{ transition: 'margin-left 0.3s ease' }}
       >
         <Outlet />
-        {/* TEMP until BE-143 {!treeData.length ? <NotFoundNodes action={handleAddCatalog} /> : <Outlet />} */}
       </Box>
     </Box>
   );

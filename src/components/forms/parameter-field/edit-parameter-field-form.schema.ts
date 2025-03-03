@@ -19,7 +19,7 @@ export const getSchema = (
       .default('')
       .matches(latinAndNumbersRe, t('ERROR.LATIN_AND_NUMBERS_ONLY'))
       .notOneOf(forbiddenKeys.filter(key => key !== data.key)),
-    type: y.mixed<DataType>().oneOf(Object.values(DataType)).default(DataType.String).required(),
+    type: y.mixed<DataType>().oneOf(Object.values(DataType)).default(DataType.String),
     defaultValue: getDefaultValueSchema(data.type, data.key),
     isRequired: y.boolean().default(false),
   });

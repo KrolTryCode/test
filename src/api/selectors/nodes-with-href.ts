@@ -1,5 +1,5 @@
 import { ContentNodeType, ContentSubtree, ProjectNode } from '~/api/utils/api-requests';
-import { NavTreeItemData } from '~/components/tree/nav-tree/nav-tree.type';
+import { NavTreeItemData } from '~/components/trees/tree.type';
 
 type NodeType = ContentSubtree | ProjectNode;
 

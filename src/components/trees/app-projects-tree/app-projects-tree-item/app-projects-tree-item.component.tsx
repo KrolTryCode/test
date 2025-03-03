@@ -2,10 +2,11 @@ import { ChevronRight, KeyboardArrowDown } from '@mui/icons-material';
 import { Stack } from '@mui/material';
 import { Button, Preloader } from '@pspod/ui-components';
 import { useQuery } from '@tanstack/react-query';
-import { FC, useState } from 'react';
+import { createLink } from '@tanstack/react-router';
+import { FC, useMemo, useState } from 'react';
 
 import { getProjectNodesByParentQueryOptions } from '~/api/queries/projects/get-project-nodes-by-parent.query';
-import { ProjectNode } from '~/api/utils/api-requests';
+import { ProjectNode, ProjectNodeType } from '~/api/utils/api-requests';
 import { NodeLogo } from '~/components/node-logo/node-logo.component';
 
 import {
@@ -14,7 +15,7 @@ import {
   _ProjectTreeNodeLink,
   _ToggleButtonContainer,
   _Description,
-} from './project-tree-item.styled';
+} from './app-projects-tree-item.styled';
 
 interface ProjectTreeItemProps {
   projectTreeNode: ProjectNode;
@@ -28,6 +29,19 @@ export const ProjectTreeItem: FC<ProjectTreeItemProps> = ({ projectTreeNode }) =
       enabled: projectTreeNode.hasChildren && isOpened,
     }),
   );
+
+  const treeNodeLink = useMemo(() => {
+    const Link = createLink(_ProjectTreeNodeLink);
+    return projectTreeNode.type === ProjectNodeType.Group ? (
+      <Link to={'/projects/group/$groupId'} params={{ groupId: projectTreeNode.id }}>
+        {projectTreeNode.name}
+      </Link>
+    ) : (
+      <Link to={'/projects/project/$projectId'} params={{ projectId: projectTreeNode.id }}>
+        {projectTreeNode.name}
+      </Link>
+    );
+  }, [projectTreeNode]);
 
   return (
     <_ProjectTreeItemContainer>
@@ -49,15 +63,12 @@ export const ProjectTreeItem: FC<ProjectTreeItemProps> = ({ projectTreeNode }) =
             nodeName={projectTreeNode.name}
             nodeType={projectTreeNode.type}
             size={'small'}
+            showTypeBadge
           />
         </_IconContainer>
 
         <Stack>
-          <_ProjectTreeNodeLink
-            to={`/projects/${projectTreeNode.type.toLowerCase()}/${projectTreeNode.id}`}
-          >
-            {projectTreeNode.name}
-          </_ProjectTreeNodeLink>
+          {treeNodeLink}
           <_Description
             variant={'body1'}
             hidden={!projectTreeNode.description}

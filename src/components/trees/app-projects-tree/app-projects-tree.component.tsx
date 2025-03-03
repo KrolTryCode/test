@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next';
 
 import { getProjectNodesByParentQueryOptions } from '~/api/queries/projects/get-project-nodes-by-parent.query';
 
-import { _ProjectsTreeContainer } from './project-list.style';
-import { ProjectTreeItem } from './project-tree-item/project-tree-item.component';
+import { ProjectTreeItem } from './app-projects-tree-item/app-projects-tree-item.component';
+import { _ProjectsTreeContainer } from './app-projects-tree.styled';
 
 export const ProjectList: FC = () => {
   const { groupId } = useParams({ strict: false });

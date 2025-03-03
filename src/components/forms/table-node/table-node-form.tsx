@@ -4,11 +4,11 @@ import { useQuery } from '@tanstack/react-query';
 import { FC, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { getContentNodesByParentOptions } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
+import { getContentNodesByParentQueryOptions } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
 import { ContentNodeType, CreateContentNodeRequest } from '~/api/utils/api-requests';
 import { getSchema } from '~/components/forms/table-node/table-node-form.schema';
 import { FormInputText, FormSelect } from '~/components/react-hook-form';
-import { FormSearchNodeTree } from '~/components/react-hook-form/form-search-tree/form-search-node-tree.component';
+import { FormSelectContentNode } from '~/components/react-hook-form/form-search-content-node/form-search-node-tree.component';
 import { useCustomTranslations } from '~/utils/hooks/use-custom-translations';
 
 export interface TableNodeFormProps {
@@ -32,7 +32,7 @@ export const TableNodeForm: FC<TableNodeFormProps> = ({
   const [selectedItem, setSelectedItem] = useState(currentNodeId);
 
   const { data: siblingNames = [], isLoading } = useQuery(
-    getContentNodesByParentOptions(projectId, selectedItem, {
+    getContentNodesByParentQueryOptions(projectId, selectedItem, {
       select: data => data.map(node => node.name),
     }),
   );
@@ -63,9 +63,18 @@ export const TableNodeForm: FC<TableNodeFormProps> = ({
 
       {!isEditing && (
         <FormItem label={t('COMMON.PARENT')}>
-          <FormSearchNodeTree
-            onSelect={setSelectedItem}
+          <FormSelectContentNode
             controllerProps={{ ...register('parentContentNodeId'), control }}
+            projectId={projectId}
+            onChange={setSelectedItem}
+            showRoot
+            /*
+              TODO: pass path to selected node (https://tracker.yandex.ru/BE-220)
+              example src/components/trees/app-group-select-tree
+            */
+            pathToSelected={[]}
+            canSelectItem={({ type }) => type === ContentNodeType.Directory}
+            isMultiple={false}
           />
         </FormItem>
       )}

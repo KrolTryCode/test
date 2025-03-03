@@ -1,15 +1,22 @@
 import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from '@tanstack/react-router';
-import { BaseSyntheticEvent, FC, useMemo } from 'react';
+import { BaseSyntheticEvent, FC, useCallback, useMemo } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { getFormParametersQueryOptions } from '~/api/queries/forms/parameters/get-parameters.query';
 import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { sortParametersByIndex } from '~/api/selectors/sort-parameters-by-index';
-import { DataType, FullTaskInfo, ParameterField, TaskState } from '~/api/utils/api-requests';
+import {
+  ContentNodeType,
+  DataType,
+  FullTaskInfo,
+  ParameterField,
+  TaskState,
+} from '~/api/utils/api-requests';
 import { FormInputNumeric, FormInputText, FormSelect } from '~/components/react-hook-form';
+import { FormSelectContentNode } from '~/components/react-hook-form/form-search-content-node/form-search-node-tree.component';
 
 interface TaskParametersFormProps {
   formId: string;
@@ -63,44 +70,48 @@ export const TaskParametersForm: FC<TaskParametersFormProps> = ({
     formState: { isLoading },
   } = useForm({ mode: 'onBlur', reValidateMode: 'onBlur', values: defaultValues });
 
-  const renderParameter = (parameter: ParameterField) => {
-    let component: JSX.Element;
-    switch (parameter.type) {
-      case DataType.Uuid: {
-        if (parameter.key === 'solver') {
-          component = (
-            <FormSelect items={solvers} controllerProps={{ ...register(parameter.key), control }} />
-          );
-        } else {
-          component = (
-            <FormSelect items={[]} controllerProps={{ ...register(parameter.key), control }} />
-          );
-        }
-        break;
-      }
-      case DataType.Timestamp: {
-        component = <FormInputNumeric controllerProps={{ ...register(parameter.key), control }} />;
-        break;
+  const renderParameter = useCallback(
+    (parameter: ParameterField) => {
+      if (parameter.key === 'solver') {
+        return (
+          <FormSelect items={solvers} controllerProps={{ ...register(parameter.key), control }} />
+        );
       }
 
-      case DataType.Boolean:
-      case DataType.Date:
-      case DataType.Float:
-      case DataType.LineString:
-      case DataType.Int:
-      case DataType.Point:
-      case DataType.Polygon:
-      case DataType.String:
-      default: {
-        component = <FormInputText controllerProps={{ ...register(parameter.key), control }} />;
+      if (parameter.key === 'contents') {
+        return (
+          <FormSelectContentNode
+            isMultiple={true}
+            /*
+              TODO: pass path to selected node (https://tracker.yandex.ru/BE-220)
+              example src/components/trees/app-group-select-tree
+            */
+            pathToSelected={[]}
+            controllerProps={{ ...register(parameter.key), control }}
+            projectId={projectId}
+            canSelectItem={({ type }) => type === ContentNodeType.Table}
+          />
+        );
       }
-    }
-    return (
-      <FormItem key={parameter.key} label={parameter.name} isRequired={parameter.isRequired}>
-        {component}
-      </FormItem>
-    );
-  };
+      switch (parameter.type) {
+        case DataType.Timestamp:
+        case DataType.Int:
+        case DataType.Float:
+          return <FormInputNumeric controllerProps={{ ...register(parameter.key), control }} />;
+
+        case DataType.Uuid:
+        case DataType.Boolean:
+        case DataType.Date:
+        case DataType.LineString:
+        case DataType.Point:
+        case DataType.Polygon:
+        case DataType.String:
+        default:
+          return <FormInputText controllerProps={{ ...register(parameter.key), control }} />;
+      }
+    },
+    [control, projectId, register, solvers],
+  );
 
   const onSubmit = (data: FieldValues, event?: BaseSyntheticEvent) => {
     const submitter = (event?.nativeEvent as SubmitEvent).submitter as HTMLButtonElement;
@@ -135,7 +146,11 @@ export const TaskParametersForm: FC<TaskParametersFormProps> = ({
       onSubmit={handleSubmit(onSubmit)}
       isLoading={isParametersLoading || isSolversLoading}
     >
-      {parameters?.map(parameter => renderParameter(parameter))}
+      {parameters?.map(parameter => (
+        <FormItem key={parameter.key} label={parameter.name} isRequired={parameter.isRequired}>
+          {renderParameter(parameter)}
+        </FormItem>
+      ))}
       <FormButtons>
         {createdTaskInfo ? (
           <Button onClick={onGoToTasksList} variant={'outlined'} color={'primary'}>

@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { projectNodeQueryOptions } from '~/api/queries/projects/get-project-node.query';
 import { GroupHeader } from '~/components/node-header/group-header.component';
-import { ProjectList } from '~/components/project-list/project-list.component';
+import { ProjectList } from '~/components/trees/app-projects-tree/app-projects-tree.component';
 
 export const Route = createFileRoute('/_main/projects/group/$groupId/')({
   component: GroupPage,

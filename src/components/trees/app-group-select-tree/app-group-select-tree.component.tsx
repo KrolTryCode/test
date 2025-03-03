@@ -3,10 +3,11 @@ import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { getProjectNodesByParentQueryOptions } from '~/api/queries/projects/get-project-nodes-by-parent.query';
+import { getParentsQueryOptions } from '~/api/queries/projects/get-projects-parents.query';
 import { ProjectNodeType } from '~/api/utils/api-requests';
 
-import { GroupSelectTreeItem } from './group-select-tree-item.component';
-import { _GroupSelectContainer } from './group-select-tree.styled';
+import { GroupSelectTreeItem } from './app-group-select-tree-item.component';
+import { _GroupSelectContainer } from './app-group-select-tree.styled';
 
 export interface GroupSelectTreeProps {
   value?: string;
@@ -24,6 +25,15 @@ export const GroupSelectTree: FC<GroupSelectTreeProps> = ({ value, onChange = ()
     }),
   );
 
+  const { data: pathToSelectedId = [] } = useQuery(
+    getParentsQueryOptions(value ?? '', {
+      enabled: !!value,
+      select(data) {
+        return data.map(({ id }) => id);
+      },
+    }),
+  );
+
   return (
     <_GroupSelectContainer>
       <GroupSelectTreeItem
@@ -32,6 +42,7 @@ export const GroupSelectTree: FC<GroupSelectTreeProps> = ({ value, onChange = ()
         id={''}
         onSelect={onChange}
         selectedId={value}
+        pathToSelectedId={pathToSelectedId}
       />
       {groups.map(({ id, name, hasChildren }) => (
         <GroupSelectTreeItem
@@ -41,6 +52,7 @@ export const GroupSelectTree: FC<GroupSelectTreeProps> = ({ value, onChange = ()
           id={id}
           onSelect={onChange}
           selectedId={value}
+          pathToSelectedId={pathToSelectedId}
         />
       ))}
     </_GroupSelectContainer>
