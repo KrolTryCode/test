@@ -7,11 +7,11 @@ import { formsQueries } from './queries';
 
 export const useArchiveFormMutation = (
   projectId: string,
-  options?: UseCustomMutationOptions<object, unknown, string>,
+  options?: UseCustomMutationOptions<void, unknown, string>,
 ) => {
   const queryClient = useQueryClient();
 
-  return useMutation<object, unknown, string>({
+  return useMutation<void, unknown, string>({
     mutationFn: formId =>
       ApiClientSecured.projectParameterFormV1Controller.deleteProjectParameterForm(
         projectId,

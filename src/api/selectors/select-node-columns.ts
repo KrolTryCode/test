@@ -7,6 +7,6 @@ export interface TableColumnExtended extends TableColumn {
 export const selectNodeColumns = (data: Table): TableColumnExtended[] => {
   return data.columns.map(item => ({
     ...item,
-    __reorder__: item.name,
+    __reorder__: item.displayName,
   }));
 };

@@ -43,7 +43,7 @@ export const TableDataForm: FC<TableDataFormProps> = ({
     values: data,
   });
 
-  const renderComponent = ({ type, id, name, nullable }: TableColumn): ReactNode => {
+  const renderComponent = ({ type, id, displayName, nullable }: TableColumn): ReactNode => {
     let component = <></>;
     switch (type) {
       case DataType.Boolean: {
@@ -90,7 +90,7 @@ export const TableDataForm: FC<TableDataFormProps> = ({
       }
     }
     return (
-      <FormItem key={id} label={name} isRequired={!nullable}>
+      <FormItem key={id} label={displayName} isRequired={!nullable}>
         {component}
       </FormItem>
     );

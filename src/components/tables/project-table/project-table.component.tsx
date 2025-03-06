@@ -58,7 +58,7 @@ export const ProjectTable: FC<ProjectTableProps> = ({ projectId, tableId }) => {
         const type = getGridColumnType(col.type);
         return {
           field: col.id,
-          headerName: col.name,
+          headerName: col.displayName,
           type,
           hideable: true,
         };

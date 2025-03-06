@@ -1,18 +1,15 @@
 import { t } from 'i18next';
 import { describe, expect, it } from 'vitest';
 
-import { TableColumn, DataType } from '~/api/utils/api-requests';
+import { DataType } from '~/api/utils/api-requests';
 
-import { getSchema } from './table-column-form.schema';
+import { getSchema, ITableColumnForm } from './table-column-form.schema';
 
-const correctFormData: TableColumn = {
-  id: '1',
-  tableId: '1',
+const correctFormData: ITableColumnForm = {
   name: 'Test',
   type: DataType.String,
-  nullable: false,
+  required: false,
   unique: false,
-  parentLinks: [],
 };
 
 const schema = getSchema(['Столбец'], t);

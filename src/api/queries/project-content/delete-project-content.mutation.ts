@@ -5,11 +5,11 @@ import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
 
 export const useDeleteProjectContentMutation = (
-  options?: UseCustomMutationOptions<object, Error, string>,
+  options?: UseCustomMutationOptions<void, Error, string>,
 ) => {
   const queryClient = useQueryClient();
 
-  return useMutation<object, Error, string>({
+  return useMutation<void, Error, string>({
     mutationFn: nodeId => ApiClientSecured.projectContentV1Controller.deleteNode(nodeId),
     ...options,
     onSuccess(...args) {

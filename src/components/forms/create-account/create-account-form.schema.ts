@@ -2,8 +2,7 @@ import * as y from 'yup';
 
 import { UserData } from '~/api/utils/api-requests';
 
-//!!! Omit is hotfix
-export type ICreateAccountForm = Omit<UserData, 'source' | 'id'>;
+export type ICreateAccountForm = Pick<UserData, 'firstName' | 'lastName' | 'email'>;
 
 export const schema: y.ObjectSchema<ICreateAccountForm> = y.object().shape({
   firstName: y.string().required().default(''),

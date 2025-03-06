@@ -7,10 +7,10 @@ import { tableQueries } from '../queries';
 
 export const useDeleteColumnMutation = (
   nodeId: string,
-  options?: UseCustomMutationOptions<object, Error, string>,
+  options?: UseCustomMutationOptions<void, Error, string>,
 ) => {
   const queryClient = useQueryClient();
-  return useMutation<object, Error, string>({
+  return useMutation<void, Error, string>({
     mutationFn: columnId => ApiClientSecured.columnV1Controller.deleteColumn(nodeId, columnId),
     ...options,
     onSuccess(...args) {
