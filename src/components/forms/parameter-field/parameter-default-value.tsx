@@ -2,14 +2,12 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from '@tanstack/react-router';
 import { FC } from 'react';
 import { UseFormRegister, Control } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import * as y from 'yup';
 
 import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { ContentNodeType, DataType } from '~/api/utils/api-requests';
 import { ParameterFieldForm } from '~/components/forms/parameter-field/parameter-field.type';
 import {
-  FormCheckbox,
   FormDateTimePicker,
   FormInputNumeric,
   FormInputText,
@@ -30,7 +28,6 @@ export const DefaultValueComponent: FC<DefaultValueComponentProps> = ({
 }) => {
   const controllerProps = { ...register('defaultValue'), control };
   const { projectId } = useParams({ strict: false });
-  const { t } = useTranslation();
 
   const { data: solvers = [] } = useQuery(
     getSolversQueryOptions(projectId ?? '', {
@@ -62,7 +59,7 @@ export const DefaultValueComponent: FC<DefaultValueComponentProps> = ({
   }
   switch (type) {
     case DataType.Boolean: {
-      return <FormCheckbox label={t('COMMON.DEFAULT_VALUE')} controllerProps={controllerProps} />;
+      return <FormSelect items={['false', 'true']} controllerProps={controllerProps} />;
     }
     case DataType.Date: {
       return <FormDateTimePicker type={'date'} controllerProps={controllerProps} />;
@@ -94,7 +91,7 @@ export const getDefaultValueSchema = (type: DataType, key?: string) => {
   }
   switch (type) {
     case DataType.Boolean:
-      return y.boolean().default(false);
+      return y.string().oneOf(['true', 'false']).allowEmptyString();
     case DataType.Timestamp:
     case DataType.Date:
       return y.date();

@@ -53,31 +53,33 @@ export const useNotificationsTable = () => {
         disableColumnMenu: true,
         headerName: t('COMMON.TEXT'),
         flex: 1,
-        renderCell({ row: { isChecked, message, id = '' } }) {
-          return (
-            <Box
-              flex={1}
-              display={'flex'}
-              alignItems={'center'}
-              fontWeight={isChecked ? 'normal' : 'bold'}
-              sx={{ '&:hover .readNotificationIcon': { visibility: 'visible' } }}
-            >
-              <IconButton
-                size={'small'}
-                color={'primary'}
-                className={'readNotificationIcon'}
-                onClick={() => handleMarkRead(!isChecked, [id])}
-                sx={isChecked ? { visibility: 'hidden' } : {}}
+        renderCell({ row: { isChecked, message, id = '' }, rowNode }) {
+          if (rowNode.type !== 'group') {
+            return (
+              <Box
+                flex={1}
+                display={'flex'}
+                alignItems={'center'}
+                fontWeight={isChecked ? 'normal' : 'bold'}
+                sx={{ '&:hover .readNotificationIcon': { visibility: 'visible' } }}
               >
-                {isChecked ? (
-                  <PanoramaFishEye sx={{ fontSize: 12 }} />
-                ) : (
-                  <Circle sx={{ fontSize: 12 }} />
-                )}
-              </IconButton>
-              <Box>{message}</Box>
-            </Box>
-          );
+                <IconButton
+                  size={'small'}
+                  color={'primary'}
+                  className={'readNotificationIcon'}
+                  onClick={() => handleMarkRead(!isChecked, [id])}
+                  sx={isChecked ? { visibility: 'hidden' } : {}}
+                >
+                  {isChecked ? (
+                    <PanoramaFishEye sx={{ fontSize: 12 }} />
+                  ) : (
+                    <Circle sx={{ fontSize: 12 }} />
+                  )}
+                </IconButton>
+                <Box>{message}</Box>
+              </Box>
+            );
+          }
         },
       },
       {

@@ -75,10 +75,21 @@ export const ParticipantsTable: FC<ParticipantsTableProps> = ({ nodeId }) => {
         flex: 1,
       },
       {
-        field: 'nodeName',
+        field: 'direct',
         headerName: t('COMMON.SOURCE'),
         flex: 1,
-        renderCell({ row: user }: GridRenderCellParams<FullProjectNodeMemberInfo>) {
+        groupingValueGetter: (direct, user) => {
+          return String(direct ? t('ENTITY.DIRECT_PARTICIPANT') : user.nodeName);
+        },
+        renderCell({
+          row: user,
+          formattedValue,
+          rowNode,
+        }: GridRenderCellParams<FullProjectNodeMemberInfo>) {
+          if (rowNode.type === 'group' && String(formattedValue).endsWith(')')) {
+            return String(formattedValue);
+          }
+
           return user.direct ? (
             <Typography>{t('ENTITY.DIRECT_PARTICIPANT')}</Typography>
           ) : (

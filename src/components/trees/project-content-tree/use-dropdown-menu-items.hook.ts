@@ -6,7 +6,7 @@ import { DropdownMenuItem } from '~/components/trees/tree.type';
 import { useContentNodeActions } from '~/use-cases/content-node-actions.hook';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 
-export const useDropdownMenuItems = () => {
+export const useDropdownMenuItems = (parentId = '') => {
   const { t } = useTranslation();
   const {
     handleAddCatalog,
@@ -14,7 +14,7 @@ export const useDropdownMenuItems = () => {
     handleDeleteNode,
     handleEditNode,
     handleEditStructure,
-  } = useContentNodeActions();
+  } = useContentNodeActions(parentId);
 
   const declinatedTranslations = useDeclinatedTranslationsContext();
 

@@ -15,6 +15,7 @@ import {
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { TableColumnExtended } from '~/api/selectors/select-node-columns';
+import { DataType } from '~/api/utils/api-requests';
 import { DataGrid } from '~/components/datagrid/datagrid.component';
 import { useGetEditRowActions } from '~/components/datagrid/use-get-edit-row-actions.hook';
 import { reorderRows } from '~/utils/datagrid/reorder-rows';
@@ -28,7 +29,7 @@ interface ProjectTableStructureProps {
 }
 
 export const ProjectTableStructure: FC<ProjectTableStructureProps> = ({ tableId }) => {
-  const { t, translateColumnType } = useCustomTranslations();
+  const { t, translateColumnType, getColumnTypeValueOptions } = useCustomTranslations();
 
   const apiRef = useGridApiRef();
   const [paging, setGridPaging] = useState<GridPagingParams>();
@@ -108,7 +109,9 @@ export const ProjectTableStructure: FC<ProjectTableStructureProps> = ({ tableId 
         field: 'type',
         headerName: t('STRUCTURE.TYPE'),
         flex: 3,
-        valueFormatter: translateColumnType,
+        type: 'singleSelect',
+        valueOptions: () => getColumnTypeValueOptions(Object.values(DataType)),
+        groupingValueGetter: value => translateColumnType(value),
       },
       // TODO API, определить формат данных
       // {
@@ -130,6 +133,7 @@ export const ProjectTableStructure: FC<ProjectTableStructureProps> = ({ tableId 
         flex: 1,
         type: 'boolean',
         valueGetter: v => !v,
+        groupingValueGetter: v => !v,
       },
       {
         field: 'actions',
@@ -138,7 +142,14 @@ export const ProjectTableStructure: FC<ProjectTableStructureProps> = ({ tableId 
         getActions: getActions(handleDropColumn),
       },
     ],
-    [getActions, handleDropColumn, t, translateColumnType, validateColumnName],
+    [
+      t,
+      getActions,
+      getColumnTypeValueOptions,
+      handleDropColumn,
+      translateColumnType,
+      validateColumnName,
+    ],
   );
 
   const onRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {

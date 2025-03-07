@@ -98,9 +98,14 @@ export const TaskParametersForm: FC<TaskParametersFormProps> = ({
         case DataType.Int:
         case DataType.Float:
           return <FormInputNumeric controllerProps={{ ...register(parameter.key), control }} />;
-
-        case DataType.Uuid:
         case DataType.Boolean:
+          return (
+            <FormSelect
+              items={['false', 'true']}
+              controllerProps={{ ...register(parameter.key), control }}
+            />
+          );
+        case DataType.Uuid:
         case DataType.Date:
         case DataType.LineString:
         case DataType.Point:

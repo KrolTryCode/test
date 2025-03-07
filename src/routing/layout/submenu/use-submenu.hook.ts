@@ -3,14 +3,14 @@ import { useLocation, useRouter, Route } from '@tanstack/react-router';
 import { FileRoutesById } from '~/routing/routeTree.gen';
 
 type MainRouteChildren = Required<FileRoutesById['/_main']>['children'];
-type MainRoueChild = MainRouteChildren[keyof MainRouteChildren];
+type MainRouteChild = MainRouteChildren[keyof MainRouteChildren];
 
 export function useSubMenu() {
   const { pathname } = useLocation();
   const router = useRouter();
 
   const secondLevelRoutes = (
-    router.routesById['/_main'].children as unknown as MainRoueChild[]
+    router.routesById['/_main'].children as unknown as MainRouteChild[]
   ).find(r => r.id.includes(pathname.split('/')[1]))?.children as Route[];
 
   if (!secondLevelRoutes?.length) {

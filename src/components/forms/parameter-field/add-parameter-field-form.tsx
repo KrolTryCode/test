@@ -74,11 +74,7 @@ export const AddParameterForm: FC<AddParameterFormProps> = ({
       <FormItem label={t('COMMON.KEY')} isRequired>
         <FormInputText controllerProps={{ ...register('key'), control }} />
       </FormItem>
-      {values.type === DataType.Boolean ? (
-        DefaultValueComp
-      ) : (
-        <FormItem label={t('COMMON.DEFAULT_VALUE')}>{DefaultValueComp}</FormItem>
-      )}
+      <FormItem label={t('COMMON.DEFAULT_VALUE')}>{DefaultValueComp}</FormItem>
       <FormCheckbox
         label={t('ERROR.REQUIRED')}
         controllerProps={{ ...register('isRequired'), control }}
