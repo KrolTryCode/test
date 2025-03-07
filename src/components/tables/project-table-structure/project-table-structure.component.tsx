@@ -54,20 +54,20 @@ export const ProjectTableStructure: FC<ProjectTableStructureProps> = ({ tableId 
 
   const changeTableColumn = useCallback(
     async (
-      { name }: TableColumnExtended,
+      { displayName }: TableColumnExtended,
       oldRow: TableColumnExtended,
     ): Promise<TableColumnExtended> => {
-      const isNameChanged = name !== oldRow.name;
+      const isNameChanged = displayName !== oldRow.displayName;
       if (!isNameChanged) {
         return oldRow;
       }
 
       try {
-        await handleEditColumn({ columnId: oldRow.id, newColumnName: name });
+        await handleEditColumn({ columnId: oldRow.id, newColumnName: displayName });
         notifySuccess(t('MESSAGE.UPDATE_SUCCESS'));
         return {
           ...oldRow,
-          name: name,
+          displayName,
         };
       } catch (e) {
         showErrorMessage(e, 'ERROR.UPDATE_FAILED');
@@ -79,7 +79,9 @@ export const ProjectTableStructure: FC<ProjectTableStructureProps> = ({ tableId 
 
   const validateColumnName = useCallback(
     (params: GridPreProcessEditCellProps<string, TableColumnExtended>) => {
-      const existingNames = items?.map(({ name }) => name).filter(name => name !== params.row.name);
+      const existingNames = items
+        ?.map(({ displayName }) => displayName)
+        .filter(name => name !== params.row.displayName);
 
       const error = existingNames?.includes(params.props.value!)
         ? t('STRUCTURE.ERROR.NOT_UNIQUE_NAME')
@@ -93,7 +95,7 @@ export const ProjectTableStructure: FC<ProjectTableStructureProps> = ({ tableId 
   const structureTableColumns: EnhancedColDef<TableColumnExtended>[] = useMemo(
     () => [
       {
-        field: 'name',
+        field: 'displayName',
         headerName: t('COMMON.TITLE'),
         flex: 3,
         editable: true,

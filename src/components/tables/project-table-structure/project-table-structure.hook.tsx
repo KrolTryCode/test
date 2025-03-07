@@ -43,7 +43,7 @@ export const useProjectTableStructure = (tableId: string) => {
       onOk: addColumn,
       title: t('STRUCTURE.ADD_COLUMN'),
       renderContent: (args: InstanceProps<CreateColumnRequest, never>) => (
-        <TableColumnForm usedNames={tableColumns.map(c => c.name)} {...args} />
+        <TableColumnForm usedNames={tableColumns.map(c => c.displayName)} {...args} />
       ),
     });
   }, [addColumn, tableColumns, t]);

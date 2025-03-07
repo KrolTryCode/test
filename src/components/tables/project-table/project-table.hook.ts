@@ -24,7 +24,7 @@ export const useProjectTable = (nodeId: string) => {
 
   const { data: metadata = [], isLoading: isMetadataLoading } = useQuery(
     getTableDataQueryOptions(nodeId, {
-      select: data => data.columns.filter(v => v.name !== 'id'),
+      select: data => data.columns.filter(v => v.displayName !== 'id'),
     }),
   );
 
@@ -70,8 +70,8 @@ export const useProjectTable = (nodeId: string) => {
   const sortedMetadataBasedOnView = useMemo(() => {
     return metadata.toSorted((a, b) => {
       return (
-        tableColumnOrder.findIndex(v => v === a.name) -
-        tableColumnOrder.findIndex(v => v === b.name)
+        tableColumnOrder.findIndex(v => v === a.displayName) -
+        tableColumnOrder.findIndex(v => v === b.displayName)
       );
     });
   }, [tableColumnOrder, metadata]);

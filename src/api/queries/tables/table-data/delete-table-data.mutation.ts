@@ -7,7 +7,7 @@ import { tableQueries } from '../queries';
 
 export const useDeleteTableDataMutation = (
   nodeId: string,
-  options?: UseCustomMutationOptions<object, unknown, string>,
+  options?: UseCustomMutationOptions<void, unknown, string>,
 ) => {
   const queryClient = useQueryClient();
 

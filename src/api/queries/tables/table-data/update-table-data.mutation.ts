@@ -11,7 +11,7 @@ export interface AddTableDataRequest extends Record<string, any> {
 
 export const useUpdateTableDataMutation = (
   nodeId: string,
-  options?: UseCustomMutationOptions<object, unknown, AddTableDataRequest>,
+  options?: UseCustomMutationOptions<void, unknown, AddTableDataRequest>,
 ) => {
   const queryClient = useQueryClient();
 
