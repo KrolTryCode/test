@@ -15,7 +15,7 @@ import { getContentNodesByParentQueryOptions } from '~/api/queries/project-conte
 import { getProjectTaskQueryOptions } from '~/api/queries/projects/tasks/get-project-task.query';
 import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { TaskState } from '~/api/utils/api-requests';
-import { ButtonLink } from '~/components/implicit-links';
+import { ButtonLink, TextLink } from '~/components/implicit-links';
 import { SolverCardPopper } from '~/components/solver-card/solver-card.component';
 import { SummaryTable, SummaryEntry } from '~/components/summary-table/summary-table.component';
 import { useTaskActions } from '~/use-cases/task-actions.hook';
@@ -61,10 +61,10 @@ function TaskPage() {
       select: data => data.find(s => s.id === taskParams?.solver),
     }),
   );
-  const { data: table } = useQuery(
+  const { data: tables } = useQuery(
     getContentNodesByParentQueryOptions(projectId, undefined, {
       enabled: !!taskParams,
-      select: data => data.find(c => c.id === taskParams?.contents),
+      select: data => data.filter(({ id }) => taskParams?.contents?.includes(id)),
     }),
   );
 
@@ -90,13 +90,24 @@ function TaskPage() {
       ),
     },
     {
-      title: t('ENTITY.TABLE'),
-      value: table?.name,
-      type: 'link',
-      to: {
-        to: '/projects/project/$projectId/tables/$tableId',
-        params: { tableId: table?.id, projectId },
-      },
+      title: t('ENTITY.TABLES'),
+      type: 'custom',
+      value: tables?.length ? (
+        <div>
+          {tables.map((table, index) => (
+            <TextLink
+              key={table.id}
+              underline={'hover'}
+              to={'/projects/project/$projectId/tables/$tableId'}
+              params={{ tableId: table.id, projectId }}
+              marginRight={0.5}
+            >
+              {table.name}
+              {index !== tables.length - 1 ? ',' : undefined}
+            </TextLink>
+          ))}
+        </div>
+      ) : null,
     },
     {
       title: t('FORM.MODELLING_TIME'),
