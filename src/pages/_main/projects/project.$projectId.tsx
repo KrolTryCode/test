@@ -1,17 +1,12 @@
 import { TabList, TabContext } from '@mui/lab';
 import { Box, Stack, Typography } from '@mui/material';
-import {
-  createFileRoute,
-  Outlet,
-  useNavigate,
-  useChildMatches,
-  redirect,
-} from '@tanstack/react-router';
-import { useEffect, useMemo } from 'react';
+import { createFileRoute, Outlet, useChildMatches, redirect } from '@tanstack/react-router';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { TabLink } from '~/components/implicit-links';
 import { ProjectHeader } from '~/components/node-header/project-header.component';
+import { FileRoutesById } from '~/routing/routeTree.gen';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId')({
   component: ProjectTabsLayout,
@@ -26,24 +21,22 @@ export const Route = createFileRoute('/_main/projects/project/$projectId')({
   },
 });
 
-const PROJECT_TABS = {
-  tables: 'NAVIGATION.TABLES',
-  solvers: 'NAVIGATION.SOLVERS',
-  forms: 'NAVIGATION.FORMS',
-  tasks: 'ENTITY.TASKS',
-  reports: 'NAVIGATION.REPORTS',
-  settings: 'NAVIGATION.SETTINGS',
-  participants: 'NAVIGATION.PARTICIPANTS',
-  events: 'NAVIGATION.EVENTS',
-};
+type ProjectRouteChildren = Required<
+  FileRoutesById['/_main/projects/project/$projectId']
+>['children'];
+type ProjectRouteChild = ProjectRouteChildren[keyof ProjectRouteChildren];
 
 function ProjectTabsLayout() {
   const { t } = useTranslation();
 
   const { projectId } = Route.useParams();
-  const navigate = useNavigate();
+  const navigate = Route.useNavigate();
 
   const childMatches = useChildMatches();
+
+  const tabs = (Route.children as ProjectRouteChild[]).sort(
+    (a, b) => (a.options.staticData?.order ?? -1) - (b.options.staticData?.order ?? -1),
+  );
 
   useEffect(() => {
     // временный фикс поломки
@@ -55,20 +48,18 @@ function ProjectTabsLayout() {
     }
   }, [childMatches.length, navigate, projectId]);
 
-  const tabValue = useMemo(() => getTab(childMatches[0]?.pathname), [childMatches]);
-
   return (
     <Stack flexDirection={'column'} height={'100%'}>
       <ProjectHeader projectId={projectId} />
-      <TabContext value={tabValue ?? 'tables'}>
+      <TabContext value={childMatches?.[0]?.fullPath ?? tabs[0].fullPath}>
         <TabList variant={'scrollable'} scrollButtons={false} visibleScrollbar>
-          {Object.entries(PROJECT_TABS).map(([key, label]) => (
+          {tabs.map((route: ProjectRouteChild) => (
             <TabLink
-              key={key}
-              to={`/projects/project/$projectId/${key}/`}
+              key={route.fullPath}
+              to={route.fullPath}
               params={{ projectId }}
-              value={key}
-              label={renderLabel(t(label))}
+              value={route.fullPath}
+              label={renderLabel(t(route.options.staticData!.title!))}
             />
           ))}
         </TabList>
@@ -78,14 +69,6 @@ function ProjectTabsLayout() {
       </TabContext>
     </Stack>
   );
-}
-
-function getTab(currentPath?: string) {
-  let tab = currentPath?.split('/').at(-1);
-  if (!tab || !Object.keys(PROJECT_TABS).includes(tab)) {
-    tab = 'tables';
-  }
-  return tab;
 }
 
 function renderLabel(text: string) {

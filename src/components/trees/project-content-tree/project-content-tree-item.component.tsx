@@ -24,16 +24,18 @@ import {
 
 interface ProjectContentTreeItemProps {
   projectId: string;
+  parentId?: string;
   contentTreeNode: ContentNode;
 }
 
 export const ProjectContentTreeItem: FC<ProjectContentTreeItemProps> = ({
   projectId,
+  parentId,
   contentTreeNode,
 }) => {
   const [isOpened, setIsOpened] = useState(false);
 
-  const { menuItems } = useDropdownMenuItems();
+  const { menuItems } = useDropdownMenuItems(parentId);
 
   const { data: childNodes = [], isLoading } = useQuery(
     getContentNodesByParentQueryOptions(projectId, contentTreeNode.id, {
@@ -89,7 +91,12 @@ export const ProjectContentTreeItem: FC<ProjectContentTreeItemProps> = ({
             <Preloader />
           ) : (
             childNodes.map(node => (
-              <ProjectContentTreeItem projectId={projectId} contentTreeNode={node} key={node.id} />
+              <ProjectContentTreeItem
+                projectId={projectId}
+                parentId={contentTreeNode.id}
+                contentTreeNode={node}
+                key={node.id}
+              />
             ))
           )}
         </Stack>

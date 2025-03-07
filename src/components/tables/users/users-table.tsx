@@ -54,15 +54,17 @@ export const UsersTable: FC = () => {
         groupable: false,
         aggregable: false,
         align: 'center',
-        renderCell({ row: user }: GridRenderCellParams<User>) {
-          return (
-            <UserAvatar
-              userId={user.id!}
-              firstName={user.firstName}
-              lastName={user.lastName}
-              surName={user.surName}
-            />
-          );
+        renderCell({ row: user, rowNode }: GridRenderCellParams<User>) {
+          if (rowNode.type !== 'group') {
+            return (
+              <UserAvatar
+                userId={user.id!}
+                firstName={user.firstName}
+                lastName={user.lastName}
+                surName={user.surName}
+              />
+            );
+          }
         },
       },
       {

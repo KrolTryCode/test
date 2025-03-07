@@ -13,7 +13,7 @@ import { isFolderType } from '~/components/trees/tree.utils';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
 import { showErrorMessage } from '~/utils/show-error-message';
 
-export function useContentNodeActions() {
+export function useContentNodeActions(parentId = '') {
   const { t } = useTranslation();
   const { projectId = '' } = useParams({ strict: false });
   const declinatedTranslations = useDeclinatedTranslationsContext();
@@ -72,7 +72,8 @@ export function useContentNodeActions() {
       nodeModal({
         title,
         isEditing: true,
-        currentNodeId: node.id,
+        projectId: projectId,
+        currentNodeId: parentId,
         data: {
           name: node.name,
           type: node.type,
@@ -80,7 +81,7 @@ export function useContentNodeActions() {
         onSave: data => updateNode({ nodeId: node.id, name: data.name }),
       });
     },
-    [declinatedTranslations, t, updateNode],
+    [declinatedTranslations, parentId, projectId, t, updateNode],
   );
 
   const handleAddCatalog = useCallback(

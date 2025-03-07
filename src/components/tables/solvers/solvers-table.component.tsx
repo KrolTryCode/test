@@ -73,11 +73,16 @@ export const SolversTable: FC = () => {
         aggregable: false,
         filterable: false,
         groupable: false,
-        renderCell: ({ row }: GridRenderCellParams<Solver>) => (
-          <Box sx={{ width: 'calc(100% + 16px)', margin: '-8px' }}>
-            <SolverFileCard solverId={row.id!} size={'small'} />
-          </Box>
-        ),
+        type: 'custom',
+        renderCell: ({ row, rowNode }: GridRenderCellParams<Solver>) => {
+          if (rowNode.type !== 'group') {
+            return (
+              <Box sx={{ width: 'calc(100% + 16px)', margin: '-8px' }}>
+                <SolverFileCard solverId={row.id!} size={'small'} />
+              </Box>
+            );
+          }
+        },
       },
       {
         field: 'actions',

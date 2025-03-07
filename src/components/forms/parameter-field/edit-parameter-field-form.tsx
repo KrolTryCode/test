@@ -26,13 +26,7 @@ export const EditParameterForm: FC<EditParameterFormProps> = ({
 }) => {
   const { t, translateColumnType } = useCustomTranslations();
 
-  const preprocessedData = {
-    ...data,
-    defaultValue:
-      data.type === DataType.Boolean && data.defaultValue === 'false' ? false : data.defaultValue,
-  };
-
-  const schema = getSchema(preprocessedData, parameterKeys, t);
+  const schema = getSchema(data, parameterKeys, t);
 
   const {
     register,
@@ -43,7 +37,7 @@ export const EditParameterForm: FC<EditParameterFormProps> = ({
   } = useForm<ParameterFieldForm>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
-    values: preprocessedData,
+    values: data,
     resolver: yupResolver(schema),
   });
 
@@ -61,7 +55,7 @@ export const EditParameterForm: FC<EditParameterFormProps> = ({
   );
   return (
     <Form showColonAfterLabel onSubmit={handleSubmit(onSubmit)}>
-      <FormItem label={t('COMMON.TITLE')} isRequired isDisabled={preprocessedData.isDefault}>
+      <FormItem label={t('COMMON.TITLE')} isRequired isDisabled={data.isDefault}>
         <FormInputText controllerProps={{ ...register('name'), control }} />
       </FormItem>
       <FormItem label={t('COMMON.TYPE')} isRequired isDisabled>
@@ -71,15 +65,11 @@ export const EditParameterForm: FC<EditParameterFormProps> = ({
           controllerProps={{ ...register('type'), control }}
         />
       </FormItem>
-      <FormItem label={t('COMMON.KEY')} isRequired isDisabled={preprocessedData.isDefault}>
+      <FormItem label={t('COMMON.KEY')} isRequired isDisabled={data.isDefault}>
         <FormInputText controllerProps={{ ...register('key'), control }} />
       </FormItem>
-      {data.type === DataType.Boolean ? (
-        DefaultValueComp
-      ) : (
-        <FormItem label={t('COMMON.DEFAULT_VALUE')}>{DefaultValueComp}</FormItem>
-      )}{' '}
-      <FormItem isDisabled={preprocessedData.isDefault}>
+      <FormItem label={t('COMMON.DEFAULT_VALUE')}>{DefaultValueComp}</FormItem>
+      <FormItem isDisabled={data.isDefault}>
         <FormCheckbox
           label={t('ERROR.REQUIRED')}
           controllerProps={{ ...register('isRequired'), control }}

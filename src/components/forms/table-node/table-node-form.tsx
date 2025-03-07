@@ -33,7 +33,8 @@ export const TableNodeForm: FC<TableNodeFormProps> = ({
 
   const { data: siblingNames = [], isLoading } = useQuery(
     getContentNodesByParentQueryOptions(projectId, selectedItem, {
-      select: data => data.map(node => node.name),
+      select: nodes => nodes.map(node => node.name).filter(name => name !== data?.name),
+      enabled: !!projectId,
     }),
   );
 

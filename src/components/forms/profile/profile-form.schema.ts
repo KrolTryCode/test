@@ -24,7 +24,6 @@ export const schema: y.ObjectSchema<UpdateUserRequestNullable> = y.object({
   company: y.string().nullable(),
   division: y.string().nullable(),
   position: y.string().nullable(),
-  phoneNumber: phoneSchema,
-
+  phoneNumber: phoneSchema.nullable(),
   timeZoneId: y.number().nullable(),
 });

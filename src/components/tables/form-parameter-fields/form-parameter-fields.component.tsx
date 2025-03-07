@@ -51,7 +51,12 @@ export const ParametersTable: FC<ParametersTableProps> = ({ formId, projectId })
         valueOptions: () => getColumnTypeValueOptions(Object.values(DataType)),
         groupingValueGetter: value => translateColumnType(value),
       },
-      { field: 'isRequired', headerName: t('ERROR.REQUIRED'), flex: 1, type: 'boolean' },
+      {
+        field: 'isRequired',
+        headerName: t('ERROR.REQUIRED'),
+        flex: 1,
+        type: 'boolean',
+      },
       {
         field: 'defaultValue',
         headerName: t('COMMON.DEFAULT_VALUE'),

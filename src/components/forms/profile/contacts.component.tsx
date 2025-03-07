@@ -24,7 +24,7 @@ export const Contacts: FC<ContactsProps> = ({ control, register }) => {
       </Fieldset>
 
       <Fieldset direction={'column'}>
-        <FormItem label={t('USER.PHONE_NUMBER')} isRequired>
+        <FormItem label={t('USER.PHONE_NUMBER')}>
           <FormInputPhone controllerProps={{ ...register('phoneNumber'), control }} />
         </FormItem>
       </Fieldset>
