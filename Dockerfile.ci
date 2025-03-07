@@ -1,4 +1,4 @@
-FROM nginx
+FROM rg.spbpu.com/customprojects/indanis/ui/nginx:latest
 COPY build /usr/share/nginx/html
 RUN mkdir /etc/nginx/templates
 COPY .nginx/nginx.conf.template /etc/nginx/templates/default.conf.template
