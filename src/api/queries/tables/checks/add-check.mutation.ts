@@ -4,7 +4,7 @@ import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
 import { Check, TableCheck } from '~/api/utils/api-requests';
 
-import { tableQueries } from '../../queries';
+import { tableQueries } from '../queries';
 
 export const useAddCheckMutation = (
   tableId: string,

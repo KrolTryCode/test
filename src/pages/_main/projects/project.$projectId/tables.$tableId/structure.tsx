@@ -1,11 +1,5 @@
-import { Stack, Typography } from '@mui/material';
-import { Preloader } from '@pspod/ui-components';
-import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
-import { useTranslation } from 'react-i18next';
 
-import { getProjectContentQueryOptions } from '~/api/queries/project-content/get-project-content.query';
-import { ButtonLink } from '~/components/implicit-links';
 import { ProjectTableStructure } from '~/components/tables/project-table-structure/project-table-structure.component';
 
 export const Route = createFileRoute(
@@ -13,35 +7,12 @@ export const Route = createFileRoute(
 )({
   component: TableStructure,
   staticData: {
-    title: 'STRUCTURE.EDIT',
+    title: 'ENTITY.STRUCTURE',
+    order: 2,
   },
 });
 
 function TableStructure() {
-  const { t } = useTranslation();
   const { tableId } = Route.useParams();
-
-  const { data: nodeInfo, isLoading: isNodeLoading } = useQuery(
-    getProjectContentQueryOptions(tableId),
-  );
-
-  if (isNodeLoading) {
-    return <Preloader />;
-  }
-
-  return (
-    <Stack height={'100%'} gap={1}>
-      <Typography variant={'h3'} color={'primary'}>
-        {`${t('STRUCTURE.LIST')} ${nodeInfo?.name ?? ''}`}
-      </Typography>
-
-      <ProjectTableStructure tableId={tableId} />
-
-      <Stack direction={'row'} gap={1} alignSelf={'flex-end'}>
-        <ButtonLink color={'primary'} to={'..'}>
-          {t('ACTION.BACK')}
-        </ButtonLink>
-      </Stack>
-    </Stack>
-  );
+  return <ProjectTableStructure tableId={tableId} />;
 }
