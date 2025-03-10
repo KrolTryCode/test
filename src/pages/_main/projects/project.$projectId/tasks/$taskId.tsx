@@ -119,7 +119,7 @@ function TaskPage() {
         return params;
       }
 
-      return [...params, { title: label, value }];
+      return [...params, { title: label, value: value?.toString() }];
     }, [] as SummaryEntry[]),
   ];
 
@@ -153,7 +153,7 @@ function TaskPage() {
             size={'small'}
             color={'error'}
             icon={<DeleteOutline />}
-            onClick={() => handleDeleteTask(task!.id!, () => void navigate({ to: '..' }))}
+            onClick={() => handleDeleteTask(task!.id, () => void navigate({ to: '..' }))}
           />
         </Stack>
         <Stack direction={'row'} alignItems={'center'}>
@@ -167,7 +167,7 @@ function TaskPage() {
             icon={<PlayArrowRounded />}
             disabled={task?.state !== TaskState.ReadyToStart}
             title={t('ACTION.RUN', { what: t('ENTITY.TASK').toLowerCase() })}
-            onClick={() => startTask(task!.id!)}
+            onClick={() => startTask(task!.id)}
             isLoading={shouldRefetch}
           />
           <Button
@@ -176,7 +176,7 @@ function TaskPage() {
             icon={<FileDownloadRounded />}
             disabled={task?.state !== TaskState.Successed}
             title={t('ACTION.DOWNLOAD', { filename: t('ENTITY.TASK').toLowerCase() })}
-            onClick={() => downloadTaskResults(task!.id!)}
+            onClick={() => downloadTaskResults(task!.id)}
           />
         </Stack>
       </Stack>

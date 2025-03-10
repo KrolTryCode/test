@@ -36,7 +36,12 @@ function EditTaskFormPage() {
       <Typography variant={'h2'} component={'h3'}>
         {t('ACTION.EDIT', { type: declinatedForm })}
       </Typography>
-      <EditTaskForm data={formData} onSave={updateForm} isPending={isPending} />
+      <EditTaskForm
+        data={formData}
+        onSave={updateForm}
+        isPending={isPending}
+        backOptions={{ to: '/projects/project/$projectId/forms', params: { projectId } }}
+      />
     </Stack>
   );
 }

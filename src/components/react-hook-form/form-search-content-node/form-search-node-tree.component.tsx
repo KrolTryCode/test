@@ -28,7 +28,12 @@ export function FormSelectContentNode<
 
   return (
     <ValidationError {...fieldState}>
-      <ProjectContentSelectTree {...componentProps} value={field.value} onChange={handleSelect} />
+      <ProjectContentSelectTree
+        {...componentProps}
+        invalid={!!fieldState.error}
+        value={field.value}
+        onChange={handleSelect}
+      />
     </ValidationError>
   );
 }

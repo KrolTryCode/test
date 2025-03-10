@@ -1,11 +1,13 @@
 import { PreviewOutlined } from '@mui/icons-material';
 import { GridActionsCellItem } from '@mui/x-data-grid-premium';
 import { AddEntity, DataGrid, DeleteCellButton, EnhancedColDef } from '@pspod/ui-components';
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { useQuery } from '@tanstack/react-query';
+import { createFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
 
+import { RealFullTaskInfo } from '~/api/queries/projects/tasks/get-project-task.query';
 import { getProjectTasksQueryOptions } from '~/api/queries/projects/tasks/get-project-tasks.query';
-import { FullTaskInfo, TaskState } from '~/api/utils/api-requests';
+import { TaskState } from '~/api/utils/api-requests';
 import { GridActionsCellItemLink } from '~/components/implicit-links';
 import { useTaskActions } from '~/use-cases/task-actions.hook';
 import { useCustomTranslations } from '~/utils/hooks';
@@ -13,18 +15,21 @@ import { useCustomTranslations } from '~/utils/hooks';
 export const Route = createFileRoute('/_main/projects/project/$projectId/tasks/')({
   component: TasksList,
   loader: async ({ context: { queryClient }, params: { projectId } }) => {
-    const taskList = await queryClient.fetchQuery(getProjectTasksQueryOptions(projectId));
+    const taskList = await queryClient.ensureQueryData(getProjectTasksQueryOptions(projectId));
     return { taskList };
   },
 });
 
 function TasksList() {
   const { projectId } = Route.useParams();
+  const navigate = Route.useNavigate();
   const { t, translateStatus, getStatusValueOptions } = useCustomTranslations();
   const { startTask, handleEditTask, downloadTaskResults, handleDeleteTask } =
     useTaskActions(projectId);
-  const { taskList } = Route.useLoaderData();
-  const navigate = useNavigate();
+
+  const { data: tasks, isLoading } = useQuery(
+    getProjectTasksQueryOptions(projectId, { placeholderData: Route.useLoaderData().taskList }),
+  );
 
   const handleAddTask = () =>
     void navigate({
@@ -32,7 +37,7 @@ function TasksList() {
       params: { projectId },
     });
 
-  const columns = useMemo<EnhancedColDef<FullTaskInfo>[]>(
+  const columns = useMemo<EnhancedColDef<RealFullTaskInfo>[]>(
     () => [
       {
         field: 'name',
@@ -85,7 +90,7 @@ function TasksList() {
               title={t('ACTION.VIEW', { type: t('ENTITY.TASK').toLowerCase() })}
               color={'primary'}
               to={'/projects/project/$projectId/tasks/$taskId'}
-              params={{ taskId: row.id!, projectId }}
+              params={{ taskId: row.id, projectId }}
             />,
             <GridActionsCellItem
               key={'edit'}
@@ -100,7 +105,7 @@ function TasksList() {
               disabled={row.state !== TaskState.Successed}
               label={t('ACTION.DOWNLOAD')}
               title={t('ACTION.DOWNLOAD')}
-              onClick={() => downloadTaskResults(row.id!)}
+              onClick={() => downloadTaskResults(row.id)}
             />,
             <GridActionsCellItem
               showInMenu
@@ -108,13 +113,13 @@ function TasksList() {
               disabled={row.state !== TaskState.ReadyToStart}
               label={t('ACTION.RUN')}
               title={t('ACTION.RUN')}
-              onClick={() => startTask(row.id!)}
+              onClick={() => startTask(row.id)}
             />,
             <DeleteCellButton
               showInMenu
               key={'delete'}
               entity={t('ENTITY.TASK')}
-              deleteHandler={() => handleDeleteTask(row.id!)}
+              deleteHandler={() => handleDeleteTask(row.id)}
             />,
           ];
         },
@@ -133,10 +138,11 @@ function TasksList() {
   );
 
   return (
-    <DataGrid<FullTaskInfo>
-      items={taskList}
+    <DataGrid<RealFullTaskInfo>
+      items={tasks}
       columns={columns}
-      totalCount={taskList.length ?? 0}
+      totalCount={tasks?.length ?? 0}
+      loading={isLoading}
       pinnedColumns={{ right: ['actions'] }}
       customToolbarContent={
         <AddEntity

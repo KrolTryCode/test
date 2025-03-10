@@ -4,12 +4,13 @@ import { projectQueries } from '~/api/queries/projects/queries';
 import { UseCustomQueryOptions } from '~/api/typings/react-query-helpers';
 import { FullTaskInfo } from '~/api/utils/api-requests';
 
-interface RealFullTaskInfo extends FullTaskInfo {
+export interface RealFullTaskInfo extends Omit<FullTaskInfo, 'id'> {
+  id: Required<FullTaskInfo>['id'];
   parameters: {
     params: {
-      [name: string]: string | null;
+      [name: string]: string | string[] | null;
       solver: string | null;
-      contents: string | null;
+      contents: string[] | null;
       timeout: string | null;
     };
   };
