@@ -1,11 +1,12 @@
 import { TabList, TabContext } from '@mui/lab';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import { createFileRoute, Outlet, useChildMatches, redirect } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { TabLink } from '~/components/implicit-links';
 import { ProjectHeader } from '~/components/node-header/project-header.component';
+import { renderTabLabel } from '~/components/render-tab-label';
 import { FileRoutesById } from '~/routing/routeTree.gen';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId')({
@@ -59,7 +60,7 @@ function ProjectTabsLayout() {
               to={route.fullPath}
               params={{ projectId }}
               value={route.fullPath}
-              label={renderLabel(t(route.options.staticData!.title!))}
+              label={renderTabLabel(t(route.options.staticData!.title!))}
             />
           ))}
         </TabList>
@@ -68,19 +69,5 @@ function ProjectTabsLayout() {
         </Box>
       </TabContext>
     </Stack>
-  );
-}
-
-function renderLabel(text: string) {
-  return (
-    <Typography
-      variant={'h4'}
-      component={'h2'}
-      marginInline={'6px'}
-      lineHeight={1}
-      gutterBottom={false}
-    >
-      {text}
-    </Typography>
   );
 }

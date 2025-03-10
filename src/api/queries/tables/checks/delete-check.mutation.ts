@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
 
-import { tableQueries } from '../../queries';
+import { tableQueries } from '../queries';
 
 export const useDeleteCheckMutation = (
   tableId: string,

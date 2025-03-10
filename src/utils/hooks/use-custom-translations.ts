@@ -12,8 +12,8 @@ export const useCustomTranslations = () => {
   const translateColumnType = (type: string = 'undefined'): string =>
     t(`COLUMN_TYPE.${type.toUpperCase()}`);
 
-  const translateCheckType = (type: string = 'undefined'): string =>
-    t(`CHECK_TYPE.${type.toUpperCase()}`);
+  const translateCheckOperatorType = (type: string = 'undefined'): string =>
+    t(`CHECKS.TYPE.${type.toUpperCase()}`);
 
   const translateColorPalette = (color: string = 'undefined'): string =>
     t(`COLORS.${color.toUpperCase()}`);
@@ -32,14 +32,22 @@ export const useCustomTranslations = () => {
     }));
   }
 
+  function getCheckOperatorsValueOptions<T extends string | undefined>(types: T[]) {
+    return types.map(type => ({
+      value: type,
+      label: translateCheckOperatorType(type),
+    }));
+  }
+
   return {
     t,
     translateStatus,
     translateEntity,
     translateColumnType,
-    translateCheckType,
+    translateCheckOperatorType,
     translateColorPalette,
     getStatusValueOptions,
     getColumnTypeValueOptions,
+    getCheckOperatorsValueOptions,
   };
 };
