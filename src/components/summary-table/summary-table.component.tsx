@@ -1,9 +1,9 @@
 import { Typography } from '@mui/material';
-import { Link } from '@tanstack/react-router';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { string as yString } from 'yup';
 
+import { TextLink } from '~/components/implicit-links';
 import { getDateFromString } from '~/utils/date/get-date-from-string';
 
 import { StyledTable } from './summary-table.style';
@@ -44,7 +44,7 @@ const SummaryTable: FC<SummaryTableProps> = ({
       case 'link': {
         if (value) {
           // @ts-expect-error type
-          return <Link {...rest.to}>{value}</Link>;
+          return <TextLink {...rest.to}>{value}</TextLink>;
         }
         return value;
       }
