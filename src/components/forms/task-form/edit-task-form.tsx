@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
-import { useParams } from '@tanstack/react-router';
+import { ToOptions, useParams } from '@tanstack/react-router';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -15,10 +15,11 @@ import { schema } from './task-form.schema';
 interface EditTaskFormProps {
   data?: ParameterForm;
   onSave: (data: UpdateParameterFormRequest) => void;
+  backOptions: ToOptions;
   isPending?: boolean;
 }
 
-export const EditTaskForm: FC<EditTaskFormProps> = ({ data, onSave, isPending }) => {
+export const EditTaskForm: FC<EditTaskFormProps> = ({ data, onSave, backOptions, isPending }) => {
   const { t } = useTranslation();
   const { projectId = '' } = useParams({ strict: false });
 
@@ -50,9 +51,7 @@ export const EditTaskForm: FC<EditTaskFormProps> = ({ data, onSave, isPending })
       </FormItem>
       <ParametersTable formId={data?.id ?? ''} projectId={projectId} />
       <FormButtons marginTop={2}>
-        <ButtonLink to={'/projects/project/$projectId/forms'} params={{ projectId }}>
-          {t('ACTION.CANCEL')}
-        </ButtonLink>
+        <ButtonLink {...backOptions}>{t('ACTION.CANCEL')}</ButtonLink>
         <Button
           type={'submit'}
           disabled={!isValid && isSubmitted}

@@ -24,8 +24,8 @@ export function FormSelect<
   const { field, fieldState } = useController(controllerProps);
 
   const onChange: SelectProps<T, Multiple>['onChange'] = value => {
-    field.onChange(value);
-    selectProps.onChange?.(value);
+    const changedValue = selectProps.onChange?.(value) as SelectProps<T, Multiple>['value'];
+    field.onChange(selectProps.onChange ? changedValue : value);
   };
 
   return (

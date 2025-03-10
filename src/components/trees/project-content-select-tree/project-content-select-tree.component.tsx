@@ -16,6 +16,7 @@ type ProjectContentSelectTreeCommonProps = {
   canSelectItem?: (contentNode: ContentNode) => boolean;
   projectId: string;
   pathToSelected: string[];
+  invalid?: boolean;
 };
 
 type ProjectContentSingleSelectTreeProps = {
@@ -52,7 +53,11 @@ export const ProjectContentSelectTree: FC<ProjectContentSelectTreeProps> = props
 
   return rootNodes.length ? (
     <ProjectContentSelectTreeContext.Provider value={props}>
-      <_ProjectContentSelectTreeContainer>
+      <_ProjectContentSelectTreeContainer
+        borderColor={theme =>
+          props.invalid ? theme.palette.error.main : `${theme.palette.common.black}30`
+        }
+      >
         {props.showRoot && (
           <ProjectContentSelectTreeItem
             contentTreeNode={{

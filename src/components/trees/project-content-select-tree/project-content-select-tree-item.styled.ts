@@ -1,8 +1,9 @@
-import { styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 
-export const _ProjectContentSelectTreeContainer = styled('div')(({ theme }) => ({
+export const _ProjectContentSelectTreeContainer = styled(Box)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
-  border: `1px solid ${theme.palette.common.black}30`,
+  borderWidth: '1px',
+  borderStyle: 'solid',
   padding: '1em 0.5em',
 }));
 

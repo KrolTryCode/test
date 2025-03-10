@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 
 import { useArchiveTaskMutation } from '~/api/queries/projects/tasks/archive-task.mutation';
 import { useCreateProjectTaskMutation } from '~/api/queries/projects/tasks/create-task.mutation';
+import { RealFullTaskInfo } from '~/api/queries/projects/tasks/get-project-task.query';
 import { useStartProjectTaskMutation } from '~/api/queries/projects/tasks/start-task.mutation';
 import { useUpdateTaskMutation } from '~/api/queries/projects/tasks/update-task.mutation';
 import { ApiClientSecured } from '~/api/utils/api-client';
-import { FullTaskInfo } from '~/api/utils/api-requests';
 import { taskModal } from '~/components/forms/task/task-form';
 import { downloadBlobFile } from '~/utils/files';
 import { showErrorMessage } from '~/utils/show-error-message';
@@ -53,12 +53,11 @@ export const useTaskActions = (projectId: string) => {
   );
 
   const handleEditTask = useCallback(
-    (task: FullTaskInfo, onOk?: () => void) => {
+    (task: RealFullTaskInfo, onOk?: () => void) => {
       taskModal({
-        data: task,
-        isEditing: true,
+        data: { name: task.name!, description: task.description },
         title: t('ACTION.EDIT', { type: t('ENTITY.TASK').toLowerCase() }),
-        onOk: data => void updateTask({ ...data, taskId: task.id! }).then(onOk),
+        onOk: data => void updateTask({ ...data, taskId: task.id }).then(onOk),
       });
     },
     [t, updateTask],
