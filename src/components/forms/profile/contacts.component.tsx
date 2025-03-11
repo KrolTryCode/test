@@ -4,7 +4,7 @@ import { Control, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { UpdateUserRequestNullable } from '~/components/forms/profile/profile-form.schema';
-import { FormInputText } from '~/components/react-hook-form';
+import { FormCheckbox, FormInputText } from '~/components/react-hook-form';
 import { FormInputPhone } from '~/components/react-hook-form/form-input-phone/form-input-phone.component';
 
 interface ContactsProps {
@@ -20,6 +20,12 @@ export const Contacts: FC<ContactsProps> = ({ control, register }) => {
       <Fieldset direction={'column'}>
         <FormItem label={t('USER.EMAIL')} isRequired>
           <FormInputText type={'email'} controllerProps={{ ...register('email'), control }} />
+        </FormItem>
+        <FormItem>
+          <FormCheckbox
+            label={t('USER.WANT_TO_SUBSCRIBE')}
+            controllerProps={{ ...register('emailNotification'), control }}
+          />
         </FormItem>
       </Fieldset>
 

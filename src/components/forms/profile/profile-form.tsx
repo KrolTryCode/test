@@ -113,5 +113,6 @@ function getFormData(user: User): UpdateUserRequestNullable {
     division: user.division,
     position: user.position,
     phoneNumber: user.phoneNumber,
+    emailNotification: user.emailNotification,
   };
 }
