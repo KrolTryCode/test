@@ -1,6 +1,6 @@
-import { Upload, Folder, BackupTable, Add as AddIcon } from '@mui/icons-material';
+import { Folder, BackupTable, Add as AddIcon } from '@mui/icons-material';
 import { MenuItem } from '@mui/material';
-import { Button, DropdownMenu } from '@pspod/ui-components';
+import { DropdownMenu, UploadFileButton } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -8,7 +8,7 @@ import { useCreateNodeActions } from './create-node-menu.hook';
 
 export const CreateNodeMenu: FC = () => {
   const { t } = useTranslation();
-  const { addGroup, addProject, importProject } = useCreateNodeActions();
+  const { addGroup, addProject, importProject, isUploadingProject } = useCreateNodeActions();
 
   return (
     <>
@@ -27,13 +27,15 @@ export const CreateNodeMenu: FC = () => {
         </MenuItem>
       </DropdownMenu>
 
-      <Button
+      <UploadFileButton
+        accept={'.zip'}
         size={'small'}
         color={'primary'}
         title={t('ACTION.IMPORT', { what: t('ENTITY.PROJECT').toLowerCase() })}
-        onClick={importProject}
+        onSelect={importProject}
         variant={'text'}
-        icon={<Upload />}
+        isLoading={isUploadingProject}
+        iconButton
       />
     </>
   );
