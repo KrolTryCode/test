@@ -82,7 +82,7 @@ export const useParametersHook = (formId: string) => {
         await Promise.all(promises);
         notifySuccess(t('MESSAGE.UPDATE_SUCCESS'));
       } catch (err) {
-        showErrorMessage(err, t('ERROR.UPDATE_FAILED'));
+        showErrorMessage(err, 'ERROR.UPDATE_FAILED');
       }
     },
     [parameters, t, updateParameter],

@@ -4,14 +4,21 @@ import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useCreateProjectNodeMutation } from '~/api/queries/projects/create-project-node.mutation';
+import { useUploadProjectFileMutation } from '~/api/queries/projects/import-project.mutation';
 import { ProjectNodeType } from '~/api/utils/api-requests';
 import { projectNodeModal } from '~/components/forms/project-node/project-node-form';
 import { useDeclinatedTranslationsContext } from '~/utils/configuration/translations/declinated-translations-provider';
+import { validateSelectedFiles } from '~/utils/files';
 import { showErrorMessage } from '~/utils/show-error-message';
 
 export const useCreateNodeActions = () => {
   const { t } = useTranslation();
   const { projectId, groupId } = useParams({ strict: false });
+
+  const { mutate: uploadProject, isPending: isUploadingProject } = useUploadProjectFileMutation({
+    onSuccess: () => notifySuccess(t('MESSAGE.IMPORT_SUCCESS')),
+    onError: e => showErrorMessage(e, 'ERROR.IMPORT_FAILED'),
+  });
 
   const declinatedTranslations = useDeclinatedTranslationsContext();
 
@@ -39,14 +46,20 @@ export const useCreateNodeActions = () => {
     });
   }, [t, declinatedTranslations.GROUP.ACCUSATIVE, createProjectNode, groupId, projectId]);
 
-  const importProject = useCallback(() => {
-    console.log('TODO import project');
-    alert('Всё будет');
-  }, []);
+  const importProject = useCallback(
+    (files: File[]) => {
+      const isValid = !!validateSelectedFiles(files, 'zip').length;
+      if (isValid) {
+        uploadProject(files[0]);
+      }
+    },
+    [uploadProject],
+  );
 
   return {
     addGroup,
     addProject,
     importProject,
+    isUploadingProject,
   };
 };
