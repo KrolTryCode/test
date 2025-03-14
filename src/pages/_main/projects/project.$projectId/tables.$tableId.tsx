@@ -1,5 +1,5 @@
 import { TabContext, TabList } from '@mui/lab';
-import { Box, Divider, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { createFileRoute, Outlet, useChildMatches } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
