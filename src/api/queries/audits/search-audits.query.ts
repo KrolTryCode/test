@@ -15,3 +15,8 @@ export const searchAuditsQueryOptions = <T = PageFullAuditInfo>(
     placeholderData: keepPreviousData,
     ...options,
   });
+
+export const commonAuditQueryParams = {
+  types: ['Authentication', 'Password', 'Role', 'User', 'Account', 'ProjectMember', 'GroupMember'],
+  pageable: { size: 99_999, page: 0 },
+};

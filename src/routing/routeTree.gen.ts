@@ -46,6 +46,7 @@ import { Route as MainProjectsProjectProjectIdParticipantsImport } from './../pa
 import { Route as MainProjectsProjectProjectIdFormsImport } from './../pages/_main/projects/project.$projectId/forms';
 import { Route as MainProjectsProjectProjectIdEventsImport } from './../pages/_main/projects/project.$projectId/events';
 import { Route as MainProjectsGroupGroupIdParticipantsImport } from './../pages/_main/projects/group/$groupId.participants';
+import { Route as MainProjectsGroupGroupIdEventsImport } from './../pages/_main/projects/group/$groupId.events';
 import { Route as MainAdminTemplatesTemplateIdEditImport } from './../pages/_main/admin/templates.$templateId.edit';
 import { Route as MainProjectsProjectProjectIdTasksIndexImport } from './../pages/_main/projects/project.$projectId/tasks/index';
 import { Route as MainProjectsProjectProjectIdSolversIndexImport } from './../pages/_main/projects/project.$projectId/solvers/index';
@@ -277,6 +278,13 @@ const MainProjectsGroupGroupIdParticipantsRoute =
   MainProjectsGroupGroupIdParticipantsImport.update({
     id: '/group/$groupId/participants',
     path: '/group/$groupId/participants',
+    getParentRoute: () => MainProjectsRoute,
+  } as any);
+
+const MainProjectsGroupGroupIdEventsRoute =
+  MainProjectsGroupGroupIdEventsImport.update({
+    id: '/group/$groupId/events',
+    path: '/group/$groupId/events',
     getParentRoute: () => MainProjectsRoute,
   } as any);
 
@@ -549,6 +557,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/templates/$templateId/edit';
       preLoaderRoute: typeof MainAdminTemplatesTemplateIdEditImport;
       parentRoute: typeof MainAdminTemplatesImport;
+    };
+    '/_main/projects/group/$groupId/events': {
+      id: '/_main/projects/group/$groupId/events';
+      path: '/group/$groupId/events';
+      fullPath: '/projects/group/$groupId/events';
+      preLoaderRoute: typeof MainProjectsGroupGroupIdEventsImport;
+      parentRoute: typeof MainProjectsImport;
     };
     '/_main/projects/group/$groupId/participants': {
       id: '/_main/projects/group/$groupId/participants';
@@ -916,6 +931,7 @@ const MainProjectsProjectProjectIdRouteWithChildren =
 interface MainProjectsRouteChildren {
   MainProjectsProjectProjectIdRoute: typeof MainProjectsProjectProjectIdRouteWithChildren;
   MainProjectsGroupIndexRoute: typeof MainProjectsGroupIndexRoute;
+  MainProjectsGroupGroupIdEventsRoute: typeof MainProjectsGroupGroupIdEventsRoute;
   MainProjectsGroupGroupIdParticipantsRoute: typeof MainProjectsGroupGroupIdParticipantsRoute;
   MainProjectsGroupGroupIdIndexRoute: typeof MainProjectsGroupGroupIdIndexRoute;
 }
@@ -924,6 +940,7 @@ const MainProjectsRouteChildren: MainProjectsRouteChildren = {
   MainProjectsProjectProjectIdRoute:
     MainProjectsProjectProjectIdRouteWithChildren,
   MainProjectsGroupIndexRoute: MainProjectsGroupIndexRoute,
+  MainProjectsGroupGroupIdEventsRoute: MainProjectsGroupGroupIdEventsRoute,
   MainProjectsGroupGroupIdParticipantsRoute:
     MainProjectsGroupGroupIdParticipantsRoute,
   MainProjectsGroupGroupIdIndexRoute: MainProjectsGroupGroupIdIndexRoute,
@@ -975,6 +992,7 @@ export interface FileRoutesByFullPath {
   '/admin/users/': typeof MainAdminUsersIndexRoute;
   '/projects/group': typeof MainProjectsGroupIndexRoute;
   '/admin/templates/$templateId/edit': typeof MainAdminTemplatesTemplateIdEditRoute;
+  '/projects/group/$groupId/events': typeof MainProjectsGroupGroupIdEventsRoute;
   '/projects/group/$groupId/participants': typeof MainProjectsGroupGroupIdParticipantsRoute;
   '/projects/project/$projectId/events': typeof MainProjectsProjectProjectIdEventsRoute;
   '/projects/project/$projectId/forms': typeof MainProjectsProjectProjectIdFormsRouteWithChildren;
@@ -1021,6 +1039,7 @@ export interface FileRoutesByTo {
   '/admin/users': typeof MainAdminUsersIndexRoute;
   '/projects/group': typeof MainProjectsGroupIndexRoute;
   '/admin/templates/$templateId/edit': typeof MainAdminTemplatesTemplateIdEditRoute;
+  '/projects/group/$groupId/events': typeof MainProjectsGroupGroupIdEventsRoute;
   '/projects/group/$groupId/participants': typeof MainProjectsGroupGroupIdParticipantsRoute;
   '/projects/project/$projectId/events': typeof MainProjectsProjectProjectIdEventsRoute;
   '/projects/project/$projectId/participants': typeof MainProjectsProjectProjectIdParticipantsRoute;
@@ -1069,6 +1088,7 @@ export interface FileRoutesById {
   '/_main/admin/users/': typeof MainAdminUsersIndexRoute;
   '/_main/projects/group/': typeof MainProjectsGroupIndexRoute;
   '/_main/admin/templates/$templateId/edit': typeof MainAdminTemplatesTemplateIdEditRoute;
+  '/_main/projects/group/$groupId/events': typeof MainProjectsGroupGroupIdEventsRoute;
   '/_main/projects/group/$groupId/participants': typeof MainProjectsGroupGroupIdParticipantsRoute;
   '/_main/projects/project/$projectId/events': typeof MainProjectsProjectProjectIdEventsRoute;
   '/_main/projects/project/$projectId/forms': typeof MainProjectsProjectProjectIdFormsRouteWithChildren;
@@ -1120,6 +1140,7 @@ export interface FileRouteTypes {
     | '/admin/users/'
     | '/projects/group'
     | '/admin/templates/$templateId/edit'
+    | '/projects/group/$groupId/events'
     | '/projects/group/$groupId/participants'
     | '/projects/project/$projectId/events'
     | '/projects/project/$projectId/forms'
@@ -1165,6 +1186,7 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/projects/group'
     | '/admin/templates/$templateId/edit'
+    | '/projects/group/$groupId/events'
     | '/projects/group/$groupId/participants'
     | '/projects/project/$projectId/events'
     | '/projects/project/$projectId/participants'
@@ -1211,6 +1233,7 @@ export interface FileRouteTypes {
     | '/_main/admin/users/'
     | '/_main/projects/group/'
     | '/_main/admin/templates/$templateId/edit'
+    | '/_main/projects/group/$groupId/events'
     | '/_main/projects/group/$groupId/participants'
     | '/_main/projects/project/$projectId/events'
     | '/_main/projects/project/$projectId/forms'
@@ -1301,6 +1324,7 @@ export const routeTree = rootRoute
       "children": [
         "/_main/projects/project/$projectId",
         "/_main/projects/group/",
+        "/_main/projects/group/$groupId/events",
         "/_main/projects/group/$groupId/participants",
         "/_main/projects/group/$groupId/"
       ]
@@ -1410,6 +1434,10 @@ export const routeTree = rootRoute
     "/_main/admin/templates/$templateId/edit": {
       "filePath": "_main/admin/templates.$templateId.edit.tsx",
       "parent": "/_main/admin/templates"
+    },
+    "/_main/projects/group/$groupId/events": {
+      "filePath": "_main/projects/group/$groupId.events.tsx",
+      "parent": "/_main/projects"
     },
     "/_main/projects/group/$groupId/participants": {
       "filePath": "_main/projects/group/$groupId.participants.tsx",
