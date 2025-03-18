@@ -2,17 +2,17 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { UseCustomMutationOptions } from '~/api/typings/react-query-helpers';
 import { ApiClientSecured } from '~/api/utils/api-client';
-import { Check, TableCheck } from '~/api/utils/api-requests';
 
 import { tableQueries } from '../queries';
 
-export const useAddCheckMutation = (
+export const useDeleteTableCheckMutation = (
   tableId: string,
-  options?: UseCustomMutationOptions<TableCheck, unknown, Check>,
+  options?: UseCustomMutationOptions<void, unknown, string>,
 ) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: checkData => ApiClientSecured.checkV1Controller.createCheck(tableId, checkData),
+    mutationFn: constraintName =>
+      ApiClientSecured.checkV1Controller.deleteCheck1(tableId, constraintName),
     ...options,
     onSuccess(...args) {
       void queryClient.invalidateQueries({ queryKey: tableQueries.metadata(tableId).queryKey });

@@ -1,13 +1,15 @@
-import { Edit as EditIcon } from '@mui/icons-material';
+import { Edit as EditIcon, Rule } from '@mui/icons-material';
 import { Stack, Typography } from '@mui/material';
 import { GridActionsCellItem, GridEventListener } from '@mui/x-data-grid-premium';
 import { AddEntity, DataGrid, DeleteCellButton, EnhancedColDef } from '@pspod/ui-components';
 import { useQuery } from '@tanstack/react-query';
-import { FC, useCallback, useMemo } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
 import { getContentNodesByParentQueryOptions } from '~/api/queries/project-content/get-content-nodes-by-parent.query';
 import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { DataType, ParameterField } from '~/api/utils/api-requests';
+import { ALLOWED_TYPES } from '~/components/checks/checks.utils';
+import { ParameterChecks } from '~/components/checks/parameter-checks/parameter-checks.component';
 import { useParametersHook } from '~/components/tables/form-parameter-fields/parameters-fields.hook';
 import { useCustomTranslations } from '~/utils/hooks';
 
@@ -35,6 +37,8 @@ export const ParametersTable: FC<ParametersTableProps> = ({ formId, projectId })
     props => void changeOrder(props),
     [changeOrder],
   );
+
+  const [selectedRow, setSelectedRow] = useState<ParameterField | null>(null);
 
   const columns = useMemo<EnhancedColDef<ParameterField>[]>(
     () => [
@@ -74,16 +78,32 @@ export const ParametersTable: FC<ParametersTableProps> = ({ formId, projectId })
       {
         field: 'actions',
         type: 'actions',
-        width: 100,
+        width: 130,
+        maxWidth: 130,
         getActions({ row }) {
           return [
             <GridActionsCellItem
               key={'edit'}
-              label={t('ACTION.EDIT', { type: t('ENTITY.FORM').toLowerCase() })}
-              title={t('ACTION.EDIT', { type: t('ENTITY.FORM').toLowerCase() })}
+              label={t('ACTION.EDIT', { type: t('ENTITY.PARAMETER').toLowerCase() })}
+              title={t('ACTION.EDIT', { type: t('ENTITY.PARAMETER').toLowerCase() })}
               icon={<EditIcon />}
               color={'primary'}
               onClick={() => handleUpdateParameter(row)}
+            />,
+            <GridActionsCellItem
+              key={'checks'}
+              label={t('ACTION.EDIT', { type: t('ENTITY.CHECKS').toLowerCase() })}
+              title={t('ACTION.EDIT', { type: t('ENTITY.CHECKS').toLowerCase() })}
+              icon={<Rule />}
+              color={'primary'}
+              disabled={row.isDefault || !ALLOWED_TYPES.includes(row.type)}
+              onClick={() => {
+                if (selectedRow === row) {
+                  setSelectedRow(null);
+                } else {
+                  setSelectedRow(row);
+                }
+              }}
             />,
             <DeleteCellButton
               key={'delete'}
@@ -99,23 +119,32 @@ export const ParametersTable: FC<ParametersTableProps> = ({ formId, projectId })
       deleteParameter,
       getColumnTypeValueOptions,
       handleUpdateParameter,
+      selectedRow,
       solvers,
       t,
       translateColumnType,
     ],
   );
   return (
-    <Stack minHeight={'40vh'}>
-      <Typography variant={'h4'}>{t('ENTITY.PARAMETERS')}</Typography>
-      <DataGrid
-        rowReordering
-        onRowOrderChange={handleOrderChange}
-        items={parameters}
-        totalCount={parameters?.length}
-        columns={columns}
-        loading={isLoading}
-        customToolbarContent={<AddEntity onClick={handleCreateParameter} />}
-      />
+    <Stack direction={'row'} justifyContent={'space-between'}>
+      <Stack minHeight={'40vh'} width={'48vw'}>
+        <Typography variant={'h4'}>{t('ENTITY.PARAMETERS')}</Typography>
+        <DataGrid
+          rowReordering
+          onRowOrderChange={handleOrderChange}
+          items={parameters}
+          totalCount={parameters?.length}
+          columns={columns}
+          loading={isLoading}
+          customToolbarContent={<AddEntity onClick={handleCreateParameter} />}
+        />
+      </Stack>
+      {selectedRow && (
+        <Stack minHeight={'40vh'} width={'48vw'} marginLeft={2}>
+          <Typography variant={'h4'}>{t('ENTITY.CHECKS')}</Typography>
+          <ParameterChecks formId={formId} fieldId={selectedRow.id} />
+        </Stack>
+      )}
     </Stack>
   );
 };

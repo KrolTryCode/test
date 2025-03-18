@@ -1,28 +1,32 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
+import { Button, Form, FormButtons, FormItem, InputText } from '@pspod/ui-components';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Check, CheckOpcode, DataType, TableColumn } from '~/api/utils/api-requests';
-import { schema } from '~/components/forms/check/check-form.schema';
+import { Check, CheckOpcode, DataType, ParameterField } from '~/api/utils/api-requests';
+import { COMPARISON_TYPES, getTypeByDataType } from '~/components/checks/checks.utils';
+import { schema } from '~/components/forms/check/parameter-check/parameter-check-form.schema';
 import { FormAutocomplete, FormSelect } from '~/components/react-hook-form';
 import { useCustomTranslations } from '~/utils/hooks';
 
-interface CheckFormProps {
-  columns: TableColumn[];
+interface ParameterCheckFormProps {
+  parameters: ParameterField[];
+  leftValue: ParameterField;
   onReject?: () => void;
   onResolve: (values: Check) => void;
 }
 
-export interface CheckFormData {
+export interface ParameterCheckFormData {
   opCode: CheckOpcode;
-  leftValue: string;
-  rightValue: { id: string; displayName: string };
+  rightValue: { id: string; name: string };
 }
 
-const COMPARISON_TYPES = [CheckOpcode.GE, CheckOpcode.GT, CheckOpcode.LT, CheckOpcode.LE];
-
-export const CheckForm: FC<CheckFormProps> = ({ columns, onResolve, onReject }) => {
+export const ParameterCheckForm: FC<ParameterCheckFormProps> = ({
+  parameters,
+  leftValue,
+  onResolve,
+  onReject,
+}) => {
   const { t, translateCheckOperatorType } = useCustomTranslations();
 
   const {
@@ -30,53 +34,47 @@ export const CheckForm: FC<CheckFormProps> = ({ columns, onResolve, onReject }) 
     handleSubmit,
     control,
     formState: { isValid, isSubmitted, isSubmitting },
-  } = useForm<CheckFormData>({
+  } = useForm<ParameterCheckFormData>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
     defaultValues: schema.getDefault(),
     resolver: yupResolver(schema),
   });
 
-  const handleAddCheck = (values: CheckFormData) => {
-    const leftValueType = columns.find(column => column.id === values.leftValue)?.type;
-
+  const handleAddCheck = (values: ParameterCheckFormData) => {
+    const leftValueType = leftValue.type;
     if (leftValueType === DataType.String && COMPARISON_TYPES.includes(values.opCode)) {
-      const leftValue = {
+      const formLeftValue = {
         '@type': 'StringLengthValue',
         value: {
           '@type': 'StringConst',
-          value: values.leftValue,
+          value: leftValue.id,
         },
       };
 
       const rightValue = {
         '@type': 'StringLengthValue',
-        value: getRightValue(leftValueType, columns, values.rightValue, values.opCode),
+        value: getRightValue(leftValueType, parameters, values.rightValue, values.opCode),
       };
 
-      onResolve({ leftValue, opCode: values.opCode, rightValue });
+      onResolve({ leftValue: formLeftValue, opCode: values.opCode, rightValue });
     } else {
-      const leftValue = {
+      const formLeftValue = {
         '@type': 'ColumnValue',
-        value: values.leftValue,
+        value: leftValue.id,
       };
 
-      const rightValue = getRightValue(leftValueType!, columns, values.rightValue, values.opCode);
+      const rightValue = getRightValue(leftValueType, parameters, values.rightValue, values.opCode);
 
       //@ts-expect-error rightValue typing
-      onResolve({ leftValue, opCode: values.opCode, rightValue });
+      onResolve({ leftValue: formLeftValue, opCode: values.opCode, rightValue });
     }
   };
 
   return (
     <Form onSubmit={handleSubmit(handleAddCheck)} showColonAfterLabel isRequired>
-      <FormItem label={t('CHECKS.LEFT_VALUE')}>
-        <FormSelect
-          items={columns}
-          valueExpr={'databaseName'}
-          displayExpr={'displayName'}
-          controllerProps={{ ...register('leftValue'), control }}
-        />
+      <FormItem label={t('CHECKS.LEFT_VALUE')} isDisabled>
+        <InputText value={leftValue.name} />
       </FormItem>
       <FormItem label={t('CHECKS.OPERATOR')}>
         <FormSelect
@@ -87,9 +85,7 @@ export const CheckForm: FC<CheckFormProps> = ({ columns, onResolve, onReject }) 
       </FormItem>
       <FormItem label={t('CHECKS.RIGHT_VALUE')}>
         <FormAutocomplete
-          items={columns}
-          valueExpr={'databaseName'}
-          displayExpr={'displayName'}
+          items={parameters.filter(value => value !== leftValue)}
           controllerProps={{ ...register('rightValue'), control }}
         />
       </FormItem>
@@ -113,11 +109,11 @@ export const CheckForm: FC<CheckFormProps> = ({ columns, onResolve, onReject }) 
 
 function getRightValue(
   leftValueType: DataType,
-  columns: TableColumn[],
-  input: CheckFormData['rightValue'],
+  parameters: ParameterField[],
+  input: ParameterCheckFormData['rightValue'],
   op: CheckOpcode,
 ) {
-  if (columns.some(column => column === input)) {
+  if (parameters.some(column => column === input)) {
     return {
       '@type': 'ColumnValue',
       value: input['id'],
@@ -127,12 +123,12 @@ function getRightValue(
   if (op === CheckOpcode.MATCH) {
     return {
       '@type': 'StringConst',
-      value: input['displayName'],
+      value: input['name'],
     };
   }
 
   if (op === CheckOpcode.IN) {
-    const possibleValues = input['displayName'].split(',');
+    const possibleValues = input['name'].split(',');
     return possibleValues.map(value => {
       return {
         '@type': getTypeByDataType(leftValueType),
@@ -142,27 +138,6 @@ function getRightValue(
   }
   return {
     '@type': getTypeByDataType(leftValueType),
-    value: input['displayName'],
+    value: input['name'],
   };
-}
-
-function getTypeByDataType(dataType?: DataType) {
-  switch (dataType) {
-    case DataType.Int:
-      return 'IntConst';
-    case DataType.Float:
-      return 'FloatConst';
-    case DataType.String:
-      return 'StringConst';
-    case DataType.Boolean:
-    case DataType.Timestamp:
-    case DataType.Date:
-    case DataType.LineString:
-    case DataType.Point:
-    case DataType.Polygon:
-    case DataType.Uuid:
-    case undefined:
-    default:
-      return 'unknown';
-  }
 }
