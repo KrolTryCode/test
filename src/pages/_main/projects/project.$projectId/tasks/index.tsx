@@ -1,6 +1,6 @@
 import { PreviewOutlined } from '@mui/icons-material';
 import { GridActionsCellItem } from '@mui/x-data-grid-premium';
-import { AddEntity, DataGrid, DeleteCellButton, EnhancedColDef } from '@pspod/ui-components';
+import { AddEntity, DataGrid, EnhancedColDef } from '@pspod/ui-components';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
@@ -115,11 +115,13 @@ function TasksList() {
               title={t('ACTION.RUN')}
               onClick={() => startTask(row.id)}
             />,
-            <DeleteCellButton
+            <GridActionsCellItem
               showInMenu
               key={'delete'}
-              entity={t('ENTITY.TASK')}
-              deleteHandler={() => handleDeleteTask(row.id)}
+              color={'error'}
+              label={t('ACTION.DELETE')}
+              title={t('ACTION.DELETE')}
+              onClick={() => handleDeleteTask(row.id)}
             />,
           ];
         },

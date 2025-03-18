@@ -71,7 +71,7 @@ export const ExportProjectForm: FC<ExportProjectFormProps> = ({
           controllerProps={{
             ...register('types'),
             control,
-            rules: { required: { message: t('yup:mixed.required'), value: true } },
+            rules: { required: { message: t('ERROR.REQUIRED_CHECKBOX'), value: true } },
           }}
         />
       </FormItem>
