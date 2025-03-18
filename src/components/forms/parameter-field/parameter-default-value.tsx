@@ -13,6 +13,10 @@ import {
   FormInputText,
   FormSelect,
 } from '~/components/react-hook-form';
+import {
+  NumericInputWithPlaceholder,
+  UUIDInputWithPlaceholder,
+} from '~/components/react-hook-form/form-inputs-with-placeholders';
 import { FormSelectContentNode } from '~/components/react-hook-form/form-search-content-node/form-search-node-tree.component';
 
 interface DefaultValueComponentProps {
@@ -61,19 +65,26 @@ export const DefaultValueComponent: FC<DefaultValueComponentProps> = ({
     case DataType.Boolean: {
       return <FormSelect items={['false', 'true']} controllerProps={controllerProps} />;
     }
-    case DataType.Date: {
-      return <FormDateTimePicker type={'date'} controllerProps={controllerProps} />;
+    case DataType.Float:
+    case DataType.Int: {
+      return <NumericInputWithPlaceholder type={type} controllerProps={controllerProps} />;
     }
-    case DataType.Timestamp:
-    case DataType.Int:
-    case DataType.Float: {
-      return <FormInputNumeric controllerProps={controllerProps} />;
+    case DataType.Date:
+    case DataType.Timestamp: {
+      return (
+        <FormDateTimePicker
+          type={type === DataType.Date ? 'date' : 'datetime'}
+          controllerProps={controllerProps}
+        />
+      );
+    }
+    case DataType.Uuid: {
+      return <UUIDInputWithPlaceholder controllerProps={controllerProps} />;
     }
     case DataType.LineString:
     case DataType.Point:
     case DataType.Polygon:
-    case DataType.String:
-    case DataType.Uuid: {
+    case DataType.String: {
       return <FormInputText controllerProps={controllerProps} />;
     }
   }
@@ -96,7 +107,7 @@ export const getDefaultValueSchema = (type: DataType, key?: string) => {
     case DataType.Date:
       return y.date();
     case DataType.Float:
-      return y.number().default(0);
+      return y.number().default(0.0);
     case DataType.Int:
       return y.number().integer().default(0);
     case DataType.Uuid:
