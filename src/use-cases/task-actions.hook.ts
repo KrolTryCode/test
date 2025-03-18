@@ -45,7 +45,7 @@ export const useTaskActions = (projectId: string) => {
   const handleDeleteTask = useCallback(
     (id: string, onOk?: () => void) => {
       confirmDeletionModal({
-        title: t('ACTION.DELETE', { type: t('ENTITY.TASK').toLowerCase() }),
+        title: t('MESSAGE.CONFIRM_DELETE_ENTITY', { what: t('ENTITY.TASK').toLowerCase() }),
         onOk: () => void archiveTask(id).then(onOk),
       });
     },

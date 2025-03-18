@@ -34,7 +34,7 @@ export function useContentNodeActions(parentId = '') {
         });
       } else {
         void navigate({
-          to: '/projects/project/$projectId/tables/$tableId',
+          to: '/projects/project/$projectId/tables/$tableId/structure',
           params: { tableId: data.id, projectId },
         });
       }
