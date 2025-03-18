@@ -9,7 +9,11 @@ import { RealFullTaskInfo } from '~/api/queries/projects/tasks/get-project-task.
 import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { sortParametersByIndex } from '~/api/selectors/sort-parameters-by-index';
 import { ContentNodeType, DataType, ParameterField } from '~/api/utils/api-requests';
-import { FormInputNumeric, FormInputText, FormSelect } from '~/components/react-hook-form';
+import { FormDateTimePicker, FormInputText, FormSelect } from '~/components/react-hook-form';
+import {
+  NumericInputWithPlaceholder,
+  UUIDInputWithPlaceholder,
+} from '~/components/react-hook-form/form-inputs-with-placeholders';
 import { FormSelectContentNode } from '~/components/react-hook-form/form-search-content-node/form-search-node-tree.component';
 
 import { ITaskForm } from './task-form.schema';
@@ -76,16 +80,24 @@ export const TaskFormParameters: FC<TaskFormParametersProps> = ({ projectId, for
           />
         );
       }
-
       switch (type) {
-        case DataType.Timestamp:
-        case DataType.Int:
-        case DataType.Float:
-          return <FormInputNumeric controllerProps={controllerProps} />;
         case DataType.Boolean:
           return <FormSelect items={['false', 'true']} controllerProps={controllerProps} />;
-        case DataType.Uuid:
+        case DataType.Float:
+        case DataType.Int:
+          return <NumericInputWithPlaceholder type={type} controllerProps={controllerProps} />;
         case DataType.Date:
+        case DataType.Timestamp: {
+          return (
+            <FormDateTimePicker
+              type={type === DataType.Date ? 'date' : 'datetime'}
+              controllerProps={controllerProps}
+            />
+          );
+        }
+        case DataType.Uuid: {
+          return <UUIDInputWithPlaceholder controllerProps={controllerProps} />;
+        }
         case DataType.LineString:
         case DataType.Point:
         case DataType.Polygon:

@@ -5,12 +5,11 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { DataType, TableColumn } from '~/api/utils/api-requests';
+import { FormCheckbox, FormDateTimePicker, FormInputText } from '~/components/react-hook-form';
 import {
-  FormCheckbox,
-  FormDateTimePicker,
-  FormInputNumeric,
-  FormInputText,
-} from '~/components/react-hook-form';
+  NumericInputWithPlaceholder,
+  UUIDInputWithPlaceholder,
+} from '~/components/react-hook-form/form-inputs-with-placeholders';
 
 import { getSchema } from './table-data-form.schema';
 
@@ -53,11 +52,7 @@ export const TableDataForm: FC<TableDataFormProps> = ({
       case DataType.Float:
       case DataType.Int: {
         component = (
-          <FormInputNumeric
-            step={type === DataType.Int ? 1 : 0.01}
-            placeholder={type === DataType.Int ? '0' : '0.00'}
-            controllerProps={{ ...register(id), control }}
-          />
+          <NumericInputWithPlaceholder type={type} controllerProps={{ ...register(id), control }} />
         );
         break;
       }
@@ -72,13 +67,7 @@ export const TableDataForm: FC<TableDataFormProps> = ({
         break;
       }
       case DataType.Uuid: {
-        component = (
-          <FormInputText
-            mask={'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'}
-            definitions={{ X: /[0-9a-f]/ }}
-            controllerProps={{ ...register(id), control }}
-          />
-        );
+        component = <UUIDInputWithPlaceholder controllerProps={{ ...register(id), control }} />;
         break;
       }
       case DataType.LineString:
