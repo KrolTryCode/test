@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Stack } from '@mui/material';
 import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
 import { ToOptions, useParams } from '@tanstack/react-router';
 import { FC } from 'react';
@@ -44,11 +45,12 @@ export const EditTaskForm: FC<EditTaskFormProps> = ({ data, onSave, backOptions,
       gap={1}
       onSubmit={handleSubmit(onSave)}
       isLoading={!data}
-      maxWidth={'900px'}
     >
-      <FormItem label={t('COMMON.TITLE')} isRequired>
-        <FormInputText controllerProps={{ ...register('name'), control }} />
-      </FormItem>
+      <Stack width={'48vw'}>
+        <FormItem label={t('COMMON.TITLE')} isRequired>
+          <FormInputText controllerProps={{ ...register('name'), control }} />
+        </FormItem>
+      </Stack>
       <ParametersTable formId={data?.id ?? ''} projectId={projectId} />
       <FormButtons marginTop={2}>
         <ButtonLink {...backOptions}>{t('ACTION.CANCEL')}</ButtonLink>

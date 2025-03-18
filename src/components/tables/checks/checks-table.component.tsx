@@ -2,17 +2,25 @@ import { AddEntity, DataGrid, DeleteCellButton, EnhancedColDef } from '@pspod/ui
 import { FC, useMemo } from 'react';
 
 import { CheckOpcode, TableCheck } from '~/api/utils/api-requests';
-import { useChecks } from '~/components/tables/checks/checks-table.hook';
+import { CheckParentType, CheckType } from '~/components/checks/checks.type';
 import { useCustomTranslations } from '~/utils/hooks';
 
 interface CheckTableProps {
-  tableId: string;
+  checks: CheckType[];
+  isLoading: boolean;
+  handleDeleteCheck: (id: string) => void;
+  handleAddCheck: () => void;
+  parents: CheckParentType[];
 }
 
-export const CheckTables: FC<CheckTableProps> = ({ tableId }) => {
+export const ChecksTable: FC<CheckTableProps> = ({
+  checks,
+  isLoading,
+  handleDeleteCheck,
+  handleAddCheck,
+  parents,
+}) => {
   const { t, getCheckOperatorsValueOptions, translateCheckOperatorType } = useCustomTranslations();
-
-  const { checks, isLoading, deleteCheck, handleAddCheck, tableColumns } = useChecks(tableId);
 
   const columns: EnhancedColDef<TableCheck>[] = useMemo(
     () => [
@@ -20,14 +28,8 @@ export const CheckTables: FC<CheckTableProps> = ({ tableId }) => {
         field: 'check.leftValue.value',
         headerName: t('CHECKS.LEFT_VALUE'),
         flex: 1,
-        valueGetter: value => {
-          const id = typeof value === 'object' ? value['value'] : value;
-          return tableColumns.find(column => column.id === id)?.displayName;
-        },
-        groupingValueGetter: value => {
-          const id = typeof value === 'object' ? value['value'] : value;
-          return tableColumns.find(column => column.id === id)?.displayName;
-        },
+        valueGetter: value => getValue(parents, value),
+        groupingValueGetter: value => getValue(parents, value),
       },
       {
         field: 'check.opCode',
@@ -41,26 +43,23 @@ export const CheckTables: FC<CheckTableProps> = ({ tableId }) => {
         field: 'check.rightValue.value',
         headerName: t('CHECKS.RIGHT_VALUE'),
         flex: 1,
-        valueGetter: value => {
-          const innerValue = typeof value === 'object' ? value['value'] : value;
-          return tableColumns.find(column => column.id === innerValue)?.displayName ?? innerValue;
-        },
-        groupingValueGetter: value => {
-          const innerValue = typeof value === 'object' ? value['value'] : value;
-          return tableColumns.find(column => column.id === innerValue)?.displayName ?? innerValue;
-        },
+        valueGetter: value => getValue(parents, value),
+        groupingValueGetter: value => getValue(parents, value),
       },
       {
         field: 'actions',
         type: 'actions',
         getActions({ row }) {
           return [
-            <DeleteCellButton key={'delete'} deleteHandler={() => void deleteCheck(row.id)} />,
+            <DeleteCellButton
+              key={'delete'}
+              deleteHandler={() => void handleDeleteCheck(row.id)}
+            />,
           ];
         },
       },
     ],
-    [deleteCheck, getCheckOperatorsValueOptions, t, tableColumns, translateCheckOperatorType],
+    [handleDeleteCheck, getCheckOperatorsValueOptions, t, parents, translateCheckOperatorType],
   );
 
   return (
@@ -78,3 +77,9 @@ export const CheckTables: FC<CheckTableProps> = ({ tableId }) => {
     />
   );
 };
+
+function getValue(parents: CheckParentType[], value: string): string {
+  const id = typeof value === 'object' ? value['value'] : value;
+  const parent = parents.find(column => column.id === id);
+  return parent ? ('name' in parent ? parent.name : parent.displayName) : id;
+}
