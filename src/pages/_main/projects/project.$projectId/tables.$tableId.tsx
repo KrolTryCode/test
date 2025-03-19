@@ -46,9 +46,9 @@ function TablePage() {
   }, [childMatches.length, navigate, projectId, tableId]);
 
   return (
-    <Stack height={'100%'}>
+    <Stack height={'100%'} gap={1}>
       <Stack flexDirection={'row'} justifyContent={'space-between'}>
-        <Typography variant={'subtitle1'} marginLeft={1.5} marginTop={0.5}>
+        <Typography variant={'subtitle1'} marginTop={0.5}>
           {title}
         </Typography>
         <TabContext value={childMatches?.[0]?.fullPath ?? tabs[0].fullPath}>
@@ -65,7 +65,7 @@ function TablePage() {
           </TabList>
         </TabContext>
       </Stack>
-      <Box flex={1} padding={1} height={'100%'}>
+      <Box flex={1} height={'100%'}>
         <Outlet />
       </Box>
     </Stack>

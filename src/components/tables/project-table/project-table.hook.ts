@@ -24,7 +24,7 @@ export const useProjectTable = (nodeId: string) => {
 
   const { data: metadata = [], isLoading: isMetadataLoading } = useQuery(
     getTableDataQueryOptions(nodeId, {
-      select: data => data.columns.filter(v => v.displayName !== 'id'),
+      select: data => data.columns,
     }),
   );
 

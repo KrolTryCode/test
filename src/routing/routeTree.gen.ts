@@ -55,6 +55,7 @@ import { Route as MainProjectsProjectProjectIdTasksAddImport } from './../pages/
 import { Route as MainProjectsProjectProjectIdTasksTaskIdImport } from './../pages/_main/projects/project.$projectId/tasks/$taskId';
 import { Route as MainProjectsProjectProjectIdTablesTableIdImport } from './../pages/_main/projects/project.$projectId/tables.$tableId';
 import { Route as MainProjectsProjectProjectIdTablesTableIdStructureImport } from './../pages/_main/projects/project.$projectId/tables.$tableId/structure';
+import { Route as MainProjectsProjectProjectIdTablesTableIdRelationshipsImport } from './../pages/_main/projects/project.$projectId/tables.$tableId/relationships';
 import { Route as MainProjectsProjectProjectIdTablesTableIdDataImport } from './../pages/_main/projects/project.$projectId/tables.$tableId/data';
 import { Route as MainProjectsProjectProjectIdTablesTableIdChecksImport } from './../pages/_main/projects/project.$projectId/tables.$tableId/checks';
 import { Route as MainProjectsProjectProjectIdFormsFormIdEditImport } from './../pages/_main/projects/project.$projectId/forms/$formId.edit';
@@ -341,6 +342,13 @@ const MainProjectsProjectProjectIdTablesTableIdStructureRoute =
   MainProjectsProjectProjectIdTablesTableIdStructureImport.update({
     id: '/structure',
     path: '/structure',
+    getParentRoute: () => MainProjectsProjectProjectIdTablesTableIdRoute,
+  } as any);
+
+const MainProjectsProjectProjectIdTablesTableIdRelationshipsRoute =
+  MainProjectsProjectProjectIdTablesTableIdRelationshipsImport.update({
+    id: '/relationships',
+    path: '/relationships',
     getParentRoute: () => MainProjectsProjectProjectIdTablesTableIdRoute,
   } as any);
 
@@ -698,6 +706,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainProjectsProjectProjectIdTablesTableIdDataImport;
       parentRoute: typeof MainProjectsProjectProjectIdTablesTableIdImport;
     };
+    '/_main/projects/project/$projectId/tables/$tableId/relationships': {
+      id: '/_main/projects/project/$projectId/tables/$tableId/relationships';
+      path: '/relationships';
+      fullPath: '/projects/project/$projectId/tables/$tableId/relationships';
+      preLoaderRoute: typeof MainProjectsProjectProjectIdTablesTableIdRelationshipsImport;
+      parentRoute: typeof MainProjectsProjectProjectIdTablesTableIdImport;
+    };
     '/_main/projects/project/$projectId/tables/$tableId/structure': {
       id: '/_main/projects/project/$projectId/tables/$tableId/structure';
       path: '/structure';
@@ -835,6 +850,7 @@ const MainProjectsProjectProjectIdSolversRouteWithChildren =
 interface MainProjectsProjectProjectIdTablesTableIdRouteChildren {
   MainProjectsProjectProjectIdTablesTableIdChecksRoute: typeof MainProjectsProjectProjectIdTablesTableIdChecksRoute;
   MainProjectsProjectProjectIdTablesTableIdDataRoute: typeof MainProjectsProjectProjectIdTablesTableIdDataRoute;
+  MainProjectsProjectProjectIdTablesTableIdRelationshipsRoute: typeof MainProjectsProjectProjectIdTablesTableIdRelationshipsRoute;
   MainProjectsProjectProjectIdTablesTableIdStructureRoute: typeof MainProjectsProjectProjectIdTablesTableIdStructureRoute;
 }
 
@@ -844,6 +860,8 @@ const MainProjectsProjectProjectIdTablesTableIdRouteChildren: MainProjectsProjec
       MainProjectsProjectProjectIdTablesTableIdChecksRoute,
     MainProjectsProjectProjectIdTablesTableIdDataRoute:
       MainProjectsProjectProjectIdTablesTableIdDataRoute,
+    MainProjectsProjectProjectIdTablesTableIdRelationshipsRoute:
+      MainProjectsProjectProjectIdTablesTableIdRelationshipsRoute,
     MainProjectsProjectProjectIdTablesTableIdStructureRoute:
       MainProjectsProjectProjectIdTablesTableIdStructureRoute,
   };
@@ -1012,6 +1030,7 @@ export interface FileRoutesByFullPath {
   '/projects/project/$projectId/forms/$formId/edit': typeof MainProjectsProjectProjectIdFormsFormIdEditRoute;
   '/projects/project/$projectId/tables/$tableId/checks': typeof MainProjectsProjectProjectIdTablesTableIdChecksRoute;
   '/projects/project/$projectId/tables/$tableId/data': typeof MainProjectsProjectProjectIdTablesTableIdDataRoute;
+  '/projects/project/$projectId/tables/$tableId/relationships': typeof MainProjectsProjectProjectIdTablesTableIdRelationshipsRoute;
   '/projects/project/$projectId/tables/$tableId/structure': typeof MainProjectsProjectProjectIdTablesTableIdStructureRoute;
   '/projects/project/$projectId/tables/folders/$folderId': typeof MainProjectsProjectProjectIdTablesFoldersFolderIdIndexRoute;
 }
@@ -1056,6 +1075,7 @@ export interface FileRoutesByTo {
   '/projects/project/$projectId/forms/$formId/edit': typeof MainProjectsProjectProjectIdFormsFormIdEditRoute;
   '/projects/project/$projectId/tables/$tableId/checks': typeof MainProjectsProjectProjectIdTablesTableIdChecksRoute;
   '/projects/project/$projectId/tables/$tableId/data': typeof MainProjectsProjectProjectIdTablesTableIdDataRoute;
+  '/projects/project/$projectId/tables/$tableId/relationships': typeof MainProjectsProjectProjectIdTablesTableIdRelationshipsRoute;
   '/projects/project/$projectId/tables/$tableId/structure': typeof MainProjectsProjectProjectIdTablesTableIdStructureRoute;
   '/projects/project/$projectId/tables/folders/$folderId': typeof MainProjectsProjectProjectIdTablesFoldersFolderIdIndexRoute;
 }
@@ -1108,6 +1128,7 @@ export interface FileRoutesById {
   '/_main/projects/project/$projectId/forms/$formId/edit': typeof MainProjectsProjectProjectIdFormsFormIdEditRoute;
   '/_main/projects/project/$projectId/tables/$tableId/checks': typeof MainProjectsProjectProjectIdTablesTableIdChecksRoute;
   '/_main/projects/project/$projectId/tables/$tableId/data': typeof MainProjectsProjectProjectIdTablesTableIdDataRoute;
+  '/_main/projects/project/$projectId/tables/$tableId/relationships': typeof MainProjectsProjectProjectIdTablesTableIdRelationshipsRoute;
   '/_main/projects/project/$projectId/tables/$tableId/structure': typeof MainProjectsProjectProjectIdTablesTableIdStructureRoute;
   '/_main/projects/project/$projectId/tables/folders/$folderId/': typeof MainProjectsProjectProjectIdTablesFoldersFolderIdIndexRoute;
 }
@@ -1160,6 +1181,7 @@ export interface FileRouteTypes {
     | '/projects/project/$projectId/forms/$formId/edit'
     | '/projects/project/$projectId/tables/$tableId/checks'
     | '/projects/project/$projectId/tables/$tableId/data'
+    | '/projects/project/$projectId/tables/$tableId/relationships'
     | '/projects/project/$projectId/tables/$tableId/structure'
     | '/projects/project/$projectId/tables/folders/$folderId';
   fileRoutesByTo: FileRoutesByTo;
@@ -1203,6 +1225,7 @@ export interface FileRouteTypes {
     | '/projects/project/$projectId/forms/$formId/edit'
     | '/projects/project/$projectId/tables/$tableId/checks'
     | '/projects/project/$projectId/tables/$tableId/data'
+    | '/projects/project/$projectId/tables/$tableId/relationships'
     | '/projects/project/$projectId/tables/$tableId/structure'
     | '/projects/project/$projectId/tables/folders/$folderId';
   id:
@@ -1253,6 +1276,7 @@ export interface FileRouteTypes {
     | '/_main/projects/project/$projectId/forms/$formId/edit'
     | '/_main/projects/project/$projectId/tables/$tableId/checks'
     | '/_main/projects/project/$projectId/tables/$tableId/data'
+    | '/_main/projects/project/$projectId/tables/$tableId/relationships'
     | '/_main/projects/project/$projectId/tables/$tableId/structure'
     | '/_main/projects/project/$projectId/tables/folders/$folderId/';
   fileRoutesById: FileRoutesById;
@@ -1501,6 +1525,7 @@ export const routeTree = rootRoute
       "children": [
         "/_main/projects/project/$projectId/tables/$tableId/checks",
         "/_main/projects/project/$projectId/tables/$tableId/data",
+        "/_main/projects/project/$projectId/tables/$tableId/relationships",
         "/_main/projects/project/$projectId/tables/$tableId/structure"
       ]
     },
@@ -1534,6 +1559,10 @@ export const routeTree = rootRoute
     },
     "/_main/projects/project/$projectId/tables/$tableId/data": {
       "filePath": "_main/projects/project.$projectId/tables.$tableId/data.tsx",
+      "parent": "/_main/projects/project/$projectId/tables/$tableId"
+    },
+    "/_main/projects/project/$projectId/tables/$tableId/relationships": {
+      "filePath": "_main/projects/project.$projectId/tables.$tableId/relationships.tsx",
       "parent": "/_main/projects/project/$projectId/tables/$tableId"
     },
     "/_main/projects/project/$projectId/tables/$tableId/structure": {

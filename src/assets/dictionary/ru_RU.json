@@ -256,7 +256,8 @@
     "EXTERNAL_SERVICES": "Внешние сервисы",
     "LINK": "Ссылка",
     "CHECKS": "Ограничения",
-    "CHECK": "Ограничение"
+    "CHECK": "Ограничение",
+    "RELATIONSHIP": "Связь"
   },
   "EXPORT": {
     "EXPORT_TO": "Экспортировать в формате",
@@ -396,7 +397,8 @@
     "EVENTS": "События",
     "SOLVERS": "Вычислители",
     "FORMS": "Формы",
-    "NOTIFICATIONS": "Уведомления"
+    "NOTIFICATIONS": "Уведомления",
+    "RELATIONSHIPS": "Связи"
   },
   "JOURNAL": {
     "ACTION": "Действие"
@@ -498,9 +500,20 @@
   },
   "TASK": {
     "SET_PARAMETERS": "Задать параметры",
-    "CONFIRM_FORM_CHANGE":{
+    "CONFIRM_FORM_CHANGE": {
       "TITLE": "При изменении формы параметры будут установлены на значения по умолчанию.",
       "TEXT": "Продолжить?"
+    }
+  },
+  "TABLE_RELATIONSHIP": {
+    "CHILD_TABLE": "Дочерняя таблица",
+    "PARENT_TABLE": "Родительская таблица",
+    "CHILD_FIELD": "Связанное поле",
+    "PARENT_FIELD": "Поле-источник",
+    "TYPE": "Тип связи",
+    "TYPE_LIST": {
+      "ONETOONE": "Один к одному",
+      "ONETOMANY": "Один ко многим"
     }
   }
 }

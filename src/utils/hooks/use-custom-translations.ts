@@ -18,6 +18,9 @@ export const useCustomTranslations = () => {
   const translateColorPalette = (color: string = 'undefined'): string =>
     t(`COLORS.${color.toUpperCase()}`);
 
+  const translateTableRelationshipTypes = (type: string = 'undefined'): string =>
+    t(`TABLE_RELATIONSHIP.TYPE_LIST.${type.toUpperCase()}`);
+
   function getStatusValueOptions<T extends string | undefined>(statuses: T[]) {
     return statuses.map(status => ({
       value: status,
@@ -39,6 +42,13 @@ export const useCustomTranslations = () => {
     }));
   }
 
+  function getTableRelationshipTypesValueOptions<T extends string | undefined>(types: T[]) {
+    return types.map(type => ({
+      value: type,
+      label: translateTableRelationshipTypes(type),
+    }));
+  }
+
   return {
     t,
     translateStatus,
@@ -46,8 +56,10 @@ export const useCustomTranslations = () => {
     translateColumnType,
     translateCheckOperatorType,
     translateColorPalette,
+    translateTableRelationshipTypes,
     getStatusValueOptions,
     getColumnTypeValueOptions,
     getCheckOperatorsValueOptions,
+    getTableRelationshipTypesValueOptions,
   };
 };
