@@ -1,6 +1,7 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { Box } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid-premium';
+import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useRef, useMemo } from 'react';
 
@@ -12,15 +13,11 @@ import { useCustomTranslations, usePreventedLinks } from '~/utils/hooks';
 
 export const Route = createFileRoute('/_main/admin/templates/')({
   component: TemplatesPage,
-  loader: async ({ context: { queryClient } }) => {
-    const templates = await queryClient.fetchQuery(getTemplatesQueryOptions());
-    return templates;
-  },
 });
 
 export function TemplatesPage() {
   const { t, translateStatus, getStatusValueOptions } = useCustomTranslations();
-  const templates = Route.useLoaderData();
+  const { data: templates, isLoading } = useQuery(getTemplatesQueryOptions());
 
   const gridWrapperRef = useRef<HTMLDivElement>();
   usePreventedLinks(gridWrapperRef);
@@ -79,6 +76,7 @@ export function TemplatesPage() {
   return (
     <Box height={'100%'} ref={gridWrapperRef}>
       <DataGrid<Template>
+        loading={isLoading}
         items={templates ?? []}
         columns={columns}
         totalCount={templates?.length}

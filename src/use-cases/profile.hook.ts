@@ -4,13 +4,13 @@ import { useTranslation } from 'react-i18next';
 
 import { useChangePasswordMutation } from '~/api/queries/users/change-password.mutation';
 import { useUpdateUserMutation } from '~/api/queries/users/update-user.mutation';
-import { UpdateUserRequest } from '~/api/utils/api-requests';
+import { UpdateUserRequest, User } from '~/api/utils/api-requests';
 import { setUserInfo } from '~/app/user/user.store';
 import { changePasswordModal } from '~/components/forms/change-password/change-password-form.modal';
 import { UpdateUserRequestNullable } from '~/components/forms/profile/profile-form.schema';
 import { showErrorMessage } from '~/utils/show-error-message';
 
-export const useProfile = ({ id, email }: { id?: string; email?: string }) => {
+export const useProfile = (user: User) => {
   const { t } = useTranslation();
 
   const { mutate: changePassword } = useChangePasswordMutation({
@@ -18,7 +18,7 @@ export const useProfile = ({ id, email }: { id?: string; email?: string }) => {
     onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
   });
 
-  const { mutateAsync: updateUser } = useUpdateUserMutation(id ?? '', true, {
+  const { mutateAsync: updateUser } = useUpdateUserMutation(user?.id ?? '', true, {
     onSuccess: () => notifySuccess(t('MESSAGE.UPDATE_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
   });
@@ -38,10 +38,10 @@ export const useProfile = ({ id, email }: { id?: string; email?: string }) => {
     () =>
       changePasswordModal({
         title: t('ACTION.CHANGE', { type: t('AUTH.PASSWORD.NAME').toLowerCase() }),
-        user: email ?? '',
+        user: user?.email ?? '',
         onSave: changePassword,
       }),
-    [changePassword, email, t],
+    [changePassword, user?.email, t],
   );
 
   return {

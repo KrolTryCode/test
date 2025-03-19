@@ -1,5 +1,6 @@
 import { Stack, Typography } from '@mui/material';
 import { notifySuccess } from '@pspod/ui-components';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
@@ -14,14 +15,13 @@ export const Route = createFileRoute('/_main/projects/project/$projectId/forms/$
   loader: async ({ context, params: { formId } }) => {
     const formData = await context.queryClient.fetchQuery(getFormQueryOptions(formId));
     context.title = formData.name;
-    return { formData };
   },
 });
 
 function EditTaskFormPage() {
   const { projectId, formId } = Route.useParams();
   const { t } = useTranslation();
-  const { formData } = Route.useLoaderData();
+  const { data: formData } = useSuspenseQuery(getFormQueryOptions(formId));
 
   const declinatedTranslations = useDeclinatedTranslationsContext();
   const declinatedForm = declinatedTranslations.FORM.ACCUSATIVE.toLowerCase();

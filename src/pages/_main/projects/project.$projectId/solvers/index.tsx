@@ -6,11 +6,11 @@ import { SolversTable } from '~/components/tables/solvers/solvers-table.componen
 export const Route = createFileRoute('/_main/projects/project/$projectId/solvers/')({
   component: SolversPage,
   loader: async ({ context: { queryClient }, params: { projectId } }) => {
-    const solvers = await queryClient.fetchQuery(getSolversQueryOptions(projectId));
-    return { solvers };
+    await queryClient.fetchQuery(getSolversQueryOptions(projectId));
   },
 });
 
 function SolversPage() {
-  return <SolversTable />;
+  const { projectId } = Route.useParams();
+  return <SolversTable projectId={projectId} />;
 }

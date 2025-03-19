@@ -1,5 +1,6 @@
 import { TabContext, TabList } from '@mui/lab';
 import { Box, Stack, Typography } from '@mui/material';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, Outlet, useChildMatches } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +15,6 @@ export const Route = createFileRoute('/_main/projects/project/$projectId/tables/
   loader: async ({ context, params: { tableId } }) => {
     const tableData = await context.queryClient.fetchQuery(getProjectContentQueryOptions(tableId));
     context.title = tableData.name;
-    return tableData.name;
   },
 });
 
@@ -29,18 +29,20 @@ function TablePage() {
   const navigate = Route.useNavigate();
 
   const { projectId, tableId } = Route.useParams();
-  const title = Route.useLoaderData();
+  const {
+    data: { name: tableName },
+  } = useSuspenseQuery(getProjectContentQueryOptions(tableId));
 
   const tabs = (Route.children as TableRouteChild[]).sort(
     (a, b) => (a.options.staticData?.order ?? -1) - (b.options.staticData?.order ?? -1),
   );
 
   useEffect(() => {
-    // временный фикс поломки
     if (!childMatches.length) {
       void navigate({
         to: '/projects/project/$projectId/tables/$tableId/data',
         params: { projectId, tableId },
+        replace: true,
       });
     }
   }, [childMatches.length, navigate, projectId, tableId]);
@@ -49,7 +51,7 @@ function TablePage() {
     <Stack height={'100%'} gap={1}>
       <Stack flexDirection={'row'} justifyContent={'space-between'}>
         <Typography variant={'subtitle1'} marginTop={0.5}>
-          {title}
+          {tableName}
         </Typography>
         <TabContext value={childMatches?.[0]?.fullPath ?? tabs[0].fullPath}>
           <TabList variant={'scrollable'} scrollButtons={false} visibleScrollbar>

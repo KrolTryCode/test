@@ -1,7 +1,7 @@
 import { PreviewOutlined } from '@mui/icons-material';
 import { GridActionsCellItem } from '@mui/x-data-grid-premium';
 import { AddEntity, DataGrid, EnhancedColDef } from '@pspod/ui-components';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
 
@@ -15,8 +15,7 @@ import { useCustomTranslations } from '~/utils/hooks';
 export const Route = createFileRoute('/_main/projects/project/$projectId/tasks/')({
   component: TasksList,
   loader: async ({ context: { queryClient }, params: { projectId } }) => {
-    const taskList = await queryClient.ensureQueryData(getProjectTasksQueryOptions(projectId));
-    return { taskList };
+    await queryClient.ensureQueryData(getProjectTasksQueryOptions(projectId));
   },
 });
 
@@ -27,9 +26,7 @@ function TasksList() {
   const { startTask, handleEditTask, downloadTaskResults, handleDeleteTask } =
     useTaskActions(projectId);
 
-  const { data: tasks, isLoading } = useQuery(
-    getProjectTasksQueryOptions(projectId, { placeholderData: Route.useLoaderData().taskList }),
-  );
+  const { data: tasks, isLoading } = useSuspenseQuery(getProjectTasksQueryOptions(projectId));
 
   const handleAddTask = () =>
     void navigate({
@@ -143,7 +140,7 @@ function TasksList() {
     <DataGrid<RealFullTaskInfo>
       items={tasks}
       columns={columns}
-      totalCount={tasks?.length ?? 0}
+      totalCount={tasks.length}
       loading={isLoading}
       pinnedColumns={{ right: ['actions'] }}
       customToolbarContent={

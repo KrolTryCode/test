@@ -1,9 +1,10 @@
 import { GridEditCellProps, GridPreProcessEditCellProps } from '@mui/x-data-grid-premium';
 import { notifySuccess } from '@pspod/ui-components';
-import { getRouteApi } from '@tanstack/react-router';
+import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { getExternalLinksQueryOptions } from '~/api/queries/settings/get-external-links.query';
 import { useUpdateLinksConfigurationMutation } from '~/api/queries/settings/update-external-links.mutation';
 import { ExternalLink } from '~/api/utils/api-requests';
 import { showErrorMessage } from '~/utils/show-error-message';
@@ -18,8 +19,11 @@ export interface ExternalLinkWithId extends ExternalLink {
 
 export const useExternalLinks = () => {
   const { t } = useTranslation();
-  const route = getRouteApi('/_main/admin/settings');
-  const { links } = route.useLoaderData();
+  const { data: links = [], isLoading: isConfigLoading } = useQuery(
+    getExternalLinksQueryOptions<ExternalLinkWithId[]>({
+      select: data => data.links.map(v => ({ ...v, id: v.order.toString() })),
+    }),
+  );
 
   const { mutateAsync: updateLinks, isPending } = useUpdateLinksConfigurationMutation();
 
@@ -96,7 +100,7 @@ export const useExternalLinks = () => {
 
   return {
     links,
-    isLoading: isPending,
+    isLoading: isPending || isConfigLoading,
     changeLinkOrder,
     createLink,
     updateLink,

@@ -1,12 +1,12 @@
 import { notifySuccess, confirmActionModal, confirmDeletionModal } from '@pspod/ui-components';
-import { useNavigate, useParams } from '@tanstack/react-router';
+import { useNavigate, useParams, useRouteContext } from '@tanstack/react-router';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useCreateProjectContentMutation } from '~/api/queries/project-content/create-project-content.mutation';
 import { useDeleteProjectContentMutation } from '~/api/queries/project-content/delete-project-content.mutation';
 import { useUpdateProjectContentMutation } from '~/api/queries/project-content/update-project-content.mutation';
-import { useGetTableMetadataColumns } from '~/api/queries/tables/structure/get-table-metadata.mutation';
+import { getTableOptions } from '~/api/queries/tables/structure/get-table.query';
 import { ContentNode, ContentNodeType } from '~/api/utils/api-requests';
 import { nodeModal } from '~/components/forms/table-node/table-node-form.modal';
 import { isFolderType } from '~/components/trees/tree.utils';
@@ -15,7 +15,8 @@ import { showErrorMessage } from '~/utils/show-error-message';
 
 export function useContentNodeActions(parentId = '') {
   const { t } = useTranslation();
-  const { projectId = '' } = useParams({ strict: false });
+  const { projectId = '', tableId = '' } = useParams({ strict: false });
+  const { queryClient } = useRouteContext({ strict: false });
   const declinatedTranslations = useDeclinatedTranslationsContext();
   const navigate = useNavigate();
 
@@ -58,10 +59,6 @@ export function useContentNodeActions(parentId = '') {
       }
     },
     onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
-  });
-
-  const { mutateAsync: getTableMetadata } = useGetTableMetadataColumns({
-    onError: e => showErrorMessage(e, 'ERROR.RETRIEVE_FAILED'),
   });
 
   const handleEditNode = useCallback(
@@ -135,14 +132,19 @@ export function useContentNodeActions(parentId = '') {
         confirmDeletionModal({ title, onOk });
       };
 
-      if (node?.type === ContentNodeType.Table) {
-        const table = await getTableMetadata(node.id);
+      if (queryClient && node?.type === ContentNodeType.Table) {
+        const table = await queryClient.fetchQuery(getTableOptions(node.id));
         if (table?.columns && table?.columns?.length > 0) {
           hasChildren = true;
         }
       }
 
-      const onDelete = () => deleteNode(node.id);
+      const onDelete = () => {
+        deleteNode(node.id);
+        if (tableId == node.id) {
+          void navigate({ to: '/projects/project/$projectId', params: { projectId } });
+        }
+      };
 
       const onOk = () => {
         if (hasChildren) {
@@ -157,7 +159,7 @@ export function useContentNodeActions(parentId = '') {
       const title = t('MESSAGE.CONFIRM_DELETE_ENTITY', { what: entity.toLowerCase() });
       return confirmActionModal({ title, onOk });
     },
-    [declinatedTranslations, deleteNode, getTableMetadata, t],
+    [declinatedTranslations, deleteNode, navigate, projectId, queryClient, t, tableId],
   );
 
   return {
