@@ -98,7 +98,7 @@ function TaskPage() {
             <TextLink
               key={table.id}
               underline={'hover'}
-              to={'/projects/project/$projectId/tables/$tableId'}
+              to={'/projects/project/$projectId/tables/$tableId/data'}
               params={{ tableId: table.id, projectId }}
               marginRight={0.5}
             >

@@ -39,7 +39,7 @@ function TablesLayout() {
       <Box
         position={'relative'}
         height={'100%'}
-        padding={1}
+        paddingLeft={1}
         marginLeft={isDrawerOpened ? `${drawerWidth}px` : 4}
         sx={{ transition: 'margin-left 0.3s ease' }}
       >
