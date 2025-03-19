@@ -14,7 +14,6 @@ export const Route = createFileRoute('/_main/projects/group/$groupId/')({
 
 function GroupPage() {
   const { groupId } = Route.useParams();
-  // const groupData = Route.useLoaderData();
 
   return (
     <>

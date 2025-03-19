@@ -1,5 +1,4 @@
 import { confirmDeletionModal, modal, notifySuccess } from '@pspod/ui-components';
-import { useRouter } from '@tanstack/react-router';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -14,7 +13,6 @@ import { showErrorMessage } from '~/utils/show-error-message';
 
 export const useSolverActions = (projectId: string) => {
   const { t } = useTranslation();
-  const router = useRouter();
 
   const { onUploadFile } = useUploadSolverFile(projectId);
 
@@ -29,10 +27,7 @@ export const useSolverActions = (projectId: string) => {
     onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
   });
   const { mutateAsync: deleteSolver } = useDeleteSolverMutation(projectId, {
-    onSuccess: async () => {
-      notifySuccess(t('MESSAGE.DELETION_SUCCESS'));
-      await router.invalidate();
-    },
+    onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.DELETION_FAILED'),
   });
 
@@ -47,9 +42,8 @@ export const useSolverActions = (projectId: string) => {
       if (file) {
         await onUploadFile(createdSolver.id!, file);
       }
-      await router.invalidate();
     },
-    [createSolver, onUploadFile, router],
+    [createSolver, onUploadFile],
   );
 
   const updateSolverWithFile = useCallback(
@@ -59,9 +53,8 @@ export const useSolverActions = (projectId: string) => {
       if (file) {
         await onUploadFile(updatedSolver.id!, file);
       }
-      await router.invalidate();
     },
-    [updateSolver, onUploadFile, router],
+    [updateSolver, onUploadFile],
   );
 
   const handleCreateSolver = useCallback(() => {

@@ -2,21 +2,24 @@ import { Upload, Edit as EditIcon, Download, DeleteOutline } from '@mui/icons-ma
 import { Box, Chip } from '@mui/material';
 import { GridActionsCellItem, GridRenderCellParams } from '@mui/x-data-grid-premium';
 import { AddEntity, Button, DataGrid, EnhancedColDef } from '@pspod/ui-components';
-import { getRouteApi } from '@tanstack/react-router';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { FC, useMemo } from 'react';
 
+import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { Solver } from '~/api/utils/api-requests';
 import { SolverFileCard } from '~/components/solver-file-card/solver-file-card.component';
 import { useCustomTranslations } from '~/utils/hooks';
 
 import { useSolverActions } from './solvers-table.hook';
 
-export const SolversTable: FC = () => {
+interface SolversTableProps {
+  projectId: string;
+}
+
+export const SolversTable: FC<SolversTableProps> = ({ projectId }) => {
   const { t, translateStatus } = useCustomTranslations();
 
-  const route = getRouteApi('/_main/projects/project/$projectId/solvers/');
-  const { solvers } = route.useLoaderData();
-  const { projectId } = route.useParams();
+  const { data: solvers, isLoading } = useSuspenseQuery(getSolversQueryOptions(projectId));
 
   const {
     handleCreateSolver,
@@ -148,8 +151,9 @@ export const SolversTable: FC = () => {
   return (
     <DataGrid
       items={solvers}
-      totalCount={solvers.length ?? 0}
+      totalCount={solvers.length}
       columns={columns}
+      loading={isLoading}
       pinnedColumns={{ right: ['actions'] }}
       customToolbarContent={ToolbarContent}
     />

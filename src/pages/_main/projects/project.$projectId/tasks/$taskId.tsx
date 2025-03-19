@@ -7,7 +7,7 @@ import {
 } from '@mui/icons-material';
 import { Stack, Typography } from '@mui/material';
 import { Button } from '@pspod/ui-components';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 
@@ -36,14 +36,14 @@ function TaskPage() {
   const navigate = Route.useNavigate();
 
   const [shouldRefetch, setShouldRefetch] = useState(true);
-  const { data: task, isRefetching } = useQuery(
+  const { data: task, isRefetching } = useSuspenseQuery(
     getProjectTaskQueryOptions(taskId, {
       refetchInterval: 2000,
       enabled: shouldRefetch,
     }),
   );
 
-  const taskParams = task?.parameters.params;
+  const taskParams = task.parameters.params;
 
   const { downloadTaskResults, handleEditTask, startTask, isTaskStarted, handleDeleteTask } =
     useTaskActions(projectId);
@@ -51,9 +51,9 @@ function TaskPage() {
   useEffect(() => {
     const processStatuses = [TaskState.Created, TaskState.Queued, TaskState.InProgress];
     setShouldRefetch(
-      (TaskState.ReadyToStart && isTaskStarted) || processStatuses.some(s => s === task?.state),
+      (TaskState.ReadyToStart && isTaskStarted) || processStatuses.some(s => s === task.state),
     );
-  }, [isRefetching, isTaskStarted, task?.state]);
+  }, [isRefetching, isTaskStarted, task.state]);
 
   const { data: solver } = useQuery(
     getSolversQueryOptions(projectId, {
@@ -69,12 +69,12 @@ function TaskPage() {
   );
 
   const taskInfo: SummaryEntry[] = [
-    { title: t('COMMON.DESCRIPTION'), value: task?.description },
-    { title: t('COMMON.PRIORITY'), value: task?.priority, type: 'number' },
-    { title: t('COMMON.PROGRESS'), value: task?.progress, type: 'number' },
-    { title: t('COMMON.DATE_CREATED'), value: task?.created, type: 'dateTime' },
-    { title: t('COMMON.DATE_END'), value: task?.endDate, type: 'dateTime' },
-    { title: t('COMMON.AUTHOR'), value: task?.authorName },
+    { title: t('COMMON.DESCRIPTION'), value: task.description },
+    { title: t('COMMON.PRIORITY'), value: task.priority, type: 'number' },
+    { title: t('COMMON.PROGRESS'), value: task.progress, type: 'number' },
+    { title: t('COMMON.DATE_CREATED'), value: task.created, type: 'dateTime' },
+    { title: t('COMMON.DATE_END'), value: task.endDate, type: 'dateTime' },
+    { title: t('COMMON.AUTHOR'), value: task.authorName },
   ];
 
   const taskParamsInfo: SummaryEntry[] = [
@@ -136,7 +136,7 @@ function TaskPage() {
         <Stack direction={'row'} alignItems={'center'}>
           <ButtonLink to={'..'} variant={'text'} icon={<ArrowBack />} />
           <Typography variant={'h3'} gutterBottom={false} marginRight={theme => theme.spacing(1)}>
-            {task?.name}
+            {task.name}
           </Typography>
           <Button
             variant={'text'}
@@ -145,7 +145,7 @@ function TaskPage() {
             color={'primary'}
             title={t('ACTION.EDIT', { type: t('ENTITY.TASK').toLowerCase() })}
             onClick={() => {
-              handleEditTask(task!, () => setShouldRefetch(true));
+              handleEditTask(task, () => setShouldRefetch(true));
             }}
           />
           <Button
@@ -153,30 +153,30 @@ function TaskPage() {
             size={'small'}
             color={'error'}
             icon={<DeleteOutline />}
-            onClick={() => handleDeleteTask(task!.id, () => void navigate({ to: '..' }))}
+            onClick={() => handleDeleteTask(task.id, () => void navigate({ to: '..' }))}
           />
         </Stack>
         <Stack direction={'row'} alignItems={'center'}>
           <Typography textAlign={'right'} gutterBottom={false}>
             <b>{t('COMMON.STATUS')}: </b>
-            {translateStatus(task!.state)}
+            {translateStatus(task.state)}
           </Typography>
           <Button
             variant={'text'}
             size={'small'}
             icon={<PlayArrowRounded />}
-            disabled={task?.state !== TaskState.ReadyToStart}
+            disabled={task.state !== TaskState.ReadyToStart}
             title={t('ACTION.RUN', { what: t('ENTITY.TASK').toLowerCase() })}
-            onClick={() => startTask(task!.id)}
+            onClick={() => startTask(task.id)}
             isLoading={shouldRefetch}
           />
           <Button
             variant={'text'}
             size={'small'}
             icon={<FileDownloadRounded />}
-            disabled={task?.state !== TaskState.Successed}
+            disabled={task.state !== TaskState.Successed}
             title={t('ACTION.DOWNLOAD', { filename: t('ENTITY.TASK').toLowerCase() })}
-            onClick={() => downloadTaskResults(task!.id)}
+            onClick={() => downloadTaskResults(task.id)}
           />
         </Stack>
       </Stack>

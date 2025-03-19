@@ -45,6 +45,7 @@ function ProjectTabsLayout() {
       void navigate({
         to: '/projects/project/$projectId/tables',
         params: { projectId },
+        replace: true,
       });
     }
   }, [childMatches.length, navigate, projectId]);

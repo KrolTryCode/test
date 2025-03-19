@@ -1,5 +1,6 @@
 import { Stack } from '@mui/material';
 import { Accordion } from '@pspod/ui-components';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
@@ -18,24 +19,27 @@ export const Route = createFileRoute('/_main/admin/security')({
     order: 4,
   },
   loader: async ({ context: { queryClient } }) => {
-    const configuration = await queryClient.fetchQuery(getModuleListQueryOptions());
-    return {
-      accountsModuleProperties: selectPropertiesByModuleName(configuration, ModuleType.ACCOUNTS),
-      usersModuleProperties: selectPropertiesByModuleName(configuration, ModuleType.USERS),
-    };
+    await queryClient.fetchQuery(getModuleListQueryOptions());
   },
 });
 
 function SecurityPage() {
-  const { accountsModuleProperties, usersModuleProperties } = Route.useLoaderData();
+  const { data: modules } = useSuspenseQuery(
+    getModuleListQueryOptions({
+      select: data => ({
+        [ModuleType.ACCOUNTS]: selectPropertiesByModuleName(data, ModuleType.ACCOUNTS),
+        [ModuleType.USERS]: selectPropertiesByModuleName(data, ModuleType.USERS),
+      }),
+    }),
+  );
 
   return (
     <Stack>
-      {accountsModuleProperties?.map(entry => (
+      {modules[ModuleType.ACCOUNTS]?.map(entry => (
         <ConfigFormAccordion {...entry} key={entry.moduleName} />
       ))}
 
-      {usersModuleProperties?.map(entry => (
+      {modules[ModuleType.USERS]?.map(entry => (
         <ConfigFormAccordion {...entry} key={entry.moduleName} />
       ))}
     </Stack>

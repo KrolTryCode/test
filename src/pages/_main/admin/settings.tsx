@@ -1,9 +1,9 @@
 import { Stack } from '@mui/material';
 import { Accordion } from '@pspod/ui-components';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { getExternalLinksQueryOptions } from '~/api/queries/settings/get-external-links.query';
 import {
   ModuleType,
   getModuleListQueryOptions,
@@ -11,7 +11,6 @@ import {
 import { selectPropertiesByModuleName } from '~/api/selectors/select-properties-by-module-name';
 import { DesignConfigurationForm } from '~/components/forms/configuration-design/design-configuration-form';
 import { ExternalLinksTable } from '~/components/tables/external-links/external-links.component';
-import { ExternalLinkWithId } from '~/components/tables/external-links/external-links.hook';
 
 export const Route = createFileRoute('/_main/admin/settings')({
   component: SettingsPage,
@@ -20,21 +19,18 @@ export const Route = createFileRoute('/_main/admin/settings')({
     order: 3,
   },
   loader: async ({ context: { queryClient } }) => {
-    const configuration = await queryClient.fetchQuery(getModuleListQueryOptions());
-    const externalLinks = await queryClient.fetchQuery(
-      getExternalLinksQueryOptions<ExternalLinkWithId[]>(),
-    );
-    return {
-      designModuleProperties: selectPropertiesByModuleName(configuration, ModuleType.DESIGN),
-      links: externalLinks.links.map(v => ({ ...v, id: v.order.toString() })),
-    };
+    await queryClient.fetchQuery(getModuleListQueryOptions());
   },
 });
 
 function SettingsPage() {
   const { t } = useTranslation();
 
-  const { designModuleProperties } = Route.useLoaderData();
+  const { data: designModuleProperties } = useSuspenseQuery(
+    getModuleListQueryOptions({
+      select: data => selectPropertiesByModuleName(data, ModuleType.DESIGN),
+    }),
+  );
 
   return (
     <Stack>

@@ -1,5 +1,6 @@
 import { Stack, Typography } from '@mui/material';
 import { notifySuccess } from '@pspod/ui-components';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
@@ -14,7 +15,6 @@ export const Route = createFileRoute('/_main/admin/templates/$templateId/edit')(
   loader: async ({ context, params: { templateId } }) => {
     const template = await context.queryClient.fetchQuery(getTemplateQueryOptions(templateId));
     context.title = template.name;
-    return { template };
   },
 });
 
@@ -23,7 +23,7 @@ function EditTemplate() {
   const navigate = useNavigate();
   const { templateId } = Route.useParams();
 
-  const { template } = Route.useLoaderData();
+  const { data: template, isLoading } = useSuspenseQuery(getTemplateQueryOptions(templateId));
   const { mutateAsync: updateTemplate, isPending } = useUpdateTemplateMutation({
     onSuccess: () => {
       notifySuccess(t('MESSAGE.UPDATE_SUCCESS'));
@@ -46,6 +46,7 @@ function EditTemplate() {
       <TemplateForm
         data={template as CreateTemplateRequest}
         onSave={onSubmit}
+        isLoading={isLoading}
         isPending={isPending}
       />
     </Stack>

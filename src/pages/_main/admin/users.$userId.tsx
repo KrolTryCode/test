@@ -1,4 +1,5 @@
 import { ArrowBack } from '@mui/icons-material';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
 import { getUserQueryOptions } from '~/api/queries/users/get-user.query';
@@ -22,27 +23,28 @@ export const Route = createFileRoute('/_main/admin/users/$userId')({
     const user = await context.queryClient.fetchQuery(getUserQueryOptions(userId));
     const fullName = getFullName(user?.firstName, user?.lastName, user?.surName);
     context.title = fullName;
-    return { user: { ...user, fullName } };
   },
 });
 
 function UserAccount() {
   const { userId } = Route.useParams();
-  const { user } = Route.useLoaderData();
+  const { data: user } = useSuspenseQuery(getUserQueryOptions(userId));
+
   const { handleChangePassword, handleUpdateUser } = useUserAccount(userId, user.email);
+  const fullName = getFullName(user.firstName, user.lastName, user.surName);
 
   return (
     <UserProfileLayout>
-      <UserProfileHeader userName={user.fullName}>
+      <UserProfileHeader userName={fullName}>
         <ButtonLink variant={'text'} to={'/admin/users'} icon={<ArrowBack />} />
       </UserProfileHeader>
       <UserProfileContent>
         <UserAvatar
           size={150}
           userId={user.id ?? ''}
-          firstName={user?.firstName}
-          lastName={user?.lastName}
-          surName={user?.surName}
+          firstName={user.firstName}
+          lastName={user.lastName}
+          surName={user.surName}
         />
         <ProfileForm
           data={user}
