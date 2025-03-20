@@ -5,6 +5,7 @@ import { IMaskMixin } from 'react-imask';
 export interface MaskedInputProps extends InputTextProps {
   mask: string;
   definitions?: Record<string, RegExp>;
+  unmask?: boolean;
   // add other mask props if needed
 }
 

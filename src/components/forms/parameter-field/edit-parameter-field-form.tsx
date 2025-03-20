@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { DataType, ParameterField } from '~/api/utils/api-requests';
@@ -32,8 +32,8 @@ export const EditParameterForm: FC<EditParameterFormProps> = ({
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { isValid, isSubmitted, isSubmitting },
-    getValues,
   } = useForm<ParameterFieldForm>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
@@ -42,6 +42,29 @@ export const EditParameterForm: FC<EditParameterFormProps> = ({
   });
 
   const onSubmit = (values: ParameterFieldForm) => {
+    if (!values.defaultValue?.toString()) {
+      onResolve({ ...data, ...values, defaultValue: '' });
+      return;
+    }
+
+    if (values.type === DataType.Timestamp) {
+      onResolve({
+        ...data,
+        ...values,
+        defaultValue: new Date(values.defaultValue as string).getTime().toString(),
+      });
+      return;
+    }
+
+    if (values.type === DataType.Date) {
+      onResolve({
+        ...data,
+        ...values,
+        defaultValue: new Date(values.defaultValue as string).toJSON(),
+      });
+      return;
+    }
+
     const defaultValue =
       typeof values.defaultValue === 'string'
         ? values.defaultValue
@@ -49,10 +72,6 @@ export const EditParameterForm: FC<EditParameterFormProps> = ({
     onResolve({ ...data, ...values, defaultValue });
   };
 
-  const DefaultValueComp = useMemo(
-    () => <DefaultValueComponent data={getValues()} register={register} control={control} />,
-    [getValues, register, control],
-  );
   return (
     <Form showColonAfterLabel onSubmit={handleSubmit(onSubmit)}>
       <FormItem label={t('COMMON.TITLE')} isRequired isDisabled={data.isDefault}>
@@ -63,12 +82,18 @@ export const EditParameterForm: FC<EditParameterFormProps> = ({
           items={Object.values(DataType)}
           translateItemsFunction={translateColumnType}
           controllerProps={{ ...register('type'), control }}
+          onChange={value => {
+            setValue('defaultValue', undefined);
+            return value;
+          }}
         />
       </FormItem>
       <FormItem label={t('COMMON.KEY')} isRequired isDisabled={data.isDefault}>
         <FormInputText controllerProps={{ ...register('key'), control }} />
       </FormItem>
-      <FormItem label={t('COMMON.DEFAULT_VALUE')}>{DefaultValueComp}</FormItem>
+      <FormItem label={t('COMMON.DEFAULT_VALUE')}>
+        <DefaultValueComponent control={control} register={register} />
+      </FormItem>
       <FormItem isDisabled={data.isDefault}>
         <FormCheckbox
           label={t('ERROR.REQUIRED')}
