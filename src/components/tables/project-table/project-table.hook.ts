@@ -13,32 +13,32 @@ import { showErrorMessage } from '~/utils/show-error-message';
 
 export type TableData = Record<string, any> & { id: string };
 
-export const useProjectTable = (nodeId: string) => {
+export const useProjectTable = (tableId: string) => {
   const { t } = useTranslation();
 
   const {
     data: content = [],
     isError: isContentError,
     isLoading: isContentLoading,
-  } = useQuery(getTableContentQueryOptions(nodeId));
+  } = useQuery(getTableContentQueryOptions(tableId));
 
   const { data: metadata = [], isLoading: isMetadataLoading } = useQuery(
-    getTableDataQueryOptions(nodeId, {
+    getTableDataQueryOptions(tableId, {
       select: data => data.columns,
     }),
   );
 
-  const { mutate: addTableColumn } = useAddTableDataMutation(nodeId, {
+  const { mutateAsync: addTableColumn } = useAddTableDataMutation(tableId, {
     onSuccess: () => notifySuccess(t('MESSAGE.CREATION_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
   });
 
-  const { mutate: updateTableColumn } = useUpdateTableDataMutation(nodeId, {
+  const { mutateAsync: updateTableColumn } = useUpdateTableDataMutation(tableId, {
     onSuccess: () => notifySuccess(t('MESSAGE.UPDATE_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.UPDATE_FAILED'),
   });
 
-  const { mutate: deleteTableColumn } = useDeleteTableDataMutation(nodeId, {
+  const { mutate: deleteTableColumn } = useDeleteTableDataMutation(tableId, {
     onSuccess: () => notifySuccess(t('MESSAGE.DELETION_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.DELETION_FAILED'),
   });

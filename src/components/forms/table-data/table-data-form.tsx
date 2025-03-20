@@ -1,9 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, FormItem, FormButtons, Button } from '@pspod/ui-components';
+import { useIsMutating } from '@tanstack/react-query';
 import { FC, ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { InstanceProps } from 'react-modal-promise';
 
+import { tableQueries } from '~/api/queries/tables/queries';
 import { DataType, TableColumn } from '~/api/utils/api-requests';
 import { FormCheckbox, FormDateTimePicker, FormInputText } from '~/components/react-hook-form';
 import {
@@ -13,22 +16,25 @@ import {
 
 import { getSchema } from './table-data-form.schema';
 
-interface TableDataFormProps<TableData = Record<string, any>> {
+export interface TableDataFormProps<TableData = Record<string, any>>
+  extends Pick<InstanceProps<TableData, unknown>, 'onResolve' | 'onReject'> {
   metadata: TableColumn[];
   tableContent: TableData[];
   data?: TableData;
-  onResolve: (data: TableData) => void;
-  onReject: () => void;
+  onSave: (data: TableData) => Promise<void | string[]>;
 }
 
 export const TableDataForm: FC<TableDataFormProps> = ({
   onResolve,
   onReject,
+  onSave,
   metadata,
   data,
   tableContent,
 }) => {
   const { t } = useTranslation();
+
+  const isMutating = useIsMutating({ mutationKey: tableQueries._def });
 
   const {
     register,
@@ -85,12 +91,17 @@ export const TableDataForm: FC<TableDataFormProps> = ({
     );
   };
 
+  const onSubmit = async (data: Record<string, any>) => {
+    await onSave(data);
+    onResolve();
+  };
+
   return (
     <Form
       showColonAfterLabel
       labelPosition={'left'}
       labelWidth={2}
-      onSubmit={handleSubmit(onResolve)}
+      onSubmit={handleSubmit(onSubmit)}
     >
       {metadata.map(renderComponent)}
       <FormButtons isSticky>
@@ -102,6 +113,7 @@ export const TableDataForm: FC<TableDataFormProps> = ({
           variant={'contained'}
           type={'submit'}
           disabled={!isValid && isSubmitted}
+          isLoading={!!isMutating}
         >
           {t('ACTION.SAVE')}
         </Button>
