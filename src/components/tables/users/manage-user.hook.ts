@@ -43,7 +43,7 @@ export function useManageUser() {
     );
   };
 
-  const { mutate: createAccount } = useCreateUserMutation({
+  const { mutateAsync: createAccount } = useCreateUserMutation({
     onSuccess: () => notifySuccess(t('MESSAGE.CREATION_SUCCESS')),
     onError: e => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
   });

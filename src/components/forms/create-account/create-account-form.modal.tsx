@@ -1,27 +1,17 @@
 import { modal } from '@pspod/ui-components';
 import { InstanceProps } from 'react-modal-promise';
 
-import { CreateAccountForm } from './create-account-form';
+import { CreateAccountForm, CreateAccountFormModalProps } from './create-account-form';
 import { ICreateAccountForm } from './create-account-form.schema';
 
-export const createAccountModal = ({
-  title,
-  onSave,
-  onCancel,
-}: {
+interface ModalProps extends Omit<CreateAccountFormModalProps, 'onReject' | 'onResolve' | 'type'> {
   title: string;
-  onSave: (data: ICreateAccountForm) => void;
-  onCancel?: () => void;
-}) =>
+}
+
+export const createAccountModal = ({ title, ...formProps }: ModalProps) =>
   modal({
     title,
-    onOk: onSave,
-    onCancel: onCancel,
-    renderContent: (modalInstance: InstanceProps<ICreateAccountForm, never>) => (
-      <CreateAccountForm
-        {...modalInstance}
-        onSave={modalInstance.onResolve}
-        onCancel={modalInstance.onReject}
-      />
+    renderContent: (modalInstance: InstanceProps<ICreateAccountForm, unknown>) => (
+      <CreateAccountForm {...modalInstance} type={'modal'} {...formProps} />
     ),
   });
