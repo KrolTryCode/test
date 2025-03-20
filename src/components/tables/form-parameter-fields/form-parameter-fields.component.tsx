@@ -11,6 +11,7 @@ import { DataType, ParameterField } from '~/api/utils/api-requests';
 import { ALLOWED_TYPES } from '~/components/checks/checks.utils';
 import { ParameterChecks } from '~/components/checks/parameter-checks/parameter-checks.component';
 import { useParametersHook } from '~/components/tables/form-parameter-fields/parameters-fields.hook';
+import { parseDefaultValue } from '~/utils/form-parameters/parse-default-value';
 import { useCustomTranslations } from '~/utils/hooks';
 
 interface ParametersTableProps {
@@ -40,11 +41,33 @@ export const ParametersTable: FC<ParametersTableProps> = ({ formId, projectId })
 
   const [selectedRow, setSelectedRow] = useState<ParameterField | null>(null);
 
+  const formatDefaultValue = useCallback(
+    (parameter: ParameterField) => {
+      const parsedValue = parseDefaultValue(parameter);
+
+      if (parameter.key === 'solver' && !!parameter.defaultValue) {
+        return solvers.find(s => s.id === parsedValue)?.name ?? parsedValue;
+      }
+
+      if (parameter.key === 'contents' && !!parameter.defaultValue) {
+        return (parsedValue as string[]).map(v => contents.find(t => t.id === v)?.name);
+      }
+
+      return parameter.defaultValue;
+    },
+    [contents, solvers],
+  );
+
   const columns = useMemo<EnhancedColDef<ParameterField>[]>(
     () => [
       {
         field: 'name',
         headerName: t('COMMON.TITLE'),
+        flex: 1,
+      },
+      {
+        field: 'key',
+        headerName: t('COMMON.KEY'),
         flex: 1,
       },
       {
@@ -65,15 +88,7 @@ export const ParametersTable: FC<ParametersTableProps> = ({ formId, projectId })
         field: 'defaultValue',
         headerName: t('COMMON.DEFAULT_VALUE'),
         flex: 1,
-        valueFormatter: (value, row) => {
-          if (row.key === 'solver' && !!row.defaultValue) {
-            return solvers.find(s => s.id === value)?.name ?? value;
-          }
-          if (row.key === 'contents' && !!row.defaultValue) {
-            return contents.find(s => s.id === value)?.name ?? value;
-          }
-          return value;
-        },
+        valueFormatter: (_, parameter) => formatDefaultValue(parameter),
       },
       {
         field: 'actions',
@@ -115,12 +130,11 @@ export const ParametersTable: FC<ParametersTableProps> = ({ formId, projectId })
       },
     ],
     [
-      contents,
       deleteParameter,
+      formatDefaultValue,
       getColumnTypeValueOptions,
       handleUpdateParameter,
       selectedRow,
-      solvers,
       t,
       translateColumnType,
     ],

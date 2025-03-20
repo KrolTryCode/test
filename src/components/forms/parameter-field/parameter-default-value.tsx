@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from '@tanstack/react-router';
-import { FC } from 'react';
-import { UseFormRegister, Control } from 'react-hook-form';
+import { FC, useEffect } from 'react';
+import { UseFormRegister, Control, useWatch, useController } from 'react-hook-form';
 import * as y from 'yup';
 
 import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
@@ -18,20 +18,36 @@ import {
   UUIDInputWithPlaceholder,
 } from '~/components/react-hook-form/form-inputs-with-placeholders';
 import { FormSelectContentNode } from '~/components/react-hook-form/form-search-content-node/form-search-node-tree.component';
+import { parseDefaultValue } from '~/utils/form-parameters/parse-default-value';
 
 interface DefaultValueComponentProps {
-  data: ParameterFieldForm;
   register: UseFormRegister<ParameterFieldForm>;
   control: Control<ParameterFieldForm>;
 }
 
-export const DefaultValueComponent: FC<DefaultValueComponentProps> = ({
-  data: { type, key },
-  register,
-  control,
-}) => {
+export const DefaultValueComponent: FC<DefaultValueComponentProps> = ({ register, control }) => {
+  const key = useWatch({ control, name: 'key' });
+  const type = useWatch({ control, name: 'type' });
   const controllerProps = { ...register('defaultValue'), control };
   const { projectId } = useParams({ strict: false });
+  const { field } = useController(controllerProps);
+
+  useEffect(() => {
+    if ([DataType.Int, DataType.Float].includes(type) && field.value === '') {
+      field.onChange(null);
+      return;
+    }
+
+    if (!(typeof field.value === 'string' && field.value) || type === DataType.Boolean) {
+      return;
+    }
+    if (type === DataType.Date) {
+      field.onChange(new Date(field.value));
+    } else {
+      field.onChange(parseDefaultValue({ defaultValue: field.value, key, type }));
+    }
+    field.onBlur();
+  }, [field, key, type]);
 
   const { data: solvers = [] } = useQuery(
     getSolversQueryOptions(projectId ?? '', {
@@ -47,7 +63,7 @@ export const DefaultValueComponent: FC<DefaultValueComponentProps> = ({
     return (
       <FormSelectContentNode
         controllerProps={controllerProps}
-        isMultiple={true}
+        isMultiple
         /*
           TODO: pass path to selected node (https://tracker.yandex.ru/BE-220)
           example src/components/trees/app-group-select-tree
@@ -98,18 +114,18 @@ export const getDefaultValueSchema = (type: DataType, key?: string) => {
     return y.array(y.string().uuid().required()).default([]);
   }
   if (key === 'timeout') {
-    return y.string().default('');
+    return y.number().min(0).nullable();
   }
   switch (type) {
     case DataType.Boolean:
       return y.string().oneOf(['true', 'false']).allowEmptyString();
     case DataType.Timestamp:
     case DataType.Date:
-      return y.date();
+      return y.string().nullable().default('');
     case DataType.Float:
-      return y.number().default(0.0);
+      return y.number().nullable().default(null);
     case DataType.Int:
-      return y.number().integer().default(0);
+      return y.number().integer().nullable().default(null);
     case DataType.Uuid:
       return y.string().uuid().default('');
     case DataType.LineString:

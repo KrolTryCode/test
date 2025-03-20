@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { CreateParameterFieldRequest, DataType } from '~/api/utils/api-requests';
@@ -30,9 +30,8 @@ export const AddParameterForm: FC<AddParameterFormProps> = ({
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { isValid, isSubmitted, isSubmitting },
-    getValues,
-    watch,
   } = useForm<ParameterFieldForm>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
@@ -41,6 +40,25 @@ export const AddParameterForm: FC<AddParameterFormProps> = ({
   });
 
   const onSubmit = (values: ParameterFieldForm) => {
+    if (!values.defaultValue?.toString()) {
+      onResolve({ ...values, defaultValue: '' });
+      return;
+    }
+
+    if (values.type === DataType.Timestamp) {
+      onResolve({
+        ...values,
+        defaultValue: new Date(values.defaultValue as string).getTime().toString(),
+      });
+      return;
+    }
+    if (values.type === DataType.Date) {
+      onResolve({
+        ...values,
+        defaultValue: new Date(values.defaultValue as string).toJSON(),
+      });
+      return;
+    }
     const defaultValue =
       typeof values.defaultValue === 'string'
         ? values.defaultValue
@@ -48,16 +66,6 @@ export const AddParameterForm: FC<AddParameterFormProps> = ({
 
     onResolve({ ...values, defaultValue });
   };
-
-  //костыль - без этого поле не перерисовывается
-  const _typeValue = watch('type');
-
-  const values = getValues();
-
-  const DefaultValueComp = useMemo(
-    () => <DefaultValueComponent data={values} register={register} control={control} />,
-    [values, register, control],
-  );
 
   return (
     <Form showColonAfterLabel onSubmit={handleSubmit(onSubmit)}>
@@ -69,12 +77,18 @@ export const AddParameterForm: FC<AddParameterFormProps> = ({
           items={Object.values(DataType)}
           translateItemsFunction={translateColumnType}
           controllerProps={{ ...register('type'), control }}
+          onChange={value => {
+            setValue('defaultValue', undefined);
+            return value;
+          }}
         />
       </FormItem>
       <FormItem label={t('COMMON.KEY')} isRequired>
         <FormInputText controllerProps={{ ...register('key'), control }} />
       </FormItem>
-      <FormItem label={t('COMMON.DEFAULT_VALUE')}>{DefaultValueComp}</FormItem>
+      <FormItem label={t('COMMON.DEFAULT_VALUE')}>
+        <DefaultValueComponent register={register} control={control} />
+      </FormItem>
       <FormCheckbox
         label={t('ERROR.REQUIRED')}
         controllerProps={{ ...register('isRequired'), control }}

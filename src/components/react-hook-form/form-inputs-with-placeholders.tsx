@@ -14,6 +14,7 @@ export const UUIDInputWithPlaceholder = <T extends FieldValues>({
   return (
     <FormInputText<T>
       mask={'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'}
+      unmask={false}
       definitions={{ X: /[0-9a-f]/ }}
       controllerProps={controllerProps}
     />

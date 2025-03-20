@@ -11,6 +11,7 @@ interface FormInputTextProps<
 > extends Partial<InputTextProps> {
   mask?: string;
   definitions?: Record<string, RegExp>;
+  unmask?: boolean;
   controllerProps: UseControllerProps<TFieldValues, TName>;
 }
 

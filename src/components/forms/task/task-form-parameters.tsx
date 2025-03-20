@@ -5,7 +5,6 @@ import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { getFormParametersQueryOptions } from '~/api/queries/forms/parameters/get-parameters.query';
-import { RealFullTaskInfo } from '~/api/queries/projects/tasks/get-project-task.query';
 import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { sortParametersByIndex } from '~/api/selectors/sort-parameters-by-index';
 import { ContentNodeType, DataType, ParameterField } from '~/api/utils/api-requests';
@@ -15,6 +14,7 @@ import {
   UUIDInputWithPlaceholder,
 } from '~/components/react-hook-form/form-inputs-with-placeholders';
 import { FormSelectContentNode } from '~/components/react-hook-form/form-search-content-node/form-search-node-tree.component';
+import { parseDefaultValue } from '~/utils/form-parameters/parse-default-value';
 
 import { ITaskForm } from './task-form.schema';
 
@@ -39,16 +39,8 @@ export const TaskFormParameters: FC<TaskFormParametersProps> = ({ projectId, for
     if (formId) {
       resetField('parameters', { keepDirty: false, keepTouched: false, keepError: false });
       parameters.forEach(param => {
-        const shouldParse =
-          ['contents', 'timestamp'].includes(param.key) ||
-          [DataType.Timestamp, DataType.Int, DataType.Float, DataType.Boolean].includes(param.type);
         resetField(`parameters.${param.key}`, {
-          defaultValue:
-            param.defaultValue !== undefined && shouldParse
-              ? (JSON.parse(
-                  param.defaultValue,
-                ) as RealFullTaskInfo['parameters']['params'][typeof param.key])
-              : param.defaultValue,
+          defaultValue: parseDefaultValue(param),
           keepDirty: false,
           keepTouched: false,
           keepError: false,
@@ -68,7 +60,7 @@ export const TaskFormParameters: FC<TaskFormParametersProps> = ({ projectId, for
       if (key === 'contents') {
         return (
           <FormSelectContentNode
-            isMultiple={true}
+            isMultiple
             /*
               TODO: pass path to selected node (https://tracker.yandex.ru/BE-220)
               example src/components/trees/app-group-select-tree
@@ -80,6 +72,7 @@ export const TaskFormParameters: FC<TaskFormParametersProps> = ({ projectId, for
           />
         );
       }
+
       switch (type) {
         case DataType.Boolean:
           return <FormSelect items={['false', 'true']} controllerProps={controllerProps} />;
