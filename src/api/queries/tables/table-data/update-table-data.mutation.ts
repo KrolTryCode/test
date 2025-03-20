@@ -10,22 +10,23 @@ export interface AddTableDataRequest extends Record<string, any> {
 }
 
 export const useUpdateTableDataMutation = (
-  nodeId: string,
+  tableId: string,
   options?: UseCustomMutationOptions<void, unknown, AddTableDataRequest>,
 ) => {
   const queryClient = useQueryClient();
 
   return useMutation({
+    mutationKey: [...tableQueries._def, 'update'],
     mutationFn: data =>
       ApiClientSecured.tableV1Controller.updateRecord(
-        nodeId,
+        tableId,
         data.id,
         // @ts-expect-error id type
         { ...data, id: undefined },
       ),
     ...options,
     onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: tableQueries.content(nodeId).queryKey });
+      void queryClient.invalidateQueries({ queryKey: tableQueries.content(tableId).queryKey });
       options?.onSuccess?.(...args);
     },
   });
