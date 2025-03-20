@@ -27,9 +27,9 @@ function RegisterPage() {
 
   return (
     <CreateAccountForm
-      onCancel={() => void navigate({ to: `/auth/login` })}
-      onSave={createUserMutation.mutate}
-      isPending={createUserMutation.isPending}
+      type={'page'}
+      onReject={() => void navigate({ to: `/auth/login` })}
+      onSave={createUserMutation.mutateAsync}
     />
   );
 }

@@ -1,21 +1,37 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, FormItem, FormButtons, Button } from '@pspod/ui-components';
+import { useIsMutating } from '@tanstack/react-query';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { userQueries } from '~/api/queries/users/queries';
 import { FormInputText } from '~/components/react-hook-form';
 
 import { schema, ICreateAccountForm } from './create-account-form.schema';
 
-interface CreateAccountFormProps {
-  onSave: (data: ICreateAccountForm) => void;
-  isPending?: boolean;
-  onCancel?: () => void;
+export interface CreateAccountFormModalProps {
+  type: 'modal';
+  onSave: (data: ICreateAccountForm) => Promise<unknown>;
+  onReject: () => void;
+  onResolve: (data: ICreateAccountForm) => void;
 }
 
-export const CreateAccountForm: FC<CreateAccountFormProps> = ({ onSave, onCancel, isPending }) => {
+interface CreateAccountFormPageProps {
+  type: 'page';
+  onSave: (data: ICreateAccountForm) => Promise<unknown>;
+  onReject: () => void;
+  onResolve?: undefined;
+}
+
+export const CreateAccountForm: FC<CreateAccountFormModalProps | CreateAccountFormPageProps> = ({
+  onSave,
+  onReject,
+  onResolve,
+}) => {
   const { t } = useTranslation();
+
+  const isMutating = useIsMutating({ mutationKey: userQueries._def });
 
   const {
     register,
@@ -29,8 +45,13 @@ export const CreateAccountForm: FC<CreateAccountFormProps> = ({ onSave, onCancel
     resolver: yupResolver(schema),
   });
 
+  const onSubmit = async (data: ICreateAccountForm) => {
+    await onSave(data);
+    onResolve?.(data);
+  };
+
   return (
-    <Form showColonAfterLabel onSubmit={handleSubmit(onSave)}>
+    <Form showColonAfterLabel onSubmit={handleSubmit(onSubmit)}>
       <FormItem isRequired label={t('USER.FIRST_NAME')}>
         <FormInputText controllerProps={{ ...register('firstName'), control }} />
       </FormItem>
@@ -41,7 +62,7 @@ export const CreateAccountForm: FC<CreateAccountFormProps> = ({ onSave, onCancel
         <FormInputText type={'email'} controllerProps={{ ...register('email'), control }} />
       </FormItem>
       <FormButtons>
-        <Button onClick={onCancel} variant={'outlined'} color={'primary'}>
+        <Button onClick={onReject} variant={'outlined'} color={'primary'}>
           {t('ACTION.CANCEL')}
         </Button>
         <Button
@@ -49,7 +70,7 @@ export const CreateAccountForm: FC<CreateAccountFormProps> = ({ onSave, onCancel
           disabled={!isValid && isSubmitted}
           variant={'contained'}
           color={'primary'}
-          isLoading={isPending}
+          isLoading={!!isMutating}
         >
           {t('ACTION.CREATE', { type: t('ENTITY.ACCOUNT').toLowerCase() })}
         </Button>

@@ -13,6 +13,7 @@ export const useSelfCreateUserMutation = (
   const queryClient = useQueryClient();
 
   return useMutation<User, unknown, UserData>({
+    mutationKey: [...userQueries._def, 'self-create'],
     mutationFn: userData => ApiClientSecured.userRegistrationV1Controller.selfCreateUser(userData),
     ...options,
     onSuccess(...args) {
@@ -28,6 +29,7 @@ export const useCreateUserMutation = (
   const queryClient = useQueryClient();
 
   return useMutation<User, unknown, UserData>({
+    mutationKey: [...userQueries._def, 'create'],
     mutationFn: userData => ApiClientSecured.usersV1Controller.createUser(userData),
     ...options,
     onSuccess(...args) {
