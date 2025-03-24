@@ -1,13 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Form, FormButtons, FormItem, InputText } from '@pspod/ui-components';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Check, CheckOpcode, DataType, ParameterField } from '~/api/utils/api-requests';
 import { COMPARISON_TYPES, getTypeByDataType } from '~/components/checks/checks.utils';
-import { schema } from '~/components/forms/check/parameter-check/parameter-check-form.schema';
+import { getSchema } from '~/components/forms/check/parameter-check/parameter-check-form.schema';
 import { FormAutocomplete, FormSelect } from '~/components/react-hook-form';
 import { useCustomTranslations } from '~/utils/hooks';
+import { positiveIntegerRe } from '~/utils/validation/utils/regexp';
 
 interface ParameterCheckFormProps {
   parameters: ParameterField[];
@@ -27,12 +28,16 @@ export const ParameterCheckForm: FC<ParameterCheckFormProps> = ({
   onResolve,
   onReject,
 }) => {
-  const { t, translateCheckOperatorType } = useCustomTranslations();
+  const { t, translateCheckOperatorType, translateStringCheckOperatorType } =
+    useCustomTranslations();
+
+  const schema = getSchema(leftValue, t);
 
   const {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { isValid, isSubmitted, isSubmitting },
   } = useForm<ParameterCheckFormData>({
     mode: 'onBlur',
@@ -41,22 +46,45 @@ export const ParameterCheckForm: FC<ParameterCheckFormProps> = ({
     resolver: yupResolver(schema),
   });
 
+  const opCodeData = watch('opCode');
+
+  const isStringCompared =
+    COMPARISON_TYPES.includes(opCodeData) && leftValue.type === DataType.String;
+
+  const rightValueData = useMemo(
+    () =>
+      isStringCompared
+        ? parameters.filter(
+            param =>
+              [DataType.Int, DataType.String].includes(param.type) && param.id !== leftValue.id,
+          )
+        : parameters.filter(param => param.type === leftValue.type && param.id !== leftValue.id),
+    [isStringCompared, parameters, leftValue],
+  );
+
   const handleAddCheck = (values: ParameterCheckFormData) => {
-    const leftValueType = leftValue.type;
-    if (leftValueType === DataType.String && COMPARISON_TYPES.includes(values.opCode)) {
+    if (isStringCompared) {
       const formLeftValue = {
         '@type': 'StringLengthValue',
         value: {
-          '@type': 'StringConst',
+          '@type': 'ColumnValue',
           value: leftValue.id,
         },
       };
 
-      const rightValue = {
-        '@type': 'StringLengthValue',
-        value: getRightValue(leftValueType, parameters, values.rightValue, values.opCode),
-      };
-
+      const rightValue = positiveIntegerRe.test(values.rightValue.name)
+        ? {
+            '@type': 'IntConst',
+            value: Number(values.rightValue.name),
+          }
+        : {
+            '@type': 'StringLengthValue',
+            value: {
+              '@type': 'ColumnValue',
+              value: values.rightValue,
+            },
+          };
+      //@ts-expect-error rightValue typing
       onResolve({ leftValue: formLeftValue, opCode: values.opCode, rightValue });
     } else {
       const formLeftValue = {
@@ -64,7 +92,12 @@ export const ParameterCheckForm: FC<ParameterCheckFormProps> = ({
         value: leftValue.id,
       };
 
-      const rightValue = getRightValue(leftValueType, parameters, values.rightValue, values.opCode);
+      const rightValue = getRightValue(
+        leftValue.type,
+        parameters,
+        values.rightValue,
+        values.opCode,
+      );
 
       //@ts-expect-error rightValue typing
       onResolve({ leftValue: formLeftValue, opCode: values.opCode, rightValue });
@@ -79,13 +112,15 @@ export const ParameterCheckForm: FC<ParameterCheckFormProps> = ({
       <FormItem label={t('CHECKS.OPERATOR')}>
         <FormSelect
           items={Object.values(CheckOpcode)}
-          translateItemsFunction={translateCheckOperatorType}
+          translateItemsFunction={
+            isStringCompared ? translateStringCheckOperatorType : translateCheckOperatorType
+          }
           controllerProps={{ ...register('opCode'), control }}
         />
       </FormItem>
       <FormItem label={t('CHECKS.RIGHT_VALUE')}>
         <FormAutocomplete
-          items={parameters.filter(value => value !== leftValue)}
+          items={rightValueData}
           controllerProps={{ ...register('rightValue'), control }}
         />
       </FormItem>

@@ -1,7 +1,7 @@
 import { AddEntity, DataGrid, DeleteCellButton, EnhancedColDef } from '@pspod/ui-components';
-import { FC, useMemo } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 
-import { CheckOpcode, TableCheck } from '~/api/utils/api-requests';
+import { DataType } from '~/api/utils/api-requests';
 import { CheckParentType, CheckType } from '~/components/checks/checks.type';
 import { useCustomTranslations } from '~/utils/hooks';
 
@@ -20,9 +20,26 @@ export const ChecksTable: FC<CheckTableProps> = ({
   handleAddCheck,
   parents,
 }) => {
-  const { t, getCheckOperatorsValueOptions, translateCheckOperatorType } = useCustomTranslations();
+  const { t, translateCheckOperatorType, translateStringCheckOperatorType } =
+    useCustomTranslations();
 
-  const columns: EnhancedColDef<TableCheck>[] = useMemo(
+  const getOperatorValues = useCallback(
+    (row: CheckType, value: string) => {
+      const innerValue =
+        typeof row.check.leftValue?.value === 'object' && 'value' in row.check.leftValue.value
+          ? row.check.leftValue?.value['value']
+          : row.check.leftValue?.value;
+      const rowType = parents.find(par => par.id === innerValue)?.type;
+      if (rowType === DataType.String) {
+        return translateStringCheckOperatorType(value);
+      } else {
+        return translateCheckOperatorType(value);
+      }
+    },
+    [parents, translateCheckOperatorType, translateStringCheckOperatorType],
+  );
+
+  const columns: EnhancedColDef<CheckType>[] = useMemo(
     () => [
       {
         field: 'check.leftValue.value',
@@ -35,9 +52,8 @@ export const ChecksTable: FC<CheckTableProps> = ({
         field: 'check.opCode',
         headerName: t('CHECKS.OPERATOR'),
         flex: 1,
-        type: 'singleSelect',
-        valueOptions: () => getCheckOperatorsValueOptions(Object.values(CheckOpcode)),
-        groupingValueGetter: value => translateCheckOperatorType(value),
+        valueGetter: (value, row) => getOperatorValues(row, value),
+        groupingValueGetter: (value, row) => getOperatorValues(row, value),
       },
       {
         field: 'check.rightValue.value',
@@ -59,11 +75,11 @@ export const ChecksTable: FC<CheckTableProps> = ({
         },
       },
     ],
-    [handleDeleteCheck, getCheckOperatorsValueOptions, t, parents, translateCheckOperatorType],
+    [t, parents, getOperatorValues, handleDeleteCheck],
   );
 
   return (
-    <DataGrid<TableCheck>
+    <DataGrid<CheckType>
       items={checks}
       totalCount={checks.length}
       columns={columns}
