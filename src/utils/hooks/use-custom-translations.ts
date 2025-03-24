@@ -15,6 +15,9 @@ export const useCustomTranslations = () => {
   const translateCheckOperatorType = (type: string = 'undefined'): string =>
     t(`CHECKS.TYPE.${type.toUpperCase()}`);
 
+  const translateStringCheckOperatorType = (type: string = 'undefined'): string =>
+    t(`CHECKS.STRING_TYPE.${type.toUpperCase()}`);
+
   const translateColorPalette = (color: string = 'undefined'): string =>
     t(`COLORS.${color.toUpperCase()}`);
 
@@ -55,6 +58,7 @@ export const useCustomTranslations = () => {
     translateEntity,
     translateColumnType,
     translateCheckOperatorType,
+    translateStringCheckOperatorType,
     translateColorPalette,
     translateTableRelationshipTypes,
     getStatusValueOptions,

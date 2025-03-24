@@ -1,13 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Form, FormButtons, FormItem } from '@pspod/ui-components';
 import { FC, useMemo } from 'react';
-import { UseControllerProps, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { Check, CheckOpcode, DataType, TableColumn } from '~/api/utils/api-requests';
 import { COMPARISON_TYPES, getTypeByDataType } from '~/components/checks/checks.utils';
-import { schema } from '~/components/forms/check/table-check/table-check-form.schema';
+import { getSchema } from '~/components/forms/check/table-check/table-check-form.schema';
 import { FormAutocomplete, FormSelect } from '~/components/react-hook-form';
 import { useCustomTranslations } from '~/utils/hooks';
+import { positiveIntegerRe } from '~/utils/validation/utils/regexp';
 
 interface TableCheckFormProps {
   columns: TableColumn[];
@@ -22,8 +23,10 @@ export interface TableCheckFormData {
 }
 
 export const TableCheckForm: FC<TableCheckFormProps> = ({ columns, onResolve, onReject }) => {
-  const { t, translateCheckOperatorType } = useCustomTranslations();
+  const { t, translateCheckOperatorType, translateStringCheckOperatorType } =
+    useCustomTranslations();
 
+  const schema = getSchema(columns, t);
   const {
     register,
     handleSubmit,
@@ -38,22 +41,31 @@ export const TableCheckForm: FC<TableCheckFormProps> = ({ columns, onResolve, on
   });
 
   const leftValueData = watch('leftValue');
+  const opCodeData = watch('opCode');
 
-  const RightValuesComponent = useMemo(
-    () => (
-      <RightValueSelector
-        leftValue={leftValueData}
-        columns={columns}
-        controllerProps={{ ...register('rightValue'), control }}
-      />
-    ),
-    [columns, control, leftValueData, register],
+  const leftValueType = useMemo(
+    () => columns.find(column => column.id === leftValueData)?.type,
+    [columns, leftValueData],
+  );
+
+  const isStringCompared =
+    COMPARISON_TYPES.includes(opCodeData) && leftValueType === DataType.String;
+
+  const rightValueData = useMemo(
+    () =>
+      isStringCompared
+        ? columns.filter(
+            column =>
+              [DataType.Int, DataType.String].includes(column.type) && column.id !== leftValueData,
+          )
+        : columns.filter(column => column.type === leftValueType && column.id !== leftValueData),
+    [isStringCompared, columns, leftValueType, leftValueData],
   );
 
   const handleAddCheck = (values: TableCheckFormData) => {
     const leftValueType = columns.find(column => column.id === values.leftValue)?.type;
 
-    if (leftValueType === DataType.String && COMPARISON_TYPES.includes(values.opCode)) {
+    if (isStringCompared) {
       const leftValue = {
         '@type': 'StringLengthValue',
         value: {
@@ -62,11 +74,19 @@ export const TableCheckForm: FC<TableCheckFormProps> = ({ columns, onResolve, on
         },
       };
 
-      const rightValue = {
-        '@type': 'StringLengthValue',
-        value: getRightValue(leftValueType, columns, values.rightValue, values.opCode),
-      };
-
+      const rightValue = positiveIntegerRe.test(values.rightValue.displayName)
+        ? {
+            '@type': 'IntConst',
+            value: Number(values.rightValue.displayName),
+          }
+        : {
+            '@type': 'StringLengthValue',
+            value: {
+              '@type': 'ColumnValue',
+              value: values.rightValue,
+            },
+          };
+      //@ts-expect-error rightValue typing
       onResolve({ leftValue, opCode: values.opCode, rightValue });
     } else {
       const leftValue = {
@@ -94,11 +114,20 @@ export const TableCheckForm: FC<TableCheckFormProps> = ({ columns, onResolve, on
       <FormItem label={t('CHECKS.OPERATOR')}>
         <FormSelect
           items={Object.values(CheckOpcode)}
-          translateItemsFunction={translateCheckOperatorType}
+          translateItemsFunction={
+            isStringCompared ? translateStringCheckOperatorType : translateCheckOperatorType
+          }
           controllerProps={{ ...register('opCode'), control }}
         />
       </FormItem>
-      <FormItem label={t('CHECKS.RIGHT_VALUE')}>{RightValuesComponent}</FormItem>
+      <FormItem label={t('CHECKS.RIGHT_VALUE')}>
+        <FormAutocomplete
+          items={rightValueData}
+          valueExpr={'databaseName'}
+          displayExpr={'displayName'}
+          controllerProps={{ ...register('rightValue'), control }}
+        />
+      </FormItem>
       <FormButtons>
         <Button onClick={onReject} variant={'outlined'} color={'primary'}>
           {t('ACTION.CANCEL')}
@@ -151,22 +180,3 @@ function getRightValue(
     value: input['displayName'],
   };
 }
-
-const RightValueSelector: FC<{
-  leftValue: string;
-  columns: TableColumn[];
-  controllerProps: UseControllerProps<
-    TableCheckFormData,
-    'opCode' | 'leftValue' | 'rightValue' | 'rightValue.id' | 'rightValue.displayName'
-  >;
-}> = ({ columns, controllerProps, leftValue }) => {
-  const rightValue = columns.filter(column => column.id !== leftValue);
-  return (
-    <FormAutocomplete
-      items={rightValue}
-      valueExpr={'databaseName'}
-      displayExpr={'displayName'}
-      controllerProps={controllerProps}
-    />
-  );
-};
