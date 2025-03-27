@@ -1,5 +1,5 @@
 import { Box, Card, CardContent, ClickAwayListener, Stack, Typography } from '@mui/material';
-import { Button } from '@pspod/ui-components';
+import { Button, PopperWithPaper } from '@pspod/ui-components';
 import { useQuery } from '@tanstack/react-query';
 import { TFunction } from 'i18next';
 import { FC, useRef, useState } from 'react';
@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 
 import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { Solver } from '~/api/utils/api-requests';
-import { PopperWithPaper } from '~/components/popper-with-paper/popper-with-paper.component';
 import { SolverFileCard } from '~/components/solver-file-card/solver-file-card.component';
 import { SummaryTable, SummaryEntry } from '~/components/summary-table/summary-table.component';
 
