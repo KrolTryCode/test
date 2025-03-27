@@ -30,7 +30,7 @@ export const ProjectList: FC = () => {
     </_ProjectsTreeContainer>
   ) : (
     <Typography variant={'subtitle2'} textAlign={'center'} color={'secondary'}>
-      {t('ERROR.NOT_FOUND_NODES.TEXT1')}
+      {groupId ? t('TREE.EMPTY_GROUP') : t('TREE.NO_NODES')}
     </Typography>
   );
 };

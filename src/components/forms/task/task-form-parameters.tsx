@@ -1,3 +1,4 @@
+import { AlertTitle, Paper } from '@mui/material';
 import { FormItem, Fieldset } from '@pspod/ui-components';
 import { useQuery } from '@tanstack/react-query';
 import { FC, useCallback, useEffect } from 'react';
@@ -8,6 +9,7 @@ import { getFormParametersQueryOptions } from '~/api/queries/forms/parameters/ge
 import { getSolversQueryOptions } from '~/api/queries/solvers/get-solvers.query';
 import { sortParametersByIndex } from '~/api/selectors/sort-parameters-by-index';
 import { ContentNodeType, DataType, ParameterField } from '~/api/utils/api-requests';
+import { TextLink } from '~/components/implicit-links';
 import { FormDateTimePicker, FormInputText, FormSelect } from '~/components/react-hook-form';
 import {
   NumericInputWithPlaceholder,
@@ -25,6 +27,7 @@ interface TaskFormParametersProps {
 
 export const TaskFormParameters: FC<TaskFormParametersProps> = ({ projectId, formId }) => {
   const { t } = useTranslation();
+
   const { control, register, setValue, resetField } = useFormContext<ITaskForm>();
 
   const { data: solvers = [] } = useQuery(getSolversQueryOptions(projectId));
@@ -49,6 +52,32 @@ export const TaskFormParameters: FC<TaskFormParametersProps> = ({ projectId, for
     }
   }, [formId, parameters, resetField, setValue]);
 
+  const renderNoContents = useCallback(
+    (invalid: boolean) => {
+      return (
+        <Paper
+          variant={'outlined'}
+          sx={theme => ({
+            borderColor: invalid ? theme.palette.error.main : undefined,
+            padding: theme.spacing(1),
+          })}
+        >
+          <AlertTitle>{t('PROJECT.NO_TABLES')}</AlertTitle>
+          <TextLink
+            underline={'hover'}
+            to={'/projects/project/$projectId/tables'}
+            params={{ projectId }}
+            ignoreBlocker
+            color={invalid ? 'error' : 'primary'}
+          >
+            {t('ACTION.GO')}
+          </TextLink>
+        </Paper>
+      );
+    },
+    [t, projectId],
+  );
+
   const renderParameter = useCallback(
     ({ key, type }: ParameterField) => {
       const controllerProps = { ...register(`parameters.${key}`), control };
@@ -69,6 +98,7 @@ export const TaskFormParameters: FC<TaskFormParametersProps> = ({ projectId, for
             controllerProps={controllerProps}
             projectId={projectId}
             canSelectItem={({ type }) => type === ContentNodeType.Table}
+            renderNoData={renderNoContents}
           />
         );
       }
@@ -99,7 +129,7 @@ export const TaskFormParameters: FC<TaskFormParametersProps> = ({ projectId, for
           return <FormInputText controllerProps={controllerProps} />;
       }
     },
-    [control, projectId, register, solvers],
+    [control, projectId, register, renderNoContents, solvers],
   );
 
   if (!parameters.length) {

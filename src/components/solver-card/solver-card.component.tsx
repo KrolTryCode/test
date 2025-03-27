@@ -52,7 +52,7 @@ const SolverCard: FC<SolverCardProps> = ({ projectId, solverId }) => {
   );
 
   if (!solver) {
-    return t('ERROR.NOT_FOUND_NODES');
+    return t('TREE.EMPTY_PROJECT');
   }
 
   return (

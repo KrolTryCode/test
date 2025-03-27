@@ -17,6 +17,7 @@ type ProjectContentSelectTreeCommonProps = {
   projectId: string;
   pathToSelected: string[];
   invalid?: boolean;
+  renderNoData?: (invalid: boolean) => JSX.Element;
 };
 
 type ProjectContentSingleSelectTreeProps = {
@@ -74,8 +75,10 @@ export const ProjectContentSelectTree: FC<ProjectContentSelectTreeProps> = props
       </_ProjectContentSelectTreeContainer>
     </ProjectContentSelectTreeContext.Provider>
   ) : (
-    <Typography variant={'body1'} textAlign={'center'} color={'secondary'}>
-      {t('ERROR.NOT_FOUND_NODES.TEXT1')}
-    </Typography>
+    (props.renderNoData?.(!!props.invalid) ?? (
+      <Typography variant={'body1'} textAlign={'center'} color={'secondary'}>
+        {t('TREE.EMPTY_PROJECT')}
+      </Typography>
+    ))
   );
 };
