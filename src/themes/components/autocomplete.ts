@@ -46,6 +46,9 @@ export const MuiAutocomplete: Components<Omit<Theme, 'components'>>['MuiAutocomp
     },
     clearIndicator: ({ theme }) => ({
       color: `${theme.palette.text.primary}80`,
+      '&:last-child': {
+        right: 4,
+      },
     }),
     listbox: {
       padding: 0,
