@@ -47,22 +47,24 @@ export const useProjectTable = (tableId: string) => {
     tableDataFormModal({
       title: t('ACTION.ADD', { type: t('COMMON.DATA').toLowerCase() }),
       tableContent: content,
+      tableId,
       metadata,
       onSave: addTableColumn,
     });
-  }, [t, content, metadata, addTableColumn]);
+  }, [t, content, metadata, addTableColumn, tableId]);
 
   const editTableData = useCallback(
     (data: TableData) => {
       tableDataFormModal({
         title: t('ACTION.EDIT', { type: t('COMMON.DATA').toLowerCase() }),
         tableContent: content,
+        tableId,
         metadata,
         data,
         onSave: formData => updateTableColumn({ ...formData, id: data.id }),
       });
     },
-    [t, content, metadata, updateTableColumn],
+    [t, content, metadata, updateTableColumn, tableId],
   );
 
   const tableColumnOrder = useMemo(() => (content?.[0] ? Object.keys(content[0]) : []), [content]);

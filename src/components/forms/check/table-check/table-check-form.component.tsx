@@ -50,7 +50,6 @@ export const TableCheckForm: FC<TableCheckFormProps> = ({ columns, onResolve, on
 
   const isStringCompared =
     COMPARISON_TYPES.includes(opCodeData) && leftValueType === DataType.String;
-
   const rightValueData = useMemo(
     () =>
       isStringCompared

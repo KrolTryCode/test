@@ -8,13 +8,14 @@ import { InstanceProps } from 'react-modal-promise';
 
 import { tableQueries } from '~/api/queries/tables/queries';
 import { DataType, TableColumn } from '~/api/utils/api-requests';
+import { useTableChecks } from '~/components/checks/table-checks/table-checks.hook';
 import { FormCheckbox, FormDateTimePicker, FormInputText } from '~/components/react-hook-form';
 import {
   NumericInputWithPlaceholder,
   UUIDInputWithPlaceholder,
 } from '~/components/react-hook-form/form-inputs-with-placeholders';
 
-import { getSchema } from './table-data-form.schema';
+import { getSchema } from './schema/table-data-form.schema';
 
 export interface TableDataFormProps<TableData = Record<string, any>>
   extends Pick<InstanceProps<TableData, unknown>, 'onResolve' | 'onReject'> {
@@ -22,6 +23,7 @@ export interface TableDataFormProps<TableData = Record<string, any>>
   tableContent: TableData[];
   data?: TableData;
   onSave: (data: TableData) => Promise<void | string[]>;
+  tableId: string;
 }
 
 export const TableDataForm: FC<TableDataFormProps> = ({
@@ -31,8 +33,10 @@ export const TableDataForm: FC<TableDataFormProps> = ({
   metadata,
   data,
   tableContent,
+  tableId,
 }) => {
   const { t } = useTranslation();
+  const { checks, isLoading } = useTableChecks(tableId);
 
   const isMutating = useIsMutating({ mutationKey: tableQueries._def });
 
@@ -44,7 +48,7 @@ export const TableDataForm: FC<TableDataFormProps> = ({
   } = useForm({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
-    resolver: yupResolver(getSchema(metadata, tableContent)),
+    resolver: yupResolver(getSchema(metadata, tableContent, checks)),
     values: data,
   });
 
@@ -102,6 +106,7 @@ export const TableDataForm: FC<TableDataFormProps> = ({
       labelPosition={'left'}
       labelWidth={2}
       onSubmit={handleSubmit(onSubmit)}
+      isLoading={isLoading}
     >
       {metadata.map(renderComponent)}
       <FormButtons isSticky>

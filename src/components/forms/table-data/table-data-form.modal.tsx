@@ -5,6 +5,7 @@ import { TableDataForm, TableDataFormProps } from './table-data-form';
 
 interface ModalProps extends Omit<TableDataFormProps, 'onReject' | 'onResolve'> {
   title: string;
+  tableId: string;
 }
 
 export const tableDataFormModal = ({ title, ...formProps }: ModalProps) =>
