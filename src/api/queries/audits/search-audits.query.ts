@@ -13,10 +13,23 @@ export const searchAuditsQueryOptions = <T = PageFullAuditInfo>(
   queryOptions({
     ...auditQueries.list(query, searchRequest),
     placeholderData: keepPreviousData,
+    staleTime: 0,
     ...options,
   });
 
 export const commonAuditQueryParams = {
-  types: ['Authentication', 'Password', 'Role', 'User', 'Account', 'ProjectMember', 'GroupMember'],
+  types: [
+    'Authentication',
+    'Password',
+    'Role',
+    'User',
+    'Account',
+    'ProjectMember',
+    'GroupMember',
+    'Task',
+    'Solver',
+    'ParameterForm',
+    'ProjectNode',
+  ],
   pageable: { size: 99_999, page: 0 },
 };
