@@ -29,7 +29,7 @@ export const ProjectContentTree: FC = () => {
     ))
   ) : (
     <Typography variant={'subtitle2'} textAlign={'center'} color={'secondary'}>
-      {t('ERROR.NOT_FOUND_NODES.TEXT1')}
+      {t('TREE.EMPTY_PROJECT')}
     </Typography>
   );
 };
