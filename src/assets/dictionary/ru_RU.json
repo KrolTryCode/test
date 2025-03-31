@@ -112,7 +112,8 @@
     "VALUE": "Значение",
     "SOURCE": "Источник",
     "KEY": "Ключ",
-    "PROGRESS": "Прогресс"
+    "PROGRESS": "Прогресс",
+    "DIAGRAM_PLACEHOLDER": "Редактор мнемосхем"
   },
   "PREPOSITION": {
     "K": "К"
@@ -253,7 +254,9 @@
     "LINK": "Ссылка",
     "CHECKS": "Ограничения",
     "CHECK": "Ограничение",
-    "RELATIONSHIP": "Связь"
+    "RELATIONSHIP": "Связь",
+    "DIAGRAM": "Мнемосхема",
+    "DIAGRAMS": "Мнемосхемы"
   },
   "EXPORT": {
     "EXPORT_TO": "Экспортировать в формате",
@@ -413,7 +416,8 @@
     "SOLVERS": "Вычислители",
     "FORMS": "Формы",
     "NOTIFICATIONS": "Уведомления",
-    "RELATIONSHIPS": "Связи"
+    "RELATIONSHIPS": "Связи",
+    "DIAGRAMS": "Мнемосхемы"
   },
   "JOURNAL": {
     "ACTION": "Действие"
