@@ -13,9 +13,17 @@ export const useDeleteDiagramMutation = (
   return useMutation({
     mutationFn: (diagramId) => ApiClientSecured.diagramsV1Controller.deleteDiagram(diagramId),
     ...options,
-    onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: diagramQueries.all._def });
-      options?.onSuccess?.(...args);
+    onSuccess(data, diagramId, context) {
+      // Инвалидируем все запросы диаграмм, чтобы гарантировать обновление
+      queryClient.invalidateQueries({ queryKey: ['diagram'] });
+
+      // Принудительно запрашиваем все запросы, которые могут содержать этот diagramId
+      queryClient.refetchQueries({
+        queryKey: ['diagram', 'byProjectId']
+      });
+
+      // Вызываем пользовательский обработчик успеха, если он предоставлен
+      options?.onSuccess?.(data, diagramId, context);
     },
   });
 };

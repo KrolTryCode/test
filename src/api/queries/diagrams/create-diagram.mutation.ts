@@ -14,9 +14,17 @@ export const useCreateDiagramMutation = (
   return useMutation({
     mutationFn: (data) => ApiClientSecured.diagramsV1Controller.createDiagram(data),
     ...options,
-    onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: diagramQueries.all._def });
-      options?.onSuccess?.(...args);
+    onSuccess(data, variables, context) {
+      // Инвалидируем все запросы диаграмм
+      queryClient.invalidateQueries({ queryKey: ['diagram'] });
+      // Принудительно обновим список диаграмм для конкретного проекта
+      if (variables.projectId) {
+        queryClient.invalidateQueries({
+          queryKey: ['diagram', 'byProjectId', variables.projectId]
+        });
+      }
+      // Вызываем пользовательский обработчик успеха, если он предоставлен
+      options?.onSuccess?.(data, variables, context);
     },
   });
 };

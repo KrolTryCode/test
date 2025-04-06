@@ -13,12 +13,27 @@ export const useUpdateDiagramMutation = (
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data) => ApiClientSecured.diagramsV1Controller.updateDiagram(diagramId, data),
+    mutationFn: (data) => {
+      console.log(`Updating diagram ${diagramId} with data:`, data);
+      return ApiClientSecured.diagramsV1Controller.updateDiagram(diagramId, data);
+    },
     ...options,
-    onSuccess(...args) {
-      void queryClient.invalidateQueries({ queryKey: diagramQueries.all._def });
-      void queryClient.invalidateQueries({ queryKey: diagramQueries.byId(diagramId).queryKey });
-      options?.onSuccess?.(...args);
+    onSuccess(data, variables, context) {
+      // Инвалидируем все запросы диаграмм
+      queryClient.invalidateQueries({ queryKey: ['diagram'] });
+      // Принудительно обновим список диаграмм для конкретного проекта
+      if (variables.projectId) {
+        queryClient.invalidateQueries({
+          queryKey: ['diagram', 'byProjectId', variables.projectId]
+        });
+      }
+      // Конкретную диаграмму тоже инвалидируем
+      queryClient.invalidateQueries({
+        queryKey: ['diagram', 'byId', diagramId]
+      });
+
+      // Вызываем пользовательский обработчик успеха, если он предоставлен
+      options?.onSuccess?.(data, variables, context);
     },
   });
 };

@@ -1,13 +1,12 @@
 // src/components/tables/diagrams/diagrams-table.component.tsx
-import { Edit as EditIcon } from '@mui/icons-material';
-import { Box, Stack, Typography, Button } from '@mui/material';
+import { Edit as EditIcon, Add as AddIcon } from '@mui/icons-material';
+import { Button } from '@mui/material';
 import {
   DataGrid,
   DeleteCellButton,
   EnhancedColDef,
   modal,
   notifySuccess,
-  Preloader,
 } from '@pspod/ui-components';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
@@ -15,9 +14,10 @@ import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InstanceProps } from 'react-modal-promise';
 
+import { useDeleteDiagramMutation } from '~/api/queries/diagrams/delete-diagram.mutation';
 import { getDiagramsQueryOptions } from '~/api/queries/diagrams/get-diagrams.query';
+import { useCreateDiagramMutation } from '~/api/queries/diagrams/create-diagram.mutation';
 import { Diagram, DiagramRequest } from '~/api/utils/api-requests';
-import { ApiClientSecured } from '~/api/utils/api-client';
 import { DiagramForm } from '~/components/forms/diagram/diagram-form';
 import { GridActionsCellItemLink } from '~/components/implicit-links';
 import { showErrorMessage } from '~/utils/show-error-message';
@@ -31,13 +31,46 @@ export const DiagramsTable: FC<DiagramsTableProps> = ({ projectId }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  // Запрос для получения диаграмм
-  const {
-    data: diagrams = [],
-    isLoading,
-    isError,
-    error
-  } = useQuery(getDiagramsQueryOptions(projectId));
+  // Добавим функцию для принудительного обновления списка диаграмм
+  const refreshDiagrams = () => {
+    // Явно инвалидируем все запросы диаграмм
+    queryClient.invalidateQueries({ queryKey: ['diagram'] });
+    // Для гарантии также выполним повторный запрос
+    queryClient.refetchQueries({ queryKey: ['diagram', 'byProjectId', projectId] });
+  };
+
+  // Запрос на получение диаграмм с минимальным стейлом
+  const { data: diagrams = [], isLoading } = useQuery({
+    ...getDiagramsQueryOptions(projectId),
+    refetchOnWindowFocus: true,
+    staleTime: 0, // Данные всегда устаревшие
+    cacheTime: 0, // Не кэшировать результаты
+    refetchInterval: 2000 // Опрашивать каждые 2 секунды
+  });
+
+  // Мутация для создания диаграммы
+  const { mutateAsync: createDiagram, isPending: isCreating } = useCreateDiagramMutation({
+    onSuccess: (diagram) => {
+      notifySuccess(t('MESSAGE.CREATION_SUCCESS'));
+      // Принудительно обновляем список диаграмм
+      refreshDiagrams();
+      void navigate({
+        to: '/projects/project/$projectId/diagrams/$diagramId',
+        params: { projectId, diagramId: diagram.id },
+      });
+    },
+    onError: (e) => showErrorMessage(e, 'ERROR.CREATION_FAILED'),
+  });
+
+  // Мутация для удаления диаграммы
+  const { mutate: deleteDiagram } = useDeleteDiagramMutation({
+    onSuccess: () => {
+      notifySuccess(t('MESSAGE.DELETION_SUCCESS'));
+      // Принудительно обновляем список диаграмм
+      refreshDiagrams();
+    },
+    onError: (e) => showErrorMessage(e, 'ERROR.DELETION_FAILED'),
+  });
 
   // Обработчик добавления диаграммы
   const handleAddDiagram = () => {
@@ -45,52 +78,14 @@ export const DiagramsTable: FC<DiagramsTableProps> = ({ projectId }) => {
       title: t('ACTION.ADD', {
         type: t('ENTITY.DIAGRAM').toLowerCase(),
       }),
-      onOk: async (data: DiagramRequest) => {
-        try {
-          const diagram = await ApiClientSecured.diagramsV1Controller.createDiagram({
-            ...data,
-            projectId
-          });
-
-          notifySuccess(t('MESSAGE.CREATION_SUCCESS'));
-
-          // Немедленно обновляем кэш запроса, чтобы увидеть новую диаграмму
-          queryClient.setQueryData(['diagrams', projectId], (oldData: Diagram[] = []) => {
-            return [...oldData, diagram];
-          });
-
-          // Перейти на страницу редактирования диаграммы
-          void navigate({
-            to: '/projects/project/$projectId/diagrams/$diagramId',
-            params: { projectId, diagramId: diagram.id },
-          });
-        } catch (e) {
-          showErrorMessage(e, 'ERROR.CREATION_FAILED');
-        }
-      },
+      onOk: (data: DiagramRequest) => createDiagram({ ...data, projectId }),
       renderContent: (modalInstance: InstanceProps<DiagramRequest, never>) => (
-        <DiagramForm {...modalInstance} />
+        <DiagramForm {...modalInstance} isPending={isCreating} />
       ),
     });
   };
 
-  // Обработчик удаления диаграммы
-  const handleDeleteDiagram = async (diagramId: string) => {
-    try {
-      await ApiClientSecured.diagramsV1Controller.deleteDiagram(diagramId);
-
-      notifySuccess(t('MESSAGE.DELETION_SUCCESS'));
-
-      // Немедленно обновляем кэш запроса, чтобы удалить диаграмму из списка
-      queryClient.setQueryData(['diagrams', projectId], (oldData: Diagram[] = []) => {
-        return oldData.filter(d => d.id !== diagramId);
-      });
-    } catch (e) {
-      showErrorMessage(e, 'ERROR.DELETION_FAILED');
-    }
-  };
-
-  // Колонки для таблицы
+  // Определение колонок для таблицы
   const columns = useMemo<EnhancedColDef<Diagram>[]>(
     () => [
       {
@@ -126,61 +121,32 @@ export const DiagramsTable: FC<DiagramsTableProps> = ({ projectId }) => {
             />,
             <DeleteCellButton
               key={'delete'}
-              deleteHandler={() => handleDeleteDiagram(row.id)}
+              deleteHandler={() => deleteDiagram(row.id)}
             />,
           ];
         },
       },
     ],
-    [t, projectId, handleDeleteDiagram],
+    [t, projectId, deleteDiagram],
   );
 
   return (
-    <Stack height="100%" spacing={2}>
-      {/* Кнопка добавления расположена слева вверху */}
-      <Box display="flex" justifyContent="flex-start">
+    <DataGrid
+      items={diagrams}
+      totalCount={diagrams.length}
+      columns={columns}
+      loading={isLoading}
+      pinnedColumns={{ right: ['actions'] }}
+      customToolbarContent={
         <Button
-          variant="contained"
+          variant="text"
           color="primary"
+          startIcon={<AddIcon />}
           onClick={handleAddDiagram}
         >
-          {t('ACTION.ADD', { type: t('ENTITY.DIAGRAM').toLowerCase() })}
+          {t('ENTITY.DIAGRAM')}
         </Button>
-      </Box>
-
-      {/* Индикатор загрузки, сообщение об ошибке или таблица с диаграммами */}
-      {isLoading ? (
-        <Box flex={1} display="flex" alignItems="center" justifyContent="center">
-          <Preloader />
-        </Box>
-      ) : isError ? (
-        <Box flex={1} p={2} display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-          <Typography variant="body1" color="error" gutterBottom>
-            {t('ERROR.LOADING_FAILED')}
-          </Typography>
-          <Typography variant="body2" color="textSecondary">
-            {error instanceof Error ? error.message : String(error)}
-          </Typography>
-        </Box>
-      ) : diagrams.length === 0 ? (
-        <Box flex={1} p={2} display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-          <Typography variant="body1" color="textSecondary" gutterBottom>
-            {t('MESSAGE.NO_DIAGRAMS')}
-          </Typography>
-          <Typography variant="body2" color="textSecondary">
-            {t('MESSAGE.CREATE_FIRST_DIAGRAM')}
-          </Typography>
-        </Box>
-      ) : (
-        <Box flex={1}>
-          <DataGrid
-            items={diagrams}
-            totalCount={diagrams.length}
-            columns={columns}
-            pinnedColumns={{ right: ['actions'] }}
-          />
-        </Box>
-      )}
-    </Stack>
+      }
+    />
   );
 };
