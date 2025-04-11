@@ -69,32 +69,3 @@ export const TextNode = memo(({ data }: NodeProps) => {
     </div>
   );
 });
-
-// Компонент для пользовательских изображений
-export const ImageNode = memo(({ data, selected }: NodeProps) => {
-  return (
-    <>
-      <Handle type="target" position={Position.Top} />
-      <div
-        style={{
-          border: selected ? '2px solid #ff0072' : 'none',
-          borderRadius: 3,
-          overflow: 'hidden',
-          width: data.width || 100,
-          height: data.height || 100,
-        }}
-      >
-        <img
-          src={data.src}
-          alt={data.label || 'Image'}
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: data.fit || 'contain'
-          }}
-        />
-      </div>
-      <Handle type="source" position={Position.Bottom} />
-    </>
-  );
-});

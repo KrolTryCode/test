@@ -22,7 +22,7 @@ import { DiagramForm } from '~/components/forms/diagram/diagram-form';
 import { showErrorMessage } from '~/utils/show-error-message';
 import { DiagramSidebar } from '~/components/diagrams/diagram-sidebar';
 import {
-  RectangleNode, CircleNode, TextNode, ImageNode
+  RectangleNode, CircleNode, TextNode
 } from '~/components/diagrams/nodes/basic-nodes';
 
 // Импортируем мутации для работы с элементами
@@ -30,6 +30,8 @@ import { useCreateElementMutation } from '~/api/queries/diagrams/elements/create
 import { useUpdateElementMutation } from '~/api/queries/diagrams/elements/update-element.mutation';
 import { useDeleteElementMutation } from '~/api/queries/diagrams/elements/delete-element.mutation';
 import { getElementsQueryOptions } from '~/api/queries/diagrams/elements/get-elements.query';
+import { getElementFilesByDiagramIdQueryOptions } from '~/api/queries/diagrams/get-element-files-by-diagram-id.query';
+import { ImageNode } from '~/components/diagrams/nodes/image-node';
 
 export const Route = createFileRoute('/_main/projects/project/$projectId/diagrams/$diagramId')({
   component: DiagramEditor,
@@ -51,15 +53,6 @@ export const Route = createFileRoute('/_main/projects/project/$projectId/diagram
   },
 });
 
-// Определяем nodeTypes глобально, вне компонента
-const nodeTypes = {
-  rectangle: RectangleNode,
-  circle: CircleNode,
-  text: TextNode,
-  image: ImageNode,
-};
-
-// Определяем edgeTypes глобально, вне компонента
 const edgeTypes = {};
 
 function DiagramEditor() {
@@ -69,10 +62,26 @@ function DiagramEditor() {
   const queryClient = useQueryClient();
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
+  const nodeTypes = useMemo(() => ({
+    rectangle: RectangleNode,
+    circle: CircleNode,
+    text: TextNode,
+    image: ImageNode,  // ImageNode теперь получает diagramId из data
+  }), []);
 
   // Используем хуки React Flow для управления узлами и соединениями
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
+  const { data: elementFiles = [] } = useQuery({
+    ...getElementFilesByDiagramIdQueryOptions(diagramId),
+    refetchOnWindowFocus: true,
+  });
+
+  const refreshElements = useCallback(() => {
+    queryClient.invalidateQueries({ queryKey: ['diagram', 'elements', diagramId] });
+    queryClient.invalidateQueries({ queryKey: ['diagram', 'elementFiles', diagramId] });
+  }, [queryClient, diagramId]);
 
   // Запрос на получение диаграммы
   const { data: diagram, isLoading: isDiagramLoading } = useQuery({
@@ -141,14 +150,21 @@ function DiagramEditor() {
 
   // Преобразование API-элементов в узлы React Flow
   useEffect(() => {
-    if (elements && elements.length > 0) {
+    if (elements && elements.length > 0 && elementFiles) {
       try {
         const flowNodes = elements.map(element => {
           const { id, properties } = element;
           const { x, y, type, name, scale = 1 } = properties;
 
-          // Определяем тип узла ReactFlow на основе типа элемента
+          // Поиск файла для элемента
+          const elementFile = elementFiles.find(file => file.elementId === id);
+
           let nodeType;
+          const nodeData = {
+            label: name,
+            scale
+          };
+
           switch (type) {
             case ElementType.RECTANGLE:
               nodeType = 'rectangle';
@@ -161,6 +177,10 @@ function DiagramEditor() {
               break;
             case ElementType.IMAGE:
               nodeType = 'image';
+              // Добавляем fileId только для изображений
+              if (elementFile) {
+                nodeData.fileId = elementFile.fileId;
+              }
               break;
             default:
               nodeType = 'default';
@@ -170,7 +190,7 @@ function DiagramEditor() {
             id,
             type: nodeType,
             position: { x, y },
-            data: { label: name, scale },
+            data: nodeData,
           };
         });
 
@@ -179,27 +199,9 @@ function DiagramEditor() {
         console.error('Error converting elements to nodes:', error);
       }
     }
-  }, [elements, setNodes]);
+  }, [elements, elementFiles, setNodes]);
 
-  // Функция для загрузки изображения
-  const handleImageUpload = useCallback(async (file: File): Promise<string> => {
-    // Здесь должна быть логика загрузки изображения на сервер
-    // В качестве временного решения, используем FileReader для создания data URL
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (typeof reader.result === 'string') {
-          resolve(reader.result);
-        } else {
-          reject(new Error('Failed to read file'));
-        }
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  }, []);
-
-  // Обработчик инициализации React Flow
+// Обработчик инициализации React Flow
   const onInit = useCallback((instance) => {
     console.log('ReactFlow initialized');
     setReactFlowInstance(instance);
@@ -437,8 +439,9 @@ function DiagramEditor() {
       >
         {/* Панель инструментов с возможностью загрузки изображений */}
         <DiagramSidebar
+          diagramId={diagramId}
           onDragStart={onDragStart}
-          onImageUpload={handleImageUpload}
+          onImageAdded={refreshElements}
         />
 
         {/* Холст ReactFlow */}
